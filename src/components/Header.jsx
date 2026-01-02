@@ -21,7 +21,7 @@ function Header() {
         <LaserBeam top="100%" left="13%" color="blue" duration="6.0s" />
         <LaserBeam top="100%" left="13%" color="blue" duration="5.0s" />
         <div className="header__image">
-          <img src={headerImg} alt="Tayyab MERN Stack Developer React Node.js Express MongoDB JavaScript" loading="lazy" />
+          <img src={headerImg} alt="Tayyab Full Stack Developer React Node.js Express MongoDB JavaScript" loading="lazy" />
         </div>
         <div className="header__content" style={{ textAlign: 'center' }}>
           <motion.h4
