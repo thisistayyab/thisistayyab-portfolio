@@ -10,7 +10,7 @@ function Header() {
 
   return (
     <header className="header" style={{ position: 'relative', overflow: 'hidden' }}>
-      <AppAppBar/>
+      <AppAppBar />
       {/* Header Content */}
       <div className="header__socials">
         <a className="circle-icon" href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A" aria-label="Email Me"><RiMailLine size={24} /></a>
@@ -21,14 +21,14 @@ function Header() {
         <LaserBeam top="100%" left="13%" color="blue" duration="6.0s" />
         <LaserBeam top="100%" left="13%" color="blue" duration="5.0s" />
         <div className="header__image">
-          <img src={headerImg} alt="Tayyab Full Stack Developer React Node.js Express MongoDB JavaScript" width="600" height="600" style={{ maxWidth: '100%', height: 'auto' }} />
+          <img src={headerImg} alt="Tayyab (thisistayyab) - Full Stack Developer & Software Engineer" width="600" height="600" style={{ maxWidth: '100%', height: 'auto' }} />
         </div>
         <div className="header__content" style={{ textAlign: 'center' }}>
           <motion.h4
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            >
+          >
             Crafting Digital Excellence
           </motion.h4>
           <motion.h1
