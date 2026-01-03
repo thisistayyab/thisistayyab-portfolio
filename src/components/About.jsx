@@ -59,9 +59,9 @@ function About() {
           <a color='white' href={cv} download className="btn download__btn">
             Download CV
           </a>
-          <a className="circle-icon" href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A"><RiMailLine size={20} /></a>
-          <a className="circle-icon" href="https://github.com/thisistayyab"><RiGithubLine size={20} /></a>
-          <a className="circle-icon" href="https://www.linkedin.com/in/thisistayyab/"><RiLinkedinLine size={20} /></a>
+          <a className="circle-icon" href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A" aria-label="Email Me"><RiMailLine size={20} /></a>
+          <a className="circle-icon" href="https://github.com/thisistayyab" aria-label="GitHub Profile"><RiGithubLine size={20} /></a>
+          <a className="circle-icon" href="https://www.linkedin.com/in/thisistayyab/" aria-label="LinkedIn Profile"><RiLinkedinLine size={20} /></a>
         </motion.div>
       </div>
     </section>

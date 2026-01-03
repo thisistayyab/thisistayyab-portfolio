@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion,AnimatePresence  } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import project1 from '../assets/project-1.png';
 import project2 from '../assets/project-2.jpg';
 import project3 from '../assets/project-3.png';
@@ -15,7 +15,7 @@ const projects = [
   {
     id: 1,
     category: 'web',
-    img: project8, 
+    img: project8,
     link: 'https://7opportunity.vercel.app/',
     name: '7Opportunity',
     description: `7Opportunity is a sleek, animated multi-section website built to serve as a personal brand and marketing platform. It integrates smooth scrolling, dynamic transitions, and an interactive UI to provide an engaging experience. The backend, powered by Supabase, handles user inquiries, data storage, and dynamic content integration for maximum functionality. The site was carefully designed to be fully responsive, adapting seamlessly to various screen sizes and ensuring consistent performance. 7Opportunity demonstrates advanced frontend development skills with Framer Motion animations, backend integration, and modern deployment practices on Vercel.`,
@@ -29,7 +29,7 @@ const projects = [
   {
     id: 2,
     category: 'web',
-    img: project9, 
+    img: project9,
     link: 'https://7options.vercel.app/',
     name: '7Options',
     description: `7Options is a full stack subscription management platform designed to handle  subscription sign-ups, recurring payments, refundable deposits, and account management. The system includes a modern user dashboard, predefined subscription plans, à la carte options, and automated email reminders. It integrates seamlessly with Stripe for payments, Swikly for refundable deposits, and Odoo for quote signing and CRM follow-ups. The platform also includes admin and super admin dashboards for full control, with security and reliability at its core.`,
@@ -43,7 +43,7 @@ const projects = [
   {
     id: 3,
     category: 'web',
-    img: project10, 
+    img: project10,
     link: 'https://7talenthub.vercel.app/',
     name: '7TalentHub',
     description: `7 TalentHub is a full-featured company CRM for managing employee relations, talent tracking, and performance analytics. Built with React.js, Node.js, and Supabase, it streamlines HR workflows, boosts retention, and creates dynamic internal talent portfolios.`,
@@ -152,7 +152,7 @@ const projects = [
     ],
     button: 'Live View'
   },
-  
+
 ];
 
 const filters = [
@@ -215,6 +215,8 @@ function Projects() {
             <motion.button
               key={filter.value}
               className={`btn project__btn${active === filter.value ? ' mixitup-control-active' : ''}`}
+              title={`Filter by ${filter.label}`}
+              aria-label={`Filter projects by ${filter.label}`}
               onClick={() => {
                 setActive(filter.value);
                 setVisibleCount(6);
@@ -230,7 +232,7 @@ function Projects() {
           ))}
         </div>
       </motion.div>
-      <motion.div 
+      <motion.div
         className="project__grid"
       >
 
@@ -259,7 +261,7 @@ function Projects() {
               <p className="project__desc">
                 {project.description.slice(0, 80)}...
               </p>
-                {project.technologies && project.technologies.map((tech, idx) => (
+              {project.technologies && project.technologies.map((tech, idx) => (
                 <div className="project__techrow" key={tech.label + idx}>
                   <span className="project__techlabel">{tech.label}</span>
                   <div className="project__techloadingbar-outer">
@@ -304,7 +306,7 @@ function Projects() {
         </div>
       )}
 
-     <AnimatePresence>
+      <AnimatePresence>
         {selectedProject && (
           <motion.div
             className="project__modal"
@@ -345,7 +347,7 @@ function Projects() {
                   href={selectedProject.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{marginTop:'1rem'}}
+                  style={{ marginTop: '1rem' }}
                   className="project__liveview"
                 >
                   Visit Site
@@ -355,7 +357,7 @@ function Projects() {
           </motion.div>
         )}
       </AnimatePresence>
-  
+
 
     </section>
   );

@@ -13,15 +13,15 @@ function Header() {
       <AppAppBar/>
       {/* Header Content */}
       <div className="header__socials">
-        <a className="circle-icon" href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A"><RiMailLine size={24} /></a>
-        <a className="circle-icon" href="https://github.com/thisistayyab"><RiGithubLine size={24} /></a>
-        <a className="circle-icon" href="https://www.linkedin.com/in/thisistayyab/"><RiLinkedinLine size={24} /></a>
+        <a className="circle-icon" href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A" aria-label="Email Me"><RiMailLine size={24} /></a>
+        <a className="circle-icon" href="https://github.com/thisistayyab" aria-label="Visit GitHub Profile"><RiGithubLine size={24} /></a>
+        <a className="circle-icon" href="https://www.linkedin.com/in/thisistayyab/" aria-label="Visit LinkedIn Profile"><RiLinkedinLine size={24} /></a>
       </div>
       <div className="section__container header__container" id="home" style={{ position: 'relative', zIndex: 5 }}>
         <LaserBeam top="100%" left="13%" color="blue" duration="6.0s" />
         <LaserBeam top="100%" left="13%" color="blue" duration="5.0s" />
         <div className="header__image">
-          <img src={headerImg} alt="Tayyab Full Stack Developer React Node.js Express MongoDB JavaScript" loading="lazy" />
+          <img src={headerImg} alt="Tayyab Full Stack Developer React Node.js Express MongoDB JavaScript" width="600" height="600" style={{ maxWidth: '100%', height: 'auto' }} />
         </div>
         <div className="header__content" style={{ textAlign: 'center' }}>
           <motion.h4
