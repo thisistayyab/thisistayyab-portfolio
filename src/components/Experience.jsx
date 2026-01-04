@@ -7,34 +7,45 @@ const experiences = [
     id: 1,
     type: 'work',
     icon: <RiBriefcaseLine size={32} />,
-    color: '#3b82f6',
+    color: '#14a800',
     title: 'Full Stack Developer',
-    company: 'Freelance',
-    period: '2021 - Present',
-    description: 'Building full-stack web applications using React, Node.js, Express, and MongoDB. Delivered 50+ projects for clients worldwide, specializing in modern, responsive UIs and scalable backend solutions.',
-    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JavaScript', 'TypeScript']
+    company: 'Upwork',
+    period: 'Dec 9, 2025 - Present',
+    description: 'Working as a specialized hourly full-stack developer, delivering high-quality web solutions. I focus on building robust applications, optimizing performance, and ensuring seamless user experiences for diverse clients.',
+    technologies: ['React', 'Node.js', 'Full-Stack Development', 'MERN Stack']
   },
   {
     id: 2,
     type: 'work',
-    icon: <RiCodeSSlashLine size={32} />,
-    color: '#8b5cf6',
-    title: 'Problem Solver',
-    company: 'LeetCode',
-    period: '2020 - Present',
-    description: 'Solved 1150+ algorithmic problems, strengthening expertise in Data Structures and Algorithms. This experience enhances my ability to write optimized, efficient code for production applications.',
-    technologies: ['DSA', 'Algorithms', 'Problem Solving', 'Optimization']
+    icon: <RiBriefcaseLine size={32} />,
+    color: '#1dbf73',
+    title: 'Full Stack Developer',
+    company: 'Fiverr',
+    period: 'Oct 2024 - Present',
+    description: 'Developing complete web applications for clients using the MERN stack. My work includes building responsive UIs, creating secure REST APIs, integrating databases, deploying apps, and delivering optimized, scalable solutions.',
+    technologies: ['HTML5', 'CSS3', 'MERN Stack', 'REST APIs', 'Database Design']
   },
   {
     id: 3,
+    type: 'work',
+    icon: <RiCodeSSlashLine size={32} />,
+    color: '#3b82f6',
+    title: 'Full Stack Developer',
+    company: 'Taylance Technologies',
+    period: 'Apr 2023 - Present',
+    description: 'Building modern, scalable software solutions across full-stack web development, AI integration, and automation. Responsible for developing complete MERN applications and designing efficient architectures.',
+    technologies: ['Node.js', 'Full-Stack Development', 'AI Integration', 'Automation']
+  },
+  {
+    id: 4,
     type: 'education',
     icon: <RiGraduationCapLine size={32} />,
     color: '#ec4899',
-    title: 'Computer Engineering Student',
-    company: 'University',
-    period: 'Ongoing',
-    description: 'Pursuing Computer Engineering with focus on software development, AI/ML, and system design. Combining theoretical knowledge with practical experience to build innovative solutions.',
-    technologies: ['Computer Science', 'AI/ML', 'System Design', 'Software Engineering']
+    title: "Bachelor's Degree, Computer Science",
+    company: 'Riphah International University',
+    period: 'Aug 2023 - Aug 2027',
+    description: 'Achieved Grade: 3.96/4. Active Cabinet Member of Riphah Blood Donor Society. Focusing on advanced computer science concepts, software engineering principles, and practical application development.',
+    technologies: ['C++', 'Program Management', 'DSA', 'Software Engineering']
   }
 ];
 
@@ -54,7 +65,7 @@ function Experience() {
         opacity: 0.15,
         zIndex: 0,
       }} />
-      
+
       <motion.h2
         className="section__header"
         initial={{ opacity: 0, y: -30 }}
@@ -65,7 +76,7 @@ function Experience() {
       >
         Experience
       </motion.h2>
-      
+
       <motion.p
         className="section__description"
         initial={{ opacity: 0, y: 20 }}
@@ -86,7 +97,7 @@ function Experience() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 * i, duration: 0.7 }}
             viewport={{ once: true }}
-            style={{ 
+            style={{
               '--experience-color': exp.color,
               '--experience-color-rgb': exp.color === '#3b82f6' ? '59, 130, 246' : exp.color === '#8b5cf6' ? '139, 92, 246' : '236, 72, 153',
               '--badge-color': exp.color,

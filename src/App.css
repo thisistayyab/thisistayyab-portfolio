@@ -10,11 +10,9 @@
   --text-light: #94a3b8;
   --white: #ffffff;
   --max-width: 1200px;
-  --gradient: linear-gradient(
-    to right,
-    var(--primary-color-dark),
-    var(--primary-color)
-  );
+  --gradient: linear-gradient(to right,
+      var(--primary-color-dark),
+      var(--primary-color));
 }
 
 /* Typography styles can be added here if needed */
@@ -31,7 +29,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html, body {
+html,
+body {
   font-family: 'Urbanist', sans-serif !important;
   overflow-x: hidden;
 }
@@ -214,7 +213,8 @@ body {
 
 /* Transparent background elements - only floating circles */
 .header__bg-gradient {
-  display: none; /* Removed gradient background */
+  display: none;
+  /* Removed gradient background */
 }
 
 .header__bg-circle {
@@ -257,9 +257,19 @@ body {
 }
 
 @keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -30px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
 }
 
 .header__content {
@@ -304,14 +314,22 @@ body {
 }
 
 @keyframes textShimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @keyframes nameGlow {
   0% {
     filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5));
   }
+
   100% {
     filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.8)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.6));
   }
@@ -366,21 +384,66 @@ body {
 .about__image {
   position: relative;
   z-index: 2;
+  max-width: 450px;
+  margin: auto;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.about__image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: 1;
+}
+
+.about__image::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.about__image:hover::before {
+  transform: scaleX(1);
+}
+
+.about__image:hover::after {
+  opacity: 1;
+}
+
+.about__image:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 0 40px rgba(59, 130, 246, 0.15);
+  /* No scale transform as requested */
 }
 
 .about__image img {
-  max-width: 450px;
-  margin: auto;
-  border-radius: 24px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s ease;
-}
-
-.about__image:hover img {
-  transform: scale(1.02);
-  border-color: rgba(59, 130, 246, 0.4);
-  box-shadow: 0 24px 80px rgba(59, 130, 246, 0.2);
+  width: 100%;
+  display: block;
+  border-radius: 16px;
+  position: relative;
+  z-index: 2;
 }
 
 .about__content {
@@ -449,6 +512,7 @@ body {
   0% {
     text-shadow: 0 0 5px #1d75ff, 0 0 10px #003b9a;
   }
+
   100% {
     text-shadow: 0 0 12px #7abfff, 0 0 20px #0676ff;
   }
@@ -550,7 +614,7 @@ body {
   border-color: #0d6efd;
 } */
 
-.banner__card > div {
+.banner__card>div {
   position: relative;
   z-index: 2;
   flex: 1;
@@ -653,7 +717,7 @@ body {
 }
 
 
-.project__card{
+.project__card {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
   padding: 0;
@@ -725,9 +789,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3000; /* make sure it's above or below navbar as you prefer */
+  z-index: 3000;
+  /* make sure it's above or below navbar as you prefer */
   animation: fadeIn 0.3s ease;
-  cursor: pointer; /* so user knows they can click outside */
+  cursor: pointer;
+  /* so user knows they can click outside */
 }
 
 /* Modal Content Box */
@@ -745,7 +811,8 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(59, 130, 246, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   animation: scaleIn 0.3s ease;
-  cursor: default; /* prevent closing when clicking inside */
+  cursor: default;
+  /* prevent closing when clicking inside */
 }
 
 .project__modal-content::-webkit-scrollbar {
@@ -821,13 +888,25 @@ body {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 
@@ -868,13 +947,16 @@ body {
 .project__card:hover a::after {
   opacity: 1;
 }
+
 @media (max-width: 860px) {
   .project__info {
     padding: 0.75rem 0.5rem;
   }
+
   .project__name {
     font-size: 1rem;
   }
+
   .project__desc {
     font-size: 0.9rem;
   }
@@ -888,6 +970,7 @@ body {
   position: relative;
   z-index: 2;
 }
+
 .project__name {
   font-size: 1.3rem;
   font-weight: 700;
@@ -906,6 +989,7 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
 .project__desc {
   font-size: 0.95rem;
   color: var(--text-light);
@@ -913,6 +997,7 @@ body {
   line-height: 1.6;
   opacity: 0.9;
 }
+
 .project__liveview {
   display: inline-block;
   padding: 0.6rem 1.5rem;
@@ -969,7 +1054,9 @@ body {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 480px) {
@@ -984,6 +1071,7 @@ body {
   align-items: center;
   margin-bottom: 0.5rem;
 }
+
 .project__techlabel {
   min-width: 80px;
   font-size: 0.98rem;
@@ -991,6 +1079,7 @@ body {
   margin-right: 0.75rem;
   font-weight: 500;
 }
+
 .project__techloadingbar-outer {
   flex: 1;
   height: 10px;
@@ -1022,8 +1111,13 @@ body {
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .swiper {
@@ -1168,7 +1262,8 @@ body {
 }
 
 .client__card img {
-  max-width: 200px;
+  max-width: 100%;
+  width: 100%;
   margin: auto;
   border-radius: 20px;
 }
@@ -1298,6 +1393,7 @@ body {
   border-radius: 16px;
   padding: 0.5rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
 .contact__input-wrapper::before {
@@ -1307,21 +1403,18 @@ body {
   left: 0;
   right: 0;
   height: 2px;
+  width: 0%;
   background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-  border-radius: 16px 16px 0 0;
+  transition: width 0.3s ease;
 }
 
 .contact__input-wrapper:focus-within {
   border-color: rgba(59, 130, 246, 0.4);
   box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
-  transform: translateY(-2px);
 }
 
 .contact__input-wrapper:focus-within::before {
-  transform: scaleX(1);
+  width: 100%;
 }
 
 .contact__input-icon {
@@ -1746,9 +1839,17 @@ body {
 
 
 @keyframes scan-rotate {
-  0%   { transform: rotate(227deg); }
-  50%  { transform: rotate(134deg); }
-  100% { transform: rotate(227deg); }
+  0% {
+    transform: rotate(227deg);
+  }
+
+  50% {
+    transform: rotate(134deg);
+  }
+
+  100% {
+    transform: rotate(227deg);
+  }
 }
 
 .sticky-nav {
@@ -1757,12 +1858,14 @@ body {
   left: 0;
   width: 100%;
   z-index: 200;
-  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   height: 68px;
 }
+
 .sticky-nav.show {
   transform: translateY(0);
 }
+
 .sticky-nav.hide {
   transform: translateY(-100%);
 }
@@ -2014,8 +2117,13 @@ body {
 }
 
 @keyframes shine {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
 }
 
 .experience__badge {

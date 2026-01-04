@@ -64,9 +64,9 @@ export default function AppAppBar() {
 
   return (
     <motion.div
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+    // initial={{ y: -100, opacity: 0 }}
+    // animate={{ y: 0, opacity: 1 }}
+    // transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
     >
       <AppBar
         position="fixed"
@@ -177,7 +177,7 @@ export default function AppAppBar() {
             </Box>
 
             {/* Mobile Nav */}
-            <Box sx={{ display: { xs: 'flex',sm:'none', md: 'none' } }}>
+            <Box sx={{ display: { xs: 'flex', sm: 'none', md: 'none' } }}>
               <motion.div
                 whileTap={{ scale: 0.9 }}
               >
@@ -215,10 +215,10 @@ export default function AppAppBar() {
                             transition={{ delay: index * 0.1, duration: 0.3 }}
                             whileHover={{ x: 10 }}
                           >
-                            <MenuItem 
-                              component="a" 
-                              href={item.href} 
-                              sx={{ color: '#fff' }} 
+                            <MenuItem
+                              component="a"
+                              href={item.href}
+                              sx={{ color: '#fff' }}
                               onClick={toggleDrawer(false)}
                             >
                               {item.label}

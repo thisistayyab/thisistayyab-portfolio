@@ -89,7 +89,7 @@ function Contact() {
         <motion.button
           className="btn contact__submit"
           type="submit"
-          whileHover={{ scale: 1.05 }}
+          // whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <RiSendPlaneLine size={18} />
