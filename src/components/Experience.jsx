@@ -6,7 +6,8 @@ const experiences = [
   {
     id: 1,
     type: 'work',
-    icon: <RiBriefcaseLine size={24} />,
+    icon: <RiBriefcaseLine size={32} />,
+    color: '#3b82f6',
     title: 'Full Stack Developer',
     company: 'Freelance',
     period: '2021 - Present',
@@ -16,7 +17,8 @@ const experiences = [
   {
     id: 2,
     type: 'work',
-    icon: <RiCodeSSlashLine size={24} />,
+    icon: <RiCodeSSlashLine size={32} />,
+    color: '#8b5cf6',
     title: 'Problem Solver',
     company: 'LeetCode',
     period: '2020 - Present',
@@ -26,7 +28,8 @@ const experiences = [
   {
     id: 3,
     type: 'education',
-    icon: <RiGraduationCapLine size={24} />,
+    icon: <RiGraduationCapLine size={32} />,
+    color: '#ec4899',
     title: 'Computer Engineering Student',
     company: 'University',
     period: 'Ongoing',
@@ -83,11 +86,17 @@ function Experience() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 * i, duration: 0.7 }}
             viewport={{ once: true }}
+            style={{ 
+              '--experience-color': exp.color,
+              '--experience-color-rgb': exp.color === '#3b82f6' ? '59, 130, 246' : exp.color === '#8b5cf6' ? '139, 92, 246' : '236, 72, 153',
+              '--badge-color': exp.color,
+              '--badge-color-rgb': exp.color === '#3b82f6' ? '59, 130, 246' : exp.color === '#8b5cf6' ? '139, 92, 246' : '236, 72, 153'
+            }}
           >
-            <div className="experience__icon">
+            <div className="experience__icon" style={{ color: exp.color }}>
               {exp.icon}
             </div>
-            <div className="experience__badge">
+            <div className="experience__badge" style={{ '--badge-color': exp.color }}>
               {exp.type === 'work' ? 'Work' : 'Education'}
             </div>
             <h3>{exp.title}</h3>

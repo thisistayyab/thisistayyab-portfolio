@@ -7,19 +7,9 @@ import cv from "../assets/Tayyab's CV.pdf"
 function About() {
   return (
     <section className="section__container about__container" id="about" style={{ position: 'relative', overflow: 'hidden' }}>
-      {/* Blurred Circle Background */}
-      <div style={{
-        position: 'absolute',
-        top: '20%',
-        left: '60%',
-        width: 180,
-        height: 180,
-        background: '#00c2ff',
-        borderRadius: '50%',
-        filter: 'blur(90px)',
-        opacity: 0.18,
-        zIndex: 0,
-      }} />
+      {/* Colorful background circles */}
+      <div className="about__bg-circle about__bg-circle-1"></div>
+      <div className="about__bg-circle about__bg-circle-2"></div>
       <div className="about__image image-wrapper" style={{ position: 'relative', zIndex: 2 }}>
         <img src={aboutImg} alt="about" loading="lazy" />
       </div>

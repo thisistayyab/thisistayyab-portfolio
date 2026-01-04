@@ -22,15 +22,30 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   flexShrink: 0,
-  borderRadius: `calc(${theme.shape.borderRadius}px + 12px)`,
-  backdropFilter: 'blur(24px)',
+  borderRadius: '20px',
+  backdropFilter: 'blur(20px)',
   border: '1px solid',
-  borderColor: '#232323ff',
-  backgroundColor: theme.vars
-    ? `rgba(${theme.vars.palette.background.defaultChannel} / 0.4)`
-    : alpha(theme.palette.background.default, 0.4),
-  boxShadow: 5,
-  padding: '8px 12px',
+  borderColor: 'rgba(255, 255, 255, 0.1)',
+  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%)',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(59, 130, 246, 0.1)',
+  padding: '12px 20px',
+  position: 'relative',
+  overflow: 'hidden',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '2px',
+    background: 'linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899)',
+    opacity: 0.6,
+  },
+  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+  '&:hover': {
+    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(59, 130, 246, 0.2)',
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
 }));
 
 export default function AppAppBar() {
@@ -94,6 +109,10 @@ export default function AppAppBar() {
                     letterSpacing: 1,
                     fontSize: 17,
                     display: 'block',
+                    background: 'linear-gradient(135deg, #ffffff, #94a3b8, #60a5fa)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                   }}
                 >
                   ayyab's Portfolio
@@ -117,16 +136,22 @@ export default function AppAppBar() {
                       disableRipple
                       sx={{
                         position: 'relative',
-                        color: 'white',
+                        color: 'rgba(255, 255, 255, 0.9)',
                         textTransform: 'none',
-                        px: 0,
+                        px: 2,
+                        py: 1,
                         backgroundColor: 'transparent',
+                        borderRadius: '10px',
+                        fontWeight: 500,
+                        fontSize: '0.95rem',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         '&:hover': {
-                          bgcolor: 'transparent', 
-                          color:'white',
+                          bgcolor: 'rgba(255, 255, 255, 0.05)',
+                          color: 'white',
+                          transform: 'translateY(-2px)',
                         },
                         '&:hover .underline': {
-                          width: '100%', 
+                          width: '100%',
                         },
                       }}
                     >
@@ -135,11 +160,12 @@ export default function AppAppBar() {
                         className="underline"
                         sx={{
                           position: 'absolute',
-                          bottom: 0,
-                          left: 0,
-                          height: '3px',
+                          bottom: 4,
+                          left: '50%',
+                          transform: 'translateX(-50%)',
+                          height: '2px',
                           width: 0,
-                          bgcolor: '#3b82f6',
+                          background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)',
                           transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                           borderRadius: '2px',
                         }}
