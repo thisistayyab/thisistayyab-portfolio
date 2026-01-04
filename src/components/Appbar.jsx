@@ -12,6 +12,7 @@ import {
   Divider
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
+import { motion, AnimatePresence } from 'framer-motion';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import logo from '../assets/favicon.png';
@@ -41,118 +42,173 @@ export default function AppAppBar() {
     { label: 'About', href: '#about' },
     { label: 'Projects', href: '#project' },
     { label: 'Testimonials', href: '#client' },
+    { label: 'Experience', href: '#experience' },
     { label: 'Services', href: '#service' },
     { label: 'Contact', href: '#contact' },
   ];
 
   return (
-    <AppBar
-      position="fixed"
-      sx={{
-        boxShadow: 0,
-        bgcolor: 'transparent',
-        backgroundImage: 'none',
-        mt: 'calc(var(--template-frame-height, 0px) + 28px)',
-      }}
+    <motion.div
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
     >
-      <Container maxWidth="lg">
-        <StyledToolbar variant="dense" disableGutters >
-          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-            <Box
-              component="img"
-              src={logo}
-              alt="Tayyab's Logo"
-              sx={{
-                width: 30,
-                height: 30,
-                borderRadius: 2,
-                // p: 0.5,
-                boxShadow: 1,
-              }}
-            />
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: 700,
-                letterSpacing: 1,
-                fontSize: 17,
-                display: 'block',
-              }}
-            >
-              ayyab's Portfolio
-            </Typography>
-
-            {/* Desktop Nav */}
-            <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex' }, ml: 4, gap: 2 }}>
-              {navItems.map((item) => (
-                <Button
-                  key={item.label}
-                  href={item.href}
-                  variant="text"
-                  size="large"
-                  disableRipple
+      <AppBar
+        position="fixed"
+        sx={{
+          boxShadow: 0,
+          bgcolor: 'transparent',
+          backgroundImage: 'none',
+          mt: 'calc(var(--template-frame-height, 0px) + 28px)',
+        }}
+      >
+        <Container maxWidth="lg">
+          <StyledToolbar variant="dense" disableGutters >
+            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Box
+                  component="img"
+                  src={logo}
+                  alt="Tayyab's Logo"
                   sx={{
-                    position: 'relative',
-                    color: 'white',
-                    textTransform: 'none',
-                    px: 0,
-                    backgroundColor: 'transparent',
-                    '&:hover': {
-                      bgcolor: 'transparent', 
-                      color:'white',
-                    },
-                    '&:hover .underline': {
-                      width: '100%', 
-                    },
+                    width: 30,
+                    height: 30,
+                    borderRadius: 2,
+                    boxShadow: 1,
+                    cursor: 'pointer',
+                  }}
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+              >
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 700,
+                    letterSpacing: 1,
+                    fontSize: 17,
+                    display: 'block',
                   }}
                 >
-                  {item.label}
-                  <Box
-                    className="underline"
-                    sx={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      height: '3px',
-                      width: 0,
-                      bgcolor: '#0d6efd', // this is your loading bar color
-                      transition: 'width 0.3s ease-in-out',
-                      borderRadius: '2px',
-                    }}
-                  />
-                </Button>
-              ))}
-            </Box>
-          </Box>
+                  ayyab's Portfolio
+                </Typography>
+              </motion.div>
 
-          {/* Mobile Nav */}
-          <Box sx={{ display: { xs: 'flex',sm:'none', md: 'none' } }}>
-            <IconButton aria-label="menu" onClick={toggleDrawer(true)}>
-              <MenuIcon />
-            </IconButton>
-            <Drawer
-              anchor="top"
-              open={open}
-              onClose={toggleDrawer(false)}
-              PaperProps={{ sx: { top: 'var(--template-frame-height, 0px)' } }}
-            >
-              <Box sx={{ p: 2, backgroundColor: '#0b0c10', height: '100vh' }}>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <IconButton onClick={toggleDrawer(false)} sx={{ color: '#fff' }}>
-                    <CloseRoundedIcon />
-                  </IconButton>
-                </Box>
-                {navItems.map((item) => (
-                  <MenuItem key={item.label} component="a" href={item.href} sx={{ color: '#fff' }} onClick={toggleDrawer(false)}>
-                    {item.label}
-                  </MenuItem>
+              {/* Desktop Nav */}
+              <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex' }, ml: 4, gap: 2 }}>
+                {navItems.map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
+                    whileHover={{ y: -2 }}
+                  >
+                    <Button
+                      href={item.href}
+                      variant="text"
+                      size="large"
+                      disableRipple
+                      sx={{
+                        position: 'relative',
+                        color: 'white',
+                        textTransform: 'none',
+                        px: 0,
+                        backgroundColor: 'transparent',
+                        '&:hover': {
+                          bgcolor: 'transparent', 
+                          color:'white',
+                        },
+                        '&:hover .underline': {
+                          width: '100%', 
+                        },
+                      }}
+                    >
+                      {item.label}
+                      <Box
+                        className="underline"
+                        sx={{
+                          position: 'absolute',
+                          bottom: 0,
+                          left: 0,
+                          height: '3px',
+                          width: 0,
+                          bgcolor: '#3b82f6',
+                          transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          borderRadius: '2px',
+                        }}
+                      />
+                    </Button>
+                  </motion.div>
                 ))}
-                <Divider sx={{ my: 3, borderColor: '#333' }} />
               </Box>
-            </Drawer>
-          </Box>
-        </StyledToolbar>
-      </Container>
-    </AppBar>
+            </Box>
+
+            {/* Mobile Nav */}
+            <Box sx={{ display: { xs: 'flex',sm:'none', md: 'none' } }}>
+              <motion.div
+                whileTap={{ scale: 0.9 }}
+              >
+                <IconButton aria-label="menu" onClick={toggleDrawer(true)}>
+                  <MenuIcon />
+                </IconButton>
+              </motion.div>
+              <Drawer
+                anchor="top"
+                open={open}
+                onClose={toggleDrawer(false)}
+                PaperProps={{ sx: { top: 'var(--template-frame-height, 0px)' } }}
+              >
+                <AnimatePresence>
+                  {open && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Box sx={{ p: 2, backgroundColor: '#0b0c10', height: '100vh' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                          <motion.div whileTap={{ scale: 0.9 }}>
+                            <IconButton onClick={toggleDrawer(false)} sx={{ color: '#fff' }}>
+                              <CloseRoundedIcon />
+                            </IconButton>
+                          </motion.div>
+                        </Box>
+                        {navItems.map((item, index) => (
+                          <motion.div
+                            key={item.label}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.1, duration: 0.3 }}
+                            whileHover={{ x: 10 }}
+                          >
+                            <MenuItem 
+                              component="a" 
+                              href={item.href} 
+                              sx={{ color: '#fff' }} 
+                              onClick={toggleDrawer(false)}
+                            >
+                              {item.label}
+                            </MenuItem>
+                          </motion.div>
+                        ))}
+                        <Divider sx={{ my: 3, borderColor: '#333' }} />
+                      </Box>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </Drawer>
+            </Box>
+          </StyledToolbar>
+        </Container>
+      </AppBar>
+    </motion.div>
   );
 }

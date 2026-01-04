@@ -172,16 +172,14 @@ function Projects() {
   const [visibleCount, setVisibleCount] = useState(6);
   const [active, setActive] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleViewMore = () => {
-    const currentScrollY = window.scrollY;
-    setVisibleCount((prev) => prev + 3);
-    requestAnimationFrame(() => {
-      window.scrollTo({
-        top: currentScrollY,
-        behavior: 'auto',
-      });
-    });
+    setIsLoading(true);
+    setTimeout(() => {
+      setVisibleCount((prev) => prev + 3);
+      setIsLoading(false);
+    }, 500);
   };
 
   const filteredProjects =
@@ -234,18 +232,23 @@ function Projects() {
       </motion.div>
       <motion.div
         className="project__grid"
+        layout
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
       >
 
         {filteredProjects.slice(0, visibleCount).map((project, i) => (
           <motion.div
             layout
             key={project.id}
-            className={`project__card mix ${project.category} anim`}
-            // whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + i * 0.1, duration: 0.7 }}
-            // viewport={{ once: true }}
+            className={`project__card mix ${project.category}`}
             initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ 
+              delay: Math.min(i * 0.1, 0.5), 
+              duration: 0.6,
+              ease: [0.4, 0, 0.2, 1]
+            }}
           >
             {project.link ? (
               <a href={project.link} target="_blank" rel="noopener noreferrer">
@@ -262,15 +265,32 @@ function Projects() {
                 {project.description.slice(0, 80)}...
               </p>
               {project.technologies && project.technologies.map((tech, idx) => (
-                <div className="project__techrow" key={tech.label + idx}>
+                <motion.div 
+                  className="project__techrow" 
+                  key={tech.label + idx}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ 
+                    delay: 0.3 + idx * 0.1,
+                    duration: 0.4,
+                    ease: [0.4, 0, 0.2, 1]
+                  }}
+                >
                   <span className="project__techlabel">{tech.label}</span>
                   <div className="project__techloadingbar-outer">
-                    <div
+                    <motion.div
                       className="project__techloadingbar-inner"
-                      style={{ width: tech.width, background: tech.color }}
+                      style={{ background: tech.color }}
+                      initial={{ width: 0 }}
+                      animate={{ width: tech.width }}
+                      transition={{ 
+                        delay: 0.5 + idx * 0.1,
+                        duration: 0.8,
+                        ease: [0.4, 0, 0.2, 1]
+                      }}
                     />
                   </div>
-                </div>
+                </motion.div>
               ))}
               <div className="project__buttons">
                 {project.link && (
@@ -296,14 +316,31 @@ function Projects() {
         ))}
       </motion.div>
       {visibleCount < filteredProjects.length && (
-        <div style={{ textAlign: "center", marginTop: "4rem" }}>
-          <button
+        <motion.div 
+          style={{ textAlign: "center", marginTop: "4rem" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.button
             className="project__liveview"
             onClick={handleViewMore}
+            disabled={isLoading}
+            whileHover={{ scale: isLoading ? 1 : 1.05 }}
+            whileTap={{ scale: isLoading ? 1 : 0.95 }}
+            transition={{ duration: 0.2 }}
           >
-            View More
-          </button>
-        </div>
+            {isLoading ? (
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span className="loader"></span>
+                Loading...
+              </span>
+            ) : (
+              'View More'
+            )}
+          </motion.button>
+        </motion.div>
       )}
 
       <AnimatePresence>

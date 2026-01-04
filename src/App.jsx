@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import Header from './components/Header';
+import Experience from './components/Experience';
 import About from './components/About';
 import Banner from './components/Banner';
 import Projects from './components/Projects';
@@ -82,6 +83,7 @@ function App() {
         <About />
         <Banner />
         <Projects />
+        <Experience />
         <Clients/>
         <Services />
         <Contact />
