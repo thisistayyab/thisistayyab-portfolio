@@ -22,7 +22,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   flexShrink: 0,
-  borderRadius: '20px',
+  borderRadius: '8px',
   backdropFilter: 'blur(20px)',
   border: '1px solid',
   borderColor: 'rgba(255, 255, 255, 0.1)',
