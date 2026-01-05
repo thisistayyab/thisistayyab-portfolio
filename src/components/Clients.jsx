@@ -51,7 +51,12 @@ function Clients() {
         >
           <SwiperSlide>
             <div className="client__card">
-              <img className='client__img' src={client1} alt="client" />
+              <img
+                className="client__img"
+                src={client1}
+                alt="Client testimonial from satisfied web development client"
+                loading="lazy"
+              />
             </div>
           </SwiperSlide>
         {/* <SwiperSlide>

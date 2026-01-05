@@ -250,10 +250,18 @@ function Projects() {
           >
             {project.link ? (
               <a href={project.link} target="_blank" rel="noopener noreferrer">
-                <img src={project.img} alt="project" loading="lazy" />
+                <img
+                  src={project.img}
+                  alt={`${project.name} project screenshot`}
+                  loading="lazy"
+                />
               </a>
             ) : (
-              <img src={project.img} alt="project" loading="lazy" />
+              <img
+                src={project.img}
+                alt={`${project.name} project screenshot`}
+                loading="lazy"
+              />
             )}
             <div className="project__info">
 
@@ -372,7 +380,7 @@ function Projects() {
 
               <img
                 src={selectedProject.img}
-                alt={selectedProject.name}
+                alt={`${selectedProject.name} detailed project screenshot`}
                 className="project__modal-img"
               />
               <h2>{selectedProject.name}</h2>

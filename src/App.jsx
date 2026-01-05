@@ -63,7 +63,7 @@ function App() {
               <motion.img
                 key={i}
                 src={item.src}
-                alt="tech icon"
+                alt={item.alt}
                 style={{ position: 'absolute', width: 40, height: 40, top: item.top, left: item.left, opacity: 0.18, willChange: 'transform' }}
                 initial={{ y: -20, x: 0 }}
                 animate={{ y: [0, 20, 0], x: [0, -20, 0] }}
@@ -74,7 +74,7 @@ function App() {
               <img
                 key={i}
                 src={item.src}
-                alt="tech icon"
+                alt={item.alt}
                 style={{ position: 'absolute', width: 40, height: 40, top: item.top, left: item.left, opacity: 0.18 }}
               />
             ))}

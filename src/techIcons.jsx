@@ -15,21 +15,21 @@ import robotframework from './assets/tech-icons/robo.svg';
 import kalilinux from './assets/tech-icons/kali.svg';
 
 const techIcons = [
-  { src: cplusplus, top: '15%', left: '20%', duration: 9 },
-  { src: css3, top: '19%', left: '30%', duration: 9 },
-  { src: html5, top: '30%', left: '60%', duration: 11 },
-  { src: tailwindcss, top: '70%', left: '25%', duration: 10 },
-  { src: javascript, top: '50%', left: '40%', duration: 8 },
-  { src: bootstrap, top: '15%', left: '75%', duration: 9 },
-  { src: mongodb, top: '80%', left: '60%', duration: 12 },
-  { src: express, top: '35%', left: '10%', duration: 10 },
-  { src: python, top: '65%', left: '80%', duration: 11 },
-  { src: scikitlearn, top: '20%', left: '50%', duration: 10 },
-  { src: tensorflow, top: '80%', left: '30%', duration: 12 },
-  { src: pytorch, top: '40%', left: '80%', duration: 10 },
-  { src: react, top: '60%', left: '10%', duration: 11 },
-  { src: robotframework, top: '75%', left: '50%', duration: 13 },
-  { src: kalilinux, top: '55%', left: '55%', duration: 13 },
+  { src: cplusplus, alt: 'C++ programming language logo', top: '15%', left: '20%', duration: 9 },
+  { src: css3, alt: 'CSS3 styling language logo', top: '19%', left: '30%', duration: 9 },
+  { src: html5, alt: 'HTML5 markup language logo', top: '30%', left: '60%', duration: 11 },
+  { src: tailwindcss, alt: 'Tailwind CSS framework logo', top: '70%', left: '25%', duration: 10 },
+  { src: javascript, alt: 'JavaScript programming language logo', top: '50%', left: '40%', duration: 8 },
+  { src: bootstrap, alt: 'Bootstrap UI framework logo', top: '15%', left: '75%', duration: 9 },
+  { src: mongodb, alt: 'MongoDB database logo', top: '80%', left: '60%', duration: 12 },
+  { src: express, alt: 'Express.js backend framework logo', top: '35%', left: '10%', duration: 10 },
+  { src: python, alt: 'Python programming language logo', top: '65%', left: '80%', duration: 11 },
+  { src: scikitlearn, alt: 'Scikit-learn machine learning library logo', top: '20%', left: '50%', duration: 10 },
+  { src: tensorflow, alt: 'TensorFlow deep learning framework logo', top: '80%', left: '30%', duration: 12 },
+  { src: pytorch, alt: 'PyTorch deep learning framework logo', top: '40%', left: '80%', duration: 10 },
+  { src: react, alt: 'React JavaScript library logo', top: '60%', left: '10%', duration: 11 },
+  { src: robotframework, alt: 'Robot Framework test automation logo', top: '75%', left: '50%', duration: 13 },
+  { src: kalilinux, alt: 'Kali Linux cyber security distribution logo', top: '55%', left: '55%', duration: 13 },
 ];
 
 export default techIcons;

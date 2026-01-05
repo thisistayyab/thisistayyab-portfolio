@@ -12,7 +12,11 @@ function About() {
       <div className="about__bg-circle about__bg-circle-1"></div>
       <div className="about__bg-circle about__bg-circle-2"></div>
       <div className="about__image image-wrapper" style={{ position: 'relative', zIndex: 2 }}>
-        <img src={aboutImg} alt="about" loading="lazy" />
+        <img
+          src={aboutImg}
+          alt="Tayyab - Full Stack Developer portrait"
+          loading="lazy"
+        />
       </div>
       <div className="about__content" style={{ position: 'relative', zIndex: 2 }}>
         <motion.h2

@@ -12,10 +12,38 @@ function Footer() {
             Building digital experiences that are fast, beautiful, and user-focused. Let's connect and create something amazing together!
           </p>
           <div className="footer__socials">
-            <a className="circle-icon" style={{ '--icon-color': '#0078d4' }} href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A"><RiMailLine size={24} /></a>
-            <a className="circle-icon" style={{ '--icon-color': '#ffffff' }} href="https://github.com/thisistayyab"><RiGithubFill size={24} /></a>
-            <a className="circle-icon" style={{ '--icon-color': '#0077b5' }} href="https://www.linkedin.com/in/thisistayyab/"><RiLinkedinFill size={24} /></a>
-            <a className="circle-icon" style={{ '--icon-color': '#ffa116' }} href="https://leetcode.com/u/thisistayyab/"><SiLeetcode size={24} /></a>
+            <a
+              className="circle-icon"
+              style={{ '--icon-color': '#0078d4' }}
+              href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A"
+              aria-label="Email Tayyab"
+            >
+              <RiMailLine size={24} />
+            </a>
+            <a
+              className="circle-icon"
+              style={{ '--icon-color': '#ffffff' }}
+              href="https://github.com/thisistayyab"
+              aria-label="Visit Tayyab's GitHub profile"
+            >
+              <RiGithubFill size={24} />
+            </a>
+            <a
+              className="circle-icon"
+              style={{ '--icon-color': '#0077b5' }}
+              href="https://www.linkedin.com/in/thisistayyab/"
+              aria-label="Visit Tayyab's LinkedIn profile"
+            >
+              <RiLinkedinFill size={24} />
+            </a>
+            <a
+              className="circle-icon"
+              style={{ '--icon-color': '#ffa116' }}
+              href="https://leetcode.com/u/thisistayyab/"
+              aria-label="Visit Tayyab's LeetCode profile"
+            >
+              <SiLeetcode size={24} />
+            </a>
           </div>
         </div>
         <div className="footer__col">
@@ -33,19 +61,19 @@ function Footer() {
         <div className="footer__col">
           <h4>Services</h4>
           <div className="footer__links">
-            <a href="#">Website Design</a>
-            <a href="#">Website Development</a>
-            <a href="#">DSA Mastery</a>
-            <a href="#">API Development</a>
-            <a href="#">SEO</a>
-            <a href="#">App Development</a>
+            <a href="#service">Website Design</a>
+            <a href="#service">Website Development</a>
+            <a href="#experience">DSA Mastery</a>
+            <a href="#service">API Development</a>
+            <a href="#service">SEO</a>
+            <a href="#service">App Development</a>
           </div>
         </div>
         <div className="footer__col">
           <h4>Contact</h4>
           <div className="footer__links">
             <a href="mailto:thisistayyab@outlook.com">thisistayyab@outlook.com</a>
-            <a href="#">Pakistan</a>
+            <span>Pakistan</span>
           </div>
         </div>
       </div>
