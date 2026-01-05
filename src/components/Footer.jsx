@@ -1,5 +1,6 @@
 import React from 'react';
-import { RiMailLine, RiGithubLine, RiLinkedinLine } from 'react-icons/ri';
+import { RiMailLine, RiGithubFill, RiLinkedinFill } from 'react-icons/ri';
+import { SiLeetcode } from 'react-icons/si';
 
 function Footer() {
   return (
@@ -11,9 +12,10 @@ function Footer() {
             Building digital experiences that are fast, beautiful, and user-focused. Let's connect and create something amazing together!
           </p>
           <div className="footer__socials">
-            <a className="circle-icon" href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A"><RiMailLine size={20} /></a>
-            <a className="circle-icon" href="https://github.com/thisistayyab"><RiGithubLine size={20} /></a>
-            <a className="circle-icon" href="https://www.linkedin.com/in/thisistayyab/"><RiLinkedinLine size={20} /></a>
+            <a className="circle-icon" style={{ '--icon-color': '#0078d4' }} href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A"><RiMailLine size={24} /></a>
+            <a className="circle-icon" style={{ '--icon-color': '#ffffff' }} href="https://github.com/thisistayyab"><RiGithubFill size={24} /></a>
+            <a className="circle-icon" style={{ '--icon-color': '#0077b5' }} href="https://www.linkedin.com/in/thisistayyab/"><RiLinkedinFill size={24} /></a>
+            <a className="circle-icon" style={{ '--icon-color': '#ffa116' }} href="https://leetcode.com/u/thisistayyab/"><SiLeetcode size={24} /></a>
           </div>
         </div>
         <div className="footer__col">

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import aboutImg from '../assets/about.webp';
-import { RiMailLine, RiGithubLine, RiLinkedinLine } from 'react-icons/ri';
+import { RiMailLine, RiGithubFill, RiLinkedinFill } from 'react-icons/ri';
+import { SiLeetcode } from 'react-icons/si';
 import cv from "../assets/Tayyab's CV.pdf"
 
 function About() {
@@ -49,9 +50,10 @@ function About() {
           <a color='white' href={cv} download className="btn download__btn">
             Download CV
           </a>
-          <a className="circle-icon" href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A" aria-label="Email Me"><RiMailLine size={20} /></a>
-          <a className="circle-icon" href="https://github.com/thisistayyab" aria-label="GitHub Profile"><RiGithubLine size={20} /></a>
-          <a className="circle-icon" href="https://www.linkedin.com/in/thisistayyab/" aria-label="LinkedIn Profile"><RiLinkedinLine size={20} /></a>
+          <a className="circle-icon" style={{ '--icon-color': '#0078d4' }} href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A" aria-label="Email Me"><RiMailLine size={20} /></a>
+          <a className="circle-icon" style={{ '--icon-color': '#ffffff' }} href="https://github.com/thisistayyab" aria-label="GitHub Profile"><RiGithubFill size={20} /></a>
+          <a className="circle-icon" style={{ '--icon-color': '#0077b5' }} href="https://www.linkedin.com/in/thisistayyab/" aria-label="LinkedIn Profile"><RiLinkedinFill size={20} /></a>
+          <a className="circle-icon" style={{ '--icon-color': '#ffa116' }} href="https://leetcode.com/u/thisistayyab/" aria-label="LeetCode Profile"><SiLeetcode size={20} /></a>
         </motion.div>
       </div>
     </section>

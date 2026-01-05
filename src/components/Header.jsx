@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import headerImg from '../assets/header.webp';
-import { RiMailLine, RiGithubLine, RiLinkedinLine, RiMenu3Line, RiCloseLine } from 'react-icons/ri';
+import { RiMailLine, RiGithubFill, RiLinkedinFill, RiMenu3Line, RiCloseLine } from 'react-icons/ri';
+import { SiLeetcode } from 'react-icons/si';
 import LaserBeam from './LaserBeam';
 import AppAppBar from './Appbar';
 
@@ -13,9 +14,10 @@ function Header() {
       <AppAppBar />
       {/* Header Content */}
       <div className="header__socials">
-        <a className="circle-icon" href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A" aria-label="Email Me"><RiMailLine size={24} /></a>
-        <a className="circle-icon" href="https://github.com/thisistayyab" aria-label="Visit GitHub Profile"><RiGithubLine size={24} /></a>
-        <a className="circle-icon" href="https://www.linkedin.com/in/thisistayyab/" aria-label="Visit LinkedIn Profile"><RiLinkedinLine size={24} /></a>
+        <a className="circle-icon" style={{ '--icon-color': '#0078d4' }} href="mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A" aria-label="Email Me"><RiMailLine size={24} /></a>
+        <a className="circle-icon" style={{ '--icon-color': '#ffffff' }} href="https://github.com/thisistayyab" aria-label="Visit GitHub Profile"><RiGithubFill size={24} /></a>
+        <a className="circle-icon" style={{ '--icon-color': '#0077b5' }} href="https://www.linkedin.com/in/thisistayyab/" aria-label="Visit LinkedIn Profile"><RiLinkedinFill size={24} /></a>
+        <a className="circle-icon" style={{ '--icon-color': '#ffa116' }} href="https://leetcode.com/u/thisistayyab/" aria-label="Visit LeetCode Profile"><SiLeetcode size={24} /></a>
       </div>
       <div className="section__container header__container" id="home" style={{ position: 'relative', zIndex: 5 }}>
         {/* Colorful animated background elements */}
@@ -23,7 +25,7 @@ function Header() {
         <div className="header__bg-circle header__bg-circle-1"></div>
         <div className="header__bg-circle header__bg-circle-2"></div>
         <div className="header__bg-circle header__bg-circle-3"></div>
-        
+
         <div className="header__content" style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
           <motion.h4
             className="header__subtitle"
