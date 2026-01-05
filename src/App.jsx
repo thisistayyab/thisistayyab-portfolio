@@ -12,6 +12,7 @@ import ThemeCustomization from './themes';
 import { motion } from 'framer-motion';
 import techIcons from './techIcons.jsx'
 import Clients from './components/Clients.jsx';
+import RippleBackground from './components/RippleBackground';
 
 function useIsDesktop() {
   const [isDesktop, setIsDesktop] = React.useState(() => window.innerWidth >= 768);
@@ -23,10 +24,12 @@ function useIsDesktop() {
   return isDesktop;
 }
 
+
 function App() {
   const isDesktop = useIsDesktop();
   return (
     <ThemeCustomization>
+      <RippleBackground />
       {/* Global Animated Background: Blurred Circles and Tech Icons */}
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
