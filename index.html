@@ -94,9 +94,9 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
 
   <!-- Cloudflare Web Analytics -->
-  <!-- Automatic setup is enabled in Cloudflare Dashboard -->
-  <!-- Cloudflare will automatically inject the analytics script when your site is served through their network -->
-  <!-- No manual script tag needed - analytics will work automatically -->
+  <!-- Add your Cloudflare Web Analytics token in the data-cf-beacon attribute -->
+  <!-- You can find your token in Cloudflare Dashboard > Analytics & Logs > Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_CLOUDFLARE_TOKEN"}'></script>
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -301,7 +301,7 @@
     </div>
   </noscript>
   <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 
 </html>
