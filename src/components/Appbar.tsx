@@ -13,6 +13,7 @@ import {
 
 export default function AppAppBar() {
   const [open, setOpen] = useState<boolean>(false);
+  const [activeSection, setActiveSection] = useState<string>('#home');
   const baseUrl = 'https://thisistayyab.dev';
 
   // Update canonical link based on current hash
@@ -33,6 +34,54 @@ export default function AppAppBar() {
     updateCanonical();
     window.addEventListener('hashchange', updateCanonical);
     return () => window.removeEventListener('hashchange', updateCanonical);
+  }, []);
+
+  // Active section detection based on scroll position
+  useEffect(() => {
+    const sections = navItems.map(item => {
+      const id = item.href.replace('#', '');
+      return { id, element: document.getElementById(id), href: item.href };
+    });
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 200; // Offset for navbar height
+
+      // Check each section to see if it's in view
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.element) {
+          const { offsetTop, offsetHeight } = section.element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section.href);
+            // Update URL hash without triggering scroll
+            if (window.location.hash !== section.href) {
+              window.history.replaceState(null, '', section.href);
+            }
+            break;
+          }
+        }
+      }
+
+      // Handle top of page (home section)
+      if (window.scrollY < 100) {
+        setActiveSection('#home');
+        if (window.location.hash !== '#home' && window.location.hash !== '') {
+          window.history.replaceState(null, '', '#home');
+        }
+      }
+    };
+
+    // Initial check
+    handleScroll();
+
+    // Listen to scroll events
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
@@ -128,14 +177,26 @@ export default function AppAppBar() {
                         aria-label={linkDescriptions[item.label] || `Navigate to ${item.label} section`}
                         aria-description={linkDescriptions[item.label] || `Go to ${item.label} section of Tayyab's portfolio`}
                         title={`${linkDescriptions[item.label] || `Go to ${item.label} section`} - Tayyab's Portfolio`}
-                        className="group relative text-white/90 no-underline px-4 py-3 bg-transparent rounded-[10px] font-medium text-[0.95rem] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-white/5 hover:text-white hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent focus:bg-white/5"
+                        aria-current={activeSection === item.href ? 'page' : undefined}
+                        className={`group relative text-white/90 no-underline px-4 py-3 bg-transparent rounded-[10px] font-medium text-[0.95rem] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-white/5 hover:text-white hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent focus:bg-white/5 ${
+                          activeSection === item.href 
+                            ? 'bg-white/10 text-white' 
+                            : ''
+                        }`}
                         itemProp="url"
                         tabIndex={0}
                         rel="prefetch"
                       >
                         <span itemProp="name">{item.label}</span>
                         <meta itemProp="position" content={String(index + 1)} />
-                        <span className="nav-underline absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-0 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-sm group-hover:w-full" aria-hidden="true" />
+                        <span 
+                          className={`nav-underline absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-sm ${
+                            activeSection === item.href 
+                              ? 'w-full' 
+                              : 'w-0 group-hover:w-full'
+                          }`} 
+                          aria-hidden="true" 
+                        />
                       </a>
                     </motion.div>
                   </li>
@@ -205,7 +266,12 @@ export default function AppAppBar() {
                                     aria-label={linkDescriptions[item.label] || `Navigate to ${item.label} section`}
                                     aria-description={linkDescriptions[item.label] || `Go to ${item.label} section of Tayyab's portfolio`}
                                     title={`${linkDescriptions[item.label] || `Go to ${item.label} section`} - Tayyab's Portfolio`}
-                                    className="block text-white py-3 px-4 hover:bg-white/5 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent focus:bg-white/5"
+                                    aria-current={activeSection === item.href ? 'page' : undefined}
+                                    className={`block text-white py-3 px-4 hover:bg-white/5 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent focus:bg-white/5 ${
+                                      activeSection === item.href 
+                                        ? 'bg-white/10 font-semibold' 
+                                        : ''
+                                    }`}
                                     onClick={() => setOpen(false)}
                                     tabIndex={0}
                                     rel="prefetch"
