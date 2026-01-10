@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-white bg-[linear-gradient(135deg,rgba(59,130,246,0.1),rgba(139,92,246,0.1))] border-[1.5px] border-[rgba(59,130,246,0.5)] hover:bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] hover:border-[rgba(59,130,246,0.8)] hover:shadow-[0_0_20px_rgba(59,130,246,0.6),0_0_40px_rgba(139,92,246,0.3)] hover:-translate-y-0.5",
+        default: "text-white bg-[linear-gradient(135deg,rgba(59,130,246,0.1),rgba(139,92,246,0.1))] border-[1.5px] border-[rgba(59,130,246,0.5)] hover:bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] hover:border-[rgba(59,130,246,0.8)] hover:-translate-y-0.5 [&[style*='--glow-primary']]:hover:shadow-[0_0_20px_var(--glow-primary),0_0_40px_var(--glow-secondary)] [&:not([style*='--glow-primary'])]:hover:shadow-[0_0_20px_rgba(59,130,246,0.6),0_0_40px_rgba(139,92,246,0.3)]",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
@@ -36,17 +36,54 @@ const buttonVariants = cva(
   }
 )
 
+interface ButtonProps extends React.ComponentProps<"button">, VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+  glowColor?: string // Custom glow color for hover effects (e.g., "#3b82f6", "#8b5cf6")
+}
+
 function Button({
   className,
   variant = "default",
   size = "default",
   asChild = false,
+  glowColor,
+  style,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
+}: ButtonProps) {
   const Comp = asChild ? Slot : "button"
+  
+  // Calculate glow colors from glowColor prop or use defaults
+  // glowColor can be in format: "rgba(59, 130, 246, 0.6)" or "#3b82f6" or "rgb(59, 130, 246)"
+  const getSecondaryGlow = (color: string): string => {
+    // Extract RGB values from rgba/rgb format
+    const rgbaMatch = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
+    if (rgbaMatch) {
+      const r = Math.min(255, parseInt(rgbaMatch[1]) + 30)
+      const g = Math.min(255, parseInt(rgbaMatch[2]) + 30)
+      const b = Math.min(255, parseInt(rgbaMatch[3]) + 30)
+      return `rgba(${r}, ${g}, ${b}, 0.3)`
+    }
+    // If hex color, convert to rgba with opacity
+    if (color.startsWith('#')) {
+      const hex = color.replace('#', '')
+      const r = parseInt(hex.substring(0, 2), 16)
+      const g = parseInt(hex.substring(2, 4), 16)
+      const b = parseInt(hex.substring(4, 6), 16)
+      return `rgba(${r}, ${g}, ${b}, 0.3)`
+    }
+    return "rgba(139, 92, 246, 0.3)"
+  }
+
+  const primaryGlow = glowColor || "rgba(59, 130, 246, 0.6)"
+  const secondaryGlow = glowColor ? getSecondaryGlow(glowColor) : "rgba(139, 92, 246, 0.3)"
+
+  const customStyle = glowColor 
+    ? {
+        ...style,
+        '--glow-primary': primaryGlow,
+        '--glow-secondary': secondaryGlow,
+      } as React.CSSProperties
+    : style
 
   return (
     <Comp
@@ -54,6 +91,7 @@ function Button({
       data-variant={variant}
       data-size={size}
       className={cn(buttonVariants({ variant, size, className }))}
+      style={customStyle}
       {...props}
     />
   )

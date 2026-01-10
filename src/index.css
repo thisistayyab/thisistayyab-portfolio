@@ -359,4 +359,65 @@ body {
   .skip-to-main:focus {
     top: 0;
   }
+
+  /* Floating animation for background circles */
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(30px, -30px) scale(1.1);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Text shimmer animation */
+  @keyframes textShimmer {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-text-shimmer {
+    animation: textShimmer 3s ease-in-out infinite;
+    background-size: 200% 200%;
+  }
+
+  /* Name glow animation */
+  @keyframes nameGlow {
+    0% {
+      filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5));
+    }
+    100% {
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.8)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.6));
+    }
+  }
+
+  .animate-name-glow {
+    animation: nameGlow 2s ease-in-out infinite alternate;
+  }
+
+  /* Social Icon colorful hover glow effect */
+  .social-icon:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 
+                0 0 20px color-mix(in srgb, var(--icon-hover-color) 20%, transparent);
+  }
+
+  /* Enhanced keyboard focus ring for social icons */
+  .social-icon:focus-visible {
+    outline: 2px solid var(--icon-color);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--icon-color) 30%, transparent),
+                0 15px 30px rgba(0, 0, 0, 0.2), 
+                0 0 20px color-mix(in srgb, var(--icon-hover-color) 20%, transparent);
+  }
 }
