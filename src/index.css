@@ -406,6 +406,39 @@ body {
     animation: nameGlow 2s ease-in-out infinite alternate;
   }
 
+  /* Shimmer animation for tech loading bars */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 1.5s infinite alternate;
+  }
+
+  /* Custom scrollbar for project modal */
+  .project-modal-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .project-modal-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+
+  .project-modal-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.5);
+    border-radius: 10px;
+  }
+
+  .project-modal-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 130, 246, 0.7);
+  }
+
   /* Social Icon colorful hover glow effect */
   .social-icon:hover {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 
