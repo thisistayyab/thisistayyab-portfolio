@@ -2,7 +2,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 export interface CardProps extends React.ComponentProps<"div"> {
-  glowColor?: string; // Primary glow color (e.g., "#3b82f6")
+  glowColor?: string; // Primary glow color (e.g., "#3b82f6" or "rgba(59, 130, 246, 0.1)"). If not provided, uses default blue glow.
   gradientColors?: string[]; // Array of colors for gradient border (default: ["#3b82f6", "#8b5cf6", "#ec4899"])
   hoverScale?: boolean; // Whether to scale on hover (default: true)
   hoverLift?: boolean; // Whether to lift on hover (default: true)
@@ -25,6 +25,8 @@ function Card({
     : hoverScale
     ? "group-hover:scale-[1.02]"
     : "";
+  
+  // Calculate translateY value: -12px = -translate-y-3 (0.75rem = 12px)
 
   return (
     <div
@@ -49,7 +51,7 @@ function Card({
     >
       {/* Top gradient border - decorative */}
       <span 
-        className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--gradient-colors)] scale-x-0 origin-left transition-transform duration-[400ms] ease-in-out group-hover:scale-x-100 z-[2]"
+        className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r scale-x-0 origin-left transition-transform duration-[400ms] ease-in-out group-hover:scale-x-100 z-[2]"
         style={{ 
           background: `linear-gradient(90deg, ${gradientString})`,
         } as React.CSSProperties}
@@ -58,7 +60,7 @@ function Card({
       
       {/* Radial glow background - decorative */}
       <span 
-        className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,var(--glow-color)_0%,transparent_70%)] opacity-0 transition-opacity duration-[400ms] ease-in-out pointer-events-none z-0 group-hover:opacity-10"
+        className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,var(--glow-color)_0%,transparent_70%)] opacity-0 transition-opacity duration-[400ms] ease-in-out pointer-events-none z-0 group-hover:opacity-100"
         style={{
           background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
         } as React.CSSProperties}

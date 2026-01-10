@@ -46,6 +46,7 @@ function About() {
         className="relative z-[2] max-w-[450px] mx-auto p-4 hover:scale-100"
         hoverScale={false}
         hoverLift={false}
+        glowColor="rgba(59, 130, 246, 0.1)"
       >
         <img
           src={aboutImg}
