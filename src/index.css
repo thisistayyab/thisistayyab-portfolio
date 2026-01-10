@@ -332,4 +332,31 @@ body {
   [data-slot="button"][data-variant="default"]:hover::before {
     left: 100%;
   }
+
+  /* Keyboard focus styles for navigation and interactive elements */
+  nav a:focus-visible,
+  nav button:focus-visible,
+  [role="menuitem"]:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    border-radius: 8px;
+  }
+
+  /* Skip to main content link for accessibility */
+  .skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 10000;
+    border-radius: 4px;
+  }
+
+  .skip-to-main:focus {
+    top: 0;
+  }
 }
