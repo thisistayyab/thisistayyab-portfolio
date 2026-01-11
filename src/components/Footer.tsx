@@ -35,7 +35,7 @@ function Footer() {
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#project">Projects</a>
-            <a href="#service">Services</a>
+            <a href="#profiles">Profiles</a>
             <a href="#client">Clients</a>
             <a href="#blog">Blog</a>
             <a href="#contact">Contact</a>

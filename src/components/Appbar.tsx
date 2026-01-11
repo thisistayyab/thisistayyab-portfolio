@@ -160,7 +160,7 @@ export default function AppAppBar() {
                   'Projects': 'View Tayyab\'s portfolio of web development projects and applications',
                   'Testimonials': 'Read client testimonials and feedback about Tayyab\'s work',
                   'Experience': 'Explore Tayyab\'s professional experience and career journey',
-                  'Services': 'Discover the web development services offered by Tayyab',
+                  'Profiles': 'Explore Tayyab\'s professional profiles on GitHub, LinkedIn, Upwork, Fiverr, LeetCode, Credly, and other platforms',
                   'Contact': 'Get in touch with Tayyab for web development projects and opportunities'
                 };
                 return (
@@ -249,7 +249,7 @@ export default function AppAppBar() {
                               'Projects': 'View Tayyab\'s portfolio of web development projects and applications',
                               'Testimonials': 'Read client testimonials and feedback about Tayyab\'s work',
                               'Experience': 'Explore Tayyab\'s professional experience and career journey',
-                              'Services': 'Discover the web development services offered by Tayyab',
+                              'Profiles': 'Explore Tayyab\'s professional profiles on GitHub, LinkedIn, Upwork, Fiverr, LeetCode, Credly, and other platforms',
                               'Contact': 'Get in touch with Tayyab for web development projects and opportunities'
                             };
                             return (

@@ -5,7 +5,7 @@ import Experience from './components/Experience';
 import About from './components/About';
 import Banner from './components/Banner';
 import Projects from './components/Projects';
-import Services from './components/Services';
+import Profiles from './components/Profiles';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { motion } from 'framer-motion';
@@ -92,7 +92,7 @@ function App() {
         <Projects />
         <Experience />
         <Clients />
-        <Services />
+        <Profiles />
         <Contact />
         <Footer />
       </main>

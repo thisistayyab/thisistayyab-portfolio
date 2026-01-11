@@ -6,26 +6,28 @@ export interface CardProps extends React.ComponentProps<"div"> {
   gradientColors?: string[]; // Array of colors for gradient border (default: ["#3b82f6", "#8b5cf6", "#ec4899"])
   hoverScale?: boolean; // Whether to scale on hover (default: true)
   hoverLift?: boolean; // Whether to lift on hover (default: true)
+  contentClassName?: string; // Optional class for the inner content wrapper
 }
 
-function Card({ 
-  className, 
+function Card({
+  className,
   glowColor = "#3b82f6",
   gradientColors = ["#3b82f6", "#8b5cf6", "#ec4899"],
   hoverScale = true,
   hoverLift = true,
+  contentClassName,
   style,
-  ...props 
+  ...props
 }: CardProps) {
   const gradientString = gradientColors.join(", ");
-  const hoverTransform = hoverLift && hoverScale 
+  const hoverTransform = hoverLift && hoverScale
     ? "group-hover:-translate-y-3 group-hover:scale-[1.02]"
-    : hoverLift 
-    ? "group-hover:-translate-y-3"
-    : hoverScale
-    ? "group-hover:scale-[1.02]"
-    : "";
-  
+    : hoverLift
+      ? "group-hover:-translate-y-3"
+      : hoverScale
+        ? "group-hover:scale-[1.02]"
+        : "";
+
   // Calculate translateY value: -12px = -translate-y-3 (0.75rem = 12px)
 
   return (
@@ -50,25 +52,25 @@ function Card({
       {...props}
     >
       {/* Top gradient border - decorative */}
-      <span 
+      <span
         className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r scale-x-0 origin-left transition-transform duration-[400ms] ease-in-out group-hover:scale-x-100 z-[2]"
-        style={{ 
+        style={{
           background: `linear-gradient(90deg, ${gradientString})`,
         } as React.CSSProperties}
         aria-hidden="true"
       />
-      
+
       {/* Radial glow background - decorative */}
-      <span 
+      <span
         className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,var(--glow-color)_0%,transparent_70%)] opacity-0 transition-opacity duration-[400ms] ease-in-out pointer-events-none z-0 group-hover:opacity-100"
         style={{
           background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
         } as React.CSSProperties}
         aria-hidden="true"
       />
-      
+
       {/* Card content */}
-      <div className="relative z-[1]">
+      <div className={cn("relative z-[1]", contentClassName)}>
         {props.children}
       </div>
     </div>

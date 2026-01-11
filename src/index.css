@@ -516,4 +516,55 @@ body {
                 0 15px 30px rgba(0, 0, 0, 0.2), 
                 0 0 20px color-mix(in srgb, var(--icon-hover-color) 20%, transparent);
   }
+
+  /* Profile card title gradient hover effect */
+  .group\/profile-card:hover .profile-title-gradient {
+    background-image: linear-gradient(135deg, var(--profile-color), rgba(var(--profile-color-rgb), 0.8)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+
+  /* Profile card icon hover shadow */
+  .group\/profile-card:hover .profile-icon {
+    box-shadow: 0 8px 24px rgba(var(--profile-color-rgb), 0.3) !important;
+  }
+
+  /* Profile card top border - visible with profile color on hover */
+  .group\/profile-card [data-slot="card"] > span:first-child {
+    height: 4px !important;
+    background: linear-gradient(90deg, var(--profile-color), transparent) !important;
+  }
+
+  /* Profile card - subtle radial glow on hover */
+  .group\/profile-card:hover [data-slot="card"] > span:nth-child(2) {
+    opacity: 0.08 !important;
+  }
+
+  /* Profile card - subtle border and shadow on hover */
+  .group\/profile-card:hover {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 0 30px rgba(var(--profile-color-rgb), 0.1) !important;
+  }
+
+  /* Ensure all profile cards have same height and proper flex layout */
+  .group\/profile-card {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Ensure Card's inner content wrapper takes full height and uses flex */
+  .group\/profile-card [data-slot="card"] {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
+
+  .group\/profile-card [data-slot="card"] > div:last-child {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 0% !important;
+    min-height: 0 !important;
+    height: 100% !important;
+  }
 }
