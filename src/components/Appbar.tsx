@@ -85,7 +85,7 @@ export default function AppAppBar() {
   }, []);
 
   return (
-    <motion.div>
+    <div>
       <nav 
         className="fixed top-[calc(var(--template-frame-height,0px)+28px)] left-0 right-0 z-[1100] flex justify-center px-3"
         role="navigation"
@@ -168,7 +168,7 @@ export default function AppAppBar() {
                     <motion.div
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4 }}
+                      transition={{ delay: index * 0.1, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                       whileHover={{ y: -5 }}
                     >
                       <a
@@ -293,6 +293,6 @@ export default function AppAppBar() {
           </div>
         </div>
       </nav>
-    </motion.div>
+    </div>
   );
 }
