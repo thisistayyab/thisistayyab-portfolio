@@ -420,6 +420,69 @@ body {
     animation: shimmer 1.5s infinite alternate;
   }
 
+  /* Shine animation for experience icons */
+  @keyframes shine {
+    0% {
+      transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+      transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+  }
+
+  .animate-shine {
+    animation: shine 1.5s infinite;
+  }
+
+  /* Experience title gradient hover effect */
+  .group:hover .experience-title {
+    background-image: var(--title-gradient-hover) !important;
+  }
+
+  /* Experience card hover effects - override Card defaults with experience color */
+  .experience-card.group:hover {
+    border-color: rgba(var(--experience-color-rgb), 0.4) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(var(--experience-color-rgb), 0.2) !important;
+  }
+
+  /* Experience card top border - override Card's default to 3px height and position on border edge */
+  .experience-card [data-slot="card"] {
+    overflow: visible !important;
+  }
+  
+  .experience-card [data-slot="card"] > span:first-child {
+    height: 3px !important;
+    top: -1px !important;
+    left: -1px !important;
+    right: -1px !important;
+    width: calc(100% + 2px) !important;
+  }
+  
+  .experience-card [data-slot="card"] > div:last-child {
+    overflow: hidden;
+  }
+
+  /* Experience badge hover effects - colored background on card hover */
+  .group:hover .experience-badge {
+    background: rgba(var(--experience-color-rgb), 0.25) !important;
+    border-color: rgba(var(--experience-color-rgb), 0.5) !important;
+  }
+
+  /* Experience tech tag hover effects - only when hovering the badge itself, not the card */
+  [data-tech-tag]:hover {
+    background: rgba(var(--experience-color-rgb), 0.2) !important;
+    border-color: rgba(var(--experience-color-rgb), 0.5) !important;
+    color: var(--experience-color) !important;
+    box-shadow: 0 4px 12px rgba(var(--experience-color-rgb), 0.3) !important;
+  }
+
+  /* Experience icon hover effects with dynamic colors */
+  .group:hover .experience-icon {
+    background: rgba(var(--experience-color-rgb), 0.2) !important;
+    border-color: rgba(var(--experience-color-rgb), 0.5) !important;
+    box-shadow: 0 8px 24px rgba(var(--experience-color-rgb), 0.4) !important;
+  }
+
   /* Custom scrollbar for project modal */
   .project-modal-scrollbar::-webkit-scrollbar {
     width: 8px;

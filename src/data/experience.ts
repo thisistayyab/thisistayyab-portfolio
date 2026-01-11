@@ -59,7 +59,7 @@ export const experiences: Experience[] = [
     color: '#ec4899',
     title: "Bachelor's Degree, Computer Science",
     company: 'Riphah International University',
-    period: 'Aug 2023 - Aug 2027',
+    period: 'Aug 2023 - Present',
     description: 'Achieved Grade: 3.96/4. Active Cabinet Member of Riphah Blood Donor Society. Focusing on advanced computer science concepts, software engineering principles, and practical application development.',
     technologies: ['C++', 'Program Management', 'DSA', 'Software Engineering']
   }
