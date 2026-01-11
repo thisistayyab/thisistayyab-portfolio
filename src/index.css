@@ -317,6 +317,25 @@ body {
 }
 
 @layer components {
+  /* Performance optimizations for smooth animations */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* GPU acceleration for smooth scrolling */
+  html {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Optimize backdrop-filter performance */
+  [class*="backdrop-blur"] {
+    will-change: backdrop-filter;
+    transform: translateZ(0);
+  }
+
   /* Button shimmer effect to match .btn class */
   [data-slot="button"][data-variant="default"]::before {
     content: '';
@@ -326,7 +345,9 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
+    transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: left;
+    transform: translateZ(0);
   }
 
   [data-slot="button"][data-variant="default"]:hover::before {
@@ -375,6 +396,10 @@ body {
 
   .animate-float {
     animation: float 6s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
 
   /* Text shimmer animation */
@@ -390,6 +415,7 @@ body {
   .animate-text-shimmer {
     animation: textShimmer 3s ease-in-out infinite;
     background-size: 200% 200%;
+    will-change: background-position;
   }
 
   /* Name glow animation */
@@ -404,6 +430,7 @@ body {
 
   .animate-name-glow {
     animation: nameGlow 2s ease-in-out infinite alternate;
+    will-change: filter;
   }
 
   /* Shimmer animation for tech loading bars */
@@ -418,6 +445,8 @@ body {
 
   .animate-shimmer {
     animation: shimmer 1.5s infinite alternate;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   /* Shine animation for experience icons */
@@ -432,6 +461,8 @@ body {
 
   .animate-shine {
     animation: shine 1.5s infinite;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   /* Experience title gradient hover effect */
@@ -545,6 +576,24 @@ body {
   .group\/profile-card:hover {
     border-color: rgba(255, 255, 255, 0.2) !important;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 0 30px rgba(var(--profile-color-rgb), 0.1) !important;
+  }
+
+  /* Portfolio card performance optimization */
+  .portfolio-card {
+    will-change: transform, box-shadow, border-color;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Smooth transitions for all interactive elements */
+  a, button, [role="button"], [role="menuitem"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Optimize motion components */
+  [data-framer-component] {
+    will-change: transform, opacity;
+    transform: translateZ(0);
   }
 
   /* Ensure all profile cards have same height and proper flex layout */

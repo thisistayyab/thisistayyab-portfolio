@@ -11,7 +11,6 @@ import Footer from './components/Footer';
 import { motion } from 'framer-motion';
 import { techIcons } from './data/techIcons';
 import Clients from './components/Clients';
-// import RippleBackground from './components/RippleBackground';
 
 function useIsDesktop(): boolean {
   const [isDesktop, setIsDesktop] = useState<boolean>(() => window.innerWidth >= 768);
@@ -28,7 +27,6 @@ function App() {
   const isDesktop = useIsDesktop();
   return (
     <>
-      {/* <RippleBackground /> */}
       {/* Global Animated Background: Blurred Circles and Tech Icons */}
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
