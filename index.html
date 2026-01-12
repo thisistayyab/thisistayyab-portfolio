@@ -15,8 +15,17 @@
     gtag('config', 'G-2G8GTSVY0L');
   </script>
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "173fb657ea2344c58534c7f4a84bbec0"}'></script>
+  <!-- Cloudflare Web Analytics (Production Only) -->
+  <script>
+    // Only load Cloudflare Analytics in production
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      const script = document.createElement('script');
+      script.defer = true;
+      script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+      script.setAttribute('data-cf-beacon', '{"token": "173fb657ea2344c58534c7f4a84bbec0"}');
+      document.head.appendChild(script);
+    }
+  </script>
   <!-- End Cloudflare Web Analytics -->
 
   <!-- Primary Meta Tags -->

@@ -10,7 +10,10 @@ import viteImagemin from "vite-plugin-imagemin"
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      // Ensure React 19 compatibility
+      jsxRuntime: 'automatic',
+    }),
     tailwindcss(),
     // Image optimization with imagetools - Auto-convert ALL imported images to WebP
     imagetools({
@@ -95,6 +98,8 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // Ensure proper module resolution for React
+    dedupe: ['react', 'react-dom'],
   },
   build: {
     // Production optimizations
@@ -108,16 +113,35 @@ export default defineConfig({
         manualChunks: (id) => {
           // Split node_modules into separate chunks
           if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
+            // Normalize path separators for cross-platform compatibility
+            const normalizedId = id.replace(/\\/g, '/');
+            
+            // CRITICAL: React and react-dom MUST be in the same chunk
+            // Match exact React core packages only (not react-icons, react-router, etc.)
+            const isReactCore = 
+              (normalizedId.includes('node_modules/react/') || normalizedId.includes('node_modules\\react\\')) &&
+              !normalizedId.includes('react-icons') &&
+              !normalizedId.includes('react-router');
+            
+            const isReactDOM = 
+              normalizedId.includes('node_modules/react-dom/') || 
+              normalizedId.includes('node_modules\\react-dom\\');
+            
+            const isScheduler = 
+              normalizedId.includes('node_modules/scheduler/') || 
+              normalizedId.includes('node_modules\\scheduler\\');
+            
+            if (isReactCore || isReactDOM || isScheduler) {
               return 'react-vendor';
             }
-            if (id.includes('framer-motion')) {
+            
+            if (normalizedId.includes('framer-motion')) {
               return 'framer-vendor';
             }
-            if (id.includes('lucide-react')) {
+            if (normalizedId.includes('lucide-react')) {
               return 'lucide-vendor';
             }
-            if (id.includes('react-icons')) {
+            if (normalizedId.includes('react-icons')) {
               return 'icons-vendor';
             }
             // Other vendor libraries
@@ -125,8 +149,8 @@ export default defineConfig({
           }
         },
         // Optimize chunk file names
-        chunkFileNames: 'js/[name]-[hash].js',
         entryFileNames: 'js/[name]-[hash].js',
+        chunkFileNames: 'js/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.');
           const ext = info[info.length - 1];
@@ -152,11 +176,16 @@ export default defineConfig({
     include: [
       'react',
       'react-dom',
+      'react/jsx-runtime',
       'framer-motion',
       'lucide-react',
       'react-icons',
     ],
     exclude: [],
+    // Force React to be pre-bundled together
+    esbuildOptions: {
+      target: 'esnext',
+    },
   },
   // Performance optimizations
   server: {
