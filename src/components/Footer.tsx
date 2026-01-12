@@ -154,11 +154,11 @@ function Footer() {
             </h4>
             <ul className="flex flex-col gap-3">
               {[
-                { label: 'Website Design', href: '#about' },
-                { label: 'Web Development', href: '#project' },
-                { label: 'Full Stack Solutions', href: '#project' },
-                { label: 'API Development', href: '#project' },
-                { label: 'SEO Optimization', href: '#contact' },
+                { label: 'Full Stack Development', href: '#services' },
+                { label: 'Web Design', href: '#services' },
+                { label: 'API Development', href: '#services' },
+                { label: 'Cloud Deployment', href: '#services' },
+                { label: 'SEO Optimization', href: '#services' },
               ].map((service) => (
                 <li key={service.label}>
                   <a

@@ -15,7 +15,7 @@ function Header() {
   };
 
   return (
-    <header className="relative overflow-hidden pt-[100px]">
+    <header className="relative overflow-hidden pt-[100px] bg-transparent">
       <AppAppBar />
       
       {/* Structured Data for Social Profiles */}
