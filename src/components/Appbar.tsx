@@ -111,7 +111,7 @@ export default function AppAppBar() {
           }}
         />
         <div className="w-full max-w-[1200px]">
-          <div className="flex items-center relative rounded-[8px] backdrop-blur-[20px] border border-white/10 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 shadow-[0_8px_32px_rgba(0,0,0,0.3),0_0_40px_rgba(59,130,246,0.1)] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.4),0_0_60px_rgba(59,130,246,0.2)] hover:border-white/20 py-3 px-5">
+          <div className="flex items-center relative rounded-[8px] backdrop-blur-[20px] border border-white/10 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 shadow-[0_8px_32px_rgba(0,0,0,0.3),0_0_40px_rgba(59,130,246,0.1)] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.4),0_0_60px_rgba(59,130,246,0.2)] hover:border-white/20 py-3 px-3 sm:px-4 lg:px-5">
             {/* Top gradient border */}
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-60" />
 
@@ -151,8 +151,8 @@ export default function AppAppBar() {
               </motion.a>
             </div>
 
-            {/* Desktop Nav - Left aligned with margin */}
-            <ul className="hidden sm:flex md:flex items-center gap-2 ml-6 p-2 list-none" role="menubar" aria-label="Main navigation menu">
+            {/* Desktop Nav - Left aligned with margin - Show only on large screens (1024px+) */}
+            <ul className="hidden lg:flex items-center gap-2 ml-6 p-2 list-none" role="menubar" aria-label="Main navigation menu">
               {navItems.map((item, index) => {
                 const linkDescriptions: Record<string, string> = {
                   'Home': 'Return to the home page showcasing Tayyab\'s portfolio introduction and overview',
@@ -160,6 +160,7 @@ export default function AppAppBar() {
                   'Projects': 'View Tayyab\'s portfolio of web development projects and applications',
                   'Testimonials': 'Read client testimonials and feedback about Tayyab\'s work',
                   'Experience': 'Explore Tayyab\'s professional experience and career journey',
+                  'Services': 'Browse professional web development services including full-stack development, React, Node.js, MongoDB, SEO optimization, and more',
                   'Profiles': 'Explore Tayyab\'s professional profiles on GitHub, LinkedIn, Upwork, Fiverr, LeetCode, Credly, and other platforms',
                   'Contact': 'Get in touch with Tayyab for web development projects and opportunities'
                 };
@@ -204,8 +205,8 @@ export default function AppAppBar() {
               })}
             </ul>
 
-            {/* Mobile Nav */}
-            <div className="flex sm:hidden md:hidden flex-shrink-0 ml-auto">
+            {/* Mobile Nav - Show on mobile and tablet (up to 1023px) */}
+            <div className="flex lg:hidden flex-shrink-0 ml-auto">
               <motion.div whileTap={{ scale: 0.9 }}>
                 <Button
                   variant="ghost"
@@ -249,6 +250,7 @@ export default function AppAppBar() {
                               'Projects': 'View Tayyab\'s portfolio of web development projects and applications',
                               'Testimonials': 'Read client testimonials and feedback about Tayyab\'s work',
                               'Experience': 'Explore Tayyab\'s professional experience and career journey',
+                              'Services': 'Browse professional web development services including full-stack development, React, Node.js, MongoDB, SEO optimization, and more',
                               'Profiles': 'Explore Tayyab\'s professional profiles on GitHub, LinkedIn, Upwork, Fiverr, LeetCode, Credly, and other platforms',
                               'Contact': 'Get in touch with Tayyab for web development projects and opportunities'
                             };

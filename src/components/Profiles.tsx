@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { profiles } from '../data/services';
+import { profiles } from '../data/profiles';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
