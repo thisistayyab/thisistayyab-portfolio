@@ -4,7 +4,13 @@ import './index.css'
 import App from './App.tsx'
 import { Analytics } from '@vercel/analytics/react';
 
-createRoot(document.getElementById('root')!).render(
+// Ensure root element exists before rendering
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
+
+createRoot(rootElement).render(
   <StrictMode>
     <Analytics />
     <App />
