@@ -28,6 +28,65 @@ const getBrowser = (): string => {
   return 'Other';
 };
 
+// Get IP address and geolocation data
+const getLocationData = async (): Promise<{
+  ip_address?: string;
+  country?: string;
+  city?: string;
+}> => {
+  // Try multiple APIs in sequence
+  const apis = [
+    // 1. ipapi.co (existing, good accuracy)
+    async () => {
+      const response = await fetch('https://ipapi.co/json/', { headers: { 'Accept': 'application/json' } });
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      return {
+        ip_address: data.ip,
+        country: data.country_name || data.country_code,
+        city: data.city
+      };
+    },
+    // 2. ipwho.is (free, no key, CORS support)
+    async () => {
+      const response = await fetch('https://ipwho.is/');
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      if (!data.success) throw new Error(data.message || 'API error');
+      return {
+        ip_address: data.ip,
+        country: data.country,
+        city: data.city
+      };
+    },
+    // 3. db-ip.com (free, basic)
+    async () => {
+      const response = await fetch('https://api.db-ip.com/v2/free/self');
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      return {
+        ip_address: data.ipAddress,
+        country: data.countryName,
+        city: data.city
+      };
+    }
+  ];
+
+  for (const api of apis) {
+    try {
+      const result = await api();
+      if (result.ip_address) {
+        return result;
+      }
+    } catch (error) {
+      console.warn('Geolocation API failed, trying next...', error);
+      continue;
+    }
+  }
+
+  return {};
+};
+
 // Track page view - ONLY for home page (/)
 let lastTrackedPath = '';
 let lastTrackedTime = 0;
@@ -47,14 +106,24 @@ export const trackPageView = async (pagePath: string, pageTitle?: string) => {
     }
 
     const sessionId = getSessionId();
-    const referrer = document.referrer || undefined;
+    const referrer = document.referrer || 'Direct'; // Default to 'Direct' if empty
+    const deviceType = getDeviceType();
+    const browser = getBrowser();
+
+    // Get location data (IP, country, city)
+    const locationData = await getLocationData();
 
     await supabase.rpc('track_page_view', {
-      p_page_path: '/',
+      p_page_path: '/', // Normalize all home visits to '/'
       p_page_title: pageTitle || document.title,
       p_referrer: referrer,
       p_user_agent: navigator.userAgent,
       p_session_id: sessionId,
+      p_ip_address: locationData.ip_address || null,
+      p_country: locationData.country || null,
+      p_city: locationData.city || null,
+      p_device_type: deviceType || null,
+      p_browser: browser || null,
     });
 
     lastTrackedPath = pagePath;
@@ -73,15 +142,21 @@ export const trackEvent = async (
   metadata?: Record<string, any>
 ) => {
   try {
+    // Don't track events on dashboard or login pages
+    const pagePath = window.location.pathname;
+    if (pagePath.includes('/dashboard') || pagePath.includes('/login')) {
+      return;
+    }
+
     const sessionId = getSessionId();
-    const pagePath = window.location.pathname + window.location.search;
+    const fullPath = pagePath + window.location.search;
 
     await supabase.from('user_events').insert({
       event_type: eventType,
       event_name: eventName,
       element_id: elementId,
       element_type: elementType,
-      page_path: pagePath,
+      page_path: fullPath,
       session_id: sessionId,
       user_agent: navigator.userAgent,
       metadata: metadata || {},
@@ -124,13 +199,20 @@ export const trackScrollDepth = async () => {
   }
 };
 
-// Initialize scroll tracking
+// Initialize scroll tracking (only on portfolio pages, not dashboard/login)
 if (typeof window !== 'undefined') {
   let scrollTimeout: NodeJS.Timeout;
-  window.addEventListener('scroll', () => {
+  const handleScroll = () => {
+    // Don't track scroll on dashboard or login pages
+    const pagePath = window.location.pathname;
+    if (pagePath.includes('/dashboard') || pagePath.includes('/login')) {
+      return;
+    }
+
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
       trackScrollDepth();
     }, 1000);
-  });
+  };
+  window.addEventListener('scroll', handleScroll);
 }

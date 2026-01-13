@@ -387,10 +387,14 @@ CREATE POLICY "Allow users to read own admin_users record"
 -- Analytics indexes
 CREATE INDEX IF NOT EXISTS idx_page_views_created_at ON page_views(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_page_views_page_path ON page_views(page_path);
+CREATE INDEX IF NOT EXISTS idx_page_views_country ON page_views(country);
+CREATE INDEX IF NOT EXISTS idx_page_views_city ON page_views(city);
 CREATE INDEX IF NOT EXISTS idx_user_events_created_at ON user_events(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_user_events_event_type ON user_events(event_type);
 CREATE INDEX IF NOT EXISTS idx_sessions_session_id ON sessions(session_id);
 CREATE INDEX IF NOT EXISTS idx_sessions_first_visit ON sessions(first_visit DESC);
+CREATE INDEX IF NOT EXISTS idx_sessions_country ON sessions(country);
+CREATE INDEX IF NOT EXISTS idx_sessions_city ON sessions(city);
 
 -- Content indexes
 CREATE INDEX IF NOT EXISTS idx_projects_display_order ON projects(display_order);
@@ -445,26 +449,79 @@ CREATE OR REPLACE FUNCTION track_page_view(
   p_page_title TEXT DEFAULT NULL,
   p_referrer TEXT DEFAULT NULL,
   p_user_agent TEXT DEFAULT NULL,
-  p_session_id TEXT DEFAULT NULL
+  p_session_id TEXT DEFAULT NULL,
+  p_ip_address INET DEFAULT NULL,
+  p_country TEXT DEFAULT NULL,
+  p_city TEXT DEFAULT NULL,
+  p_device_type TEXT DEFAULT NULL,
+  p_browser TEXT DEFAULT NULL
 )
 RETURNS UUID AS $$
 DECLARE
   v_id UUID;
 BEGIN
-  -- Insert page view
-  INSERT INTO page_views (page_path, page_title, referrer, user_agent, session_id)
-  VALUES (p_page_path, p_page_title, p_referrer, p_user_agent, p_session_id)
+  -- Insert page view with all fields
+  INSERT INTO page_views (
+    page_path, 
+    page_title, 
+    referrer, 
+    user_agent, 
+    session_id,
+    ip_address,
+    country,
+    city,
+    device_type,
+    browser
+  )
+  VALUES (
+    p_page_path, 
+    p_page_title, 
+    p_referrer, 
+    p_user_agent, 
+    p_session_id,
+    p_ip_address,
+    p_country,
+    p_city,
+    p_device_type,
+    p_browser
+  )
   RETURNING id INTO v_id;
 
-  -- Update or create session
+  -- Update or create session with location and device info
   IF p_session_id IS NOT NULL THEN
-    INSERT INTO sessions (session_id, user_agent, last_activity, page_count)
-    VALUES (p_session_id, p_user_agent, NOW(), 1)
+    INSERT INTO sessions (
+      session_id, 
+      user_agent, 
+      ip_address,
+      country,
+      city,
+      device_type,
+      browser,
+      last_activity, 
+      page_count
+    )
+    VALUES (
+      p_session_id, 
+      p_user_agent,
+      p_ip_address,
+      p_country,
+      p_city,
+      p_device_type,
+      p_browser,
+      NOW(), 
+      1
+    )
     ON CONFLICT (session_id) DO UPDATE
     SET last_activity = NOW(),
         page_count = sessions.page_count + 1,
         duration_seconds = EXTRACT(EPOCH FROM (NOW() - sessions.first_visit))::INTEGER,
-        is_bounce = false;
+        is_bounce = false,
+        -- Update location/device info if not already set
+        ip_address = COALESCE(sessions.ip_address, p_ip_address),
+        country = COALESCE(sessions.country, p_country),
+        city = COALESCE(sessions.city, p_city),
+        device_type = COALESCE(sessions.device_type, p_device_type),
+        browser = COALESCE(sessions.browser, p_browser);
   END IF;
 
   RETURN v_id;
