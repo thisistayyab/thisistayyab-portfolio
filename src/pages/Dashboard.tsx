@@ -190,12 +190,17 @@ const WorldMapHeatmap: React.FC<{
       style={{ width: '100%', height: '100%' }}
     >
       <Geographies geography={geoUrl}>
-        {({ geographies }: { geographies: any[] }) =>
-          geographies.map((geo: any) => {
+        {({ geographies }: { geographies: any[] }) => {
+          if (!geographies || geographies.length === 0) {
+            console.warn('No geographies data loaded');
+            return null;
+          }
+          console.log('Geographies loaded:', geographies.length);
+          return geographies.map((geo: any, index: number) => {
             // Try multiple ISO code properties from the geo data
-            const isoA3 = geo.properties.ISO_A3?.toUpperCase();
-            const isoA2 = geo.properties.ISO_A2?.toUpperCase();
-            const geoName = geo.properties.NAME || geo.properties.NAME_LONG || geo.properties.ADMIN || geo.properties.ADM0_NAME || geo.properties.ISO_A3;
+            const isoA3 = geo.properties?.ISO_A3?.toUpperCase();
+            const isoA2 = geo.properties?.ISO_A2?.toUpperCase();
+            const geoName = geo.properties?.NAME || geo.properties?.NAME_LONG || geo.properties?.ADMIN || geo.properties?.ADM0_NAME || geo.properties?.ISO_A3;
             const geoId = geo.id;
             const geoIdString = geoId ? String(geoId) : undefined;
             const geoIdPadded = geoIdString ? geoIdString.padStart(3, '0') : undefined;
@@ -205,10 +210,10 @@ const WorldMapHeatmap: React.FC<{
               isoToCountryNameMap[isoA3] ||
               isoToCountryNameMap[isoA2] ||
               (geoIdPadded && isoToCountryNameMap[geoIdPadded]) ||
-              isoToCountryNameMap[geo.properties.ISO_A3] ||
-              isoToCountryNameMap[geo.properties.ISO_A2] ||
-              isoToCountryNameMap[geo.properties.ISO_A3?.toUpperCase()] ||
-              isoToCountryNameMap[geo.properties.ISO_A2?.toUpperCase()];
+              isoToCountryNameMap[geo.properties?.ISO_A3] ||
+              isoToCountryNameMap[geo.properties?.ISO_A2] ||
+              isoToCountryNameMap[geo.properties?.ISO_A3?.toUpperCase()] ||
+              isoToCountryNameMap[geo.properties?.ISO_A2?.toUpperCase()];
 
             // If still not found, search in countries array
             if (!countryName) {
@@ -217,8 +222,8 @@ const WorldMapHeatmap: React.FC<{
                   (isoA3 && c.cca3 && c.cca3.toUpperCase() === isoA3) ||
                   (isoA2 && c.cca2 && c.cca2.toUpperCase() === isoA2) ||
                   (geoIdPadded && c.ccn3 === geoIdPadded) ||
-                  (geo.properties.ISO_A3 && c.cca3 && c.cca3.toUpperCase() === geo.properties.ISO_A3.toUpperCase()) ||
-                  (geo.properties.ISO_A2 && c.cca2 && c.cca2.toUpperCase() === geo.properties.ISO_A2.toUpperCase()) ||
+                  (geo.properties?.ISO_A3 && c.cca3 && c.cca3.toUpperCase() === geo.properties.ISO_A3.toUpperCase()) ||
+                  (geo.properties?.ISO_A2 && c.cca2 && c.cca2.toUpperCase() === geo.properties.ISO_A2.toUpperCase()) ||
                   (geoName && c.name.common === geoName) ||
                   (geoName && c.name.official === geoName) ||
                   (geoName && c.name.common.toLowerCase() === geoName.toLowerCase()) ||
@@ -245,7 +250,7 @@ const WorldMapHeatmap: React.FC<{
             }
 
             // Get ISO code for color mapping (use the best available)
-            let isoCodeForColor = isoA3 || isoA2 || geo.properties.ISO_A3 || geo.properties.ISO_A2 || '';
+            let isoCodeForColor = isoA3 || isoA2 || geo.properties?.ISO_A3 || geo.properties?.ISO_A2 || '';
 
             // If we don't have an ISO code from the map properties, try to get it from the resolved country name
             if (!isoCodeForColor && countryName && countryName !== 'Unknown') {
@@ -255,9 +260,12 @@ const WorldMapHeatmap: React.FC<{
             const fillColor = getFillColor(isoCodeForColor);
             const count = countryCounts[isoCodeForColor] || countryCounts[isoA3] || countryCounts[isoA2] || 0;
 
+            // Use a unique key - try rsmKey first, then fallback to id or index
+            const uniqueKey = geo.rsmKey || geo.id || `geo-${index}`;
+
             return (
               <Geography
-                key={geo.rsmKey}
+                key={uniqueKey}
                 geography={geo}
                 fill={fillColor}
                 stroke="#1F2937"
@@ -279,8 +287,8 @@ const WorldMapHeatmap: React.FC<{
                 </title>
               </Geography>
             );
-          })
-        }
+          });
+        }}
       </Geographies>
     </ComposableMap>
   );
@@ -1162,7 +1170,7 @@ export const Dashboard: React.FC = () => {
             {/* Country Heatmap - World Map (Always show at bottom) */}
             <div className="mb-8">
               <ChartCard title="Page Views by Country (World Map Heatmap)">
-                <div className="w-full" style={{ height: '500px' }}>
+                <div className="w-full" style={{ height: '500px', minHeight: '500px', position: 'relative' }}>
                   <WorldMapHeatmap countryData={countryData} selectedCountry={selectedCountry} />
                 </div>
                 <div className="mt-4 flex items-center justify-between text-sm text-gray-400">

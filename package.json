@@ -18,6 +18,7 @@
     "@supabase/supabase-js": "^2.90.1",
     "@tailwindcss/vite": "^4.1.18",
     "@vercel/analytics": "^1.5.0",
+    "react-simple-maps": "^3.0.0",
     "cities.json": "^1.1.50",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -29,7 +30,6 @@
     "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.12.0",
-    "react-simple-maps": "^3.0.0",
     "recharts": "^3.6.0",
     "scrollreveal": "^4.0.9",
     "swiper": "^12.0.3",
@@ -58,5 +58,11 @@
     "vite-plugin-imagemin": "^0.6.1",
     "vite-plugin-pwa": "^1.2.0",
     "vite-plugin-static-copy": "^3.1.4"
+  },
+  "overrides": {
+    "react-simple-maps": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   }
 }
