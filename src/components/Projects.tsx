@@ -212,7 +212,7 @@ function Projects() {
         viewport={{ once: true }}
       >
         <h2 id="projects-heading" className="text-4xl font-semibold text-center">
-          Web Development Projects Portfolio - Full Stack Developer Projects
+          Full Stack Web Development Projects | React & Node.js Portfolio
         </h2>
         <p className="sr-only">
           Professional portfolio showcasing full-stack web development projects built with React, Node.js, Express.js, MongoDB, and modern web technologies. Expert MERN stack developer demonstrating expertise in building scalable web applications.

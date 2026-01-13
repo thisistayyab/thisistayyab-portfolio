@@ -68,7 +68,7 @@ function About() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          Hi, I'm Tayyab — Full Stack Web Developer
+          About Tayyab — Full Stack Developer | React & Node.js Expert
         </motion.h2>
         
         <motion.p

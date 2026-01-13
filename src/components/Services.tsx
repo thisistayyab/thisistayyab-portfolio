@@ -189,7 +189,7 @@ function Services() {
           id="services-heading"
           className="text-4xl font-semibold mb-4 bg-gradient-to-r from-white via-slate-300 to-blue-400 bg-clip-text text-transparent"
         >
-          Professional Web Development Services
+          Full Stack Web Development Services | React & Node.js Expert
         </h2>
         <p className="text-slate-400 text-lg max-w-3xl mx-auto leading-relaxed">
           Expert full-stack web development services specializing in React, Node.js, Express.js, MongoDB, MERN stack development, responsive web design, SEO optimization, cloud deployment, API development, and performance optimization. Building scalable, modern web applications with 3+ years of professional experience.

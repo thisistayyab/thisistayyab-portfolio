@@ -26,7 +26,7 @@ function Portfolio({ isDesktop }: PortfolioProps) {
       <GlobalBackground isDesktop={isDesktop} showTechIcons={true} />
       {/* Hidden SEO Content - Visible to search engines, hidden from users */}
       <div className="sr-only" aria-hidden="true">
-        <h1>thisistayyab - This is Tayyab - Full Stack Developer</h1>
+        <h2>thisistayyab - This is Tayyab - Full Stack Developer</h2>
         <p>thisistayyab developer, this is tayyab developer, This is Tayyab developer, thisistayyab= developer. Professional full stack web development services by thisistayyab. Expert React, Node.js, Express, MongoDB developer. this is tayyab portfolio showcasing web development projects and services.</p>
         <p>thisistayyab portfolio, this is tayyab portfolio, This is Tayyab portfolio. Hire thisistayyab for custom web development, React applications, Node.js backend services, MongoDB database design, and full stack solutions.</p>
         <p>thisistayyab= full stack developer, this is tayyab full stack developer, This is Tayyab full stack developer. Specializing in MERN stack development, TypeScript, WordPress development, and AI integration services.</p>

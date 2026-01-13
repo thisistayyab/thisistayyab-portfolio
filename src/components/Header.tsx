@@ -79,7 +79,7 @@ function Header() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            Hi, I'm <span className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-name-glow relative">Tayyab</span>. Full-Stack Web Developer & AI/ML Enthusiast.
+            Hi, I'm <span className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-name-glow relative">Tayyab</span> — Full Stack Web Developer | React & Node.js Expert
           </motion.h1>
           
           <motion.p
