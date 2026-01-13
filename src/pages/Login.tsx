@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
+import { GlobalBackground } from '../components/GlobalBackground';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isDesktop, setIsDesktop] = useState<boolean>(() => window.innerWidth >= 768);
   const { signIn, isAdmin } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const onResize = () => setIsDesktop(window.innerWidth >= 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   React.useEffect(() => {
     if (isAdmin) {
@@ -42,9 +50,10 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 relative">
+      <GlobalBackground isDesktop={isDesktop} showTechIcons={false} />
       <Card 
-        className="w-full max-w-md p-8 bg-white/5 backdrop-blur-lg border border-white/10"
+        className="w-full max-w-md p-8 bg-white/5 backdrop-blur-lg border border-white/10 relative z-10"
         hoverScale={false}
         hoverLift={false}
         glowColor="transparent"

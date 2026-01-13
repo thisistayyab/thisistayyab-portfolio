@@ -1,5 +1,6 @@
 import { ComponentType } from 'react';
 import { RiCodeSSlashLine, RiSmartphoneLine, RiDatabaseLine, RiCloudLine, RiSearchLine, RiShieldCheckLine, RiSpeedUpLine, RiCustomerServiceLine } from 'react-icons/ri';
+import { SiWordpress } from 'react-icons/si';
 
 export interface Service {
   id: number;
@@ -232,6 +233,37 @@ export const services: Service[] = [
       'Payment Integration',
       'API Documentation',
       'Web API Development'
+    ]
+  },
+  {
+    id: 9,
+    title: 'WordPress Development & Services',
+    Icon: SiWordpress,
+    iconSize: 32,
+    color: '#21759b',
+    description: 'Expert WordPress development and customization services. Build custom WordPress themes, plugins, and websites with responsive design, SEO optimization, and performance tuning. Specialize in converting designs to WordPress, e-commerce integration with WooCommerce, and creating content management systems.',
+    features: [
+      'Custom WordPress Themes',
+      'WordPress Plugin Development',
+      'WooCommerce Integration',
+      'WordPress SEO Optimization',
+      'Performance Optimization',
+      'Content Management Setup'
+    ],
+    keywords: [
+      'WordPress Developer',
+      'WordPress Development',
+      'WordPress Customization',
+      'WordPress Theme Development',
+      'WordPress Plugin Development',
+      'WooCommerce Development',
+      'WordPress SEO',
+      'WordPress Website Design',
+      'WordPress Maintenance',
+      'WordPress Migration',
+      'WordPress Optimization',
+      'Custom WordPress Solutions',
+      'WordPress CMS Development'
     ]
   }
 ];

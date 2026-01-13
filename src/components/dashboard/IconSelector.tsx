@@ -21,6 +21,7 @@ const iconCategories = {
     'RiShieldCheckLine',
     'RiSpeedUpLine',
     'RiCustomerServiceLine',
+    'SiWordpress',
   ],
   'Profiles': [
     'RiGithubFill',

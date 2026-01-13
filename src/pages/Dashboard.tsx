@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { PageView, UserEvent, Session, ContactSubmission } from '../lib/supabase';
+import { GlobalBackground } from '../components/GlobalBackground';
 import {
   LineChart,
   Line,
@@ -307,6 +308,13 @@ export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState<DashboardTab>('overview');
+  const [isDesktop, setIsDesktop] = useState<boolean>(() => window.innerWidth >= 768);
+
+  useEffect(() => {
+    const onResize = () => setIsDesktop(window.innerWidth >= 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
   const [stats, setStats] = useState<DashboardStats>({
     totalPageViews: 0,
     totalSessions: 0,
@@ -1206,11 +1214,12 @@ export const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex">
+    <div className="min-h-screen bg-gray-900 text-white flex relative">
+      <GlobalBackground isDesktop={isDesktop} showTechIcons={false} />
       {/* Sidebar */}
       <aside
         className={`${sidebarOpen ? 'w-64' : 'w-0'
-          } bg-gray-800 border-r border-gray-700 transition-all duration-300 overflow-hidden`}
+          } bg-gray-800/90 backdrop-blur-sm border-r border-gray-700 transition-all duration-300 overflow-hidden relative z-10`}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-8">
@@ -1320,9 +1329,9 @@ export const Dashboard: React.FC = () => {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         {/* Header */}
-        <header className="bg-gray-800 border-b border-gray-700 p-4">
+        <header className="bg-gray-800/90 backdrop-blur-sm border-b border-gray-700 p-4">
           <div className="flex items-center justify-between">
             <button
               onClick={() => setSidebarOpen(true)}

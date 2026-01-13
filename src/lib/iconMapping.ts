@@ -19,6 +19,7 @@ import {
   SiFreelancer,
   SiLeetcode,
   SiCredly,
+  SiWordpress,
 } from 'react-icons/si';
 
 // Map icon names to actual icon components
@@ -32,6 +33,7 @@ export const iconMap: Record<string, ComponentType<{ size?: number }>> = {
   'RiShieldCheckLine': RiShieldCheckLine,
   'RiSpeedUpLine': RiSpeedUpLine,
   'RiCustomerServiceLine': RiCustomerServiceLine,
+  'SiWordpress': SiWordpress,
   
   // Profile icons
   'RiGithubFill': RiGithubFill,
@@ -44,7 +46,6 @@ export const iconMap: Record<string, ComponentType<{ size?: number }>> = {
   'SiCredly': SiCredly,
   
   // Experience icons
-  'RiBriefcaseLine': RiBriefcaseLine,
   'RiGraduationCapLine': RiGraduationCapLine,
 };
 
