@@ -34,22 +34,15 @@ const getLocationData = async (): Promise<{
   country?: string;
   city?: string;
 }> => {
-  // Try multiple APIs in sequence
+  // Try multiple APIs in sequence (prioritize CORS-enabled APIs)
   const apis = [
-    // 1. ipapi.co (existing, good accuracy)
+    // 1. ipwho.is (free, no key, CORS support) - PRIMARY
     async () => {
-      const response = await fetch('https://ipapi.co/json/', { headers: { 'Accept': 'application/json' } });
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      return {
-        ip_address: data.ip,
-        country: data.country_name || data.country_code,
-        city: data.city
-      };
-    },
-    // 2. ipwho.is (free, no key, CORS support)
-    async () => {
-      const response = await fetch('https://ipwho.is/');
+      const response = await fetch('https://ipwho.is/', {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+        mode: 'cors'
+      });
       if (!response.ok) throw new Error('Network response was not ok');
       const data = await response.json();
       if (!data.success) throw new Error(data.message || 'API error');
@@ -59,9 +52,27 @@ const getLocationData = async (): Promise<{
         city: data.city
       };
     },
-    // 3. db-ip.com (free, basic)
+    // 2. ip-api.com (free, CORS support) - Note: uses HTTP (not HTTPS) but supports CORS
     async () => {
-      const response = await fetch('https://api.db-ip.com/v2/free/self');
+      const response = await fetch('https://ip-api.com/json/?fields=status,message,country,city,query', {
+        method: 'GET',
+        mode: 'cors'
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      if (data.status !== 'success') throw new Error(data.message || 'API error');
+      return {
+        ip_address: data.query,
+        country: data.country,
+        city: data.city
+      };
+    },
+    // 3. db-ip.com (free, basic, CORS support)
+    async () => {
+      const response = await fetch('https://api.db-ip.com/v2/free/self', {
+        method: 'GET',
+        mode: 'cors'
+      });
       if (!response.ok) throw new Error('Network response was not ok');
       const data = await response.json();
       return {
@@ -79,7 +90,8 @@ const getLocationData = async (): Promise<{
         return result;
       }
     } catch (error) {
-      console.warn('Geolocation API failed, trying next...', error);
+      // Silently try next API - don't log errors to avoid console spam
+      // CORS errors are expected with some APIs
       continue;
     }
   }
