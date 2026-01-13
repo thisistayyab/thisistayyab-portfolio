@@ -36,7 +36,7 @@ function Card({
       className={cn(
         "portfolio-card group relative overflow-hidden rounded-[8px] bg-white/5 backdrop-blur-[10px] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.1)] transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[transform,box-shadow,border-color]",
         hoverTransform,
-        "group-hover:border-[rgba(59,130,246,0.4)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.2),0_0_40px_rgba(59,130,246,0.15)]",
+        hoverLift && hoverScale && "group-hover:border-[rgba(59,130,246,0.4)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.2),0_0_40px_rgba(59,130,246,0.15)]",
         className
       )}
       style={
@@ -52,22 +52,26 @@ function Card({
       {...props}
     >
       {/* Top gradient border - decorative */}
-      <span
-        className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r scale-x-0 origin-left transition-transform duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-x-100 z-[2] will-change-transform"
-        style={{
-          background: `linear-gradient(90deg, ${gradientString})`,
-        } as React.CSSProperties}
-        aria-hidden="true"
-      />
+      {gradientColors.length > 0 && (
+        <span
+          className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r scale-x-0 origin-left transition-transform duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-x-100 z-[2] will-change-transform"
+          style={{
+            background: `linear-gradient(90deg, ${gradientString})`,
+          } as React.CSSProperties}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Radial glow background - decorative */}
-      <span
-        className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,var(--glow-color)_0%,transparent_70%)] opacity-0 transition-opacity duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] pointer-events-none z-0 group-hover:opacity-100 will-change-opacity"
-        style={{
-          background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
-        } as React.CSSProperties}
-        aria-hidden="true"
-      />
+      {glowColor !== "transparent" && (
+        <span
+          className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,var(--glow-color)_0%,transparent_70%)] opacity-0 transition-opacity duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] pointer-events-none z-0 group-hover:opacity-100 will-change-opacity"
+          style={{
+            background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
+          } as React.CSSProperties}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Card content */}
       <div className={cn("relative z-[1]", contentClassName)}>

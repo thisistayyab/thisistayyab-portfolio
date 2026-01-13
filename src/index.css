@@ -337,7 +337,8 @@ body {
   }
 
   /* Button shimmer effect to match .btn class */
-  [data-slot="button"][data-variant="default"]::before {
+  [data-slot="button"][data-variant="default"]::before,
+  [data-slot="button"][data-variant="destructive"]::before {
     content: '';
     position: absolute;
     top: 0;
@@ -348,10 +349,20 @@ body {
     transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: left;
     transform: translateZ(0);
+    z-index: 1;
   }
 
-  [data-slot="button"][data-variant="default"]:hover::before {
+  [data-slot="button"][data-variant="default"]:hover::before,
+  [data-slot="button"][data-variant="destructive"]:hover::before {
     left: 100%;
+  }
+
+  /* Glassy line (top gradient border) on button hover */
+  [data-slot="button"][data-variant="default"]:hover .button-glassy-line,
+  [data-slot="button"][data-variant="destructive"]:hover .button-glassy-line,
+  [data-slot="button"][data-variant="default"]:focus-visible .button-glassy-line,
+  [data-slot="button"][data-variant="destructive"]:focus-visible .button-glassy-line {
+    transform: scaleX(1);
   }
 
   /* Keyboard focus styles for navigation and interactive elements */

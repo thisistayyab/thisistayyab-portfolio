@@ -1,13 +1,52 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { services } from '../data/servicesData';
+import { services as localServices } from '../data/servicesData';
+import { supabase } from '../lib/supabase';
+import { getIcon } from '../lib/iconMapping';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
 
 function Services() {
+  const [services, setServices] = useState(localServices);
+  const [loading, setLoading] = useState(true);
   const baseUrl = 'https://thisistayyab.dev';
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('services')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+
+      // Transform Supabase data to match component format
+      const transformed = data?.map((s) => ({
+        id: s.service_id,
+        title: s.title,
+        Icon: getIcon(s.icon_name) || localServices[0]?.Icon,
+        iconSize: s.icon_size,
+        color: s.color,
+        description: s.description,
+        features: s.features,
+        keywords: s.keywords,
+      })) || [];
+
+      setServices(transformed.length > 0 ? transformed : localServices);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching services:', error);
+      setServices(localServices);
+      setLoading(false);
+    }
+  };
 
   // Inject structured data for SEO
   useEffect(() => {
@@ -109,7 +148,7 @@ function Services() {
       if (cleanup1) cleanup1.remove();
       if (cleanup2) cleanup2.remove();
     };
-  }, []);
+  }, [services]);
 
   // Helper to convert hex to RGB
   const hexToRgb = (hex: string): string => {
@@ -163,8 +202,15 @@ function Services() {
         </p>
       </motion.div>
 
-      {/* Services Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10 relative z-[1] items-stretch">
+      {loading ? (
+        <div className="text-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+          <p className="mt-4 text-gray-400">Loading services...</p>
+        </div>
+      ) : (
+        <>
+          {/* Services Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10 relative z-[1] items-stretch">
         {services.map((service, i) => {
           const Icon = service.Icon;
           const rgbColor = hexToRgb(service.color);
@@ -268,7 +314,9 @@ function Services() {
             </motion.div>
           );
         })}
-      </div>
+          </div>
+        </>
+      )}
 
       {/* Additional SEO Content - Hidden but accessible to crawlers */}
       <div className="sr-only" aria-hidden="false">

@@ -1,11 +1,51 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { experiences } from '../data/experience';
+import { experiences as localExperiences } from '../data/experience';
+import { supabase } from '../lib/supabase';
+import { getIcon } from '../lib/iconMapping';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 
 function Experience() {
+  const [experiences, setExperiences] = useState(localExperiences);
+  const [loading, setLoading] = useState(true);
   const baseUrl = 'https://thisistayyab.dev';
+
+  useEffect(() => {
+    fetchExperiences();
+  }, []);
+
+  const fetchExperiences = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('experiences')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+
+      const transformed = data?.map((e) => ({
+        id: e.experience_id,
+        type: e.type,
+        Icon: getIcon(e.icon_name) || localExperiences[0]?.Icon,
+        iconSize: e.icon_size,
+        color: e.color,
+        title: e.title,
+        company: e.company,
+        period: e.period,
+        description: e.description,
+        technologies: e.technologies,
+      })) || [];
+
+      setExperiences(transformed.length > 0 ? transformed : localExperiences);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching experiences:', error);
+      setExperiences(localExperiences);
+      setLoading(false);
+    }
+  };
 
   // Inject structured data into document head for SEO
   useEffect(() => {
@@ -111,7 +151,7 @@ function Experience() {
       if (script1Cleanup) script1Cleanup.remove();
       if (script2Cleanup) script2Cleanup.remove();
     };
-  }, []);
+  }, [experiences]);
 
   // Helper to convert hex to RGB
   const hexToRgb = (hex: string): string => {
@@ -120,6 +160,17 @@ function Experience() {
       ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
       : '59, 130, 246';
   };
+
+  if (loading) {
+    return (
+      <section className="max-w-[1200px] mx-auto px-4 py-20 relative" id="experience" aria-labelledby="experience-heading">
+        <div className="text-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+          <p className="mt-4 text-gray-400">Loading experience...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section 

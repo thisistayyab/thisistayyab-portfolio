@@ -1,12 +1,50 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { profiles } from '../data/profiles';
+import { profiles as localProfiles } from '../data/profiles';
+import { supabase } from '../lib/supabase';
+import { getIcon } from '../lib/iconMapping';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 
 function Profiles() {
+  const [profiles, setProfiles] = useState(localProfiles);
+  const [loading, setLoading] = useState(true);
   const baseUrl = 'https://thisistayyab.dev';
+
+  useEffect(() => {
+    fetchProfiles();
+  }, []);
+
+  const fetchProfiles = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+
+      const transformed = data?.map((p) => ({
+        id: p.profile_id,
+        name: p.name,
+        Icon: getIcon(p.icon_name) || localProfiles[0]?.Icon,
+        iconSize: p.icon_size,
+        color: p.color,
+        description: p.description,
+        link: p.link,
+        button: p.button,
+      })) || [];
+
+      setProfiles(transformed.length > 0 ? transformed : localProfiles);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching profiles:', error);
+      setProfiles(localProfiles);
+      setLoading(false);
+    }
+  };
 
   // Inject structured data into document head for SEO
   useEffect(() => {
@@ -95,7 +133,7 @@ function Profiles() {
       if (script1Cleanup) script1Cleanup.remove();
       if (script2Cleanup) script2Cleanup.remove();
     };
-  }, []);
+  }, [profiles]);
 
   // Helper to convert hex to RGB for CSS variables
   const hexToRgb = (hex: string): string => {
@@ -145,8 +183,15 @@ function Profiles() {
         </p>
       </motion.div>
 
-      {/* Profiles Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-10 relative z-[1] items-stretch">
+      {loading ? (
+        <div className="text-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+          <p className="mt-4 text-gray-400">Loading profiles...</p>
+        </div>
+      ) : (
+        <>
+          {/* Profiles Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-10 relative z-[1] items-stretch">
         {profiles.map((profile, i) => {
           const Icon = profile.Icon;
           const gradientColors = getGradientColors(profile.color);
@@ -250,7 +295,9 @@ function Profiles() {
             </motion.div>
           );
         })}
-      </div>
+          </div>
+        </>
+      )}
     </section>
   );
 }

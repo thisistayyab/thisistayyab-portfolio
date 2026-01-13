@@ -10,6 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from './ui/sheet';
+import { trackLinkClick } from '../lib/analytics';
 
 export default function AppAppBar() {
   const [open, setOpen] = useState<boolean>(false);
@@ -187,6 +188,7 @@ export default function AppAppBar() {
                         itemProp="url"
                         tabIndex={0}
                         rel="prefetch"
+                        onClick={() => trackLinkClick(item.label, item.href, `nav-${item.label.toLowerCase()}`)}
                       >
                         <span itemProp="name">{item.label}</span>
                         <meta itemProp="position" content={String(index + 1)} />
@@ -274,7 +276,10 @@ export default function AppAppBar() {
                                         ? 'bg-white/10 font-semibold' 
                                         : ''
                                     }`}
-                                    onClick={() => setOpen(false)}
+                                    onClick={() => {
+                                      trackLinkClick(item.label, item.href, `mobile-nav-${item.label.toLowerCase()}`);
+                                      setOpen(false);
+                                    }}
                                     tabIndex={0}
                                     rel="prefetch"
                                   >

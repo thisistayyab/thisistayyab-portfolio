@@ -1,16 +1,55 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { projects, filters, Project } from '../data/projects';
+import { projects as localProjects, filters, Project } from '../data/projects';
+import { supabase } from '../lib/supabase';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { X } from 'lucide-react';
 
 function Projects() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState<number>(6);
   const [active, setActive] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const baseUrl = 'https://thisistayyab.dev';
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+
+      // Transform Supabase data to match component expectations
+      const transformed = data?.map((p) => ({
+        id: p.project_id,
+        category: p.category,
+        img: p.img,
+        link: p.link,
+        name: p.name,
+        description: p.description,
+        technologies: p.technologies,
+        button: p.button,
+      })) || [];
+
+      setProjects(transformed.length > 0 ? transformed : localProjects);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+      // Fallback to local data
+      setProjects(localProjects);
+      setLoading(false);
+    }
+  };
 
   const handleViewMore = () => {
     setIsLoading(true);
@@ -27,6 +66,8 @@ function Projects() {
 
   // Inject structured data into document head (better for SEO than inline)
   useEffect(() => {
+    if (projects.length === 0) return;
+    
     // Remove existing script if any
     const existingScript = document.getElementById('projects-structured-data');
     if (existingScript) {
@@ -136,7 +177,18 @@ function Projects() {
       if (script1Cleanup) script1Cleanup.remove();
       if (script2Cleanup) script2Cleanup.remove();
     };
-  }, []); // Run once on mount with all projects
+  }, [projects]); // Update when projects change
+
+  if (loading) {
+    return (
+      <section className="max-w-[1200px] mx-auto px-4 py-20 relative" id="project" aria-labelledby="project-heading">
+        <div className="text-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+          <p className="mt-4 text-gray-400">Loading projects...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section 

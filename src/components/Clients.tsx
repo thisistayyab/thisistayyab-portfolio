@@ -2,17 +2,57 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { testimonials } from '../data/testimonials';
+import { testimonials as localTestimonials } from '../data/testimonials';
+import { supabase } from '../lib/supabase';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 
 function Clients() {
+  const [testimonials, setTestimonials] = useState(localTestimonials);
+  const [loading, setLoading] = useState(true);
   const baseUrl = 'https://thisistayyab.dev';
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const showCarousel = testimonials.length > 1;
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  const fetchTestimonials = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+
+      const transformed = data?.map((t) => ({
+        id: t.testimonial_id,
+        clientName: t.client_name,
+        clientRole: t.client_role,
+        clientCompany: t.client_company,
+        clientImage: t.client_image,
+        platform: t.platform,
+        platformUrl: t.platform_url,
+        rating: t.rating,
+        testimonial: t.testimonial,
+        date: t.date,
+        projectType: t.project_type,
+      })) || [];
+
+      setTestimonials(transformed.length > 0 ? transformed : localTestimonials);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+      setTestimonials(localTestimonials);
+      setLoading(false);
+    }
+  };
 
   // Auto-advance carousel every 5 seconds
   useEffect(() => {
@@ -123,7 +163,18 @@ function Clients() {
       if (script1Cleanup) script1Cleanup.remove();
       if (script2Cleanup) script2Cleanup.remove();
     };
-  }, []);
+  }, [testimonials]);
+
+  if (loading) {
+    return (
+      <section className="max-w-[1200px] mx-auto px-4 py-20 relative" id="client" aria-labelledby="client-heading">
+        <div className="text-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+          <p className="mt-4 text-gray-400">Loading testimonials...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section 

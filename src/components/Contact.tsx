@@ -7,6 +7,8 @@ import { Textarea } from './ui/textarea';
 import { Alert, AlertDescription } from './ui/alert';
 import { cn } from '@/lib/utils';
 import { CheckCircle2, XCircle } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { trackFormSubmit } from '../lib/analytics';
 
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -186,12 +188,35 @@ function Contact() {
     setIsSubmitting(true);
     
     try {
+      // Send email via EmailJS
       await emailjs.sendForm(
         serviceId,
         templateId,
         form.current,
         publicKey
       );
+      
+      // Save to Supabase
+      try {
+        await supabase.from('contact_submissions').insert({
+          name,
+          email,
+          subject,
+          message,
+          user_agent: navigator.userAgent,
+        });
+      } catch (supabaseError) {
+        console.error('Error saving to Supabase:', supabaseError);
+        // Don't fail the form submission if Supabase fails
+      }
+      
+      // Track form submission
+      trackFormSubmit('contact_form', {
+        has_name: !!name,
+        has_email: !!email,
+        has_subject: !!subject,
+        message_length: message.length,
+      });
       
       setStatus({
         type: 'success',
