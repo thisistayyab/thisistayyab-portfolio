@@ -194,12 +194,6 @@ function Services() {
         <p className="text-slate-400 text-lg max-w-3xl mx-auto leading-relaxed">
           Expert full-stack web development services specializing in React, Node.js, Express.js, MongoDB, MERN stack development, responsive web design, SEO optimization, cloud deployment, API development, and performance optimization. Building scalable, modern web applications with 3+ years of professional experience.
         </p>
-        <p className="text-slate-500 text-sm mt-4 max-w-2xl mx-auto">
-          {/* Keyword-rich hidden text for SEO */}
-          <span className="sr-only">
-            Full Stack Developer Services | React Developer | Node.js Developer | Express.js Developer | MongoDB Developer | MERN Stack Development | Web Application Development | Responsive Web Design | UI/UX Design | Frontend Development | Backend Development | API Development | RESTful API | Database Design | Cloud Deployment | DevOps Services | SEO Optimization | Search Engine Optimization | Performance Optimization | Security Implementation | Authentication Development | JavaScript Developer | TypeScript Developer | Web Development Services | Custom Web Development | Professional Web Developer | Freelance Web Developer
-          </span>
-        </p>
       </motion.div>
 
       {loading ? (

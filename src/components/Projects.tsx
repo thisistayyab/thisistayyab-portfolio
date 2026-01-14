@@ -435,34 +435,6 @@ function Projects() {
         })}
       </motion.ul>
 
-      {/* Hidden content for SEO - All project details accessible to crawlers */}
-      <div className="sr-only" aria-hidden="false">
-        {projects.map((project) => (
-          <article
-            key={`seo-${project.id}`}
-            id={`seo-project-${project.id}`}
-            itemScope
-            itemType="https://schema.org/SoftwareApplication"
-          >
-            <h3 itemProp="name">{project.name}</h3>
-            <p itemProp="description">{project.description}</p>
-            {project.link && <link itemProp="url" href={project.link} />}
-            <link itemProp="url" href={`${baseUrl}/#project-${project.id}`} />
-            <meta itemProp="datePublished" content="2023-01-01" />
-            <meta itemProp="softwareVersion" content="1.0" />
-            <meta itemProp="browserRequirements" content="Requires JavaScript. Requires HTML5. Requires CSS3." />
-            <div itemProp="author" itemScope itemType="https://schema.org/Person">
-              <meta itemProp="name" content="Tayyab" />
-              <link itemProp="url" href={baseUrl} />
-            </div>
-            {project.technologies && (
-              <div itemProp="programmingLanguage">
-                {project.technologies.map((tech) => tech.label).join(", ")}
-              </div>
-            )}
-          </article>
-        ))}
-      </div>
 
       {/* View More Button */}
       {visibleCount < filteredProjects.length && (
