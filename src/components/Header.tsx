@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import AppAppBar from './Appbar';
 import { socialLinksHeader } from '../data/socialLinks';
 import { Button } from './ui/button';
@@ -103,9 +104,9 @@ function Header() {
               glowColor="rgba(59, 130, 246, 0.6)"
               className="hover:scale-105 active:scale-95"
             >
-              <a href="#contact">
+              <Link to="/contact">
                 Hire Me Now
-              </a>
+              </Link>
             </Button>
           </motion.div>
         </div>

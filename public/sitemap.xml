@@ -3,13 +3,60 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  <!-- Main Page - Single Page Application with hash routing -->
-  <!-- Note: Hash fragments (#about, #project, etc.) are handled client-side and don't need separate sitemap entries -->
-  <!-- Search engines will index the main page and can discover sections through internal links and structured data -->
+  <!-- Home Page -->
   <url>
     <loc>https://thisistayyab.dev/</loc>
     <lastmod>2026-01-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <!-- About Page -->
+  <url>
+    <loc>https://thisistayyab.dev/about</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Projects Page -->
+  <url>
+    <loc>https://thisistayyab.dev/projects</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Experience Page -->
+  <url>
+    <loc>https://thisistayyab.dev/experience</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Testimonials Page -->
+  <url>
+    <loc>https://thisistayyab.dev/testimonials</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Services Page -->
+  <url>
+    <loc>https://thisistayyab.dev/services</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Profiles Page -->
+  <url>
+    <loc>https://thisistayyab.dev/profiles</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Contact Page -->
+  <url>
+    <loc>https://thisistayyab.dev/contact</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>

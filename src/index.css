@@ -1,6 +1,21 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Hide focus rings when using mouse, show only for keyboard navigation */
+body:not(.keyboard-navigation) *:focus {
+  outline: none !important;
+}
+
+body:not(.keyboard-navigation) *:focus-visible {
+  outline: none !important;
+}
+
+/* Show focus rings only when keyboard navigation is active */
+body.keyboard-navigation *:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
 /* Screen reader only - Hidden from view but accessible to search engines and screen readers */
 .sr-only {
   position: absolute;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { services as localServices } from '../data/servicesData';
 import { supabase } from '../lib/supabase';
 import { getIcon } from '../lib/iconMapping';
@@ -295,12 +296,12 @@ function Services() {
                         color: service.color,
                       } as React.CSSProperties}
                     >
-                      <a
-                        href="#contact"
+                      <Link
+                        to="/contact"
                         aria-label={`Get ${service.title} service - Contact Tayyab`}
                       >
                         Get Service
-                      </a>
+                      </Link>
                     </Button>
                   </div>
                 </div>

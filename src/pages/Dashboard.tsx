@@ -343,6 +343,7 @@ export const Dashboard: React.FC = () => {
   const [availableCountries, setAvailableCountries] = useState<string[]>([]);
   const [availableCities, setAvailableCities] = useState<string[]>([]);
   const [countryData, setCountryData] = useState<Array<{ country: string; count: number }>>([]);
+  const [referrerData, setReferrerData] = useState<Array<{ referrer: string; count: number }>>([]);
 
   // Get all world countries for the filter
   const allWorldCountries = React.useMemo(() => {
@@ -670,15 +671,19 @@ export const Dashboard: React.FC = () => {
 
       // Cities are now handled by the useEffect hook that watches selectedCountry
 
-      // Fetch country data for heatmap (always fetch ALL countries for map, filters apply to highlighting)
+      // Fetch country data for locations list and heatmap
+      // Apply all filters (date range, country, city) for locations list
       let countryDataQuery = supabase
         .from('page_views')
         .select('country, city')
         .gte('created_at', startDateStr)
         .not('country', 'is', null);
 
-      // Don't filter by country here - we want to show all countries on the map
-      // The filter will be applied visually on the map
+      // Apply country filter for locations list
+      if (selectedCountry !== 'all') {
+        countryDataQuery = countryDataQuery.eq('country', selectedCountry);
+      }
+      // Apply city filter
       if (selectedCity !== 'all') {
         countryDataQuery = countryDataQuery.eq('city', selectedCity);
       }
@@ -706,6 +711,56 @@ export const Dashboard: React.FC = () => {
 
       console.log('Country data array:', countryDataArray);
       setCountryData(countryDataArray);
+
+      // Fetch referrer data
+      let referrerQuery = supabase
+        .from('page_views')
+        .select('referrer')
+        .gte('created_at', startDateStr)
+        .not('referrer', 'is', null)
+        .not('referrer', 'eq', '');
+
+      if (selectedCountry !== 'all') {
+        referrerQuery = referrerQuery.eq('country', selectedCountry);
+      }
+      if (selectedCity !== 'all') {
+        referrerQuery = referrerQuery.eq('city', selectedCity);
+      }
+
+      const { data: referrerPageViews } = await referrerQuery;
+
+      const referrerCounts: Record<string, number> = {};
+      if (referrerPageViews && referrerPageViews.length > 0) {
+        referrerPageViews.forEach((pv) => {
+          if (pv.referrer && pv.referrer.trim() !== '') {
+            // Normalize referrer URLs - extract domain
+            let normalizedReferrer = pv.referrer.trim();
+            try {
+              // Try to extract domain from URL
+              if (normalizedReferrer.startsWith('http://') || normalizedReferrer.startsWith('https://')) {
+                const url = new URL(normalizedReferrer);
+                normalizedReferrer = url.hostname.replace('www.', '');
+              } else if (normalizedReferrer === 'Direct') {
+                normalizedReferrer = 'Direct';
+              } else {
+                // If it's not a full URL, use as is
+                normalizedReferrer = normalizedReferrer.replace('www.', '');
+              }
+            } catch {
+              // If URL parsing fails, use as is
+              normalizedReferrer = normalizedReferrer.replace('www.', '');
+            }
+            referrerCounts[normalizedReferrer] = (referrerCounts[normalizedReferrer] || 0) + 1;
+          }
+        });
+      }
+
+      const referrerDataArray = Object.entries(referrerCounts)
+        .map(([referrer, count]) => ({ referrer, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 20); // Top 20 referrers
+
+      setReferrerData(referrerDataArray);
 
       // Fetch chart data with filters
       let pageViewsChartQuery = supabase
@@ -1167,6 +1222,75 @@ export const Dashboard: React.FC = () => {
               </div>
             )}
 
+            {/* Locations and Referrers Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              {/* Locations (Countries) */}
+              <ChartCard title="Top Locations">
+                <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                  {countryData.length > 0 ? (
+                    countryData.slice(0, 15).map((item, index) => (
+                      <div
+                        key={item.country}
+                        className="flex items-center justify-between p-3 bg-gray-700/30 rounded-lg hover:bg-gray-700/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-sm font-semibold text-blue-400">
+                            {index + 1}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-white font-medium truncate">{item.country}</div>
+                          </div>
+                        </div>
+                        <div className="flex-shrink-0 text-right">
+                          <div className="text-lg font-bold text-blue-400">{item.count.toLocaleString()}</div>
+                          <div className="text-xs text-gray-400">views</div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 text-gray-400">
+                      <Globe size={32} className="mx-auto mb-2 opacity-50" />
+                      <p>No location data yet</p>
+                    </div>
+                  )}
+                </div>
+              </ChartCard>
+
+              {/* Referrers */}
+              <ChartCard title="Top Referrers">
+                <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                  {referrerData.length > 0 ? (
+                    referrerData.map((item, index) => (
+                      <div
+                        key={item.referrer}
+                        className="flex items-center justify-between p-3 bg-gray-700/30 rounded-lg hover:bg-gray-700/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-sm font-semibold text-purple-400">
+                            {index + 1}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-white font-medium truncate" title={item.referrer}>
+                              {item.referrer}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex-shrink-0 text-right">
+                          <div className="text-lg font-bold text-purple-400">{item.count.toLocaleString()}</div>
+                          <div className="text-xs text-gray-400">visits</div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 text-gray-400">
+                      <MousePointerClick size={32} className="mx-auto mb-2 opacity-50" />
+                      <p>No referrer data yet</p>
+                    </div>
+                  )}
+                </div>
+              </ChartCard>
+            </div>
+
             {/* Country Heatmap - World Map (Always show at bottom) */}
             <div className="mb-8">
               <ChartCard title="Page Views by Country (World Map Heatmap)">
@@ -1196,17 +1320,6 @@ export const Dashboard: React.FC = () => {
                   </div>
                 </div>
               </ChartCard>
-            </div>
-
-            {/* Data Management Info */}
-            <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 mt-8">
-              <h3 className="text-lg font-semibold mb-4">Data Management</h3>
-              <div className="space-y-2 text-sm text-gray-400">
-                <p>• Analytics data older than 90 days is automatically cleaned up</p>
-                <p>• Contact submissions are kept for 1 year</p>
-                <p>• Cleanup runs automatically once per day</p>
-                <p>• Only home page views are tracked to reduce data growth</p>
-              </div>
             </div>
           </main>
         );
