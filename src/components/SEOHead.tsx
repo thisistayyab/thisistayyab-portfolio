@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface RouteMetaTags {
@@ -103,7 +103,7 @@ export const SEOHead: React.FC = () => {
     }
     canonicalLink.setAttribute('href', `${baseUrl}${location.pathname}`);
 
-  }, [location.pathname, meta]);
+  }, [location.pathname, meta.title, meta.description]);
 
   return null;
 };

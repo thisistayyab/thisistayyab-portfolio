@@ -1,13 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Login } from './pages/Login';
-import { Dashboard } from './pages/Dashboard';
 import Portfolio from './Portfolio';
 import { trackPageView } from './lib/analytics';
 import { SEOHead } from './components/SEOHead';
+
+// Lazy load Dashboard to improve initial load time (Dashboard is a named export)
+const Dashboard = lazy(() => 
+  import('./pages/Dashboard').then(module => {
+    return { default: module.Dashboard };
+  })
+);
 
 function useIsDesktop(): boolean {
   const [isDesktop, setIsDesktop] = useState<boolean>(() => window.innerWidth >= 768);
@@ -154,7 +160,13 @@ function App() {
             element={
               <ProtectedRoute>
                 <ErrorBoundary>
-                  <Dashboard />
+                  <Suspense fallback={
+                    <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+                    </div>
+                  }>
+                    <Dashboard />
+                  </Suspense>
                 </ErrorBoundary>
               </ProtectedRoute>
             }

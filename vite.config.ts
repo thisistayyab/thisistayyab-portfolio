@@ -144,6 +144,21 @@ export default defineConfig({
             if (normalizedId.includes('react-icons')) {
               return 'icons-vendor';
             }
+            if (normalizedId.includes('recharts')) {
+              return 'recharts-vendor';
+            }
+            if (normalizedId.includes('react-simple-maps')) {
+              return 'maps-vendor';
+            }
+            if (normalizedId.includes('world-countries') || normalizedId.includes('cities.json')) {
+              return 'data-vendor';
+            }
+            if (normalizedId.includes('react-router')) {
+              return 'router-vendor';
+            }
+            if (normalizedId.includes('supabase')) {
+              return 'supabase-vendor';
+            }
             // Other vendor libraries
             return 'vendor';
           }
@@ -164,8 +179,8 @@ export default defineConfig({
         },
       },
     },
-    // Chunk size warnings threshold
-    chunkSizeWarningLimit: 1000,
+    // Chunk size warnings threshold (increased for large libraries)
+    chunkSizeWarningLimit: 2000,
     // Enable CSS code splitting
     cssCodeSplit: true,
     // Report compressed size
