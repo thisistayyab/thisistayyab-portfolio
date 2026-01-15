@@ -1,55 +1,56 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects as localProjects, filters, Project } from '../data/projects';
-import { supabase } from '../lib/supabase';
+// import { supabase } from '../lib/supabase'; // COMMENTED OUT - Using mock data for performance
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { X } from 'lucide-react';
 
 function Projects() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState<Project[]>(localProjects);
+  const [loading, setLoading] = useState(false); // No loading needed with mock data
   const [visibleCount, setVisibleCount] = useState<number>(6);
   const [active, setActive] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const baseUrl = 'https://thisistayyab.dev';
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
+  // COMMENTED OUT - Using mock data directly for performance
+  // useEffect(() => {
+  //   fetchProjects();
+  // }, []);
 
-  const fetchProjects = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('projects')
-        .select('*')
-        .eq('is_active', true)
-        .order('display_order', { ascending: true });
+  // const fetchProjects = async () => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('projects')
+  //       .select('*')
+  //       .eq('is_active', true)
+  //       .order('display_order', { ascending: true });
 
-      if (error) throw error;
+  //     if (error) throw error;
 
-      // Transform Supabase data to match component expectations
-      const transformed = data?.map((p) => ({
-        id: p.project_id,
-        category: p.category,
-        img: p.img,
-        link: p.link,
-        name: p.name,
-        description: p.description,
-        technologies: p.technologies,
-        button: p.button,
-      })) || [];
+  //     // Transform Supabase data to match component expectations
+  //     const transformed = data?.map((p) => ({
+  //       id: p.project_id,
+  //       category: p.category,
+  //       img: p.img,
+  //       link: p.link,
+  //       name: p.name,
+  //       description: p.description,
+  //       technologies: p.technologies,
+  //       button: p.button,
+  //     })) || [];
 
-      setProjects(transformed.length > 0 ? transformed : localProjects);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-      // Fallback to local data
-      setProjects(localProjects);
-      setLoading(false);
-    }
-  };
+  //     setProjects(transformed.length > 0 ? transformed : localProjects);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching projects:', error);
+  //     // Fallback to local data
+  //     setProjects(localProjects);
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleViewMore = () => {
     setIsLoading(true);

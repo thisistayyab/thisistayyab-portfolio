@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { services as localServices } from '../data/servicesData';
-import { supabase } from '../lib/supabase';
-import { getIcon } from '../lib/iconMapping';
+// import { supabase } from '../lib/supabase'; // COMMENTED OUT - Using mock data for performance
+// import { getIcon } from '../lib/iconMapping'; // Not needed with mock data
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
@@ -11,43 +11,44 @@ import { Check } from 'lucide-react';
 
 function Services() {
   const [services, setServices] = useState(localServices);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // No loading needed with mock data
   const baseUrl = 'https://thisistayyab.dev';
 
-  useEffect(() => {
-    fetchServices();
-  }, []);
+  // COMMENTED OUT - Using mock data directly for performance
+  // useEffect(() => {
+  //   fetchServices();
+  // }, []);
 
-  const fetchServices = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('services')
-        .select('*')
-        .eq('is_active', true)
-        .order('display_order', { ascending: true });
+  // const fetchServices = async () => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('services')
+  //       .select('*')
+  //       .eq('is_active', true)
+  //       .order('display_order', { ascending: true });
 
-      if (error) throw error;
+  //     if (error) throw error;
 
-      // Transform Supabase data to match component format
-      const transformed = data?.map((s) => ({
-        id: s.service_id,
-        title: s.title,
-        Icon: getIcon(s.icon_name) || localServices[0]?.Icon,
-        iconSize: s.icon_size,
-        color: s.color,
-        description: s.description,
-        features: s.features,
-        keywords: s.keywords,
-      })) || [];
+  //     // Transform Supabase data to match component format
+  //     const transformed = data?.map((s) => ({
+  //       id: s.service_id,
+  //       title: s.title,
+  //       Icon: getIcon(s.icon_name) || localServices[0]?.Icon,
+  //       iconSize: s.icon_size,
+  //       color: s.color,
+  //       description: s.description,
+  //       features: s.features,
+  //       keywords: s.keywords,
+  //     })) || [];
 
-      setServices(transformed.length > 0 ? transformed : localServices);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching services:', error);
-      setServices(localServices);
-      setLoading(false);
-    }
-  };
+  //     setServices(transformed.length > 0 ? transformed : localServices);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching services:', error);
+  //     setServices(localServices);
+  //     setLoading(false);
+  //   }
+  // };
 
   // Inject structured data for SEO
   useEffect(() => {

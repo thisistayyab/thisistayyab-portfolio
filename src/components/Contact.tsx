@@ -7,7 +7,7 @@ import { Textarea } from './ui/textarea';
 import { Alert, AlertDescription } from './ui/alert';
 import { cn } from '@/lib/utils';
 import { CheckCircle2, XCircle } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+// import { supabase } from '../lib/supabase'; // COMMENTED OUT - Using mock data for performance
 import { trackFormSubmit } from '../lib/analytics';
 
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -196,19 +196,20 @@ function Contact() {
         publicKey
       );
       
+      // COMMENTED OUT - Supabase save disabled for performance
       // Save to Supabase
-      try {
-        await supabase.from('contact_submissions').insert({
-          name,
-          email,
-          subject,
-          message,
-          user_agent: navigator.userAgent,
-        });
-      } catch (supabaseError) {
-        console.error('Error saving to Supabase:', supabaseError);
-        // Don't fail the form submission if Supabase fails
-      }
+      // try {
+      //   await supabase.from('contact_submissions').insert({
+      //     name,
+      //     email,
+      //     subject,
+      //     message,
+      //     user_agent: navigator.userAgent,
+      //   });
+      // } catch (supabaseError) {
+      //   console.error('Error saving to Supabase:', supabaseError);
+      //   // Don't fail the form submission if Supabase fails
+      // }
       
       // Track form submission
       trackFormSubmit('contact_form', {

@@ -1,50 +1,51 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { profiles as localProfiles } from '../data/profiles';
-import { supabase } from '../lib/supabase';
-import { getIcon } from '../lib/iconMapping';
+// import { supabase } from '../lib/supabase'; // COMMENTED OUT - Using mock data for performance
+// import { getIcon } from '../lib/iconMapping'; // Not needed with mock data
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 
 function Profiles() {
   const [profiles, setProfiles] = useState(localProfiles);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // No loading needed with mock data
   const baseUrl = 'https://thisistayyab.dev';
 
-  useEffect(() => {
-    fetchProfiles();
-  }, []);
+  // COMMENTED OUT - Using mock data directly for performance
+  // useEffect(() => {
+  //   fetchProfiles();
+  // }, []);
 
-  const fetchProfiles = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('is_active', true)
-        .order('display_order', { ascending: true });
+  // const fetchProfiles = async () => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('profiles')
+  //       .select('*')
+  //       .eq('is_active', true)
+  //       .order('display_order', { ascending: true });
 
-      if (error) throw error;
+  //     if (error) throw error;
 
-      const transformed = data?.map((p) => ({
-        id: p.profile_id,
-        name: p.name,
-        Icon: getIcon(p.icon_name) || localProfiles[0]?.Icon,
-        iconSize: p.icon_size,
-        color: p.color,
-        description: p.description,
-        link: p.link,
-        button: p.button,
-      })) || [];
+  //     const transformed = data?.map((p) => ({
+  //       id: p.profile_id,
+  //       name: p.name,
+  //       Icon: getIcon(p.icon_name) || localProfiles[0]?.Icon,
+  //       iconSize: p.icon_size,
+  //       color: p.color,
+  //       description: p.description,
+  //       link: p.link,
+  //       button: p.button,
+  //     })) || [];
 
-      setProfiles(transformed.length > 0 ? transformed : localProfiles);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching profiles:', error);
-      setProfiles(localProfiles);
-      setLoading(false);
-    }
-  };
+  //     setProfiles(transformed.length > 0 ? transformed : localProfiles);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching profiles:', error);
+  //     setProfiles(localProfiles);
+  //     setLoading(false);
+  //   }
+  // };
 
   // Inject structured data into document head for SEO
   useEffect(() => {

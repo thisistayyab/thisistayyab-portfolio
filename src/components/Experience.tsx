@@ -1,51 +1,52 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { experiences as localExperiences } from '../data/experience';
-import { supabase } from '../lib/supabase';
-import { getIcon } from '../lib/iconMapping';
+// import { supabase } from '../lib/supabase'; // COMMENTED OUT - Using mock data for performance
+// import { getIcon } from '../lib/iconMapping'; // Not needed with mock data
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 
 function Experience() {
   const [experiences, setExperiences] = useState(localExperiences);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // No loading needed with mock data
   const baseUrl = 'https://thisistayyab.dev';
 
-  useEffect(() => {
-    fetchExperiences();
-  }, []);
+  // COMMENTED OUT - Using mock data directly for performance
+  // useEffect(() => {
+  //   fetchExperiences();
+  // }, []);
 
-  const fetchExperiences = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('experiences')
-        .select('*')
-        .eq('is_active', true)
-        .order('display_order', { ascending: true });
+  // const fetchExperiences = async () => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('experiences')
+  //       .select('*')
+  //       .eq('is_active', true)
+  //       .order('display_order', { ascending: true });
 
-      if (error) throw error;
+  //     if (error) throw error;
 
-      const transformed = data?.map((e) => ({
-        id: e.experience_id,
-        type: e.type,
-        Icon: getIcon(e.icon_name) || localExperiences[0]?.Icon,
-        iconSize: e.icon_size,
-        color: e.color,
-        title: e.title,
-        company: e.company,
-        period: e.period,
-        description: e.description,
-        technologies: e.technologies,
-      })) || [];
+  //     const transformed = data?.map((e) => ({
+  //       id: e.experience_id,
+  //       type: e.type,
+  //       Icon: getIcon(e.icon_name) || localExperiences[0]?.Icon,
+  //       iconSize: e.icon_size,
+  //       color: e.color,
+  //       title: e.title,
+  //       company: e.company,
+  //       period: e.period,
+  //       description: e.description,
+  //       technologies: e.technologies,
+  //     })) || [];
 
-      setExperiences(transformed.length > 0 ? transformed : localExperiences);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching experiences:', error);
-      setExperiences(localExperiences);
-      setLoading(false);
-    }
-  };
+  //     setExperiences(transformed.length > 0 ? transformed : localExperiences);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching experiences:', error);
+  //     setExperiences(localExperiences);
+  //     setLoading(false);
+  //   }
+  // };
 
   // Inject structured data into document head for SEO
   useEffect(() => {

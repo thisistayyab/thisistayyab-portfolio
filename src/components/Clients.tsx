@@ -3,56 +3,57 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { testimonials as localTestimonials } from '../data/testimonials';
-import { supabase } from '../lib/supabase';
+// import { supabase } from '../lib/supabase'; // COMMENTED OUT - Using mock data for performance
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 
 function Clients() {
   const [testimonials, setTestimonials] = useState(localTestimonials);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // No loading needed with mock data
   const baseUrl = 'https://thisistayyab.dev';
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const showCarousel = testimonials.length > 1;
 
-  useEffect(() => {
-    fetchTestimonials();
-  }, []);
+  // COMMENTED OUT - Using mock data directly for performance
+  // useEffect(() => {
+  //   fetchTestimonials();
+  // }, []);
 
-  const fetchTestimonials = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('testimonials')
-        .select('*')
-        .eq('is_active', true)
-        .order('display_order', { ascending: true });
+  // const fetchTestimonials = async () => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('testimonials')
+  //       .select('*')
+  //       .eq('is_active', true)
+  //       .order('display_order', { ascending: true });
 
-      if (error) throw error;
+  //     if (error) throw error;
 
-      const transformed = data?.map((t) => ({
-        id: t.testimonial_id,
-        clientName: t.client_name,
-        clientRole: t.client_role,
-        clientCompany: t.client_company,
-        clientImage: t.client_image,
-        platform: t.platform,
-        platformUrl: t.platform_url,
-        rating: t.rating,
-        testimonial: t.testimonial,
-        date: t.date,
-        projectType: t.project_type,
-      })) || [];
+  //     const transformed = data?.map((t) => ({
+  //       id: t.testimonial_id,
+  //       clientName: t.client_name,
+  //       clientRole: t.client_role,
+  //       clientCompany: t.client_company,
+  //       clientImage: t.client_image,
+  //       platform: t.platform,
+  //       platformUrl: t.platform_url,
+  //       rating: t.rating,
+  //       testimonial: t.testimonial,
+  //       date: t.date,
+  //       projectType: t.project_type,
+  //     })) || [];
 
-      setTestimonials(transformed.length > 0 ? transformed : localTestimonials);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching testimonials:', error);
-      setTestimonials(localTestimonials);
-      setLoading(false);
-    }
-  };
+  //     setTestimonials(transformed.length > 0 ? transformed : localTestimonials);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching testimonials:', error);
+  //     setTestimonials(localTestimonials);
+  //     setLoading(false);
+  //   }
+  // };
 
   // Auto-advance carousel every 5 seconds
   useEffect(() => {
