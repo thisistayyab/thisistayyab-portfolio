@@ -100,22 +100,45 @@ const getLocationData = async (): Promise<{
 };
 
 // Track page view - ONLY for home page (/)
-let lastTrackedPath = '';
-let lastTrackedTime = 0;
-const TRACK_DEBOUNCE_MS = 5000; // Don't track same path within 5 seconds
+// Use sessionStorage to persist tracking state across page reloads
+const TRACK_DEBOUNCE_MS = 30000; // Don't track same session within 30 seconds
+
+// Lock to prevent concurrent tracking calls
+let isTrackingInProgress = false;
+
+const getLastTrackedTime = (): number => {
+  const stored = sessionStorage.getItem('last_tracked_time');
+  return stored ? parseInt(stored, 10) : 0;
+};
+
+const setLastTrackedTime = (time: number): void => {
+  sessionStorage.setItem('last_tracked_time', time.toString());
+};
 
 export const trackPageView = async (pagePath: string, pageTitle?: string) => {
+  // Prevent concurrent calls
+  if (isTrackingInProgress) {
+    return;
+  }
+
   try {
-    // Only track home page views
-    if (pagePath !== '/' && pagePath !== '/#home' && !pagePath.includes('#home')) {
+    // Only track home page views (normalize all home page variations)
+    const normalizedPath = pagePath === '/' || pagePath === '/#home' || pagePath.includes('#home') ? '/' : null;
+    if (!normalizedPath) {
       return;
     }
 
     const now = Date.now();
-    // Skip if same path was tracked recently
-    if (lastTrackedPath === pagePath && (now - lastTrackedTime) < TRACK_DEBOUNCE_MS) {
+    const lastTrackedTime = getLastTrackedTime();
+    
+    // Skip if tracked recently (within debounce period)
+    if ((now - lastTrackedTime) < TRACK_DEBOUNCE_MS) {
       return;
     }
+
+    // Set lock and update time immediately to prevent duplicate calls
+    isTrackingInProgress = true;
+    setLastTrackedTime(now);
 
     const sessionId = getSessionId();
     const referrer = document.referrer || 'Direct'; // Default to 'Direct' if empty
@@ -137,12 +160,46 @@ export const trackPageView = async (pagePath: string, pageTitle?: string) => {
       p_device_type: deviceType || null,
       p_browser: browser || null,
     });
-
-    lastTrackedPath = pagePath;
-    lastTrackedTime = now;
   } catch (error) {
     console.error('Error tracking page view:', error);
+    // On error, reset the time so it can retry
+    const lastTrackedTime = getLastTrackedTime();
+    const now = Date.now();
+    // Only reset if the error happened very recently (within 1 second)
+    // This prevents infinite retry loops
+    if ((now - lastTrackedTime) < 1000) {
+      setLastTrackedTime(0);
+    }
+  } finally {
+    // Always release the lock
+    isTrackingInProgress = false;
   }
+};
+
+// Cache IP address to avoid multiple API calls
+let cachedIPAddress: string | null = null;
+let ipCacheTime: number = 0;
+const IP_CACHE_DURATION = 5 * 60 * 1000; // Cache for 5 minutes
+
+// Get IP address (cached)
+const getIPAddress = async (): Promise<string | null> => {
+  const now = Date.now();
+  // Return cached IP if still valid
+  if (cachedIPAddress && (now - ipCacheTime) < IP_CACHE_DURATION) {
+    return cachedIPAddress;
+  }
+
+  try {
+    const locationData = await getLocationData();
+    if (locationData.ip_address) {
+      cachedIPAddress = locationData.ip_address;
+      ipCacheTime = now;
+      return cachedIPAddress;
+    }
+  } catch (error) {
+    // Silently fail - IP is optional
+  }
+  return null;
 };
 
 // Track user event
@@ -162,6 +219,9 @@ export const trackEvent = async (
 
     const sessionId = getSessionId();
     const fullPath = pagePath + window.location.search;
+    
+    // Get IP address (cached)
+    const ipAddress = await getIPAddress();
 
     await supabase.from('user_events').insert({
       event_type: eventType,
@@ -171,6 +231,7 @@ export const trackEvent = async (
       page_path: fullPath,
       session_id: sessionId,
       user_agent: navigator.userAgent,
+      ip_address: ipAddress,
       metadata: metadata || {},
     });
   } catch (error) {

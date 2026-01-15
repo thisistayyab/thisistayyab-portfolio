@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import Portfolio from './Portfolio';
 import { trackPageView } from './lib/analytics';
+import { SEOHead } from './components/SEOHead';
 
 function useIsDesktop(): boolean {
   const [isDesktop, setIsDesktop] = useState<boolean>(() => window.innerWidth >= 768);
@@ -22,6 +24,7 @@ function ScrollToSection() {
   const location = useLocation();
   const navigationRef = useRef<string | null>(null);
   const isUserNavigation = useRef<boolean>(false);
+  const lastTrackedPathRef = useRef<string | null>(null);
 
   useEffect(() => {
     // Check if this navigation was triggered by scroll (via sessionStorage flag)
@@ -103,9 +106,13 @@ function ScrollToSection() {
       navigationRef.current = location.pathname;
     }
 
-    // Track page view
-    trackPageView(location.pathname, document.title);
-  }, [location]);
+    // Only track page view if pathname actually changed (not just hash or query params)
+    // This prevents duplicate tracking from location object changes
+    if (lastTrackedPathRef.current !== location.pathname) {
+      lastTrackedPathRef.current = location.pathname;
+      trackPageView(location.pathname, document.title);
+    }
+  }, [location.pathname]); // Only depend on pathname, not the entire location object
 
   return null;
 }
@@ -138,6 +145,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <SEOHead />
         <ScrollToSection />
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -145,7 +153,9 @@ function App() {
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <ErrorBoundary>
+                  <Dashboard />
+                </ErrorBoundary>
               </ProtectedRoute>
             }
           />

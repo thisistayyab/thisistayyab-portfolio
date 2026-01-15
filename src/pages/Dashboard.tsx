@@ -27,6 +27,7 @@ import {
 } from 'react-simple-maps';
 import { Button } from '../components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../components/ui/card';
+import { DateRangePicker } from '../components/DateRangePicker';
 import {
   BarChart3,
   Users,
@@ -45,6 +46,10 @@ import {
   MessageSquare,
   Settings,
   CheckCircle2,
+  MapPin,
+  Monitor,
+  Globe2,
+  Trash2,
 } from 'lucide-react';
 import { cleanupOldAnalytics } from '../lib/dataManagement';
 import { initializeStorageBuckets } from '../lib/storage';
@@ -53,53 +58,73 @@ import { ServicesManagement } from './dashboard/ServicesManagement';
 import { ProfilesManagement } from './dashboard/ProfilesManagement';
 import { TestimonialsManagement } from './dashboard/TestimonialsManagement';
 import { ExperiencesManagement } from './dashboard/ExperiencesManagement';
+import { ConfirmModal } from '../components/ConfirmModal';
+import { EventsAnalytics } from './dashboard/EventsAnalytics';
 import countries from 'world-countries';
 import citiesData from 'cities.json';
 
-type DashboardTab = 'overview' | 'projects' | 'services' | 'profiles' | 'testimonials' | 'experiences' | 'contacts';
+type DashboardTab = 'overview' | 'projects' | 'services' | 'profiles' | 'testimonials' | 'experiences' | 'contacts' | 'visitors' | 'events';
 
-// Create country name to ISO code mapping from world-countries
+  // Create country name to ISO code mapping from world-countries
 const createCountryToISOMapping = (): Record<string, string> => {
-  const mapping: Record<string, string> = {};
-  countries.forEach((country) => {
-    // Map common name to ISO A3 code
-    mapping[country.name.common] = country.cca3;
-    // Also map official name
-    if (country.name.official) {
-      mapping[country.name.official] = country.cca3;
+  try {
+    const mapping: Record<string, string> = {};
+    if (!countries || !Array.isArray(countries)) {
+      console.warn('world-countries data is not in expected format');
+      return mapping;
     }
-    // Map alternative names
-    if (country.altSpellings) {
-      country.altSpellings.forEach((alt) => {
-        mapping[alt] = country.cca3;
-      });
-    }
-  });
-  return mapping;
+    countries.forEach((country) => {
+      // Map common name to ISO A3 code
+      mapping[country.name.common] = country.cca3;
+      // Also map official name
+      if (country.name.official) {
+        mapping[country.name.official] = country.cca3;
+      }
+      // Map alternative names
+      if (country.altSpellings) {
+        country.altSpellings.forEach((alt) => {
+          mapping[alt] = country.cca3;
+        });
+      }
+    });
+    return mapping;
+  } catch (error) {
+    console.error('Error processing countries data:', error);
+    return {};
+  }
 };
 
 const countryToISO = createCountryToISOMapping();
 
 // Create comprehensive ISO to country name mapping (outside component for performance)
 const createISOToCountryNameMap = (): Record<string, string> => {
-  const map: Record<string, string> = {};
-  countries.forEach((country) => {
-    // Map all possible ISO codes to country name (case-insensitive)
-    if (country.cca3) {
-      map[country.cca3] = country.name.common;
-      map[country.cca3.toUpperCase()] = country.name.common;
-      map[country.cca3.toLowerCase()] = country.name.common;
+  try {
+    const map: Record<string, string> = {};
+    if (!countries || !Array.isArray(countries)) {
+      console.warn('world-countries data is not in expected format');
+      return map;
     }
-    if (country.cca2) {
-      map[country.cca2] = country.name.common;
-      map[country.cca2.toUpperCase()] = country.name.common;
-      map[country.cca2.toLowerCase()] = country.name.common;
-    }
-    if (country.ccn3) {
-      map[country.ccn3] = country.name.common;
-    }
-  });
-  return map;
+    countries.forEach((country) => {
+      // Map all possible ISO codes to country name (case-insensitive)
+      if (country.cca3) {
+        map[country.cca3] = country.name.common;
+        map[country.cca3.toUpperCase()] = country.name.common;
+        map[country.cca3.toLowerCase()] = country.name.common;
+      }
+      if (country.cca2) {
+        map[country.cca2] = country.name.common;
+        map[country.cca2.toUpperCase()] = country.name.common;
+        map[country.cca2.toLowerCase()] = country.name.common;
+      }
+      if (country.ccn3) {
+        map[country.ccn3] = country.name.common;
+      }
+    });
+    return map;
+  } catch (error) {
+    console.error('Error processing ISO to country mapping:', error);
+    return {};
+  }
 };
 
 const isoToCountryNameMap = createISOToCountryNameMap();
@@ -317,11 +342,28 @@ export const Dashboard: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState<DashboardTab>('overview');
   const [isDesktop, setIsDesktop] = useState<boolean>(() => window.innerWidth >= 768);
+  const [initError, setInitError] = useState<string | null>(null);
 
   useEffect(() => {
     const onResize = () => setIsDesktop(window.innerWidth >= 768);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Error boundary for initialization
+  useEffect(() => {
+    try {
+      // Verify critical data is loaded
+      if (!countries || !Array.isArray(countries)) {
+        setInitError('Failed to load countries data');
+      }
+      if (!citiesData || !Array.isArray(citiesData)) {
+        setInitError('Failed to load cities data');
+      }
+    } catch (error) {
+      console.error('Dashboard initialization error:', error);
+      setInitError('Failed to initialize dashboard');
+    }
   }, []);
   const [stats, setStats] = useState<DashboardStats>({
     totalPageViews: 0,
@@ -337,7 +379,12 @@ export const Dashboard: React.FC = () => {
   const [sessionsData, setSessionsData] = useState<any[]>([]);
   const [recentContacts, setRecentContacts] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
-  const [dateRange, setDateRange] = useState(7); // days
+  const [startDate, setStartDate] = useState<Date | null>(() => {
+    const date = new Date();
+    date.setDate(date.getDate() - 7);
+    return date;
+  });
+  const [endDate, setEndDate] = useState<Date | null>(() => new Date());
   const [selectedCountry, setSelectedCountry] = useState<string>('all');
   const [selectedCity, setSelectedCity] = useState<string>('all');
   const [availableCountries, setAvailableCountries] = useState<string[]>([]);
@@ -347,42 +394,80 @@ export const Dashboard: React.FC = () => {
 
   // Get all world countries for the filter
   const allWorldCountries = React.useMemo(() => {
-    return countries
-      .map((country) => country.name.common)
-      .sort();
+    try {
+      if (!countries || !Array.isArray(countries)) {
+        return [];
+      }
+      return countries
+        .map((country) => country.name.common)
+        .sort();
+    } catch (error) {
+      console.error('Error processing world countries:', error);
+      return [];
+    }
   }, []);
 
   // Create country name to country code mapping
   const countryNameToCode = React.useMemo(() => {
-    const map: Record<string, string> = {};
-    countries.forEach((country) => {
-      map[country.name.common] = country.cca2; // Use 2-letter code for cities library
-      if (country.name.official) {
-        map[country.name.official] = country.cca2;
+    try {
+      const map: Record<string, string> = {};
+      if (!countries || !Array.isArray(countries)) {
+        return map;
       }
-    });
-    return map;
+      countries.forEach((country) => {
+        map[country.name.common] = country.cca2; // Use 2-letter code for cities library
+        if (country.name.official) {
+          map[country.name.official] = country.cca2;
+        }
+      });
+      return map;
+    } catch (error) {
+      console.error('Error creating country name to code mapping:', error);
+      return {};
+    }
   }, []);
 
   // Create country code to cities mapping from library
   const countryCodeToCitiesMap = React.useMemo(() => {
-    const map: Record<string, string[]> = {};
-    // cities.json is an array of city objects with {name, country, lat, lng, etc.}
-    const citiesArray = citiesData as Array<{ name: string; country: string;[key: string]: any }>;
-    citiesArray.forEach((city) => {
-      const countryCode = city.country; // cities.json uses 2-letter country codes
-      if (!map[countryCode]) {
-        map[countryCode] = [];
+    try {
+      const map: Record<string, string[]> = {};
+      // cities.json is an array of city objects with {name, country, lat, lng, etc.}
+      const citiesArray = citiesData as Array<{ name: string; country: string;[key: string]: any }>;
+      if (!citiesArray || !Array.isArray(citiesArray)) {
+        console.warn('cities.json data is not in expected format');
+        return map;
       }
-      if (!map[countryCode].includes(city.name)) {
+      
+      // Process cities in batches to avoid blocking (limit to first 100k for performance)
+      const maxCities = Math.min(citiesArray.length, 100000);
+      const processedCities = new Set<string>(); // Track processed city+country combinations
+      
+      for (let i = 0; i < maxCities; i++) {
+        const city = citiesArray[i];
+        if (!city || !city.country || !city.name) continue;
+        
+        const countryCode = city.country;
+        const cityKey = `${countryCode}:${city.name}`;
+        
+        // Skip duplicates
+        if (processedCities.has(cityKey)) continue;
+        processedCities.add(cityKey);
+        
+        if (!map[countryCode]) {
+          map[countryCode] = [];
+        }
         map[countryCode].push(city.name);
       }
-    });
-    // Sort cities for each country
-    Object.keys(map).forEach((countryCode) => {
-      map[countryCode].sort();
-    });
-    return map;
+      
+      // Sort cities for each country
+      Object.keys(map).forEach((countryCode) => {
+        map[countryCode].sort();
+      });
+      return map;
+    } catch (error) {
+      console.error('Error processing cities data:', error);
+      return {};
+    }
   }, []);
 
   // Create country name to cities mapping (for easy lookup)
@@ -447,12 +532,14 @@ export const Dashboard: React.FC = () => {
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
 
   useEffect(() => {
-    if (activeTab === 'overview' || activeTab === 'contacts') {
-      fetchDashboardData();
-      const interval = setInterval(fetchDashboardData, 60000); // Refresh every minute
-      return () => clearInterval(interval);
+    if (activeTab === 'overview' || activeTab === 'contacts' || activeTab === 'visitors' || activeTab === 'events') {
+      if (startDate && endDate) {
+        fetchDashboardData();
+        const interval = setInterval(fetchDashboardData, 60000); // Refresh every minute
+        return () => clearInterval(interval);
+      }
     }
-  }, [dateRange, activeTab, selectedCountry, selectedCity]);
+  }, [startDate, endDate, activeTab, selectedCountry, selectedCity]);
 
   // Initialize storage buckets and cleanup old analytics data on dashboard load
   useEffect(() => {
@@ -471,16 +558,39 @@ export const Dashboard: React.FC = () => {
   }, []);
 
   const fetchDashboardData = async () => {
+    if (!startDate || !endDate) return;
+    
     try {
-      const startDate = new Date();
-      startDate.setDate(startDate.getDate() - dateRange);
-      const startDateStr = startDate.toISOString();
+      // Format dates using the selected date components directly
+      // This ensures Jan 1-15 selected queries for Jan 1-15, regardless of timezone
+      const formatDateForQuery = (date: Date, isEnd: boolean) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        // Use UTC midnight/end-of-day to ensure we get the full day
+        if (isEnd) {
+          // For end date, use next day 00:00:00 and query with < (less than) instead of <=
+          const nextDay = new Date(Date.UTC(year, date.getMonth(), date.getDate() + 1, 0, 0, 0, 0));
+          return nextDay.toISOString();
+        } else {
+          // For start date, use the selected date at UTC midnight
+          const start = new Date(Date.UTC(year, date.getMonth(), date.getDate(), 0, 0, 0, 0));
+          return start.toISOString();
+        }
+      };
+      
+      const startDateStr = formatDateForQuery(startDate, false);
+      // For end date, we'll use < (less than) the next day's midnight
+      const endDateStr = formatDateForQuery(endDate, true);
 
-      // Calculate previous period for comparison
-      const previousStartDate = new Date();
-      previousStartDate.setDate(previousStartDate.getDate() - (dateRange * 2));
-      const previousEndDate = new Date();
-      previousEndDate.setDate(previousEndDate.getDate() - dateRange);
+      // Calculate previous period for comparison (same duration as selected range)
+      const startDateObj = new Date(startDateStr);
+      const endDateObj = new Date(endDateStr);
+      const rangeDuration = endDateObj.getTime() - startDateObj.getTime();
+      const previousEndDate = new Date(startDateObj);
+      previousEndDate.setTime(previousEndDate.getTime() - 1); // 1ms before start date
+      const previousStartDate = new Date(previousEndDate);
+      previousStartDate.setTime(previousStartDate.getTime() - rangeDuration);
       const previousStartDateStr = previousStartDate.toISOString();
       const previousEndDateStr = previousEndDate.toISOString();
 
@@ -488,12 +598,14 @@ export const Dashboard: React.FC = () => {
       let pageViewsQuery = supabase
         .from('page_views')
         .select('*', { count: 'exact' })
-        .gte('created_at', startDateStr);
+        .gte('created_at', startDateStr)
+        .lt('created_at', endDateStr); // Use < instead of <= since endDateStr is next day's midnight
 
       let sessionsQuery = supabase
         .from('sessions')
         .select('*', { count: 'exact' })
-        .gte('first_visit', startDateStr);
+        .gte('first_visit', startDateStr)
+        .lt('first_visit', endDateStr); // Use < instead of <=
 
       if (selectedCountry !== 'all') {
         pageViewsQuery = pageViewsQuery.eq('country', selectedCountry);
@@ -512,7 +624,8 @@ export const Dashboard: React.FC = () => {
         supabase
           .from('user_events')
           .select('*', { count: 'exact' })
-          .gte('created_at', startDateStr),
+          .gte('created_at', startDateStr)
+          .lt('created_at', endDateStr),
         supabase
           .from('contact_submissions')
           .select('*', { count: 'exact' })
@@ -528,7 +641,8 @@ export const Dashboard: React.FC = () => {
       let uniqueSessionsQuery = supabase
         .from('sessions')
         .select('session_id')
-        .gte('first_visit', startDateStr);
+        .gte('first_visit', startDateStr)
+        .lt('first_visit', endDateStr);
 
       if (selectedCountry !== 'all') {
         uniqueSessionsQuery = uniqueSessionsQuery.eq('country', selectedCountry);
@@ -712,13 +826,12 @@ export const Dashboard: React.FC = () => {
       console.log('Country data array:', countryDataArray);
       setCountryData(countryDataArray);
 
-      // Fetch referrer data
+      // Fetch referrer data - include all referrers including "Direct" and empty ones
       let referrerQuery = supabase
         .from('page_views')
         .select('referrer')
         .gte('created_at', startDateStr)
-        .not('referrer', 'is', null)
-        .not('referrer', 'eq', '');
+        .lt('created_at', endDateStr);
 
       if (selectedCountry !== 'all') {
         referrerQuery = referrerQuery.eq('country', selectedCountry);
@@ -732,26 +845,29 @@ export const Dashboard: React.FC = () => {
       const referrerCounts: Record<string, number> = {};
       if (referrerPageViews && referrerPageViews.length > 0) {
         referrerPageViews.forEach((pv) => {
+          // Handle all referrer cases: null, empty string, "Direct", or actual URLs
+          let normalizedReferrer = 'Direct'; // Default to Direct
+          
           if (pv.referrer && pv.referrer.trim() !== '') {
-            // Normalize referrer URLs - extract domain
-            let normalizedReferrer = pv.referrer.trim();
+            normalizedReferrer = pv.referrer.trim();
             try {
               // Try to extract domain from URL
               if (normalizedReferrer.startsWith('http://') || normalizedReferrer.startsWith('https://')) {
                 const url = new URL(normalizedReferrer);
                 normalizedReferrer = url.hostname.replace('www.', '');
-              } else if (normalizedReferrer === 'Direct') {
+              } else if (normalizedReferrer.toLowerCase() === 'direct' || normalizedReferrer === '') {
                 normalizedReferrer = 'Direct';
               } else {
                 // If it's not a full URL, use as is
                 normalizedReferrer = normalizedReferrer.replace('www.', '');
               }
             } catch {
-              // If URL parsing fails, use as is
+              // If URL parsing fails, use as is (might be a domain name without protocol)
               normalizedReferrer = normalizedReferrer.replace('www.', '');
             }
-            referrerCounts[normalizedReferrer] = (referrerCounts[normalizedReferrer] || 0) + 1;
           }
+          
+          referrerCounts[normalizedReferrer] = (referrerCounts[normalizedReferrer] || 0) + 1;
         });
       }
 
@@ -767,6 +883,7 @@ export const Dashboard: React.FC = () => {
         .from('page_views')
         .select('created_at')
         .gte('created_at', startDateStr)
+        .lt('created_at', endDateStr)
         .order('created_at', { ascending: true });
 
       if (selectedCountry !== 'all') {
@@ -788,6 +905,7 @@ export const Dashboard: React.FC = () => {
         .from('sessions')
         .select('first_visit, page_count')
         .gte('first_visit', startDateStr)
+        .lt('first_visit', endDateStr)
         .order('first_visit', { ascending: true });
 
       if (selectedCountry !== 'all') {
@@ -817,14 +935,19 @@ export const Dashboard: React.FC = () => {
   };
 
   const processTimeSeriesData = (data: any[], dateField: string) => {
+    if (!startDate || !endDate) return [];
+    
     const grouped: Record<string, number> = {};
-    const now = new Date();
-    const days = dateRange;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+    // Calculate number of days in range
+    const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 
-    // Initialize all days with 0
-    for (let i = days - 1; i >= 0; i--) {
-      const date = new Date(now);
-      date.setDate(date.getDate() - i);
+    // Initialize all days in range with 0
+    for (let i = 0; i < days; i++) {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
       const key = date.toISOString().split('T')[0];
       grouped[key] = 0;
     }
@@ -1094,6 +1217,10 @@ export const Dashboard: React.FC = () => {
             )}
           </div>
         );
+      case 'visitors':
+        return <VisitorsAnalytics startDate={startDate} endDate={endDate} selectedCountry={selectedCountry} selectedCity={selectedCity} />;
+      case 'events':
+        return <EventsAnalytics startDate={startDate} endDate={endDate} selectedCountry={selectedCountry} selectedCity={selectedCity} />;
       case 'overview':
       default:
         return (
@@ -1326,6 +1453,25 @@ export const Dashboard: React.FC = () => {
     }
   };
 
+  if (initError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4 text-red-400">Dashboard Error</h2>
+          <p className="text-gray-400 mb-4">{initError}</p>
+          <Button
+            onClick={() => window.location.reload()}
+            variant="default"
+            className="cursor-pointer"
+            glowColor="#3b82f6"
+          >
+            Reload Page
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   if (loading && activeTab === 'overview') {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-900">
@@ -1340,7 +1486,7 @@ export const Dashboard: React.FC = () => {
       {/* Sidebar */}
       <aside
         className={`${sidebarOpen ? 'w-64' : 'w-0'
-          } bg-gray-800/90 backdrop-blur-sm border-r border-gray-700 transition-all duration-300 overflow-hidden relative z-10`}
+          } fixed left-0 top-0 h-screen bg-gray-800/90 backdrop-blur-sm border-r border-gray-700 transition-all duration-300 overflow-y-auto overflow-x-hidden z-10`}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-8">
@@ -1366,6 +1512,26 @@ export const Dashboard: React.FC = () => {
             >
               <BarChart3 size={18} className="inline mr-2" />
               Overview
+            </button>
+            <button
+              onClick={() => setActiveTab('visitors')}
+              className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'visitors'
+                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                }`}
+            >
+              <Globe2 size={18} className="inline mr-2" />
+              Visitors
+            </button>
+            <button
+              onClick={() => setActiveTab('events')}
+              className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'events'
+                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                }`}
+            >
+              <MousePointerClick size={18} className="inline mr-2" />
+              Events
             </button>
 
             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 mt-6">
@@ -1450,7 +1616,7 @@ export const Dashboard: React.FC = () => {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
+      <div className={`flex-1 flex flex-col overflow-hidden relative z-10 transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
         {/* Header */}
         <header className="bg-gray-800/90 backdrop-blur-sm border-b border-gray-700 p-4">
           <div className="flex items-center justify-between">
@@ -1461,17 +1627,16 @@ export const Dashboard: React.FC = () => {
               <Menu size={24} />
             </button>
             <div className="flex items-center gap-4">
-              {activeTab === 'overview' && (
+              {(activeTab === 'overview' || activeTab === 'visitors') && (
                 <>
-                  <select
-                    value={dateRange}
-                    onChange={(e) => setDateRange(Number(e.target.value))}
-                    className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white"
-                  >
-                    <option value={7}>Last 7 days</option>
-                    <option value={30}>Last 30 days</option>
-                    <option value={90}>Last 90 days</option>
-                  </select>
+                  <DateRangePicker
+                    startDate={startDate}
+                    endDate={endDate}
+                    onChange={(start, end) => {
+                      setStartDate(start);
+                      setEndDate(end);
+                    }}
+                  />
                   <select
                     value={selectedCountry}
                     onChange={(e) => {
@@ -1566,3 +1731,858 @@ const ChartCard: React.FC<{ title: string; children: React.ReactNode }> = ({
     {children}
   </div>
 );
+
+// Privacy-conscious IP masking function
+const maskIPAddress = (ip?: string | null): string => {
+  if (!ip) return 'N/A';
+  // For IPv4: show first 2 octets, mask last 2 (e.g., 192.168.x.x)
+  // For IPv6: show first 4 groups, mask rest
+  if (ip.includes('.')) {
+    const parts = ip.split('.');
+    if (parts.length === 4) {
+      return `${parts[0]}.${parts[1]}.x.x`;
+    }
+  } else if (ip.includes(':')) {
+    const parts = ip.split(':');
+    if (parts.length > 4) {
+      return `${parts.slice(0, 2).join(':')}:xxxx:xxxx`;
+    }
+  }
+  return 'x.x.x.x';
+};
+
+// Visitors Analytics Component
+const VisitorsAnalytics: React.FC<{
+  startDate: Date | null;
+  endDate: Date | null;
+  selectedCountry: string;
+  selectedCity: string;
+}> = ({ startDate, endDate, selectedCountry, selectedCity }) => {
+  const [visitors, setVisitors] = useState<PageView[]>([]);
+  const [allVisitors, setAllVisitors] = useState<PageView[]>([]); // Store all visitors for grouping
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(50);
+  const [totalCount, setTotalCount] = useState(0);
+  const [deviceData, setDeviceData] = useState<Array<{ device: string; count: number }>>([]);
+  const [browserData, setBrowserData] = useState<Array<{ browser: string; count: number }>>([]);
+  const [cityData, setCityData] = useState<Array<{ city: string; count: number }>>([]);
+  const [hourlyData, setHourlyData] = useState<Array<{ hour: string; count: number }>>([]);
+  const [selectedIP, setSelectedIP] = useState<string | null>(null);
+  const [ipVisits, setIpVisits] = useState<PageView[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loadingIPVisits, setLoadingIPVisits] = useState(false);
+  const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+    variant?: 'danger' | 'warning' | 'info';
+  }>({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: () => {},
+    variant: 'danger',
+  });
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      fetchVisitorsData();
+    }
+  }, [startDate, endDate, selectedCountry, selectedCity, page]);
+
+  const fetchVisitorsData = async () => {
+    if (!startDate || !endDate) return;
+    
+    try {
+      setLoading(true);
+      // Format dates using the selected date components directly
+      const formatDateForQuery = (date: Date, isEnd: boolean) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        if (isEnd) {
+          const nextDay = new Date(Date.UTC(year, date.getMonth(), date.getDate() + 1, 0, 0, 0, 0));
+          return nextDay.toISOString();
+        } else {
+          const start = new Date(Date.UTC(year, date.getMonth(), date.getDate(), 0, 0, 0, 0));
+          return start.toISOString();
+        }
+      };
+      
+      const startDateStr = formatDateForQuery(startDate, false);
+      const endDateStr = formatDateForQuery(endDate, true);
+
+      // Fetch data to group by IP - use a reasonable limit to prevent timeouts
+      // We'll fetch in batches if needed, but start with a large limit for grouping
+      let allVisitorsQuery = supabase
+        .from('page_views')
+        .select('*')
+        .gte('created_at', startDateStr)
+        .lt('created_at', endDateStr)
+        .order('created_at', { ascending: false })
+        .limit(10000); // Reasonable limit to prevent timeouts
+
+      if (selectedCountry !== 'all') {
+        allVisitorsQuery = allVisitorsQuery.eq('country', selectedCountry);
+      }
+      if (selectedCity !== 'all') {
+        allVisitorsQuery = allVisitorsQuery.eq('city', selectedCity);
+      }
+
+      // Fetch visitors for grouping
+      const { data: allVisitorsData, error: allError } = await allVisitorsQuery;
+      if (allError) {
+        console.error('Error fetching visitors data:', allError);
+        setLoading(false);
+        return; // Return early instead of throwing to prevent breaking the page
+      }
+      
+      if (!allVisitorsData) {
+        setLoading(false);
+        return;
+      }
+
+      // Debug: Log referrer data to see what we're getting
+      if (allVisitorsData && allVisitorsData.length > 0) {
+        const referrers = allVisitorsData.map(v => v.referrer).filter(Boolean);
+        const uniqueReferrers = [...new Set(referrers)];
+        console.log('Total visitors:', allVisitorsData.length);
+        console.log('Unique referrers found:', uniqueReferrers.slice(0, 20));
+        console.log('IPs with referrers:', allVisitorsData.filter(v => v.referrer && v.referrer !== 'Direct').length);
+      }
+
+      // Store all visitors for grouping
+      setAllVisitors(allVisitorsData || []);
+      
+      // Group by IP address - show unique IPs with visit counts
+      const ipGroups: Record<string, PageView[]> = {};
+      (allVisitorsData || []).forEach((visitor) => {
+        const ip = visitor.ip_address || 'unknown';
+        if (!ipGroups[ip]) {
+          ipGroups[ip] = [];
+        }
+        ipGroups[ip].push(visitor);
+      });
+
+      // Create grouped data - show most recent visit for each IP with visit count
+      const groupedVisitors = Object.entries(ipGroups).map(([ip, visits]) => {
+        // Sort visits by time, get most recent
+        const sortedVisits = [...visits].sort(
+          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+        return {
+          ...sortedVisits[0], // Use most recent visit data
+          visit_count: visits.length, // Add visit count
+        };
+      });
+
+      // Sort by most recent visit time
+      groupedVisitors.sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+
+      // Apply pagination to grouped results
+      const totalUniqueIPs = groupedVisitors.length;
+      const startIndex = (page - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const paginatedVisitors = groupedVisitors.slice(startIndex, endIndex);
+
+      setVisitors(paginatedVisitors as PageView[]);
+      setTotalCount(totalUniqueIPs); // Count unique IPs
+
+      // Fetch sessions data
+      let sessionsQuery = supabase
+        .from('sessions')
+        .select('*')
+        .gte('first_visit', startDateStr)
+        .lt('first_visit', endDateStr)
+        .order('first_visit', { ascending: false })
+        .limit(100);
+
+      if (selectedCountry !== 'all') {
+        sessionsQuery = sessionsQuery.eq('country', selectedCountry);
+      }
+      if (selectedCity !== 'all') {
+        sessionsQuery = sessionsQuery.eq('city', selectedCity);
+      }
+
+      const { data: sessionsData } = await sessionsQuery;
+      setSessions(sessionsData || []);
+
+      // Process data for charts (use all visitors, not grouped)
+      processChartData(allVisitorsData || []);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching visitors data:', error);
+      setLoading(false);
+    }
+  };
+
+  const processChartData = (data: PageView[]) => {
+    // Device type distribution
+    const deviceCounts: Record<string, number> = {};
+    const browserCounts: Record<string, number> = {};
+    const cityCounts: Record<string, number> = {};
+    const hourlyCounts: Record<string, number> = {};
+
+    data.forEach((visitor) => {
+      // Device type
+      const device = visitor.device_type || 'Unknown';
+      deviceCounts[device] = (deviceCounts[device] || 0) + 1;
+
+      // Browser
+      const browser = visitor.browser || 'Unknown';
+      browserCounts[browser] = (browserCounts[browser] || 0) + 1;
+
+      // City
+      if (visitor.city) {
+        cityCounts[visitor.city] = (cityCounts[visitor.city] || 0) + 1;
+      }
+
+      // Hourly distribution
+      const date = new Date(visitor.created_at);
+      const hour = date.getHours();
+      const hourLabel = `${hour.toString().padStart(2, '0')}:00`;
+      hourlyCounts[hourLabel] = (hourlyCounts[hourLabel] || 0) + 1;
+    });
+
+    setDeviceData(
+      Object.entries(deviceCounts)
+        .map(([device, count]) => ({ device, count }))
+        .sort((a, b) => b.count - a.count)
+    );
+
+    setBrowserData(
+      Object.entries(browserCounts)
+        .map(([browser, count]) => ({ browser, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10)
+    );
+
+    setCityData(
+      Object.entries(cityCounts)
+        .map(([city, count]) => ({ city, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 15)
+    );
+
+    // Sort hourly data
+    const hourlyArray = Object.entries(hourlyCounts)
+      .map(([hour, count]) => ({ hour, count }))
+      .sort((a, b) => a.hour.localeCompare(b.hour));
+    setHourlyData(hourlyArray);
+  };
+
+  const handleDeleteAllVisitsForIP = async (ipAddress: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const visitCount = (visitors.find(v => v.ip_address === ipAddress) as any)?.visit_count || 1;
+    
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete All Visits',
+      message: `Are you sure you want to delete ALL ${visitCount} visit(s) from IP ${maskIPAddress(ipAddress)}? This action cannot be undone.`,
+      variant: 'danger',
+      onConfirm: async () => {
+        setConfirmModal({ ...confirmModal, isOpen: false });
+        setDeletingIds((prev) => new Set(prev).add(ipAddress));
+        try {
+          const { error } = await supabase
+            .from('page_views')
+            .delete()
+            .eq('ip_address', ipAddress);
+
+          if (error) throw error;
+
+          // Remove from local state - remove all visits with this IP
+          setVisitors((prev) => prev.filter((v) => v.ip_address !== ipAddress));
+          setAllVisitors((prev) => prev.filter((v) => v.ip_address !== ipAddress));
+          setIpVisits((prev) => prev.filter((v) => v.ip_address !== ipAddress));
+
+          // Refresh data
+          fetchVisitorsData();
+        } catch (error) {
+          console.error('Error deleting all visits for IP:', error);
+          alert('Failed to delete visits for this IP address');
+        } finally {
+          setDeletingIds((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(ipAddress);
+            return newSet;
+          });
+        }
+      },
+    });
+  };
+
+  const handleDeleteVisit = async (visitId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete Visit Record',
+      message: 'Are you sure you want to delete this visit record? This action cannot be undone.',
+      variant: 'danger',
+      onConfirm: async () => {
+        setConfirmModal({ ...confirmModal, isOpen: false });
+        setDeletingIds((prev) => new Set(prev).add(visitId));
+        try {
+          const { error } = await supabase
+            .from('page_views')
+            .delete()
+            .eq('id', visitId);
+
+          if (error) throw error;
+
+          // Remove from local state
+          setVisitors((prev) => prev.filter((v) => v.id !== visitId));
+          setAllVisitors((prev) => prev.filter((v) => v.id !== visitId));
+          setIpVisits((prev) => prev.filter((v) => v.id !== visitId));
+
+          // Refresh data
+          fetchVisitorsData();
+        } catch (error) {
+          console.error('Error deleting visit:', error);
+          alert('Failed to delete visit record');
+        } finally {
+          setDeletingIds((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(visitId);
+            return newSet;
+          });
+        }
+      },
+    });
+  };
+
+  const handleIPClick = async (ip: string | null | undefined) => {
+    if (!ip || ip === 'unknown' || ip === '') {
+      console.log('Invalid IP:', ip);
+      return;
+    }
+    
+    console.log('Opening modal for IP:', ip);
+    setSelectedIP(ip);
+    setIsModalOpen(true);
+    setLoadingIPVisits(true);
+
+    if (!startDate || !endDate) return;
+    
+    try {
+      // Format dates using the selected date components directly
+      const formatDateForQuery = (date: Date, isEnd: boolean) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        if (isEnd) {
+          const nextDay = new Date(Date.UTC(year, date.getMonth(), date.getDate() + 1, 0, 0, 0, 0));
+          return nextDay.toISOString();
+        } else {
+          const start = new Date(Date.UTC(year, date.getMonth(), date.getDate(), 0, 0, 0, 0));
+          return start.toISOString();
+        }
+      };
+      
+      const startDateStr = formatDateForQuery(startDate, false);
+      const endDateStr = formatDateForQuery(endDate, true);
+
+      let query = supabase
+        .from('page_views')
+        .select('*')
+        .eq('ip_address', ip)
+        .gte('created_at', startDateStr)
+        .lt('created_at', endDateStr)
+        .order('created_at', { ascending: false });
+
+      if (selectedCountry !== 'all') {
+        query = query.eq('country', selectedCountry);
+      }
+      if (selectedCity !== 'all') {
+        query = query.eq('city', selectedCity);
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.error('Query error:', error);
+        throw error;
+      }
+      
+      console.log('Fetched visits:', data?.length);
+      setIpVisits(data || []);
+    } catch (error) {
+      console.error('Error fetching IP visits:', error);
+      setIpVisits([]);
+    } finally {
+      setLoadingIPVisits(false);
+    }
+  };
+
+  const totalPages = Math.ceil(totalCount / pageSize);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6 space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold">Visitor Analytics</h2>
+        <div className="text-sm text-gray-400">
+          Total: {totalCount.toLocaleString()} unique IP{totalCount !== 1 ? 's' : ''} ({allVisitors.length.toLocaleString()} total visits)
+        </div>
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {/* Device Type Distribution */}
+        {deviceData.length > 0 && (
+          <ChartCard title="Device Type Distribution">
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={deviceData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="device" stroke="#9CA3AF" />
+                <YAxis stroke="#9CA3AF" />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
+                />
+                <Bar dataKey="count" fill="#3B82F6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        )}
+
+        {/* Browser Distribution */}
+        {browserData.length > 0 && (
+          <ChartCard title="Top Browsers">
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={browserData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="browser" stroke="#9CA3AF" angle={-45} textAnchor="end" height={100} />
+                <YAxis stroke="#9CA3AF" />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
+                />
+                <Bar dataKey="count" fill="#10B981" />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        )}
+
+        {/* Top Cities */}
+        {cityData.length > 0 && (
+          <ChartCard title="Top Cities">
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={cityData} layout="vertical">
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis type="number" stroke="#9CA3AF" />
+                <YAxis dataKey="city" type="category" stroke="#9CA3AF" width={120} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
+                />
+                <Bar dataKey="count" fill="#8B5CF6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        )}
+
+        {/* Hourly Distribution */}
+        {hourlyData.length > 0 && (
+          <ChartCard title="Visits by Hour of Day">
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={hourlyData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="hour" stroke="#9CA3AF" />
+                <YAxis stroke="#9CA3AF" />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#F59E0B"
+                  fill="#F59E0B"
+                  fillOpacity={0.3}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        )}
+      </div>
+
+      {/* Detailed Visitors Table */}
+      <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-700 bg-gray-700/30">
+                <th className="text-left py-3 px-4 text-gray-400 font-semibold">Time</th>
+                <th className="text-left py-3 px-4 text-gray-400 font-semibold">Country</th>
+                <th className="text-left py-3 px-4 text-gray-400 font-semibold">City</th>
+                <th className="text-left py-3 px-4 text-gray-400 font-semibold">IP Address (Visits)</th>
+                <th className="text-left py-3 px-4 text-gray-400 font-semibold">Device</th>
+                <th className="text-left py-3 px-4 text-gray-400 font-semibold">Browser</th>
+                <th className="text-left py-3 px-4 text-gray-400 font-semibold">Page</th>
+                <th className="text-left py-3 px-4 text-gray-400 font-semibold">Referrer</th>
+                <th className="text-left py-3 px-4 text-gray-400 font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visitors.length === 0 ? (
+                <tr>
+                  <td colSpan={9} className="text-center py-8 text-gray-400">
+                    No visitor data found
+                  </td>
+                </tr>
+              ) : (
+                visitors.map((visitor) => (
+                  <tr
+                    key={visitor.id}
+                    onClick={() => {
+                      // Make entire row clickable - open IP visits modal
+                      const ip = visitor.ip_address;
+                      if (ip) {
+                        handleIPClick(ip);
+                      }
+                    }}
+                    className="border-b border-gray-700 hover:bg-gray-700/20 transition-colors cursor-pointer"
+                  >
+                    <td className="py-3 px-4 text-gray-300">
+                      {new Date(visitor.created_at).toLocaleString()}
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="flex items-center gap-2">
+                        <Globe size={16} className="text-blue-400" />
+                        <span>{visitor.country || 'Unknown'}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="flex items-center gap-2">
+                        <MapPin size={16} className="text-purple-400" />
+                        <span>{visitor.city || 'Unknown'}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const ip = visitor.ip_address;
+                          if (ip) {
+                            handleIPClick(ip);
+                          }
+                        }}
+                        className="text-gray-400 font-mono text-sm hover:text-blue-400 transition-colors cursor-pointer flex items-center gap-2"
+                        title="Click to view all visits from this IP"
+                      >
+                        {maskIPAddress(visitor.ip_address)}
+                        {(visitor as any).visit_count > 1 && (
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs">
+                            {(visitor as any).visit_count} visits
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="flex items-center gap-2">
+                        <Monitor size={16} className="text-green-400" />
+                        <span className="capitalize">{visitor.device_type || 'Unknown'}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-gray-300">{visitor.browser || 'Unknown'}</td>
+                    <td className="py-3 px-4">
+                      <span className="text-blue-400">{visitor.page_path}</span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <span className="text-gray-400 text-sm truncate max-w-[200px] block" title={visitor.referrer || 'Direct'}>
+                        {(() => {
+                          const rawReferrer = visitor.referrer;
+                          if (!rawReferrer || rawReferrer.trim() === '' || rawReferrer.toLowerCase() === 'direct') {
+                            return 'Direct';
+                          }
+                          
+                          let displayReferrer = rawReferrer.trim();
+                          try {
+                            // Normalize referrer for display - extract domain from URL
+                            if (displayReferrer.startsWith('http://') || displayReferrer.startsWith('https://')) {
+                              const url = new URL(displayReferrer);
+                              displayReferrer = url.hostname.replace(/^www\./, '');
+                            } else if (displayReferrer.includes('.')) {
+                              // Might be a domain without protocol
+                              displayReferrer = displayReferrer.replace(/^www\./, '');
+                            }
+                            // Keep the referrer as is if it's not a URL
+                          } catch (e) {
+                            // If URL parsing fails, try to extract domain manually
+                            const domainMatch = displayReferrer.match(/(?:https?:\/\/)?(?:www\.)?([^\/\s]+)/);
+                            if (domainMatch) {
+                              displayReferrer = domainMatch[1].replace(/^www\./, '');
+                            }
+                          }
+                          return displayReferrer.length > 30 ? `${displayReferrer.substring(0, 30)}...` : displayReferrer;
+                        })()}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <button
+                        onClick={(e) => {
+                          const ip = visitor.ip_address;
+                          if (ip) {
+                            handleDeleteAllVisitsForIP(ip, e);
+                          }
+                        }}
+                        disabled={visitor.ip_address ? deletingIds.has(visitor.ip_address) : false}
+                        className="text-red-400 hover:text-red-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        title={`Delete all visits from IP ${maskIPAddress(visitor.ip_address)}`}
+                      >
+                        {visitor.ip_address && deletingIds.has(visitor.ip_address) ? (
+                          <Clock size={16} className="animate-spin" />
+                        ) : (
+                          <Trash2 size={16} />
+                        )}
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between p-4 border-t border-gray-700">
+            <div className="text-sm text-gray-400">
+              Page {page} of {totalPages}
+            </div>
+            <div className="flex gap-2">
+              <Button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                variant="outline"
+                className="cursor-pointer"
+                glowColor="#3b82f6"
+              >
+                Previous
+              </Button>
+              <Button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                variant="outline"
+                className="cursor-pointer"
+                glowColor="#3b82f6"
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Sessions Summary */}
+      {sessions.length > 0 && (
+        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+          <h3 className="text-lg font-semibold mb-4">Session Summary</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-gray-700/30 rounded-lg p-4">
+              <div className="text-sm text-gray-400 mb-1">Total Sessions</div>
+              <div className="text-2xl font-bold">{sessions.length}</div>
+            </div>
+            <div className="bg-gray-700/30 rounded-lg p-4">
+              <div className="text-sm text-gray-400 mb-1">Avg. Duration</div>
+              <div className="text-2xl font-bold">
+                {Math.round(
+                  sessions.reduce((acc, s) => acc + (s.duration_seconds || 0), 0) / sessions.length
+                )}s
+              </div>
+            </div>
+            <div className="bg-gray-700/30 rounded-lg p-4">
+              <div className="text-sm text-gray-400 mb-1">Bounce Rate</div>
+              <div className="text-2xl font-bold">
+                {Math.round(
+                  (sessions.filter((s) => s.is_bounce).length / sessions.length) * 100
+                )}%
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* IP Visits Modal */}
+      {isModalOpen && selectedIP && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <Card
+            className="max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+            hoverScale={false}
+            hoverLift={false}
+            glowColor="transparent"
+            gradientColors={[]}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <CardHeader className="p-6 pb-4 border-b border-gray-700">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-2xl mb-2">All Visits from IP: {maskIPAddress(selectedIP)}</CardTitle>
+                  <div className="text-sm text-gray-400">
+                    Total: {ipVisits.length} visit{ipVisits.length !== 1 ? 's' : ''}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-gray-400 hover:text-white transition-colors flex-shrink-0"
+                  aria-label="Close modal"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+            </CardHeader>
+            <CardContent className="p-0 flex-1 min-h-0 overflow-hidden flex flex-col">
+              {loadingIPVisits ? (
+                <div className="flex items-center justify-center py-12 p-6">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                </div>
+              ) : ipVisits.length === 0 ? (
+                <div className="text-center py-12 text-gray-400 p-6">
+                  <p>No visits found for this IP address</p>
+                </div>
+              ) : (
+                <div 
+                  className="overflow-y-auto overflow-x-auto flex-1 modal-scrollable"
+                  style={{ 
+                    maxHeight: 'calc(90vh - 200px)',
+                  }}
+                >
+                  <table className="w-full">
+                    <thead className="sticky top-0 bg-gray-800 z-10">
+                      <tr className="border-b border-gray-700 bg-gray-700/30">
+                        <th className="text-left py-3 px-4 text-gray-400 font-semibold">Time</th>
+                        <th className="text-left py-3 px-4 text-gray-400 font-semibold">Country</th>
+                        <th className="text-left py-3 px-4 text-gray-400 font-semibold">City</th>
+                        <th className="text-left py-3 px-4 text-gray-400 font-semibold">Device</th>
+                        <th className="text-left py-3 px-4 text-gray-400 font-semibold">Browser</th>
+                        <th className="text-left py-3 px-4 text-gray-400 font-semibold">Page</th>
+                        <th className="text-left py-3 px-4 text-gray-400 font-semibold">Referrer</th>
+                        <th className="text-left py-3 px-4 text-gray-400 font-semibold">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ipVisits.map((visit) => (
+                        <tr
+                          key={visit.id}
+                          className="border-b border-gray-700 hover:bg-gray-700/20 transition-colors"
+                        >
+                          <td className="py-3 px-4 text-gray-300">
+                            {new Date(visit.created_at).toLocaleString()}
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-2">
+                              <Globe size={16} className="text-blue-400" />
+                              <span>{visit.country || 'Unknown'}</span>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-2">
+                              <MapPin size={16} className="text-purple-400" />
+                              <span>{visit.city || 'Unknown'}</span>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-2">
+                              <Monitor size={16} className="text-green-400" />
+                              <span className="capitalize">{visit.device_type || 'Unknown'}</span>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 text-gray-300">{visit.browser || 'Unknown'}</td>
+                          <td className="py-3 px-4">
+                            <span className="text-blue-400">{visit.page_path}</span>
+                          </td>
+                          <td className="py-3 px-4">
+                            <span className="text-gray-400 text-sm truncate max-w-[200px] block" title={visit.referrer || 'Direct'}>
+                              {(() => {
+                                const rawReferrer = visit.referrer;
+                                if (!rawReferrer || rawReferrer.trim() === '' || rawReferrer.toLowerCase() === 'direct') {
+                                  return 'Direct';
+                                }
+                                
+                                let displayReferrer = rawReferrer.trim();
+                                try {
+                                  // Normalize referrer for display - extract domain from URL
+                                  if (displayReferrer.startsWith('http://') || displayReferrer.startsWith('https://')) {
+                                    const url = new URL(displayReferrer);
+                                    displayReferrer = url.hostname.replace(/^www\./, '');
+                                  } else if (displayReferrer.includes('.')) {
+                                    // Might be a domain without protocol
+                                    displayReferrer = displayReferrer.replace(/^www\./, '');
+                                  }
+                                } catch (e) {
+                                  // If URL parsing fails, try to extract domain manually
+                                  const domainMatch = displayReferrer.match(/(?:https?:\/\/)?(?:www\.)?([^\/\s]+)/);
+                                  if (domainMatch) {
+                                    displayReferrer = domainMatch[1].replace(/^www\./, '');
+                                  }
+                                }
+                                return displayReferrer.length > 30 ? `${displayReferrer.substring(0, 30)}...` : displayReferrer;
+                              })()}
+                            </span>
+                          </td>
+                          <td className="py-3 px-4">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteVisit(visit.id, e);
+                              }}
+                              disabled={deletingIds.has(visit.id)}
+                              className="text-red-400 hover:text-red-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                              title="Delete this visit record"
+                            >
+                              {deletingIds.has(visit.id) ? (
+                                <Clock size={16} className="animate-spin" />
+                              ) : (
+                                <Trash2 size={16} />
+                              )}
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+            <CardFooter className="flex justify-end p-6 pt-4 border-t border-gray-700">
+              <Button
+                onClick={() => setIsModalOpen(false)}
+                variant="default"
+                className="cursor-pointer"
+                glowColor="#3b82f6"
+              >
+                Close
+              </Button>
+            </CardFooter>
+          </Card>
+          </div>
+        )}
+        
+        {/* Confirmation Modal */}
+        <ConfirmModal
+          isOpen={confirmModal.isOpen}
+          onClose={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+          onConfirm={confirmModal.onConfirm}
+          title={confirmModal.title}
+          message={confirmModal.message}
+          variant={confirmModal.variant || 'danger'}
+          isLoading={deletingIds.size > 0}
+        />
+      </div>
+    );
+  };

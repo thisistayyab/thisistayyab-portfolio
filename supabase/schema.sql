@@ -212,6 +212,17 @@ CREATE POLICY "Allow admin read on page_views"
     )
   );
 
+CREATE POLICY "Allow admin delete on page_views"
+  ON page_views FOR DELETE
+  TO authenticated
+  USING (
+    EXISTS (
+      SELECT 1 FROM admin_users
+      WHERE admin_users.id = auth.uid()
+      AND admin_users.is_active = true
+    )
+  );
+
 -- User events: Anyone can insert, only admins can read
 CREATE POLICY "Allow public insert on user_events"
   ON user_events FOR INSERT
@@ -220,6 +231,17 @@ CREATE POLICY "Allow public insert on user_events"
 
 CREATE POLICY "Allow admin read on user_events"
   ON user_events FOR SELECT
+  TO authenticated
+  USING (
+    EXISTS (
+      SELECT 1 FROM admin_users
+      WHERE admin_users.id = auth.uid()
+      AND admin_users.is_active = true
+    )
+  );
+
+CREATE POLICY "Allow admin delete on user_events"
+  ON user_events FOR DELETE
   TO authenticated
   USING (
     EXISTS (
