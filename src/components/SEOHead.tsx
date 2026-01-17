@@ -94,14 +94,17 @@ export const SEOHead: React.FC = () => {
     updateMetaTag('twitter:description', meta.ogDescription || meta.description);
     updateMetaTag('twitter:url', `${baseUrl}${location.pathname}`);
 
-    // Update canonical URL (already handled in Appbar.tsx, but ensure it's set)
+    // Update canonical URL - ensure no trailing slash and consistent format
+    const canonicalPath = location.pathname === '/' ? '/' : location.pathname.replace(/\/$/, '');
+    const canonicalUrl = `${baseUrl}${canonicalPath}`;
+    
     let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (!canonicalLink) {
       canonicalLink = document.createElement('link');
       canonicalLink.setAttribute('rel', 'canonical');
       document.head.appendChild(canonicalLink);
     }
-    canonicalLink.setAttribute('href', `${baseUrl}${location.pathname}`);
+    canonicalLink.setAttribute('href', canonicalUrl);
 
   }, [location.pathname, meta.title, meta.description]);
 

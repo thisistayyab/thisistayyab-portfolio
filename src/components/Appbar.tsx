@@ -22,22 +22,8 @@ export default function AppAppBar() {
   const navigate = useNavigate();
   const baseUrl = 'https://thisistayyab.dev';
 
-  // Update canonical link based on current route
-  useEffect(() => {
-    const updateCanonical = () => {
-      const canonicalUrl = `${baseUrl}${location.pathname}`;
-
-      let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-      if (!canonicalLink) {
-        canonicalLink = document.createElement('link');
-        canonicalLink.setAttribute('rel', 'canonical');
-        document.head.appendChild(canonicalLink);
-      }
-      canonicalLink.setAttribute('href', canonicalUrl);
-    };
-
-    updateCanonical();
-  }, [location.pathname]);
+  // Canonical link is now handled by SEOHead component to avoid duplicates
+  // Removed duplicate canonical tag setting
 
   // Initialize active section from current route
   useEffect(() => {

@@ -49,6 +49,14 @@
     }
   </style>
 
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WBDRGWB9');</script>
+  <!-- End Google Tag Manager -->
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2G8GTSVY0L"></script>
   <script>
@@ -85,7 +93,7 @@
   <meta name="revisit-after" content="7 days" />
   <meta name="theme-color" content="#22223b" />
 
-  <!-- Canonical URL -->
+  <!-- Canonical URL - Will be updated dynamically by SEOHead component -->
   <link rel="canonical" href="https://thisistayyab.dev/" />
   
   <!-- Sitemap -->
@@ -167,11 +175,11 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+  <!-- Removed jsdelivr dns-prefetch - remixicon no longer used -->
   <!-- Favicon preload removed to prevent unused preload warning -->
 
   <!-- Stylesheets -->
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+  <!-- Remixicon removed - not used in codebase, was causing un-minified CSS warning -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" />
 
   <!-- Analytics: Using Vercel Analytics (already configured in main.tsx) -->
@@ -593,6 +601,10 @@
 </head>
 
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBDRGWB9"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <noscript>
     <div style="background: #0a192f; color: #ffffff; padding: 2em; max-width: 1200px; margin: 0 auto; font-family: 'Outfit', sans-serif;">
       <header style="text-align: center; padding: 2em 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 2em;">
