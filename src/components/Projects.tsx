@@ -110,20 +110,20 @@ function Projects() {
               "url": baseUrl,
               "jobTitle": "Full Stack Developer"
             },
-            "datePublished": "2023-01-01", // You may want to add actual dates to project data
-            "image": {
+            "datePublished": "2023-01-01",
+            "image": imageUrl ? {
               "@type": "ImageObject",
               "url": imageUrl,
               "width": 400,
-              "height": 220,
-              "caption": `${project.name} - Web Application Screenshot`
-            },
+              "height": 220
+            } : undefined,
             "softwareVersion": "1.0",
             "browserRequirements": "Requires JavaScript. Requires HTML5. Requires CSS3.",
             "offers": {
               "@type": "Offer",
               "price": "0",
-              "priceCurrency": "USD"
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock"
             },
             "creator": {
               "@type": "Person",

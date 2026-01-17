@@ -114,7 +114,7 @@ function Experience() {
             "title": exp.title,
             "description": exp.description,
             "datePosted": formattedStartDate,
-            "validThrough": formattedEndDate,
+            ...(formattedEndDate && { "validThrough": formattedEndDate }),
             "employmentType": "FREELANCE",
             "jobLocation": {
               "@type": "Place",
@@ -127,9 +127,9 @@ function Experience() {
             "hiringOrganization": {
               "@type": "Organization",
               "name": exp.company,
-              "sameAs": exp.company === 'Upwork' ? 'https://www.upwork.com' : 
-                       exp.company === 'Fiverr' ? 'https://www.fiverr.com' : 
-                       exp.company === 'Taylance Technologies' ? baseUrl : undefined
+              ...(exp.company === 'Upwork' && { "sameAs": 'https://www.upwork.com' }),
+              ...(exp.company === 'Fiverr' && { "sameAs": 'https://www.fiverr.com' }),
+              ...(exp.company === 'Taylance Technologies' && { "sameAs": baseUrl })
             },
             "skills": exp.technologies.join(", ")
           } : {
@@ -144,8 +144,8 @@ function Experience() {
               "name": exp.company,
               "sameAs": "https://www.riphah.edu.pk"
             },
-            "dateCreated": startDate,
-            "validUntil": endDate,
+            "dateCreated": formattedStartDate,
+            ...(formattedEndDate && { "validUntil": formattedEndDate }),
             "competencyRequired": exp.technologies
           }
         };

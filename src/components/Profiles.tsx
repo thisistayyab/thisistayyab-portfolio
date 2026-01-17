@@ -68,7 +68,7 @@ function Profiles() {
         "item": {
           "@type": "ProfilePage",
           "@id": `${baseUrl}/#profile-${profile.id}`,
-          "name": `${profile.name} Profile - ${profile.name === 'GitHub' ? 'Code Repository' : profile.name === 'LinkedIn' ? 'Professional Network' : profile.name === 'LeetCode' ? 'Coding Challenges' : profile.name === 'Credly' ? 'Certifications' : 'Freelance Platform'}`,
+          "name": `${profile.name} Profile`,
           "description": profile.description,
           "url": profile.link,
           "mainEntity": {
@@ -77,7 +77,7 @@ function Profiles() {
             "name": "Tayyab",
             "url": baseUrl,
             "jobTitle": "Full Stack Developer",
-            "sameAs": profiles.map(p => p.link)
+            "sameAs": profiles.map(p => p.link).filter(Boolean)
           }
         }
       }))

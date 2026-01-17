@@ -105,7 +105,9 @@ function Clients() {
             "bestRating": 5,
             "worstRating": 1
           },
-          "datePublished": testimonial.date || new Date().getFullYear().toString(),
+          "datePublished": testimonial.date && /^\d{4}$/.test(testimonial.date) 
+            ? `${testimonial.date}-01-01` 
+            : testimonial.date || `${new Date().getFullYear()}-01-01`,
           "itemReviewed": {
             "@type": "Service",
             "name": testimonial.projectType || "Web Development Services",
