@@ -53,11 +53,11 @@ const shouldPrefetch = (href: string): boolean => {
 // Get platform name from URL for structured data
 const getPlatformName = (href: string, platformName?: string): string => {
   if (platformName) return platformName;
-  
+
   try {
     const url = new URL(href, window.location.origin);
     const hostname = url.hostname.toLowerCase();
-    
+
     if (hostname.includes('github')) return 'GitHub';
     if (hostname.includes('linkedin')) return 'LinkedIn';
     if (hostname.includes('leetcode')) return 'LeetCode';
@@ -65,7 +65,7 @@ const getPlatformName = (href: string, platformName?: string): string => {
     if (hostname.includes('instagram')) return 'Instagram';
     if (hostname.includes('facebook')) return 'Facebook';
     if (href.startsWith('mailto:')) return 'Email';
-    
+
     return 'Social Media';
   } catch {
     return platformName || 'Social Media';
@@ -86,22 +86,22 @@ export function SocialIcon({
 }: SocialIconProps) {
   // Use hoverColor if provided, otherwise use the base color
   const effectiveHoverColor = hoverColor || color;
-  
+
   // Calculate icon size - use iconSize prop if provided, otherwise calculate from container size
   const effectiveIconSize = iconSize || Math.round(size * 0.5);
 
   // Determine if link is external
   const external = isExternalLink(href);
-  
+
   // Determine if should prefetch
   const prefetch = shouldPrefetch(href);
-  
+
   // Get platform name for structured data
   const platform = getPlatformName(href, platformName);
-  
+
   // Generate title tooltip (combines platform name with action)
   const tooltipTitle = title || `${ariaLabel} - Connect with Tayyab on ${platform}`;
-  
+
   // Build rel attributes
   const relAttributes = [];
   if (external) {
@@ -152,28 +152,37 @@ export function SocialIcon({
       <meta itemProp="name" content={platform} />
       <meta itemProp="url" content={href} />
       {external && <meta itemProp="description" content={`Tayyab's ${platform} profile`} />}
-      
+
+      {/* Required mainEntity for ProfilePage */}
+      {(platform === 'GitHub' || platform === 'LinkedIn') && (
+        <span itemProp="mainEntity" itemScope itemType="https://schema.org/Person" style={{ display: 'none' }}>
+          <meta itemProp="name" content="Tayyab" />
+          <meta itemProp="jobTitle" content="Full Stack Developer" />
+          <link itemProp="url" href="https://thisistayyab.dev" />
+        </span>
+      )}
+
       {/* Top gradient border - decorative, hidden from screen readers */}
-      <span 
+      <span
         className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[var(--icon-hover-color)] to-white rounded-t-lg scale-x-0 origin-left transition-transform duration-[400ms] ease-in-out group-hover:scale-x-100 z-[2]"
         aria-hidden="true"
       />
-      
+
       {/* Radial glow background - decorative, hidden from screen readers */}
-      <span 
+      <span
         className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,var(--icon-hover-color)_0%,transparent_70%)] opacity-0 transition-opacity duration-[400ms] ease-in-out pointer-events-none z-0 group-hover:opacity-20"
         aria-hidden="true"
       />
-      
+
       {/* Icon wrapper - icon is decorative since link has aria-label */}
-      <span 
+      <span
         className="relative z-[1] transition-transform duration-300 ease-in-out"
         style={{ color: color } as React.CSSProperties}
         aria-hidden="true"
       >
         <Icon size={effectiveIconSize} aria-hidden="true" />
       </span>
-      
+
       {/* Screen reader only text for additional context */}
       <span className="sr-only">
         {external ? 'Opens in new tab' : ''} {platform} profile link

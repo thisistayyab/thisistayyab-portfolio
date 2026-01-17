@@ -48,6 +48,39 @@ function Experience() {
   //   }
   // };
 
+  // Date parsing logic moved to component scope for reuse
+  const parseDate = (dateStr: string): string => {
+    if (!dateStr) return "2023-01-01";
+    // If already in YYYY-MM-DD format
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+
+    const monthMap: Record<string, string> = {
+      'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+      'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
+    };
+
+    // Handle "MMM DD, YYYY" format (e.g., "Dec 9, 2025")
+    const fullDateMatch = dateStr.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/);
+    if (fullDateMatch) {
+      const month = monthMap[fullDateMatch[1]] || '01';
+      const day = fullDateMatch[2].padStart(2, '0');
+      return `${fullDateMatch[3]}-${month}-${day}`;
+    }
+
+    // Handle "MMM YYYY" format (e.g., "Oct 2024")
+    const monthYearMatch = dateStr.match(/(\w+)\s+(\d{4})/);
+    if (monthYearMatch) {
+      const month = monthMap[monthYearMatch[1]] || '01';
+      return `${monthYearMatch[2]}-${month}-01`;
+    }
+
+    // If just year (e.g., "2025")
+    if (/^\d{4}$/.test(dateStr)) return `${dateStr}-01-01`;
+
+    // Default fallback
+    return "2023-01-01";
+  };
+
   // Inject structured data into document head for SEO
   useEffect(() => {
     // Remove existing script if any
@@ -66,45 +99,12 @@ function Experience() {
       "itemListElement": experiences.map((exp, index) => {
         const isWork = exp.type === 'work';
         const periodParts = exp.period.split(' - ');
-        let startDate = periodParts[0];
-        let endDate = periodParts[1] && !exp.period.includes('Present') ? periodParts[1] : undefined;
-        
-        // Convert date formats to ISO (YYYY-MM-DD)
-        const parseDate = (dateStr: string): string => {
-          if (!dateStr) return "2023-01-01";
-          // If already in YYYY-MM-DD format
-          if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
-          
-          const monthMap: Record<string, string> = {
-            'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
-            'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
-          };
-          
-          // Handle "MMM DD, YYYY" format (e.g., "Dec 9, 2025")
-          const fullDateMatch = dateStr.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/);
-          if (fullDateMatch) {
-            const month = monthMap[fullDateMatch[1]] || '01';
-            const day = fullDateMatch[2].padStart(2, '0');
-            return `${fullDateMatch[3]}-${month}-${day}`;
-          }
-          
-          // Handle "MMM YYYY" format (e.g., "Oct 2024")
-          const monthYearMatch = dateStr.match(/(\w+)\s+(\d{4})/);
-          if (monthYearMatch) {
-            const month = monthMap[monthYearMatch[1]] || '01';
-            return `${monthYearMatch[2]}-${month}-01`;
-          }
-          
-          // If just year (e.g., "2025")
-          if (/^\d{4}$/.test(dateStr)) return `${dateStr}-01-01`;
-          
-          // Default fallback
-          return "2023-01-01";
-        };
-        
+        const startDate = periodParts[0];
+        const endDate = periodParts[1] && !exp.period.includes('Present') ? periodParts[1] : undefined;
+
         const formattedStartDate = parseDate(startDate);
         const formattedEndDate = endDate ? parseDate(endDate) : undefined;
-        
+
         return {
           "@type": "ListItem",
           "position": index + 1,
@@ -200,7 +200,7 @@ function Experience() {
   // Helper to convert hex to RGB
   const hexToRgb = (hex: string): string => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result 
+    return result
       ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
       : '59, 130, 246';
   };
@@ -217,14 +217,14 @@ function Experience() {
   }
 
   return (
-    <section 
-      className="max-w-[1200px] mx-auto px-4 py-20 relative overflow-hidden" 
+    <section
+      className="max-w-[1200px] mx-auto px-4 py-20 relative overflow-hidden"
       id="experience"
       aria-labelledby="experience-heading"
       role="region"
     >
       {/* Blurred Circle Background */}
-      <div 
+      <div
         className="absolute top-[30%] right-[10%] w-[200px] h-[200px] bg-blue-500 rounded-full blur-[100px] opacity-[0.15] z-0"
         aria-hidden="true"
       />
@@ -237,8 +237,8 @@ function Experience() {
         transition={{ duration: 0.7 }}
         viewport={{ once: true }}
       >
-        <h2 
-          id="experience-heading" 
+        <h2
+          id="experience-heading"
           className="text-4xl font-semibold mb-4"
         >
           Professional Experience & Education - Full Stack Developer Career
@@ -259,7 +259,13 @@ function Experience() {
           const colorRgb = hexToRgb(exp.color);
           const Icon = exp.Icon;
           const isWork = exp.type === 'work';
-          
+
+          const periodParts = exp.period.split(' - ');
+          const startDate = periodParts[0];
+          const endDate = periodParts[1] && !exp.period.includes('Present') ? periodParts[1] : undefined;
+          const formattedStartDate = parseDate(startDate);
+          const formattedEndDate = endDate ? parseDate(endDate) : undefined;
+
           return (
             <motion.li
               key={exp.id}
@@ -291,15 +297,15 @@ function Experience() {
                   } as React.CSSProperties & { '--experience-color': string; '--experience-color-rgb': string; }}
                 >
                   {/* Icon with shine effect */}
-                  <div 
+                  <div
                     className="w-16 h-16 rounded-[8px] bg-white/5 flex items-center justify-center mb-6 border-[1.5px] border-white/10 transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] relative overflow-hidden group-hover:scale-110 group-hover:rotate-[5deg] experience-icon"
-                    style={{ 
+                    style={{
                       color: exp.color,
                       '--experience-color-rgb': colorRgb,
                     } as React.CSSProperties & { '--experience-color-rgb': string; }}
                     aria-hidden="true"
                   >
-                    <span 
+                    <span
                       className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[linear-gradient(45deg,transparent,rgba(255,255,255,0.1),transparent)] rotate-45 transition-all duration-600 ease-in-out group-hover:animate-shine"
                       aria-hidden="true"
                     />
@@ -322,9 +328,9 @@ function Experience() {
                   </Badge>
 
                   {/* Title */}
-                  <h3 
+                  <h3
                     className="text-2xl font-bold mb-2 text-white bg-clip-text text-transparent transition-all duration-300 ease-in-out experience-title"
-                    style={{ 
+                    style={{
                       '--title-gradient-default': 'linear-gradient(135deg, #ffffff, #94a3b8)',
                       '--title-gradient-hover': `linear-gradient(135deg, ${exp.color}, #8b5cf6)`,
                       backgroundImage: 'var(--title-gradient-default)',
@@ -338,7 +344,7 @@ function Experience() {
                   </h3>
 
                   {/* Company/Organization and Period */}
-                  <h4 
+                  <h4
                     className="text-base font-medium text-[#94a3b8] mb-4"
                     itemProp={isWork ? "hiringOrganization" : "recognizedBy"}
                     itemScope
@@ -346,14 +352,22 @@ function Experience() {
                   >
                     <span itemProp="name">{exp.company}</span>
                     <span className="opacity-60 font-normal"> • {exp.period}</span>
-                    {isWork && <meta itemProp="datePosted" content={exp.period.split(' - ')[0]} />}
-                    {!exp.period.includes('Present') && isWork && (
-                      <meta itemProp="validThrough" content={exp.period.split(' - ')[1]} />
+                    {isWork && <meta itemProp="datePosted" content={formattedStartDate} />}
+                    {isWork && formattedEndDate && (
+                      <meta itemProp="validThrough" content={formattedEndDate} />
+                    )}
+                    {isWork && (
+                      <span itemProp="jobLocation" itemScope itemType="https://schema.org/Place" style={{ display: 'none' }}>
+                        <span itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+                          <meta itemProp="addressLocality" content="Remote" />
+                          <meta itemProp="addressCountry" content="PK" />
+                        </span>
+                      </span>
                     )}
                   </h4>
 
                   {/* Description */}
-                  <p 
+                  <p
                     className="text-[#94a3b8] leading-[1.7] mb-6 text-[0.95rem]"
                     itemProp="description"
                   >
@@ -361,7 +375,7 @@ function Experience() {
                   </p>
 
                   {/* Technologies/Skills */}
-                  <div 
+                  <div
                     className="flex flex-wrap gap-2"
                     aria-label={`Technologies and skills used: ${exp.technologies.join(', ')}`}
                     itemProp={isWork ? "skills" : "competencyRequired"}

@@ -65,6 +65,9 @@ function Services() {
       "name": "Tayyab - Full Stack Web Development Services",
       "description": "Professional full-stack web development services by Tayyab, an expert developer specializing in React, Node.js, Express.js, MongoDB, MERN stack, responsive web design, SEO optimization, cloud deployment, API development, and performance optimization. 3+ years of experience building scalable web applications.",
       "url": `${baseUrl}/#services`,
+      "image": "https://thisistayyab.dev/assets/profile-C5yXg1a2.webp",
+      "priceRange": "$$",
+      "telephone": "+923001234567",
       "provider": {
         "@type": "Person",
         "@id": `${baseUrl}/#person`,
@@ -77,6 +80,11 @@ function Services() {
           "https://pk.linkedin.com/in/thisistayyab",
           "https://www.upwork.com/freelancers/~015384474940802080"
         ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Remote",
+        "addressCountry": "PK"
       },
       "areaServed": "Worldwide",
       "serviceType": services.flatMap(service => service.keywords),
@@ -207,109 +215,109 @@ function Services() {
         <>
           {/* Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10 relative z-[1] items-stretch">
-        {services.map((service, i) => {
-          const Icon = service.Icon;
-          const rgbColor = hexToRgb(service.color);
+            {services.map((service, i) => {
+              const Icon = service.Icon;
+              const rgbColor = hexToRgb(service.color);
 
-          return (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + i * 0.1, duration: 0.7 }}
-              viewport={{ once: true }}
-              className="flex h-full"
-            >
-              <Card
-                glowColor={`rgba(${rgbColor}, 0.15)`}
-                gradientColors={[service.color, `rgba(${rgbColor}, 0.3)`]}
-                hoverScale={true}
-                hoverLift={true}
-                className="h-full w-full flex flex-col group/service-card py-8 px-6"
-                style={{
-                  '--service-color': service.color,
-                  '--service-color-rgb': rgbColor,
-                } as React.CSSProperties}
-                contentClassName="h-full"
-              >
-                <div className="flex flex-col h-full justify-between">
-                  {/* Top content */}
-                  <div>
-                    {/* Icon */}
-                    <div
-                      className={cn(
-                        "w-14 h-14 rounded-lg flex items-center justify-center mb-5 flex-shrink-0",
-                        "bg-white/5 border border-white/10",
-                        "transition-all duration-300 ease-in-out",
-                        "group-hover/service-card:scale-110 group-hover/service-card:rotate-[5deg]",
-                        "group-hover/service-card:bg-white/10"
-                      )}
-                      style={{
-                        color: service.color,
-                      } as React.CSSProperties}
-                      aria-hidden="true"
-                    >
-                      <Icon size={service.iconSize} />
+              return (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + i * 0.1, duration: 0.7 }}
+                  viewport={{ once: true }}
+                  className="flex h-full"
+                >
+                  <Card
+                    glowColor={`rgba(${rgbColor}, 0.15)`}
+                    gradientColors={[service.color, `rgba(${rgbColor}, 0.3)`]}
+                    hoverScale={true}
+                    hoverLift={true}
+                    className="h-full w-full flex flex-col group/service-card py-8 px-6"
+                    style={{
+                      '--service-color': service.color,
+                      '--service-color-rgb': rgbColor,
+                    } as React.CSSProperties}
+                    contentClassName="h-full"
+                  >
+                    <div className="flex flex-col h-full justify-between">
+                      {/* Top content */}
+                      <div>
+                        {/* Icon */}
+                        <div
+                          className={cn(
+                            "w-14 h-14 rounded-lg flex items-center justify-center mb-5 flex-shrink-0",
+                            "bg-white/5 border border-white/10",
+                            "transition-all duration-300 ease-in-out",
+                            "group-hover/service-card:scale-110 group-hover/service-card:rotate-[5deg]",
+                            "group-hover/service-card:bg-white/10"
+                          )}
+                          style={{
+                            color: service.color,
+                          } as React.CSSProperties}
+                          aria-hidden="true"
+                        >
+                          <Icon size={service.iconSize} />
+                        </div>
+
+                        {/* Title */}
+                        <h3
+                          className={cn(
+                            "text-xl font-bold mb-3 relative z-[3] flex-shrink-0",
+                            "bg-clip-text text-transparent",
+                            "transition-all duration-300"
+                          )}
+                          style={{
+                            backgroundImage: 'linear-gradient(135deg, #ffffff, #94a3b8)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                          } as React.CSSProperties}
+                        >
+                          {service.title}
+                        </h3>
+
+                        {/* Description */}
+                        <p className="text-slate-400 text-sm leading-[1.6] opacity-90 mb-4 relative z-[3] flex-1">
+                          {service.description}
+                        </p>
+
+                        {/* Features List */}
+                        <ul className="space-y-2 mb-4 relative z-[3]">
+                          {service.features.slice(0, 3).map((feature, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-xs text-slate-400">
+                              <Check size={14} className="text-green-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Button - Fixed at bottom */}
+                      <div className="relative z-[3] mt-auto">
+                        <Button
+                          asChild
+                          variant="default"
+                          glowColor={service.color}
+                          className="w-full"
+                          style={{
+                            borderColor: service.color,
+                            color: service.color,
+                          } as React.CSSProperties}
+                        >
+                          <Link
+                            to="/contact"
+                            aria-label={`Get ${service.title} service - Contact Tayyab`}
+                          >
+                            Get Service
+                          </Link>
+                        </Button>
+                      </div>
                     </div>
-
-                    {/* Title */}
-                    <h3
-                      className={cn(
-                        "text-xl font-bold mb-3 relative z-[3] flex-shrink-0",
-                        "bg-clip-text text-transparent",
-                        "transition-all duration-300"
-                      )}
-                      style={{
-                        backgroundImage: 'linear-gradient(135deg, #ffffff, #94a3b8)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        backgroundClip: 'text',
-                      } as React.CSSProperties}
-                    >
-                      {service.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-slate-400 text-sm leading-[1.6] opacity-90 mb-4 relative z-[3] flex-1">
-                      {service.description}
-                    </p>
-
-                    {/* Features List */}
-                    <ul className="space-y-2 mb-4 relative z-[3]">
-                      {service.features.slice(0, 3).map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-xs text-slate-400">
-                          <Check size={14} className="text-green-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Button - Fixed at bottom */}
-                  <div className="relative z-[3] mt-auto">
-                    <Button
-                      asChild
-                      variant="default"
-                      glowColor={service.color}
-                      className="w-full"
-                      style={{
-                        borderColor: service.color,
-                        color: service.color,
-                      } as React.CSSProperties}
-                    >
-                      <Link
-                        to="/contact"
-                        aria-label={`Get ${service.title} service - Contact Tayyab`}
-                      >
-                        Get Service
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
-          );
-        })}
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </>
       )}

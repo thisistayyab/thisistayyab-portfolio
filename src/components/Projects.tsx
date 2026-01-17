@@ -68,7 +68,7 @@ function Projects() {
   // Inject structured data into document head (better for SEO than inline)
   useEffect(() => {
     if (projects.length === 0) return;
-    
+
     // Remove existing script if any
     const existingScript = document.getElementById('projects-structured-data');
     if (existingScript) {
@@ -86,12 +86,12 @@ function Projects() {
         const projectUrl = project.link || `${baseUrl}/#project-${project.id}`;
         // Handle image URL - if it's a relative path, it's likely in /src/assets, so we'll use the project link or a placeholder
         // For SPA, we'll use the project's live URL if available, otherwise the canonical project URL
-        const imageUrl = project.img.startsWith('http') 
-          ? project.img 
-          : project.link 
+        const imageUrl = project.img.startsWith('http')
+          ? project.img
+          : project.link
             ? `${project.link}/og-image.jpg` // Assuming projects might have OG images
             : `${baseUrl}/project-${project.id}.jpg`; // Fallback to a predictable URL structure
-        
+
         return {
           "@type": "ListItem",
           "position": index + 1,
@@ -192,18 +192,18 @@ function Projects() {
   }
 
   return (
-    <section 
-      className="max-w-[1200px] mx-auto px-4 py-20 relative overflow-hidden" 
+    <section
+      className="max-w-[1200px] mx-auto px-4 py-20 relative overflow-hidden"
       id="project"
       aria-labelledby="projects-heading"
       role="region"
     >
       {/* Blurred Circle Background */}
-      <div 
+      <div
         className="absolute top-[60%] left-[70%] w-[180px] h-[180px] bg-[#7952B3] rounded-full blur-[90px] opacity-[0.13] z-0"
         aria-hidden="true"
       />
-      
+
       {/* Header */}
       <motion.div
         className="mb-16 flex flex-col items-center justify-between gap-8"
@@ -233,8 +233,8 @@ function Projects() {
                   setActive(filter.value);
                   setVisibleCount(6);
                 }}
-                className={active === filter.value 
-                  ? "bg-[linear-gradient(135deg,rgba(59,130,246,0.3),rgba(139,92,246,0.3))] border-[rgba(59,130,246,0.8)] shadow-[0_0_20px_rgba(59,130,246,0.6),0_0_40px_rgba(139,92,246,0.3)] -translate-y-0.5" 
+                className={active === filter.value
+                  ? "bg-[linear-gradient(135deg,rgba(59,130,246,0.3),rgba(139,92,246,0.3))] border-[rgba(59,130,246,0.8)] shadow-[0_0_20px_rgba(59,130,246,0.6),0_0_40px_rgba(139,92,246,0.3)] -translate-y-0.5"
                   : ""
                 }
                 title={`Filter by ${filter.label}`}
@@ -280,6 +280,12 @@ function Projects() {
                 itemType="https://schema.org/SoftwareApplication"
               >
                 <meta itemProp="position" content={String(i + 1)} />
+                <meta itemProp="applicationCategory" content="WebApplication" />
+                <meta itemProp="operatingSystem" content="Web Browser" />
+                <div itemProp="offers" itemScope itemType="https://schema.org/Offer" style={{ display: 'none' }}>
+                  <meta itemProp="price" content="0" />
+                  <meta itemProp="priceCurrency" content="USD" />
+                </div>
                 <Card
                   className="p-0 overflow-hidden h-full flex flex-col"
                   glowColor="rgba(59, 130, 246, 0.1)"
@@ -289,9 +295,9 @@ function Projects() {
                   {/* Project Image - Fixed height, stretches to cover entire area with no blank space */}
                   <div className="relative w-full h-[220px] overflow-hidden bg-[linear-gradient(135deg,#1e1e2f,#2d2d44)] m-0 p-0">
                     {project.link ? (
-                      <a 
-                        href={project.link} 
-                        target="_blank" 
+                      <a
+                        href={project.link}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="absolute inset-0 w-full h-full block overflow-hidden m-0 p-0"
                         aria-label={`Visit ${project.name} live project - Opens in new tab`}
@@ -307,7 +313,7 @@ function Projects() {
                           style={{ minWidth: '100%', minHeight: '100%' }}
                           itemProp="image"
                         />
-                        <span 
+                        <span
                           className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,0,0,0.3)_100%)] opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover:opacity-100 z-[1]"
                           aria-hidden="true"
                         />
@@ -330,15 +336,15 @@ function Projects() {
 
                   {/* Project Info */}
                   <div className="p-6 sm:p-6 text-left bg-black/20 relative z-[2] max-[860px]:px-2 max-[860px]:py-3 flex-1 flex flex-col">
-                    <h3 
+                    <h3
                       id={`${projectId}-title`}
                       className="text-xl sm:text-xl max-[860px]:text-base font-bold mb-3 text-white bg-[linear-gradient(135deg,#ffffff,#94a3b8)] bg-clip-text text-transparent transition-all duration-300 ease-in-out group-hover:bg-[linear-gradient(135deg,#3b82f6,#8b5cf6)] group-hover:bg-clip-text"
                       itemProp="name"
                     >
                       {project.name}
                     </h3>
-                    
-                    <p 
+
+                    <p
                       id={`${projectId}-description`}
                       className="text-[0.95rem] sm:text-[0.95rem] max-[860px]:text-[0.9rem] text-[#94a3b8] mb-4 leading-[1.6] opacity-90 flex-grow"
                       itemProp="description"
@@ -375,9 +381,9 @@ function Projects() {
                             <div className="flex-1 h-[10px] bg-white/5 rounded-[10px] overflow-hidden border border-white/10 relative" role="progressbar" aria-valuenow={parseInt(tech.width)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech.label} skill level: ${tech.width}`}>
                               <motion.div
                                 className="h-full rounded-[10px] relative shadow-[0_0_10px_rgba(59,130,246,0.5)] min-w-0"
-                                style={{ 
+                                style={{
                                   background: tech.color,
-                                  width: tech.width 
+                                  width: tech.width
                                 }}
                                 initial={{ width: 0 }}
                                 animate={{ width: tech.width }}
@@ -387,7 +393,7 @@ function Projects() {
                                   ease: [0.4, 0, 0.2, 1]
                                 }}
                               >
-                                <span 
+                                <span
                                   className="absolute top-0 left-0 right-0 bottom-0 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] animate-shimmer"
                                   aria-hidden="true"
                                 />
@@ -514,16 +520,16 @@ function Projects() {
                 height={400}
                 loading="lazy"
               />
-              
-              <h2 
+
+              <h2
                 id="modal-title"
                 className="text-3xl font-bold mb-4 bg-[linear-gradient(135deg,#ffffff,#94a3b8)] bg-clip-text text-transparent"
                 itemProp="name"
               >
                 {selectedProject.name}
               </h2>
-              
-              <p 
+
+              <p
                 id="modal-description"
                 className="text-base leading-[1.8] text-[#94a3b8] mb-6"
                 itemProp="description"
@@ -535,6 +541,13 @@ function Projects() {
               <link itemProp="url" href={selectedProject.link || `${baseUrl}/#project-${selectedProject.id}`} />
               <meta itemProp="datePublished" content="2023-01-01" />
               <meta itemProp="softwareVersion" content="1.0" />
+              <meta itemProp="softwareVersion" content="1.0" />
+              <meta itemProp="applicationCategory" content="WebApplication" />
+              <meta itemProp="operatingSystem" content="Web Browser" />
+              <div itemProp="offers" itemScope itemType="https://schema.org/Offer" style={{ display: 'none' }}>
+                <meta itemProp="price" content="0" />
+                <meta itemProp="priceCurrency" content="USD" />
+              </div>
               <meta itemProp="browserRequirements" content="Requires JavaScript. Requires HTML5. Requires CSS3." />
               <div itemProp="author" itemScope itemType="https://schema.org/Person" className="sr-only">
                 <meta itemProp="name" content="Tayyab" />
@@ -548,9 +561,9 @@ function Projects() {
                   <ul className="flex flex-wrap gap-2 list-none" role="list">
                     {selectedProject.technologies.map((tech, idx) => (
                       <li key={tech.label + idx} role="listitem">
-                        <span 
+                        <span
                           className="inline-block px-3 py-1 rounded-full text-sm font-medium"
-                          style={{ 
+                          style={{
                             background: `${tech.color}20`,
                             color: tech.color,
                             border: `1px solid ${tech.color}40`
