@@ -106,17 +106,22 @@ function Clients() {
             "worstRating": 1
           },
           "datePublished": testimonial.date || new Date().getFullYear().toString(),
-          ...(testimonial.projectType && {
-            "itemReviewed": {
-              "@type": "Service",
-              "name": testimonial.projectType,
-              "provider": {
-                "@type": "Person",
-                "@id": `${baseUrl}/#person`,
-                "name": "Tayyab"
-              }
-            }
-          })
+          "itemReviewed": {
+            "@type": "Service",
+            "name": testimonial.projectType || "Web Development Services",
+            "description": testimonial.projectType 
+              ? `${testimonial.projectType} services provided by Tayyab, a full-stack web developer.`
+              : "Professional web development services including full-stack development, React, Node.js, Express, MongoDB, and MERN stack development.",
+            "provider": {
+              "@type": "Person",
+              "@id": `${baseUrl}/#person`,
+              "name": "Tayyab",
+              "url": baseUrl,
+              "jobTitle": "Full Stack Developer"
+            },
+            "serviceType": testimonial.projectType || "Web Development",
+            "areaServed": "Worldwide"
+          }
         }
       }))
     };

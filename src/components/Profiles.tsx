@@ -78,14 +78,6 @@ function Profiles() {
             "url": baseUrl,
             "jobTitle": "Full Stack Developer",
             "sameAs": profiles.map(p => p.link)
-          },
-          "about": {
-            "@type": "Thing",
-            "name": profile.name === 'GitHub' ? "Software Development" :
-              profile.name === 'LinkedIn' ? "Professional Networking" :
-                profile.name === 'LeetCode' ? "Algorithm and Data Structure Practice" :
-                  profile.name === 'Credly' ? "Professional Certifications" :
-                    "Freelance Web Development Services"
           }
         }
       }))

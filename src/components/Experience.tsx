@@ -66,22 +66,65 @@ function Experience() {
       "itemListElement": experiences.map((exp, index) => {
         const isWork = exp.type === 'work';
         const periodParts = exp.period.split(' - ');
-        const startDate = periodParts[0];
-        const endDate = periodParts[1] && !exp.period.includes('Present') ? periodParts[1] : undefined;
+        let startDate = periodParts[0];
+        let endDate = periodParts[1] && !exp.period.includes('Present') ? periodParts[1] : undefined;
+        
+        // Convert date formats to ISO (YYYY-MM-DD)
+        const parseDate = (dateStr: string): string => {
+          if (!dateStr) return "2023-01-01";
+          // If already in YYYY-MM-DD format
+          if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+          
+          const monthMap: Record<string, string> = {
+            'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+            'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
+          };
+          
+          // Handle "MMM DD, YYYY" format (e.g., "Dec 9, 2025")
+          const fullDateMatch = dateStr.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/);
+          if (fullDateMatch) {
+            const month = monthMap[fullDateMatch[1]] || '01';
+            const day = fullDateMatch[2].padStart(2, '0');
+            return `${fullDateMatch[3]}-${month}-${day}`;
+          }
+          
+          // Handle "MMM YYYY" format (e.g., "Oct 2024")
+          const monthYearMatch = dateStr.match(/(\w+)\s+(\d{4})/);
+          if (monthYearMatch) {
+            const month = monthMap[monthYearMatch[1]] || '01';
+            return `${monthYearMatch[2]}-${month}-01`;
+          }
+          
+          // If just year (e.g., "2025")
+          if (/^\d{4}$/.test(dateStr)) return `${dateStr}-01-01`;
+          
+          // Default fallback
+          return "2023-01-01";
+        };
+        
+        const formattedStartDate = parseDate(startDate);
+        const formattedEndDate = endDate ? parseDate(endDate) : undefined;
         
         return {
           "@type": "ListItem",
           "position": index + 1,
           "item": isWork ? {
-            "@type": "OrganizationRole",
+            "@type": "JobPosting",
             "@id": `${baseUrl}/#experience-${exp.id}`,
-            "roleName": exp.title,
+            "title": exp.title,
             "description": exp.description,
-            "startDate": startDate,
-            "endDate": endDate,
-            "numberedPosition": index + 1,
-            "organizationName": exp.company,
-            "organization": {
+            "datePosted": formattedStartDate,
+            "validThrough": formattedEndDate,
+            "employmentType": "FREELANCE",
+            "jobLocation": {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "PK",
+                "addressLocality": "Remote"
+              }
+            },
+            "hiringOrganization": {
               "@type": "Organization",
               "name": exp.company,
               "sameAs": exp.company === 'Upwork' ? 'https://www.upwork.com' : 
