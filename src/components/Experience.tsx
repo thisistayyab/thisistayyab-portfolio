@@ -332,11 +332,21 @@ function Experience() {
                       <meta itemProp="employmentType" content="CONTRACTOR" />
                       <meta itemProp="jobLocationType" content="TELECOMMUTE" />
                       <meta itemProp="datePosted" content={formattedStartDate} />
-                      {formattedEndDate && <meta itemProp="validThrough" content={formattedEndDate} />}
+                      <meta itemProp="validThrough" content={formattedEndDate || "2026-12-31"} />
+                      <span itemProp="applicantLocationRequirements" itemScope itemType="https://schema.org/Country">
+                        <meta itemProp="name" content="PK" />
+                      </span>
                       <span itemProp="jobLocation" itemScope itemType="https://schema.org/Place" style={{ display: 'none' }}>
                         <span itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
                           <meta itemProp="addressLocality" content="Islamabad" />
                           <meta itemProp="addressCountry" content="PK" />
+                        </span>
+                      </span>
+                      <span itemProp="baseSalary" itemScope itemType="https://schema.org/MonetaryAmount" style={{ display: 'none' }}>
+                        <meta itemProp="currency" content="USD" />
+                        <span itemProp="value" itemScope itemType="https://schema.org/QuantitativeValue">
+                          <meta itemProp="value" content="0" />
+                          <meta itemProp="unitText" content="HOUR" />
                         </span>
                       </span>
                     </>
