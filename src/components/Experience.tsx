@@ -322,10 +322,25 @@ function Experience() {
                       borderColor: `rgba(${colorRgb}, 0.3)`,
                       '--experience-color-rgb': colorRgb,
                     } as React.CSSProperties & { '--experience-color-rgb': string; }}
-                    itemProp={isWork ? "employmentType" : "credentialCategory"}
                   >
                     {isWork ? 'Work' : 'Education'}
                   </Badge>
+
+                  {/* Schema.org Meta Data for JobPosting - Decoupled from UI */}
+                  {isWork && (
+                    <>
+                      <meta itemProp="employmentType" content="CONTRACTOR" />
+                      <meta itemProp="jobLocationType" content="TELECOMMUTE" />
+                      <meta itemProp="datePosted" content={formattedStartDate} />
+                      {formattedEndDate && <meta itemProp="validThrough" content={formattedEndDate} />}
+                      <span itemProp="jobLocation" itemScope itemType="https://schema.org/Place" style={{ display: 'none' }}>
+                        <span itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+                          <meta itemProp="addressLocality" content="Islamabad" />
+                          <meta itemProp="addressCountry" content="PK" />
+                        </span>
+                      </span>
+                    </>
+                  )}
 
                   {/* Title */}
                   <h3
@@ -352,18 +367,6 @@ function Experience() {
                   >
                     <span itemProp="name">{exp.company}</span>
                     <span className="opacity-60 font-normal"> • {exp.period}</span>
-                    {isWork && <meta itemProp="datePosted" content={formattedStartDate} />}
-                    {isWork && formattedEndDate && (
-                      <meta itemProp="validThrough" content={formattedEndDate} />
-                    )}
-                    {isWork && (
-                      <span itemProp="jobLocation" itemScope itemType="https://schema.org/Place" style={{ display: 'none' }}>
-                        <span itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-                          <meta itemProp="addressLocality" content="Remote" />
-                          <meta itemProp="addressCountry" content="PK" />
-                        </span>
-                      </span>
-                    )}
                   </h4>
 
                   {/* Description */}
@@ -395,9 +398,9 @@ function Experience() {
                       >
                         <span
                           className="absolute top-0 -left-full w-full h-full 
-                          bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)]
-                          transition-all duration-500 ease-in-out
-                          group-hover/tech:left-full"
+                            bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)]
+                            transition-all duration-500 ease-in-out
+                            group-hover/tech:left-full"
                           aria-hidden="true"
                         />
                         <span className="relative z-[1]">{tech}</span>
@@ -410,7 +413,7 @@ function Experience() {
           );
         })}
       </motion.ul>
-    </section>
+    </section >
   );
 }
 
