@@ -58,14 +58,15 @@ import { ServicesManagement } from './dashboard/ServicesManagement';
 import { ProfilesManagement } from './dashboard/ProfilesManagement';
 import { TestimonialsManagement } from './dashboard/TestimonialsManagement';
 import { ExperiencesManagement } from './dashboard/ExperiencesManagement';
+import { BlogManagement } from './dashboard/blog/BlogManagement';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { EventsAnalytics } from './dashboard/EventsAnalytics';
 import countries from 'world-countries';
 import citiesData from 'cities.json';
 
-type DashboardTab = 'overview' | 'projects' | 'services' | 'profiles' | 'testimonials' | 'experiences' | 'contacts' | 'visitors' | 'events';
+type DashboardTab = 'overview' | 'projects' | 'services' | 'profiles' | 'testimonials' | 'experiences' | 'contacts' | 'visitors' | 'events' | 'blog';
 
-  // Create country name to ISO code mapping from world-countries
+// Create country name to ISO code mapping from world-countries
 const createCountryToISOMapping = (): Record<string, string> => {
   try {
     const mapping: Record<string, string> = {};
@@ -437,28 +438,28 @@ export const Dashboard: React.FC = () => {
         console.warn('cities.json data is not in expected format');
         return map;
       }
-      
+
       // Process cities in batches to avoid blocking (limit to first 100k for performance)
       const maxCities = Math.min(citiesArray.length, 100000);
       const processedCities = new Set<string>(); // Track processed city+country combinations
-      
+
       for (let i = 0; i < maxCities; i++) {
         const city = citiesArray[i];
         if (!city || !city.country || !city.name) continue;
-        
+
         const countryCode = city.country;
         const cityKey = `${countryCode}:${city.name}`;
-        
+
         // Skip duplicates
         if (processedCities.has(cityKey)) continue;
         processedCities.add(cityKey);
-        
+
         if (!map[countryCode]) {
           map[countryCode] = [];
         }
         map[countryCode].push(city.name);
       }
-      
+
       // Sort cities for each country
       Object.keys(map).forEach((countryCode) => {
         map[countryCode].sort();
@@ -559,7 +560,7 @@ export const Dashboard: React.FC = () => {
 
   const fetchDashboardData = async () => {
     if (!startDate || !endDate) return;
-    
+
     try {
       // Format dates using the selected date components directly
       // This ensures Jan 1-15 selected queries for Jan 1-15, regardless of timezone
@@ -578,7 +579,7 @@ export const Dashboard: React.FC = () => {
           return start.toISOString();
         }
       };
-      
+
       const startDateStr = formatDateForQuery(startDate, false);
       // For end date, we'll use < (less than) the next day's midnight
       const endDateStr = formatDateForQuery(endDate, true);
@@ -847,7 +848,7 @@ export const Dashboard: React.FC = () => {
         referrerPageViews.forEach((pv) => {
           // Handle all referrer cases: null, empty string, "Direct", or actual URLs
           let normalizedReferrer = 'Direct'; // Default to Direct
-          
+
           if (pv.referrer && pv.referrer.trim() !== '') {
             normalizedReferrer = pv.referrer.trim();
             try {
@@ -866,7 +867,7 @@ export const Dashboard: React.FC = () => {
               normalizedReferrer = normalizedReferrer.replace('www.', '');
             }
           }
-          
+
           referrerCounts[normalizedReferrer] = (referrerCounts[normalizedReferrer] || 0) + 1;
         });
       }
@@ -936,11 +937,11 @@ export const Dashboard: React.FC = () => {
 
   const processTimeSeriesData = (data: any[], dateField: string) => {
     if (!startDate || !endDate) return [];
-    
+
     const grouped: Record<string, number> = {};
     const start = new Date(startDate);
     const end = new Date(endDate);
-    
+
     // Calculate number of days in range
     const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 
@@ -1062,6 +1063,8 @@ export const Dashboard: React.FC = () => {
         return <TestimonialsManagement />;
       case 'experiences':
         return <ExperiencesManagement />;
+      case 'blog':
+        return <BlogManagement />;
       case 'contacts':
         return (
           <div className="p-6">
@@ -1114,8 +1117,8 @@ export const Dashboard: React.FC = () => {
                             }
                             disabled={updatingStatus === contact.id}
                             className={`px-2 py-1 rounded text-xs cursor-pointer transition-all ${contact.is_read
-                                ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
-                                : 'bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30'
+                              ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
+                              : 'bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30'
                               } ${updatingStatus === contact.id ? 'opacity-50 cursor-not-allowed' : ''}`}
                             title={contact.is_read ? 'Click to mark as unread' : 'Click to mark as read'}
                           >
@@ -1506,8 +1509,8 @@ export const Dashboard: React.FC = () => {
             <button
               onClick={() => setActiveTab('overview')}
               className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'overview'
-                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
                 }`}
             >
               <BarChart3 size={18} className="inline mr-2" />
@@ -1516,8 +1519,8 @@ export const Dashboard: React.FC = () => {
             <button
               onClick={() => setActiveTab('visitors')}
               className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'visitors'
-                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
                 }`}
             >
               <Globe2 size={18} className="inline mr-2" />
@@ -1526,8 +1529,8 @@ export const Dashboard: React.FC = () => {
             <button
               onClick={() => setActiveTab('events')}
               className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'events'
-                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
                 }`}
             >
               <MousePointerClick size={18} className="inline mr-2" />
@@ -1538,10 +1541,20 @@ export const Dashboard: React.FC = () => {
               Content Management
             </div>
             <button
+              onClick={() => setActiveTab('blog')}
+              className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'blog'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                }`}
+            >
+              <MessageSquare size={18} className="inline mr-2" />
+              Blog
+            </button>
+            <button
               onClick={() => setActiveTab('projects')}
               className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'projects'
-                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
                 }`}
             >
               <FolderKanban size={18} className="inline mr-2" />
@@ -1550,8 +1563,8 @@ export const Dashboard: React.FC = () => {
             <button
               onClick={() => setActiveTab('services')}
               className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'services'
-                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
                 }`}
             >
               <Settings size={18} className="inline mr-2" />
@@ -1560,8 +1573,8 @@ export const Dashboard: React.FC = () => {
             <button
               onClick={() => setActiveTab('profiles')}
               className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'profiles'
-                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
                 }`}
             >
               <UserCircle size={18} className="inline mr-2" />
@@ -1570,8 +1583,8 @@ export const Dashboard: React.FC = () => {
             <button
               onClick={() => setActiveTab('testimonials')}
               className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'testimonials'
-                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
                 }`}
             >
               <MessageSquare size={18} className="inline mr-2" />
@@ -1580,8 +1593,8 @@ export const Dashboard: React.FC = () => {
             <button
               onClick={() => setActiveTab('experiences')}
               className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'experiences'
-                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
                 }`}
             >
               <Briefcase size={18} className="inline mr-2" />
@@ -1590,8 +1603,8 @@ export const Dashboard: React.FC = () => {
             <button
               onClick={() => setActiveTab('contacts')}
               className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${activeTab === 'contacts'
-                  ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
+                ? 'bg-[linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2))] border-[1.5px] border-[rgba(59,130,246,0.8)] text-white backdrop-blur-[10px] shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'text-gray-300 bg-white/5 border border-white/10 backdrop-blur-[10px] hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5'
                 }`}
             >
               <Mail size={18} className="inline mr-2" />
@@ -1784,7 +1797,7 @@ const VisitorsAnalytics: React.FC<{
     isOpen: false,
     title: '',
     message: '',
-    onConfirm: () => {},
+    onConfirm: () => { },
     variant: 'danger',
   });
 
@@ -1796,7 +1809,7 @@ const VisitorsAnalytics: React.FC<{
 
   const fetchVisitorsData = async () => {
     if (!startDate || !endDate) return;
-    
+
     try {
       setLoading(true);
       // Format dates using the selected date components directly
@@ -1812,7 +1825,7 @@ const VisitorsAnalytics: React.FC<{
           return start.toISOString();
         }
       };
-      
+
       const startDateStr = formatDateForQuery(startDate, false);
       const endDateStr = formatDateForQuery(endDate, true);
 
@@ -1840,7 +1853,7 @@ const VisitorsAnalytics: React.FC<{
         setLoading(false);
         return; // Return early instead of throwing to prevent breaking the page
       }
-      
+
       if (!allVisitorsData) {
         setLoading(false);
         return;
@@ -1857,7 +1870,7 @@ const VisitorsAnalytics: React.FC<{
 
       // Store all visitors for grouping
       setAllVisitors(allVisitorsData || []);
-      
+
       // Group by IP address - show unique IPs with visit counts
       const ipGroups: Record<string, PageView[]> = {};
       (allVisitorsData || []).forEach((visitor) => {
@@ -1981,7 +1994,7 @@ const VisitorsAnalytics: React.FC<{
   const handleDeleteAllVisitsForIP = async (ipAddress: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const visitCount = (visitors.find(v => v.ip_address === ipAddress) as any)?.visit_count || 1;
-    
+
     setConfirmModal({
       isOpen: true,
       title: 'Delete All Visits',
@@ -2021,7 +2034,7 @@ const VisitorsAnalytics: React.FC<{
 
   const handleDeleteVisit = async (visitId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     setConfirmModal({
       isOpen: true,
       title: 'Delete Visit Record',
@@ -2064,14 +2077,14 @@ const VisitorsAnalytics: React.FC<{
       console.log('Invalid IP:', ip);
       return;
     }
-    
+
     console.log('Opening modal for IP:', ip);
     setSelectedIP(ip);
     setIsModalOpen(true);
     setLoadingIPVisits(true);
 
     if (!startDate || !endDate) return;
-    
+
     try {
       // Format dates using the selected date components directly
       const formatDateForQuery = (date: Date, isEnd: boolean) => {
@@ -2086,7 +2099,7 @@ const VisitorsAnalytics: React.FC<{
           return start.toISOString();
         }
       };
-      
+
       const startDateStr = formatDateForQuery(startDate, false);
       const endDateStr = formatDateForQuery(endDate, true);
 
@@ -2111,7 +2124,7 @@ const VisitorsAnalytics: React.FC<{
         console.error('Query error:', error);
         throw error;
       }
-      
+
       console.log('Fetched visits:', data?.length);
       setIpVisits(data || []);
     } catch (error) {
@@ -2307,7 +2320,7 @@ const VisitorsAnalytics: React.FC<{
                           if (!rawReferrer || rawReferrer.trim() === '' || rawReferrer.toLowerCase() === 'direct') {
                             return 'Direct';
                           }
-                          
+
                           let displayReferrer = rawReferrer.trim();
                           try {
                             // Normalize referrer for display - extract domain from URL
@@ -2456,9 +2469,9 @@ const VisitorsAnalytics: React.FC<{
                   <p>No visits found for this IP address</p>
                 </div>
               ) : (
-                <div 
+                <div
                   className="overflow-y-auto overflow-x-auto flex-1 modal-scrollable"
-                  style={{ 
+                  style={{
                     maxHeight: 'calc(90vh - 200px)',
                   }}
                 >
@@ -2513,7 +2526,7 @@ const VisitorsAnalytics: React.FC<{
                                 if (!rawReferrer || rawReferrer.trim() === '' || rawReferrer.toLowerCase() === 'direct') {
                                   return 'Direct';
                                 }
-                                
+
                                 let displayReferrer = rawReferrer.trim();
                                 try {
                                   // Normalize referrer for display - extract domain from URL
@@ -2570,19 +2583,19 @@ const VisitorsAnalytics: React.FC<{
               </Button>
             </CardFooter>
           </Card>
-          </div>
-        )}
-        
-        {/* Confirmation Modal */}
-        <ConfirmModal
-          isOpen={confirmModal.isOpen}
-          onClose={() => setConfirmModal({ ...confirmModal, isOpen: false })}
-          onConfirm={confirmModal.onConfirm}
-          title={confirmModal.title}
-          message={confirmModal.message}
-          variant={confirmModal.variant || 'danger'}
-          isLoading={deletingIds.size > 0}
-        />
-      </div>
-    );
-  };
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        onClose={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+        onConfirm={confirmModal.onConfirm}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        variant={confirmModal.variant || 'danger'}
+        isLoading={deletingIds.size > 0}
+      />
+    </div>
+  );
+};

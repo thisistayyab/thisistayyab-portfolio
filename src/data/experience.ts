@@ -51,16 +51,4 @@ export const experiences: Experience[] = [
     description: 'Building modern, scalable software solutions across full-stack web development, AI integration, and automation. Responsible for developing complete MERN applications and designing efficient architectures.',
     technologies: ['Node.js', 'Full-Stack Development', 'AI Integration', 'Automation']
   },
-  {
-    id: 4,
-    type: 'education',
-    Icon: RiGraduationCapLine,
-    iconSize: 32,
-    color: '#ec4899',
-    title: "Bachelor's Degree, Computer Science",
-    company: 'Riphah International University',
-    period: 'Aug 2023 - Present',
-    description: 'Achieved Grade: 3.96/4. Active Cabinet Member of Riphah Blood Donor Society. Focusing on advanced computer science concepts, software engineering principles, and practical application development.',
-    technologies: ['C++', 'Program Management', 'DSA', 'Software Engineering']
-  }
 ];

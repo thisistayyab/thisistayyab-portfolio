@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import { GlobalBackground } from './components/GlobalBackground';
 import Clients from './components/Clients';
 import { trackPageView } from './lib/analytics';
+import HomeBlog from './components/HomeBlog';
 
 interface PortfolioProps {
   isDesktop: boolean;
@@ -38,6 +39,7 @@ function Portfolio({ isDesktop }: PortfolioProps) {
         <Experience />
         <Clients />
         <Services />
+        <HomeBlog />
         <Profiles />
         <Contact />
         <Footer />

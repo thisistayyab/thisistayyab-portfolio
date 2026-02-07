@@ -7,7 +7,13 @@ interface RouteMetaTags {
   ogTitle?: string;
   ogDescription?: string;
   keywords?: string;
+  image?: string; // Added for blog cover images
+  type?: string; // Added for og:type
+  publishedTime?: string; // Added for article:published_time
+  author?: string; // Added for article:author
 }
+
+interface SEOHeadProps extends Partial<RouteMetaTags> { } // Allow passing detailed props
 
 const routeMetaTags: Record<string, RouteMetaTags> = {
   '/': {
@@ -54,9 +60,17 @@ const routeMetaTags: Record<string, RouteMetaTags> = {
 
 const baseUrl = 'https://thisistayyab.dev';
 
-export const SEOHead: React.FC = () => {
+export const SEOHead: React.FC<SEOHeadProps> = (props) => {
   const location = useLocation();
-  const meta = routeMetaTags[location.pathname] || routeMetaTags['/'];
+  const staticMeta = routeMetaTags[location.pathname] || routeMetaTags['/'];
+
+  // Merge static meta with passed props, props take precedence
+  const meta = {
+    ...staticMeta,
+    ...props,
+    title: props.title || staticMeta.title,
+    description: props.description || staticMeta.description,
+  };
 
   useEffect(() => {
     // Update title
@@ -75,7 +89,7 @@ export const SEOHead: React.FC = () => {
 
     // Update meta description
     updateMetaTag('description', meta.description);
-    
+
     // Update meta title
     updateMetaTag('title', meta.title);
 
@@ -88,6 +102,20 @@ export const SEOHead: React.FC = () => {
     updateMetaTag('og:title', meta.ogTitle || meta.title, 'property');
     updateMetaTag('og:description', meta.ogDescription || meta.description, 'property');
     updateMetaTag('og:url', `${baseUrl}${location.pathname}`, 'property');
+    updateMetaTag('og:type', meta.type || 'website', 'property');
+
+    if (meta.image) {
+      updateMetaTag('og:image', meta.image.startsWith('http') ? meta.image : `${baseUrl}${meta.image}`, 'property');
+      updateMetaTag('twitter:image', meta.image.startsWith('http') ? meta.image : `${baseUrl}${meta.image}`);
+    }
+
+    if (meta.publishedTime) {
+      updateMetaTag('article:published_time', meta.publishedTime, 'property');
+    }
+
+    if (meta.author) {
+      updateMetaTag('article:author', meta.author, 'property');
+    }
 
     // Update Twitter Card tags
     updateMetaTag('twitter:title', meta.ogTitle || meta.title);
@@ -97,7 +125,7 @@ export const SEOHead: React.FC = () => {
     // Update canonical URL - ensure no trailing slash and consistent format
     const canonicalPath = location.pathname === '/' ? '/' : location.pathname.replace(/\/$/, '');
     const canonicalUrl = `${baseUrl}${canonicalPath}`;
-    
+
     let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (!canonicalLink) {
       canonicalLink = document.createElement('link');

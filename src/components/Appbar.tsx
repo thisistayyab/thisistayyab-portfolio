@@ -45,6 +45,7 @@ export default function AppAppBar() {
         '/': 'home',
         '/about': 'about',
         '/projects': 'project',
+        '/blog': 'blog',
         '/experience': 'experience',
         '/testimonials': 'client',
         '/services': 'services',
@@ -122,7 +123,7 @@ export default function AppAppBar() {
       const scrollPosition = window.scrollY + 200; // Offset for navbar height
       const scrollDirection = window.scrollY > lastScrollY ? 'down' : 'up';
       lastScrollY = window.scrollY;
-      
+
       let foundSection = false;
       let currentSection = '';
 
@@ -135,8 +136,8 @@ export default function AppAppBar() {
 
       // When scrolling down, check from top to bottom
       // When scrolling up, check from bottom to top
-      const checkOrder = scrollDirection === 'down' 
-        ? sortedSections 
+      const checkOrder = scrollDirection === 'down'
+        ? sortedSections
         : [...sortedSections].reverse();
 
       for (const section of checkOrder) {
@@ -144,11 +145,11 @@ export default function AppAppBar() {
           const { offsetTop, offsetHeight } = section.element;
           const sectionStart = offsetTop;
           const sectionEnd = offsetTop + offsetHeight;
-          
+
           // Check if scroll position is within section bounds
           // Trigger at section start for instant updates
           const threshold = sectionStart;
-          
+
           if (scrollPosition >= threshold && scrollPosition < sectionEnd) {
             currentSection = section.href;
             foundSection = true;
@@ -160,7 +161,7 @@ export default function AppAppBar() {
       // Update state if section changed
       if (foundSection && currentSection && currentSection !== activeSection) {
         setActiveSection(currentSection);
-        
+
         // Update URL using React Router navigate (without triggering scroll)
         if (location.pathname !== currentSection) {
           setIsScrolling(true);
@@ -171,7 +172,10 @@ export default function AppAppBar() {
       }
 
       // Handle top of page (home section)
-      if (!foundSection && window.scrollY < 100) {
+      // Only redirect if we are not on a standalone page (like /blog or /login)
+      const isStandalonePage = location.pathname.startsWith('/blog') || ['/login', '/privacy', '/terms'].includes(location.pathname);
+
+      if (!foundSection && window.scrollY < 100 && !isStandalonePage) {
         if (activeSection !== '/') {
           setActiveSection('/');
           if (location.pathname !== '/') {
@@ -187,7 +191,7 @@ export default function AppAppBar() {
     // Listen to scroll events immediately
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
-    
+
     // Initial check - no delay
     handleScroll();
 
@@ -304,8 +308,8 @@ export default function AppAppBar() {
                         title={`${linkDescriptions[item.label] || `Go to ${item.label} section`} - Tayyab's Portfolio`}
                         aria-current={activeSection === item.href ? 'page' : undefined}
                         className={`group relative text-white/90 no-underline px-4 py-3 bg-transparent rounded-[10px] font-medium text-[0.95rem] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-white/5 hover:text-white hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:bg-white/5 ${activeSection === item.href
-                            ? 'bg-white/10 text-white'
-                            : ''
+                          ? 'bg-white/10 text-white'
+                          : ''
                           }`}
                         itemProp="url"
                         tabIndex={0}
@@ -322,8 +326,8 @@ export default function AppAppBar() {
                         <meta itemProp="position" content={String(index + 1)} />
                         <span
                           className={`nav-underline absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-sm ${activeSection === item.href
-                              ? 'w-full'
-                              : 'w-0 group-hover:w-full'
+                            ? 'w-full'
+                            : 'w-0 group-hover:w-full'
                             }`}
                           aria-hidden="true"
                         />
@@ -399,8 +403,8 @@ export default function AppAppBar() {
                                     title={`${linkDescriptions[item.label] || `Go to ${item.label} section`} - Tayyab's Portfolio`}
                                     aria-current={activeSection === item.href ? 'page' : undefined}
                                     className={`block text-white py-3 px-4 hover:bg-white/5 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:bg-white/5 ${activeSection === item.href
-                                        ? 'bg-white/10 font-semibold'
-                                        : ''
+                                      ? 'bg-white/10 font-semibold'
+                                      : ''
                                       }`}
                                     onClick={(e) => {
                                       // Remove focus after mouse click to prevent focus ring

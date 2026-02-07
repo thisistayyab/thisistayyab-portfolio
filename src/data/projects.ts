@@ -219,5 +219,5 @@ export const projects: Project[] = [
 export const filters: Filter[] = [
   { label: 'All', value: 'all' },
   { label: 'Web Apps', value: 'web' },
-  { label: 'Practice DSA', value: 'design' },
+  { label: 'Problem Solving', value: 'design' },
 ];

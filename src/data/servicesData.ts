@@ -129,34 +129,6 @@ export const services: Service[] = [
     ]
   },
   {
-    id: 5,
-    title: 'SEO Optimization',
-    Icon: RiSearchLine,
-    iconSize: 32,
-    color: '#f59e0b',
-    description: 'Comprehensive SEO optimization services to improve search engine rankings. Implement on-page SEO, structured data (JSON-LD), meta tags, sitemaps, and performance optimization. Increase organic traffic and visibility.',
-    features: [
-      'On-Page SEO',
-      'Structured Data (Schema.org)',
-      'Meta Tags Optimization',
-      'Sitemap & Robots.txt',
-      'Performance Optimization',
-      'Keyword Research & Strategy'
-    ],
-    keywords: [
-      'SEO Services',
-      'Search Engine Optimization',
-      'SEO Expert',
-      'On-Page SEO',
-      'Technical SEO',
-      'Schema Markup',
-      'SEO Audit',
-      'Keyword Optimization',
-      'Google SEO',
-      'Website SEO'
-    ]
-  },
-  {
     id: 6,
     title: 'Security & Authentication',
     Icon: RiShieldCheckLine,

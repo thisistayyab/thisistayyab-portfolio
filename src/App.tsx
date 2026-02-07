@@ -9,9 +9,33 @@ import { trackPageView } from './lib/analytics';
 import { SEOHead } from './components/SEOHead';
 
 // Lazy load Dashboard to improve initial load time (Dashboard is a named export)
-const Dashboard = lazy(() => 
+const Dashboard = lazy(() =>
   import('./pages/Dashboard').then(module => {
     return { default: module.Dashboard };
+  })
+);
+
+const BlogList = lazy(() =>
+  import('./pages/BlogList').then(module => {
+    return { default: module.BlogList };
+  })
+);
+
+const BlogPost = lazy(() =>
+  import('./pages/BlogPost').then(module => {
+    return { default: module.BlogPost };
+  })
+);
+
+const PrivacyPolicy = lazy(() =>
+  import('./pages/PrivacyPolicy').then(module => {
+    return { default: module.PrivacyPolicy };
+  })
+);
+
+const TermsOfService = lazy(() =>
+  import('./pages/TermsOfService').then(module => {
+    return { default: module.TermsOfService };
   })
 );
 
@@ -36,7 +60,7 @@ function ScrollToSection() {
     // Check if this navigation was triggered by scroll (via sessionStorage flag)
     const scrollTriggered = sessionStorage.getItem('scroll-navigation') === 'true';
     sessionStorage.removeItem('scroll-navigation');
-    
+
     // If navigation was triggered by scroll detection, don't scroll
     // Only scroll if it's a user-initiated navigation (click, browser back/forward, etc.)
     if (scrollTriggered) {
@@ -47,7 +71,7 @@ function ScrollToSection() {
     // Check if this is a user-initiated navigation
     // User navigation is when the route changes but NOT from scroll detection
     const routeChanged = navigationRef.current !== location.pathname;
-    
+
     if (routeChanged && !scrollTriggered) {
       // This is a user-initiated navigation (click, browser navigation, etc.)
       isUserNavigation.current = true;
@@ -61,12 +85,13 @@ function ScrollToSection() {
         '/experience': 'experience',
         '/testimonials': 'client',
         '/services': 'services',
+        '/insights': 'blog',
         '/profiles': 'profiles',
         '/contact': 'contact',
       };
 
       const sectionId = routeToSection[location.pathname];
-      
+
       if (sectionId) {
         // For home route, scroll to top
         if (sectionId === 'home') {
@@ -89,7 +114,7 @@ function ScrollToSection() {
               }, 50);
               return;
             }
-            
+
             // Retry up to 10 times if element not found (for slow loading)
             if (attempt < 10) {
               setTimeout(() => scrollToElement(attempt + 1), 150);
@@ -101,6 +126,9 @@ function ScrollToSection() {
           // Start scrolling attempt with initial delay
           setTimeout(() => scrollToElement(), 50);
         }
+      } else {
+        // For new pages (privacy, terms, blog posts), ensure we start at the top
+        window.scrollTo(0, 0);
       }
 
       // Reset flag after a short delay
@@ -177,8 +205,29 @@ function App() {
           <Route path="/experience" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/testimonials" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/services" element={<Portfolio isDesktop={isDesktop} />} />
+          <Route path="/insights" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/profiles" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/contact" element={<Portfolio isDesktop={isDesktop} />} />
+          <Route path="/blog" element={
+            <Suspense fallback={<div className="min-h-screen bg-black" />}>
+              <BlogList isDesktop={isDesktop} />
+            </Suspense>
+          } />
+          <Route path="/blog/:slug" element={
+            <Suspense fallback={<div className="min-h-screen bg-black" />}>
+              <BlogPost isDesktop={isDesktop} />
+            </Suspense>
+          } />
+          <Route path="/privacy" element={
+            <Suspense fallback={<div className="min-h-screen bg-black" />}>
+              <PrivacyPolicy isDesktop={isDesktop} />
+            </Suspense>
+          } />
+          <Route path="/terms" element={
+            <Suspense fallback={<div className="min-h-screen bg-black" />}>
+              <TermsOfService isDesktop={isDesktop} />
+            </Suspense>
+          } />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

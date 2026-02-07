@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import { RiMailLine } from 'react-icons/ri';
+import { RiMailLine, RiMapPinLine } from 'react-icons/ri';
 import { socialLinksHeader } from '../data/socialLinks';
 import { navItems } from '../data/navigation';
 import { SocialIcon } from './ui/social-icon';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   const baseUrl = 'https://thisistayyab.dev';
@@ -58,6 +59,11 @@ function Footer() {
     };
   }, [currentYear]);
 
+  // Split navigation items into two columns for better layout
+  const midPoint = Math.ceil(navItems.length / 2);
+  const navCol1 = navItems.slice(0, midPoint);
+  const navCol2 = navItems.slice(midPoint);
+
   return (
     <footer
       className="relative overflow-hidden border-t border-white/10 bg-gradient-to-b from-transparent to-black/30"
@@ -72,18 +78,21 @@ function Footer() {
 
       {/* Main Footer Content */}
       <div className="max-w-[1200px] mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Brand Column */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-br from-white to-slate-300 bg-clip-text text-transparent">
-              Tayyab's Portfolio
-            </h3>
-            <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-sm">
-              Building digital experiences that are fast, beautiful, and user-focused. Let's connect and create something amazing together!
-            </p>
-            <div className="flex items-center gap-3 flex-wrap">
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+          {/* Brand Column (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                Tayyab's Portfolio
+              </h3>
+              <p className="text-slate-400 leading-relaxed max-w-sm">
+                Full-stack developer focused on building digital experiences that are fast, beautiful, and user-focused.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 flex-wrap mt-auto">
               {socialLinksHeader.map((link, i) => {
-                // Helper to determine platform name from href
                 const getPlatformName = (href: string): string => {
                   if (href.includes('github')) return 'GitHub';
                   if (href.includes('linkedin')) return 'LinkedIn';
@@ -96,140 +105,93 @@ function Footer() {
                   <SocialIcon
                     key={i}
                     Icon={link.Icon}
-                    size={48}
+                    size={44}
                     iconSize={link.size}
                     href={link.href}
                     ariaLabel={link.ariaLabel}
                     color={link.color}
                     platformName={getPlatformName(link.href)}
+                    className="bg-white/5 border-white/5 hover:bg-white/10"
                   />
                 );
               })}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4 pb-2 relative inline-block">
-              Quick Links
-              <span className="absolute bottom-0 left-0 w-10 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
-            </h4>
-            <nav aria-label="Footer navigation">
-              <ul className="flex flex-col gap-3">
-                {navItems.map((item) => (
+          {/* Navigation Column (4 cols - split into 2 visual lists) */}
+          <div className="lg:col-span-4">
+            <h4 className="text-white font-semibold mb-6">Explore</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <ul className="space-y-3">
+                {navCol1.map((item) => (
                   <li key={item.href}>
-                    <a
-                      href={item.href}
-                      className={cn(
-                        "text-slate-400 text-sm transition-all duration-300",
-                        "hover:text-white hover:translate-x-1",
-                        "focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 focus-visible:rounded",
-                        "relative pl-5 group"
-                      )}
+                    <Link
+                      to={item.href}
+                      className="text-slate-400 hover:text-white transition-colors flex items-center gap-2 group"
                     >
-                      <span
-                        className={cn(
-                          "absolute left-0 top-1/2 -translate-y-1/2",
-                          "text-blue-500 opacity-0 -translate-x-2",
-                          "transition-all duration-300",
-                          "group-hover:opacity-100 group-hover:translate-x-0"
-                        )}
-                        aria-hidden="true"
-                      >
-                        →
-                      </span>
+                      <span className="w-1 h-1 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
-            </nav>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4 pb-2 relative inline-block">
-              Services
-              <span className="absolute bottom-0 left-0 w-10 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
-            </h4>
-            <ul className="flex flex-col gap-3">
-              {[
-                { label: 'Full Stack Development', href: '#services' },
-                { label: 'Web Design', href: '#services' },
-                { label: 'API Development', href: '#services' },
-                { label: 'Cloud Deployment', href: '#services' },
-                { label: 'SEO Optimization', href: '#services' },
-              ].map((service) => (
-                <li key={service.label}>
-                  <a
-                    href={service.href}
-                    className={cn(
-                      "text-slate-400 text-sm transition-all duration-300",
-                      "hover:text-white hover:translate-x-1",
-                      "focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 focus-visible:rounded",
-                      "relative pl-5 group"
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        "absolute left-0 top-1/2 -translate-y-1/2",
-                        "text-blue-500 opacity-0 -translate-x-2",
-                        "transition-all duration-300",
-                        "group-hover:opacity-100 group-hover:translate-x-0"
-                      )}
-                      aria-hidden="true"
+              <ul className="space-y-3">
+                {navCol2.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      to={item.href}
+                      className="text-slate-400 hover:text-white transition-colors flex items-center gap-2 group"
                     >
-                      →
-                    </span>
-                    {service.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+                      <span className="w-1 h-1 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4 pb-2 relative inline-block">
-              Get In Touch
-              <span className="absolute bottom-0 left-0 w-10 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
-            </h4>
-            <ul className="flex flex-col gap-3">
-              <li>
-                <a
-                  href="mailto:thisistayyab@outlook.com"
-                  className={cn(
-                    "text-slate-400 text-sm transition-all duration-300",
-                    "hover:text-white hover:translate-x-1",
-                    "focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 focus-visible:rounded",
-                    "flex items-center gap-2 group"
-                  )}
-                >
-                  <RiMailLine size={16} className="text-blue-500 group-hover:scale-110 transition-transform" />
-                  <span>thisistayyab@outlook.com</span>
-                </a>
-              </li>
-              <li className="text-slate-400 text-sm flex items-center gap-2">
-                <span className="w-4 h-4 flex items-center justify-center">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full" />
-                </span>
-                <span>Pakistan</span>
-              </li>
-            </ul>
+          {/* Contact Column (3 cols) */}
+          <div className="lg:col-span-3">
+            <h4 className="text-white font-semibold mb-6">Contact</h4>
+            <div className="flex flex-col gap-4">
+              <a
+                href="mailto:thisistayyab@outlook.com"
+                className="group bg-white/5 hover:bg-white/10 p-4 rounded-xl transition-all border border-white/5 hover:border-blue-500/30"
+              >
+                <div className="flex items-center gap-3 mb-1">
+                  <div className="p-2 bg-blue-500/10 rounded-lg text-blue-400 group-hover:text-blue-300">
+                    <RiMailLine size={20} />
+                  </div>
+                  <span className="text-sm text-gray-400">Email Me</span>
+                </div>
+                <p className="text-white font-medium pl-[44px]">thisistayyab@outlook.com</p>
+              </a>
+
+              <div className="group bg-white/5 p-4 rounded-xl border border-white/5">
+                <div className="flex items-center gap-3 mb-1">
+                  <div className="p-2 bg-purple-500/10 rounded-lg text-purple-400">
+                    <RiMapPinLine size={20} />
+                  </div>
+                  <span className="text-sm text-gray-400">Location</span>
+                </div>
+                <p className="text-white font-medium pl-[44px]">Pakistan</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Footer Bar */}
-      <div className="relative border-t border-white/10 bg-black/20 backdrop-blur-[10px]">
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"
-          aria-hidden="true"
-        />
-        <div className="max-w-[1200px] mx-auto px-4 py-6">
-          <p className="text-center text-slate-400 text-sm">
-            &copy; {currentYear} <span className="text-white font-medium">Tayyab's Portfolio</span>. All rights reserved.
+      <div className="relative border-t border-white/5 bg-black/40">
+        <div className="max-w-[1200px] mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-slate-500 text-sm">
+            &copy; {currentYear} Tayyab's Portfolio. All rights reserved.
           </p>
+          <div className="flex gap-6 text-sm text-slate-500">
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>
