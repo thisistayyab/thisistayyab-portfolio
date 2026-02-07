@@ -11,7 +11,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from './ui/sheet';
-import { trackLinkClick } from '../lib/analytics';
 
 export default function AppAppBar() {
   const [open, setOpen] = useState<boolean>(false);
@@ -156,6 +155,13 @@ export default function AppAppBar() {
             break;
           }
         }
+      }
+
+      // When on the portfolio page, the "blog" section (Insights) must map to /insights, not /blog,
+      // so scrolling to Insights doesn’t navigate to the full blog page and cause a reload.
+      const isPortfolioRoute = ['/', '/about', '/projects', '/experience', '/testimonials', '/services', '/insights', '/profiles', '/contact'].includes(location.pathname);
+      if (foundSection && currentSection === '/blog' && isPortfolioRoute) {
+        currentSection = '/insights';
       }
 
       // Update state if section changed
@@ -314,12 +320,9 @@ export default function AppAppBar() {
                         itemProp="url"
                         tabIndex={0}
                         onClick={(e) => {
-                          // Remove focus after mouse click to prevent focus ring
                           (e.currentTarget as HTMLElement).blur();
-                          // Immediately update active section and disable scroll detection
                           setActiveSection(item.href);
                           setIsProgrammaticScroll(true);
-                          trackLinkClick(item.label, item.href, `nav-${item.label.toLowerCase()}`);
                         }}
                       >
                         <span itemProp="name">{item.label}</span>
@@ -412,7 +415,6 @@ export default function AppAppBar() {
                                       // Immediately update active section and disable scroll detection
                                       setActiveSection(item.href);
                                       setIsProgrammaticScroll(true);
-                                      trackLinkClick(item.label, item.href, `mobile-nav-${item.label.toLowerCase()}`);
                                       setOpen(false);
                                     }}
                                     tabIndex={0}

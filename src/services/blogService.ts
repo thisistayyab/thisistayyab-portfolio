@@ -2,6 +2,12 @@ import { supabase } from '@/lib/supabase';
 import { Post } from '@/types/database';
 import { blogPosts, BlogPost } from '@/data/blogPosts';
 
+// In-memory cache to reduce API requests (TTL: 5 min for list, 10 min for single post)
+const CACHE_TTL_MS = 5 * 60 * 1000;
+const SINGLE_POST_CACHE_TTL_MS = 10 * 60 * 1000;
+let postsCache: { data: Post[]; at: number } | null = null;
+const postBySlugCache = new Map<string, { data: Post; at: number }>();
+
 // Calculate read time based on content length
 export const calculateReadTime = (content: string): string => {
     const wordsPerMinute = 200;
@@ -41,8 +47,12 @@ const mapLocalPost = (local: BlogPost): Post => {
     } as Post;
 };
 
-// Fetch all published posts
+// Fetch all published posts (cached to reduce API requests)
 export const fetchPosts = async (): Promise<Post[]> => {
+    const now = Date.now();
+    if (postsCache && (now - postsCache.at) < CACHE_TTL_MS) {
+        return postsCache.data;
+    }
     try {
         const { data, error } = await supabase
             .from('posts')
@@ -61,15 +71,22 @@ export const fetchPosts = async (): Promise<Post[]> => {
             return blogPosts.map(mapLocalPost);
         }
 
-        return mapPosts(data);
+        const mapped = mapPosts(data);
+        postsCache = { data: mapped, at: now };
+        return mapped;
     } catch (e) {
         console.error("Exception fetching posts", e);
         return blogPosts.map(mapLocalPost);
     }
 };
 
-// Fetch a single post by slug
+// Fetch a single post by slug (cached to reduce API requests)
 export const fetchPostBySlug = async (slug: string): Promise<Post | null> => {
+    const now = Date.now();
+    const cached = postBySlugCache.get(slug);
+    if (cached && (now - cached.at) < SINGLE_POST_CACHE_TTL_MS) {
+        return cached.data;
+    }
     try {
         const { data, error } = await supabase
             .from('posts')
@@ -90,7 +107,9 @@ export const fetchPostBySlug = async (slug: string): Promise<Post | null> => {
             return null;
         }
 
-        return mapPost(data);
+        const mapped = mapPost(data);
+        postBySlugCache.set(slug, { data: mapped, at: now });
+        return mapped;
     } catch (e) {
         console.error("Exception fetching post", e);
         const local = blogPosts.find(p => p.slug === slug);
@@ -99,13 +118,18 @@ export const fetchPostBySlug = async (slug: string): Promise<Post | null> => {
     }
 };
 
-// Increment view count
+// Increment view count (at most once per post per session to avoid request spam)
 export const incrementViewCount = async (postId: string) => {
-    // Only increment if not local ID
     if (postId.startsWith('local')) return;
-
-    const { error } = await supabase.rpc('increment_view_count', { p_id: postId });
-    if (error) console.error('Error incrementing view count:', error);
+    const key = `view_count_${postId}`;
+    if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(key)) return;
+    try {
+        const { error } = await supabase.rpc('increment_view_count', { p_id: postId });
+        if (!error && typeof sessionStorage !== 'undefined') sessionStorage.setItem(key, '1');
+        if (error) console.error('Error incrementing view count:', error);
+    } catch {
+        // Non-blocking
+    }
 };
 
 // Helper: Map Supabase response to cleaner internal Post structure

@@ -34,6 +34,41 @@ export function BlogList({ isDesktop }: BlogListProps) {
     // Extract all unique tags
     const allTags = Array.from(new Set(posts.flatMap(post => post.tags || [])));
 
+    // JSON-LD for blog index (helps search engines discover article URLs)
+    useEffect(() => {
+        if (posts.length === 0) return;
+        const baseUrl = 'https://thisistayyab.dev';
+        const scriptId = 'blog-list-jsonld';
+        const existing = document.getElementById(scriptId);
+        if (existing) existing.remove();
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            '@id': `${baseUrl}/blog#page`,
+            name: 'Blog - Insights & Articles | Tayyab',
+            description: 'Articles on web development, React, Node.js, and the future of tech.',
+            url: `${baseUrl}/blog`,
+            isPartOf: { '@id': 'https://thisistayyab.dev/#website' },
+            mainEntity: {
+                '@type': 'ItemList',
+                itemListElement: posts.slice(0, 50).map((post, i) => ({
+                    '@type': 'ListItem',
+                    position: i + 1,
+                    url: `${baseUrl}/blog/${post.slug}`,
+                    name: post.title,
+                })),
+            },
+        });
+        document.head.appendChild(script);
+        return () => {
+            const el = document.getElementById(scriptId);
+            if (el) el.remove();
+        };
+    }, [posts]);
+
     const filteredPosts = posts.filter(post => {
         const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             (post.excerpt || '').toLowerCase().includes(searchTerm.toLowerCase());

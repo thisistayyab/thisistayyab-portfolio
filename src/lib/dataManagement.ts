@@ -1,18 +1,13 @@
 import { supabase } from './supabase';
 
-// Data retention settings (in days)
+// Data retention settings (in days) - only page_views and contact_submissions (user_events/sessions removed)
 const RETENTION_DAYS = {
-  page_views: 90, // Archive after 90 days
-  user_events: 90, // Archive after 90 days
-  sessions: 90, // Archive after 90 days
-  contact_submissions: 365, // Archive after 1 year
+  page_views: 90,
+  contact_submissions: 365,
 };
 
-// Archive tables for efficient storage
 const ARCHIVE_TABLES = {
   page_views: 'page_views_archive',
-  user_events: 'user_events_archive',
-  sessions: 'sessions_archive',
   contact_submissions: 'contact_submissions_archive',
 };
 
@@ -44,54 +39,13 @@ export const archiveOldAnalytics = async () => {
       }
     }
 
-    // Archive user events
-    cutoffDate.setDate(cutoffDate.getDate() - (RETENTION_DAYS.user_events - RETENTION_DAYS.page_views));
-    const { data: oldEvents } = await supabase
-      .from('user_events')
-      .select('*')
-      .lt('created_at', cutoffDate.toISOString());
-
-    if (oldEvents && oldEvents.length > 0) {
-      const { error: archiveError } = await supabase
-        .from(ARCHIVE_TABLES.user_events)
-        .insert(oldEvents);
-
-      if (!archiveError) {
-        await supabase
-          .from('user_events')
-          .delete()
-          .lt('created_at', cutoffDate.toISOString());
-        console.log(`Archived ${oldEvents.length} user events`);
-      }
-    }
-
-    // Archive old sessions
-    cutoffDate.setDate(cutoffDate.getDate() - (RETENTION_DAYS.sessions - RETENTION_DAYS.user_events));
-    const { data: oldSessions } = await supabase
-      .from('sessions')
-      .select('*')
-      .lt('first_visit', cutoffDate.toISOString());
-
-    if (oldSessions && oldSessions.length > 0) {
-      const { error: archiveError } = await supabase
-        .from(ARCHIVE_TABLES.sessions)
-        .insert(oldSessions);
-
-      if (!archiveError) {
-        await supabase
-          .from('sessions')
-          .delete()
-          .lt('first_visit', cutoffDate.toISOString());
-        console.log(`Archived ${oldSessions.length} sessions`);
-      }
-    }
-
     // Archive old contact submissions
-    cutoffDate.setDate(cutoffDate.getDate() - (RETENTION_DAYS.contact_submissions - RETENTION_DAYS.sessions));
+    const contactCutoff = new Date();
+    contactCutoff.setDate(contactCutoff.getDate() - RETENTION_DAYS.contact_submissions);
     const { data: oldContacts } = await supabase
       .from('contact_submissions')
       .select('*')
-      .lt('created_at', cutoffDate.toISOString());
+      .lt('created_at', contactCutoff.toISOString());
 
     if (oldContacts && oldContacts.length > 0) {
       const { error: archiveError } = await supabase
@@ -102,7 +56,7 @@ export const archiveOldAnalytics = async () => {
         await supabase
           .from('contact_submissions')
           .delete()
-          .lt('created_at', cutoffDate.toISOString());
+          .lt('created_at', contactCutoff.toISOString());
         console.log(`Archived ${oldContacts.length} contact submissions`);
       }
     }

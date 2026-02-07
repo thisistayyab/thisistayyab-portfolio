@@ -9,7 +9,7 @@ import { X } from 'lucide-react';
 function Projects() {
   const [projects, setProjects] = useState<Project[]>(localProjects);
   const [loading, setLoading] = useState(false); // No loading needed with mock data
-  const [visibleCount, setVisibleCount] = useState<number>(6);
+  const [visibleCount, setVisibleCount] = useState<number>(3);
   const [active, setActive] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);

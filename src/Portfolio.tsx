@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Experience from './components/Experience';
 import About from './components/About';
-import Banner from './components/Banner';
 import Projects from './components/Projects';
 import Services from './components/Services';
 import Profiles from './components/Profiles';
@@ -11,7 +9,6 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { GlobalBackground } from './components/GlobalBackground';
 import Clients from './components/Clients';
-import { trackPageView } from './lib/analytics';
 import HomeBlog from './components/HomeBlog';
 
 interface PortfolioProps {
@@ -34,7 +31,6 @@ function Portfolio({ isDesktop }: PortfolioProps) {
       >
         <Header />
         <About />
-        <Banner />
         <Projects />
         <Experience />
         <Clients />

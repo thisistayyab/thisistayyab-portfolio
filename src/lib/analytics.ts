@@ -101,7 +101,7 @@ const getLocationData = async (): Promise<{
 
 // Track page view - ONLY for home page (/)
 // Use sessionStorage to persist tracking state across page reloads
-const TRACK_DEBOUNCE_MS = 30000; // Don't track same session within 30 seconds
+const TRACK_DEBOUNCE_MS = 120000; // Don't track same session within 2 minutes (reduces DB requests)
 
 // Lock to prevent concurrent tracking calls
 let isTrackingInProgress = false;
@@ -122,34 +122,32 @@ export const trackPageView = async (pagePath: string, pageTitle?: string) => {
   }
 
   try {
-    // Only track home page views (normalize all home page variations)
-    const normalizedPath = pagePath === '/' || pagePath === '/#home' || pagePath.includes('#home') ? '/' : null;
-    if (!normalizedPath) {
+    // Don't track dashboard or login (reduce noise)
+    if (pagePath.startsWith('/dashboard') || pagePath.startsWith('/login')) {
       return;
     }
 
     const now = Date.now();
     const lastTrackedTime = getLastTrackedTime();
-    
-    // Skip if tracked recently (within debounce period)
-    if ((now - lastTrackedTime) < TRACK_DEBOUNCE_MS) {
+    const lastTrackedPath = sessionStorage.getItem('last_tracked_path') || '';
+
+    // Skip if same path was tracked recently (within debounce period)
+    if (lastTrackedPath === pagePath && (now - lastTrackedTime) < TRACK_DEBOUNCE_MS) {
       return;
     }
 
-    // Set lock and update time immediately to prevent duplicate calls
     isTrackingInProgress = true;
     setLastTrackedTime(now);
+    sessionStorage.setItem('last_tracked_path', pagePath);
 
     const sessionId = getSessionId();
-    const referrer = document.referrer || 'Direct'; // Default to 'Direct' if empty
+    const referrer = document.referrer || 'Direct';
     const deviceType = getDeviceType();
     const browser = getBrowser();
-
-    // Get location data (IP, country, city)
     const locationData = await getLocationData();
 
     await supabase.rpc('track_page_view', {
-      p_page_path: '/', // Normalize all home visits to '/'
+      p_page_path: pagePath,
       p_page_title: pageTitle || document.title,
       p_referrer: referrer,
       p_user_agent: navigator.userAgent,
@@ -176,116 +174,5 @@ export const trackPageView = async (pagePath: string, pageTitle?: string) => {
   }
 };
 
-// Cache IP address to avoid multiple API calls
-let cachedIPAddress: string | null = null;
-let ipCacheTime: number = 0;
-const IP_CACHE_DURATION = 5 * 60 * 1000; // Cache for 5 minutes
-
-// Get IP address (cached)
-const getIPAddress = async (): Promise<string | null> => {
-  const now = Date.now();
-  // Return cached IP if still valid
-  if (cachedIPAddress && (now - ipCacheTime) < IP_CACHE_DURATION) {
-    return cachedIPAddress;
-  }
-
-  try {
-    const locationData = await getLocationData();
-    if (locationData.ip_address) {
-      cachedIPAddress = locationData.ip_address;
-      ipCacheTime = now;
-      return cachedIPAddress;
-    }
-  } catch (error) {
-    // Silently fail - IP is optional
-  }
-  return null;
-};
-
-// Track user event
-export const trackEvent = async (
-  eventType: string,
-  eventName: string,
-  elementId?: string,
-  elementType?: string,
-  metadata?: Record<string, any>
-) => {
-  try {
-    // Don't track events on dashboard or login pages
-    const pagePath = window.location.pathname;
-    if (pagePath.includes('/dashboard') || pagePath.includes('/login')) {
-      return;
-    }
-
-    const sessionId = getSessionId();
-    const fullPath = pagePath + window.location.search;
-    
-    // Get IP address (cached)
-    const ipAddress = await getIPAddress();
-
-    await supabase.from('user_events').insert({
-      event_type: eventType,
-      event_name: eventName,
-      element_id: elementId,
-      element_type: elementType,
-      page_path: fullPath,
-      session_id: sessionId,
-      user_agent: navigator.userAgent,
-      ip_address: ipAddress,
-      metadata: metadata || {},
-    });
-  } catch (error) {
-    console.error('Error tracking event:', error);
-  }
-};
-
-// Track form submission
-export const trackFormSubmit = async (formName: string, metadata?: Record<string, any>) => {
-  await trackEvent('form_submit', formName, undefined, 'form', metadata);
-};
-
-// Track button click
-export const trackButtonClick = async (buttonName: string, buttonId?: string) => {
-  await trackEvent('click', buttonName, buttonId, 'button');
-};
-
-// Track link click
-export const trackLinkClick = async (linkName: string, linkUrl: string, linkId?: string) => {
-  await trackEvent('click', linkName, linkId, 'link', { url: linkUrl });
-};
-
-// Track scroll depth
-let maxScrollDepth = 0;
-export const trackScrollDepth = async () => {
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight;
-  const clientHeight = document.documentElement.clientHeight;
-  const scrollPercent = Math.round((scrollTop / (scrollHeight - clientHeight)) * 100);
-
-  if (scrollPercent > maxScrollDepth) {
-    maxScrollDepth = scrollPercent;
-    if (scrollPercent === 25 || scrollPercent === 50 || scrollPercent === 75 || scrollPercent === 100) {
-      await trackEvent('scroll', `scroll_${scrollPercent}%`, undefined, 'page', {
-        scroll_percent: scrollPercent,
-      });
-    }
-  }
-};
-
-// Initialize scroll tracking (only on portfolio pages, not dashboard/login)
-if (typeof window !== 'undefined') {
-  let scrollTimeout: NodeJS.Timeout;
-  const handleScroll = () => {
-    // Don't track scroll on dashboard or login pages
-    const pagePath = window.location.pathname;
-    if (pagePath.includes('/dashboard') || pagePath.includes('/login')) {
-      return;
-    }
-
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      trackScrollDepth();
-    }, 1000);
-  };
-  window.addEventListener('scroll', handleScroll);
-}
+// User events and sessions tracking removed to reduce database load.
+// We only track: (1) page views via trackPageView, (2) blog view count via blogService.incrementViewCount.

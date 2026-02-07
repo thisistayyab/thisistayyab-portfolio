@@ -2,8 +2,14 @@
 
 User-agent: *
 Allow: /
+Allow: /blog
+Allow: /blog/
+Allow: /privacy
+Allow: /terms
 Disallow: /api/
 Disallow: /admin/
+Disallow: /dashboard
+Disallow: /login
 
 # Allow all search engines
 User-agent: Googlebot

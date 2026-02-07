@@ -56,6 +56,21 @@ const routeMetaTags: Record<string, RouteMetaTags> = {
     description: 'Get in touch with Tayyab for web development projects, collaborations, and opportunities. Available for freelance work. Specializing in React, Node.js, Express, MongoDB, and MERN stack development.',
     keywords: 'Contact web developer, hire full stack developer, freelance developer contact, React developer hire, web development services contact',
   },
+  '/blog': {
+    title: 'Blog - Insights & Articles | Tayyab',
+    description: 'Read articles and insights on web development, React, Node.js, performance optimization, and the future of tech. Written by Tayyab, full-stack developer.',
+    keywords: 'web development blog, React blog, Node.js articles, developer insights, tech blog, full stack developer blog',
+  },
+  '/privacy': {
+    title: 'Privacy Policy | Tayyab\'s Portfolio',
+    description: 'Privacy policy for thisistayyab.dev. How we collect, use, and protect your information.',
+    keywords: 'privacy policy, data protection',
+  },
+  '/terms': {
+    title: 'Terms of Service | Tayyab\'s Portfolio',
+    description: 'Terms of service for thisistayyab.dev. Usage terms and conditions.',
+    keywords: 'terms of service, terms and conditions',
+  },
 };
 
 const baseUrl = 'https://thisistayyab.dev';
@@ -122,7 +137,7 @@ export const SEOHead: React.FC<SEOHeadProps> = (props) => {
     updateMetaTag('twitter:description', meta.ogDescription || meta.description);
     updateMetaTag('twitter:url', `${baseUrl}${location.pathname}`);
 
-    // Update canonical URL - ensure no trailing slash and consistent format
+    // Update canonical URL - ensure no trailing slash and consistent format (helps GSC crawl and index)
     const canonicalPath = location.pathname === '/' ? '/' : location.pathname.replace(/\/$/, '');
     const canonicalUrl = `${baseUrl}${canonicalPath}`;
 

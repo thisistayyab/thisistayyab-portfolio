@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { PageView, UserEvent, Session, ContactSubmission } from '../lib/supabase';
+import { PageView, ContactSubmission } from '../lib/supabase';
 import { GlobalBackground } from '../components/GlobalBackground';
 import {
   LineChart,
@@ -322,19 +322,12 @@ const WorldMapHeatmap: React.FC<{
 
 interface DashboardStats {
   totalPageViews: number;
-  totalSessions: number;
-  totalEvents: number;
   totalContacts: number;
-  uniqueVisitors: number;
-  avgSessionDuration: number;
-  bounceRate: number;
 }
 
 interface TrendData {
   pageViews: number;
-  uniqueVisitors: number;
-  totalSessions: number;
-  avgDuration: number;
+  contacts: number;
 }
 
 export const Dashboard: React.FC = () => {
@@ -368,16 +361,9 @@ export const Dashboard: React.FC = () => {
   }, []);
   const [stats, setStats] = useState<DashboardStats>({
     totalPageViews: 0,
-    totalSessions: 0,
-    totalEvents: 0,
     totalContacts: 0,
-    uniqueVisitors: 0,
-    avgSessionDuration: 0,
-    bounceRate: 0,
   });
   const [pageViewsData, setPageViewsData] = useState<any[]>([]);
-  const [eventsData, setEventsData] = useState<any[]>([]);
-  const [sessionsData, setSessionsData] = useState<any[]>([]);
   const [recentContacts, setRecentContacts] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [startDate, setStartDate] = useState<Date | null>(() => {
@@ -524,9 +510,7 @@ export const Dashboard: React.FC = () => {
   }, [selectedCountry, countryToCitiesMap]);
   const [trends, setTrends] = useState<TrendData>({
     pageViews: 0,
-    uniqueVisitors: 0,
-    totalSessions: 0,
-    avgDuration: 0,
+    contacts: 0,
   });
   const [selectedContact, setSelectedContact] = useState<ContactSubmission | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -602,139 +586,51 @@ export const Dashboard: React.FC = () => {
         .gte('created_at', startDateStr)
         .lt('created_at', endDateStr); // Use < instead of <= since endDateStr is next day's midnight
 
-      let sessionsQuery = supabase
-        .from('sessions')
-        .select('*', { count: 'exact' })
-        .gte('first_visit', startDateStr)
-        .lt('first_visit', endDateStr); // Use < instead of <=
-
       if (selectedCountry !== 'all') {
         pageViewsQuery = pageViewsQuery.eq('country', selectedCountry);
-        sessionsQuery = sessionsQuery.eq('country', selectedCountry);
       }
 
       if (selectedCity !== 'all') {
         pageViewsQuery = pageViewsQuery.eq('city', selectedCity);
-        sessionsQuery = sessionsQuery.eq('city', selectedCity);
       }
 
-      // Fetch current period stats
-      const [pageViewsRes, sessionsRes, eventsRes, contactsRes] = await Promise.all([
+      const [pageViewsRes, contactsRes] = await Promise.all([
         pageViewsQuery,
-        sessionsQuery,
-        supabase
-          .from('user_events')
-          .select('*', { count: 'exact' })
-          .gte('created_at', startDateStr)
-          .lt('created_at', endDateStr),
         supabase
           .from('contact_submissions')
           .select('*', { count: 'exact' })
+          .gte('created_at', startDateStr)
+          .lt('created_at', endDateStr)
           .order('created_at', { ascending: false }),
       ]);
 
       const totalPageViews = pageViewsRes.count || 0;
-      const totalSessions = sessionsRes.count || 0;
-      const totalEvents = eventsRes.count || 0;
       const totalContacts = contactsRes.count || 0;
 
-      // Get unique visitors
-      let uniqueSessionsQuery = supabase
-        .from('sessions')
-        .select('session_id')
-        .gte('first_visit', startDateStr)
-        .lt('first_visit', endDateStr);
-
-      if (selectedCountry !== 'all') {
-        uniqueSessionsQuery = uniqueSessionsQuery.eq('country', selectedCountry);
-      }
-      if (selectedCity !== 'all') {
-        uniqueSessionsQuery = uniqueSessionsQuery.eq('city', selectedCity);
-      }
-
-      const { data: uniqueSessions } = await uniqueSessionsQuery;
-      const uniqueVisitors = new Set(uniqueSessions?.map((s) => s.session_id) || []).size;
-
-      // Calculate average session duration
-      let allSessionsQuery = supabase
-        .from('sessions')
-        .select('duration_seconds, is_bounce')
-        .gte('first_visit', startDateStr);
-
-      if (selectedCountry !== 'all') {
-        allSessionsQuery = allSessionsQuery.eq('country', selectedCountry);
-      }
-      if (selectedCity !== 'all') {
-        allSessionsQuery = allSessionsQuery.eq('city', selectedCity);
-      }
-
-      const { data: allSessions } = await allSessionsQuery;
-
-      const avgDuration =
-        allSessions && allSessions.length > 0
-          ? allSessions.reduce((acc, s) => acc + (s.duration_seconds || 0), 0) / allSessions.length
-          : 0;
-
-      const bounceRate =
-        allSessions && allSessions.length > 0
-          ? (allSessions.filter((s) => s.is_bounce).length / allSessions.length) * 100
-          : 0;
-
-      // Fetch previous period stats for comparison (with filters)
+      // Previous period for trends
       let prevPageViewsQuery = supabase
         .from('page_views')
         .select('*', { count: 'exact' })
         .gte('created_at', previousStartDateStr)
         .lt('created_at', previousEndDateStr);
 
-      let prevSessionsQuery = supabase
-        .from('sessions')
+      const prevContactsRes = await supabase
+        .from('contact_submissions')
         .select('*', { count: 'exact' })
-        .gte('first_visit', previousStartDateStr)
-        .lt('first_visit', previousEndDateStr);
-
-      let prevUniqueSessionsQuery = supabase
-        .from('sessions')
-        .select('session_id')
-        .gte('first_visit', previousStartDateStr)
-        .lt('first_visit', previousEndDateStr);
-
-      let prevAllSessionsQuery = supabase
-        .from('sessions')
-        .select('duration_seconds')
-        .gte('first_visit', previousStartDateStr)
-        .lt('first_visit', previousEndDateStr);
+        .gte('created_at', previousStartDateStr)
+        .lt('created_at', previousEndDateStr);
 
       if (selectedCountry !== 'all') {
         prevPageViewsQuery = prevPageViewsQuery.eq('country', selectedCountry);
-        prevSessionsQuery = prevSessionsQuery.eq('country', selectedCountry);
-        prevUniqueSessionsQuery = prevUniqueSessionsQuery.eq('country', selectedCountry);
-        prevAllSessionsQuery = prevAllSessionsQuery.eq('country', selectedCountry);
       }
-
       if (selectedCity !== 'all') {
         prevPageViewsQuery = prevPageViewsQuery.eq('city', selectedCity);
-        prevSessionsQuery = prevSessionsQuery.eq('city', selectedCity);
-        prevUniqueSessionsQuery = prevUniqueSessionsQuery.eq('city', selectedCity);
-        prevAllSessionsQuery = prevAllSessionsQuery.eq('city', selectedCity);
       }
 
-      const [prevPageViewsRes, prevSessionsRes, prevUniqueSessionsRes, prevAllSessionsRes] = await Promise.all([
-        prevPageViewsQuery,
-        prevSessionsQuery,
-        prevUniqueSessionsQuery,
-        prevAllSessionsQuery,
-      ]);
-
+      const prevPageViewsRes = await prevPageViewsQuery;
       const prevPageViews = prevPageViewsRes.count || 0;
-      const prevSessions = prevSessionsRes.count || 0;
-      const prevUniqueVisitors = new Set(prevUniqueSessionsRes?.data?.map((s) => s.session_id) || []).size;
-      const prevAvgDuration =
-        prevAllSessionsRes.data && prevAllSessionsRes.data.length > 0
-          ? prevAllSessionsRes.data.reduce((acc, s) => acc + (s.duration_seconds || 0), 0) / prevAllSessionsRes.data.length
-          : 0;
+      const prevContacts = prevContactsRes.count || 0;
 
-      // Calculate percentage changes
       const calculatePercentageChange = (current: number, previous: number): number => {
         if (previous === 0) return current > 0 ? 100 : 0;
         return ((current - previous) / previous) * 100;
@@ -742,19 +638,12 @@ export const Dashboard: React.FC = () => {
 
       setTrends({
         pageViews: calculatePercentageChange(totalPageViews, prevPageViews),
-        uniqueVisitors: calculatePercentageChange(uniqueVisitors, prevUniqueVisitors),
-        totalSessions: calculatePercentageChange(totalSessions, prevSessions),
-        avgDuration: calculatePercentageChange(avgDuration, prevAvgDuration),
+        contacts: calculatePercentageChange(totalContacts, prevContacts),
       });
 
       setStats({
         totalPageViews,
-        totalSessions,
-        totalEvents,
         totalContacts,
-        uniqueVisitors,
-        avgSessionDuration: Math.round(avgDuration),
-        bounceRate: Math.round(bounceRate * 100) / 100,
       });
 
       // Merge database countries with world countries list
@@ -896,36 +785,8 @@ export const Dashboard: React.FC = () => {
 
       const { data: pageViews } = await pageViewsChartQuery;
 
-      const { data: events } = await supabase
-        .from('user_events')
-        .select('created_at, event_type')
-        .gte('created_at', startDateStr)
-        .order('created_at', { ascending: true });
-
-      let sessionsChartQuery = supabase
-        .from('sessions')
-        .select('first_visit, page_count')
-        .gte('first_visit', startDateStr)
-        .lt('first_visit', endDateStr)
-        .order('first_visit', { ascending: true });
-
-      if (selectedCountry !== 'all') {
-        sessionsChartQuery = sessionsChartQuery.eq('country', selectedCountry);
-      }
-      if (selectedCity !== 'all') {
-        sessionsChartQuery = sessionsChartQuery.eq('city', selectedCity);
-      }
-
-      const { data: sessions } = await sessionsChartQuery;
-
-      // Process data for charts
       const processedPageViews = processTimeSeriesData(pageViews || [], 'created_at');
-      const processedEvents = processTimeSeriesData(events || [], 'created_at');
-      const processedSessions = processTimeSeriesData(sessions || [], 'first_visit');
-
       setPageViewsData(processedPageViews);
-      setEventsData(processedEvents);
-      setSessionsData(processedSessions);
       setRecentContacts(contactsRes.data || []);
 
       setLoading(false);
@@ -1228,8 +1089,8 @@ export const Dashboard: React.FC = () => {
       default:
         return (
           <main className="flex-1 overflow-y-auto p-6">
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {/* Stats Grid - Page views and contacts only (sessions/user events removed to reduce DB load) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <StatCard
                 title="Page Views"
                 value={stats.totalPageViews.toLocaleString()}
@@ -1237,106 +1098,43 @@ export const Dashboard: React.FC = () => {
                 trend={formatTrend(trends.pageViews)}
               />
               <StatCard
-                title="Unique Visitors"
-                value={stats.uniqueVisitors.toLocaleString()}
-                icon={<Users size={24} />}
-                trend={formatTrend(trends.uniqueVisitors)}
-              />
-              <StatCard
-                title="Total Sessions"
-                value={stats.totalSessions.toLocaleString()}
+                title="Contacts"
+                value={stats.totalContacts.toLocaleString()}
                 icon={<Globe size={24} />}
-                trend={formatTrend(trends.totalSessions)}
-              />
-              <StatCard
-                title="Avg. Duration"
-                value={formatDuration(stats.avgSessionDuration)}
-                icon={<Clock size={24} />}
-                trend={formatTrend(trends.avgDuration)}
+                trend={formatTrend(trends.contacts)}
               />
             </div>
 
             {/* Charts */}
-            {pageViewsData.length > 0 || eventsData.length > 0 || sessionsData.length > 0 ? (
+            {pageViewsData.length > 0 ? (
               <>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                  {pageViewsData.length > 0 && (
-                    <ChartCard title="Page Views Over Time">
-                      <ResponsiveContainer width="100%" height={300}>
-                        <AreaChart data={pageViewsData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                          <XAxis dataKey="date" stroke="#9CA3AF" />
-                          <YAxis stroke="#9CA3AF" />
-                          <Tooltip
-                            contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
-                          />
-                          <Area
-                            type="monotone"
-                            dataKey="count"
-                            stroke="#3B82F6"
-                            fill="#3B82F6"
-                            fillOpacity={0.3}
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </ChartCard>
-                  )}
-
-                  {eventsData.length > 0 && (
-                    <ChartCard title="User Events Over Time">
-                      <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={eventsData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                          <XAxis dataKey="date" stroke="#9CA3AF" />
-                          <YAxis stroke="#9CA3AF" />
-                          <Tooltip
-                            contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
-                          />
-                          <Line type="monotone" dataKey="count" stroke="#10B981" strokeWidth={2} />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </ChartCard>
-                  )}
-                </div>
-
-                {/* Additional Stats */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                  {sessionsData.length > 0 && (
-                    <ChartCard title="Sessions Over Time">
-                      <ResponsiveContainer width="100%" height={300}>
-                        <AreaChart data={sessionsData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                          <XAxis dataKey="date" stroke="#9CA3AF" />
-                          <YAxis stroke="#9CA3AF" />
-                          <Tooltip
-                            contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
-                          />
-                          <Area
-                            type="monotone"
-                            dataKey="count"
-                            stroke="#8B5CF6"
-                            fill="#8B5CF6"
-                            fillOpacity={0.3}
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </ChartCard>
-                  )}
+                  <ChartCard title="Page Views Over Time">
+                    <ResponsiveContainer width="100%" height={300}>
+                      <AreaChart data={pageViewsData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                        <XAxis dataKey="date" stroke="#9CA3AF" />
+                        <YAxis stroke="#9CA3AF" />
+                        <Tooltip
+                          contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="count"
+                          stroke="#3B82F6"
+                          fill="#3B82F6"
+                          fillOpacity={0.3}
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </ChartCard>
 
                   <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-                    <h3 className="text-lg font-semibold mb-4">Additional Metrics</h3>
+                    <h3 className="text-lg font-semibold mb-4">Contacts</h3>
                     <div className="space-y-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Total Events</span>
-                        <span className="text-xl font-bold">{stats.totalEvents.toLocaleString()}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Contact Submissions</span>
+                        <span className="text-gray-400">Contact submissions</span>
                         <span className="text-xl font-bold">{stats.totalContacts.toLocaleString()}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Bounce Rate</span>
-                        <span className="text-xl font-bold">{stats.bounceRate}%</span>
                       </div>
                     </div>
                   </div>
@@ -1772,8 +1570,7 @@ const VisitorsAnalytics: React.FC<{
   selectedCity: string;
 }> = ({ startDate, endDate, selectedCountry, selectedCity }) => {
   const [visitors, setVisitors] = useState<PageView[]>([]);
-  const [allVisitors, setAllVisitors] = useState<PageView[]>([]); // Store all visitors for grouping
-  const [sessions, setSessions] = useState<Session[]>([]);
+  const [allVisitors, setAllVisitors] = useState<PageView[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(50);
@@ -1905,26 +1702,7 @@ const VisitorsAnalytics: React.FC<{
       const paginatedVisitors = groupedVisitors.slice(startIndex, endIndex);
 
       setVisitors(paginatedVisitors as PageView[]);
-      setTotalCount(totalUniqueIPs); // Count unique IPs
-
-      // Fetch sessions data
-      let sessionsQuery = supabase
-        .from('sessions')
-        .select('*')
-        .gte('first_visit', startDateStr)
-        .lt('first_visit', endDateStr)
-        .order('first_visit', { ascending: false })
-        .limit(100);
-
-      if (selectedCountry !== 'all') {
-        sessionsQuery = sessionsQuery.eq('country', selectedCountry);
-      }
-      if (selectedCity !== 'all') {
-        sessionsQuery = sessionsQuery.eq('city', selectedCity);
-      }
-
-      const { data: sessionsData } = await sessionsQuery;
-      setSessions(sessionsData || []);
+      setTotalCount(totalUniqueIPs);
 
       // Process data for charts (use all visitors, not grouped)
       processChartData(allVisitorsData || []);
@@ -2398,35 +2176,6 @@ const VisitorsAnalytics: React.FC<{
           </div>
         )}
       </div>
-
-      {/* Sessions Summary */}
-      {sessions.length > 0 && (
-        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-          <h3 className="text-lg font-semibold mb-4">Session Summary</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-gray-700/30 rounded-lg p-4">
-              <div className="text-sm text-gray-400 mb-1">Total Sessions</div>
-              <div className="text-2xl font-bold">{sessions.length}</div>
-            </div>
-            <div className="bg-gray-700/30 rounded-lg p-4">
-              <div className="text-sm text-gray-400 mb-1">Avg. Duration</div>
-              <div className="text-2xl font-bold">
-                {Math.round(
-                  sessions.reduce((acc, s) => acc + (s.duration_seconds || 0), 0) / sessions.length
-                )}s
-              </div>
-            </div>
-            <div className="bg-gray-700/30 rounded-lg p-4">
-              <div className="text-sm text-gray-400 mb-1">Bounce Rate</div>
-              <div className="text-2xl font-bold">
-                {Math.round(
-                  (sessions.filter((s) => s.is_bounce).length / sessions.length) * 100
-                )}%
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* IP Visits Modal */}
       {isModalOpen && selectedIP && (
