@@ -77,7 +77,7 @@ function ScrollToSection() {
       isUserNavigation.current = true;
       navigationRef.current = location.pathname;
 
-      // Map routes to section IDs
+      // Map routes to section IDs (/insights = portfolio page scrolled to articles section)
       const routeToSection: Record<string, string> = {
         '/': 'home',
         '/about': 'about',

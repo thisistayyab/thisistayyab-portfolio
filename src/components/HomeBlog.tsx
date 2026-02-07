@@ -61,10 +61,10 @@ function HomeBlog() {
                 viewport={{ once: true }}
             >
                 <h2 id="blog-heading" className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                    Latest Articles
+                    Insights
                 </h2>
                 <p className="text-gray-400 max-w-2xl text-lg leading-relaxed">
-                    Insights on web development, performance optimization, and the future of tech.
+                    Latest articles on web development, performance optimization, and the future of tech.
                 </p>
             </motion.div>
 
@@ -81,12 +81,12 @@ function HomeBlog() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
             >
-                <Link to="/blog">
-                    <Button variant="default" size="lg" className="group">
+                <Button asChild variant="default" size="lg" className="group">
+                    <Link to="/blog" className="cursor-pointer">
                         View All Articles
                         <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                </Link>
+                    </Link>
+                </Button>
             </motion.div>
         </section>
     );

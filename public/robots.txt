@@ -24,8 +24,5 @@ Allow: /
 User-agent: YandexBot
 Allow: /
 
-# Sitemap location
+# Sitemap location (dynamic; includes new blog posts when added from dashboard)
 Sitemap: https://thisistayyab.dev/sitemap.xml
-
-# Crawl-delay (optional, helps prevent server overload)
-Crawl-delay: 1 

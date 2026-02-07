@@ -12,52 +12,60 @@ export default async function handler(req, res) {
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     try {
-        // 1. Static Routes
-        const staticRoutes = [
-            '',
-            '/about',
-            '/projects',
-            '/experience',
-            '/testimonials',
-            '/services',
-            '/insights', // Blog List
-            '/profiles',
-            '/contact',
-            '/privacy',
-            '/terms'
+        // 1. Static Routes (canonical URLs only; /blog is blog list, not /insights)
+        const staticRoutes: { path: string; changefreq: string; priority: string }[] = [
+            { path: '', changefreq: 'weekly', priority: '1.0' },
+            { path: '/about', changefreq: 'monthly', priority: '0.9' },
+            { path: '/projects', changefreq: 'weekly', priority: '0.9' },
+            { path: '/experience', changefreq: 'monthly', priority: '0.9' },
+            { path: '/testimonials', changefreq: 'monthly', priority: '0.8' },
+            { path: '/services', changefreq: 'monthly', priority: '0.9' },
+            { path: '/blog', changefreq: 'weekly', priority: '0.9' },
+            { path: '/profiles', changefreq: 'monthly', priority: '0.8' },
+            { path: '/contact', changefreq: 'monthly', priority: '0.9' },
+            { path: '/privacy', changefreq: 'yearly', priority: '0.5' },
+            { path: '/terms', changefreq: 'yearly', priority: '0.5' }
         ];
 
-        // 2. Fetch Dynamic Blog Routes
+        // 2. Fetch published blog posts only (no duplicates; slugs are unique)
         const { data: posts, error } = await supabase
             .from('posts')
             .select('slug, updated_at, created_at')
-            .eq('published', true);
+            .eq('published', true)
+            .not('slug', 'is', null);
 
         if (error) {
             console.error('Error fetching posts for sitemap:', error);
             throw error;
         }
 
-        // 3. Build XML
+        // 3. Build XML (valid sitemap schema, single canonical URL per page)
+        const today = new Date().toISOString().split('T')[0];
         let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">`;
 
-        // Add Static Routes
-        staticRoutes.forEach(route => {
+        for (const { path, changefreq, priority } of staticRoutes) {
             sitemap += `
     <url>
-        <loc>${BASE_URL}${route}</loc>
-        <changefreq>weekly</changefreq>
-        <priority>${route === '' ? '1.0' : '0.8'}</priority>
+        <loc>${BASE_URL}${path || '/'}</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>${changefreq}</changefreq>
+        <priority>${priority}</priority>
     </url>`;
-        });
+        }
 
-        // Add Dynamic Blog Posts
+        // Add published blog post URLs (automatically included when added from dashboard)
+        const seenSlugs = new Set<string>();
         posts?.forEach(post => {
+            if (!post.slug || seenSlugs.has(post.slug)) return;
+            seenSlugs.add(post.slug);
             const lastMod = new Date(post.updated_at || post.created_at).toISOString().split('T')[0];
             sitemap += `
     <url>
-        <loc>${BASE_URL}/blog/${post.slug}</loc>
+        <loc>${BASE_URL}/blog/${encodeURIComponent(post.slug)}</loc>
         <lastmod>${lastMod}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>

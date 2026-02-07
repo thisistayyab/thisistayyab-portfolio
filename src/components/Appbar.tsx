@@ -45,10 +45,10 @@ export default function AppAppBar() {
         '/': 'home',
         '/about': 'about',
         '/projects': 'project',
-        '/blog': 'blog',
         '/experience': 'experience',
         '/testimonials': 'client',
         '/services': 'services',
+        '/insights': 'blog',
         '/profiles': 'profiles',
         '/contact': 'contact',
       };

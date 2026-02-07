@@ -115,6 +115,19 @@ export function PostsManagement() {
         setCurrentPost({});
         setSelectedCategories([]);
         fetchPosts();
+
+        // Notify search engines to re-crawl sitemap when a post is published (sitemap is dynamic and already includes new posts)
+        if (postData.published) {
+            const sitemapUrl = encodeURIComponent('https://thisistayyab.dev/sitemap.xml');
+            try {
+                await Promise.allSettled([
+                    fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`),
+                    fetch(`https://www.bing.com/ping?sitemap=${sitemapUrl}`)
+                ]);
+            } catch {
+                // Non-blocking; sitemap is still updated on next request
+            }
+        }
     };
 
     const handleDelete = async (id: string) => {
