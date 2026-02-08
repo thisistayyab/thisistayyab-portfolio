@@ -180,8 +180,13 @@ export default function AppAppBar() {
       // Handle top of page (home section)
       // Only redirect if we are not on a standalone page (like /blog or /login)
       const isStandalonePage = location.pathname.startsWith('/blog') || ['/login', '/privacy', '/terms'].includes(location.pathname);
+      // Don't override when user explicitly clicked "View All Articles" to go to blog
+      const directBlogNav = sessionStorage.getItem('direct-nav-to-blog') === 'true';
+      if (directBlogNav) {
+        sessionStorage.removeItem('direct-nav-to-blog');
+      }
 
-      if (!foundSection && window.scrollY < 100 && !isStandalonePage) {
+      if (!foundSection && window.scrollY < 100 && !isStandalonePage && !directBlogNav) {
         if (activeSection !== '/') {
           setActiveSection('/');
           if (location.pathname !== '/') {
@@ -261,6 +266,7 @@ export default function AppAppBar() {
                     height="24"
                     className="w-6 h-6"
                     loading="eager"
+                    fetchPriority="high"
                     itemProp="logo"
                     itemScope
                     itemType="https://schema.org/ImageObject"

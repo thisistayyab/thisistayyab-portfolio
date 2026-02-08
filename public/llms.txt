@@ -1,0 +1,22 @@
+# Tayyab - Full Stack Developer
+
+> Expert Full Stack Developer specializing in React, Node.js, Express, MongoDB. 3+ years of professional experience building scalable web applications. Solved 1150+ LeetCode problems. Available for freelance web development. Email: thisistayyab@outlook.com
+
+Tayyab (thisistayyab) is a full-stack web developer and computer engineering student offering custom web development services including React frontend, Node.js/Express backend, MongoDB, WordPress, and AI integration.
+
+## Key Pages
+
+- [Home](https://thisistayyab.dev/): Portfolio homepage with services overview
+- [About](https://thisistayyab.dev/about): Professional background and skills
+- [Projects](https://thisistayyab.dev/projects): Full-stack web development projects including MenuOrderAI, Taynio Chat, Taylance CRM
+- [Services](https://thisistayyab.dev/services): Web development services offered
+- [Experience](https://thisistayyab.dev/experience): Professional work experience
+- [Contact](https://thisistayyab.dev/contact): Hire for web development projects
+- [Blog](https://thisistayyab.dev/blog): Web development insights and articles (posts added dynamically; full list in sitemap: https://thisistayyab.dev/sitemap.xml)
+- [Profiles](https://thisistayyab.dev/profiles): GitHub, LinkedIn, Upwork, Fiverr, LeetCode
+
+## Optional
+
+- [Testimonials](https://thisistayyab.dev/testimonials): Client reviews
+- [Privacy Policy](https://thisistayyab.dev/privacy): Privacy policy
+- [Terms of Service](https://thisistayyab.dev/terms): Terms of service

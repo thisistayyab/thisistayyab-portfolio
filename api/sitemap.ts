@@ -5,6 +5,7 @@ const BASE_URL = 'https://thisistayyab.dev';
 // Static routes always included (so sitemap never 500s; GSC can always crawl)
 const staticRoutes: { path: string; changefreq: string; priority: string }[] = [
     { path: '', changefreq: 'weekly', priority: '1.0' },
+    { path: '/llms.txt', changefreq: 'monthly', priority: '0.7' },
     { path: '/about', changefreq: 'monthly', priority: '0.9' },
     { path: '/projects', changefreq: 'weekly', priority: '0.9' },
     { path: '/experience', changefreq: 'monthly', priority: '0.9' },

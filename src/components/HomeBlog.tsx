@@ -82,7 +82,14 @@ function HomeBlog() {
                 transition={{ delay: 0.4 }}
             >
                 <Button asChild variant="default" size="lg" className="group">
-                    <Link to="/blog" className="cursor-pointer">
+                    <Link
+                        to="/blog"
+                        className="cursor-pointer"
+                        onClick={() => {
+                            // Prevent scroll-based URL sync from overriding explicit blog navigation
+                            sessionStorage.setItem('direct-nav-to-blog', 'true');
+                        }}
+                    >
                         View All Articles
                         <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </Link>

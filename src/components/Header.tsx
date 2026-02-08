@@ -65,22 +65,20 @@ function Header() {
 
         {/* Header Content */}
         <div className="text-center max-w-[900px] mx-auto relative z-[2]">
-          <motion.h4
+          <p
             className="mb-6 text-[1.3rem] font-medium bg-gradient-to-br from-slate-400 to-blue-400 bg-clip-text text-transparent tracking-[2px] uppercase"
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+            aria-hidden="true"
           >
             Crafting Digital Excellence
-          </motion.h4>
+          </p>
           
           <motion.h1
-            className="mb-8 text-[clamp(2rem,5vw,4rem)] font-extrabold leading-[1.2] bg-gradient-to-br from-white via-slate-400 to-blue-400 bg-clip-text text-transparent animate-text-shimmer"
+            className="mb-8 text-[clamp(2rem,5vw,4rem)] font-extrabold leading-[1.2] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-purple-400 animate-text-shimmer"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            Hi, I'm <span className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-name-glow relative">Tayyab</span> — Full Stack Web Developer | React & Node.js Expert
+            Hi, I'm <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent animate-name-glow relative">Tayyab</span> — Full Stack Web Developer | React & Node.js Expert
           </motion.h1>
           
           <motion.p

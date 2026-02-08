@@ -168,19 +168,19 @@
   <meta name="msapplication-wide310x150logo" content="https://thisistayyab.dev/favicon-256x256.png" />
   <meta name="msapplication-square310x310logo" content="https://thisistayyab.dev/favicon-256x256.png" />
 
-  <!-- Performance Optimizations -->
-  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <!-- Performance Optimizations - Fonts first for LCP hero text -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <!-- Removed jsdelivr dns-prefetch - remixicon no longer used -->
   <!-- Favicon preload removed to prevent unused preload warning -->
 
-  <!-- Stylesheets -->
-  <!-- Remixicon removed - not used in codebase, was causing un-minified CSS warning -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" />
+  <!-- Stylesheets - Non-blocking font load for better LCP -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" as="style" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" /></noscript>
 
   <!-- Analytics: Using Vercel Analytics (already configured in main.tsx) -->
   <!-- Cloudflare Web Analytics can be added later if needed -->
@@ -196,8 +196,8 @@
         "@type": "Person",
         "name": "Tayyab",
         "alternateName": [
-          "Tayyab"
-          "thisistayyab",
+          "Tayyab",
+          "thisistayyab"
         ],
         "url": "https://thisistayyab.dev/",
         "image": "https://thisistayyab.dev/favicon-256x256.png",
@@ -390,8 +390,8 @@
         "@type": "ProfessionalService",
         "name": "Tayyab - Full Stack Developer",
         "alternateName": [
-          "Tayyab"
-          "thisistayyab",
+          "Tayyab",
+          "thisistayyab"
         ],
         "description": "Professional full-stack web development services by thisistayyab specializing in React, Node.js, Express, MongoDB. this is tayyab developer offering custom web applications, RESTful APIs, responsive frontend development, and scalable backend solutions.",
         "url": "https://thisistayyab.dev/",
@@ -406,10 +406,10 @@
         "provider": {
           "@type": "Person",
           "name": "Tayyab Dev",
-          "alternateName": [
-            "Tayyab"
-            "thisistayyab",
-          ],
+        "alternateName": [
+          "Tayyab",
+          "thisistayyab"
+        ],
           "email": "thisistayyab@outlook.com"
         },
         "areaServed": "Worldwide",
@@ -739,8 +739,9 @@
   </nav>
   <div id="root">
     <div class="loading" aria-label="Loading page">
-      <!-- Initial content visible to search engines before React hydration -->
+      <!-- Initial content visible to search engines before React hydration - proper H1 for Bingbot/SEO -->
       <div style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;" aria-hidden="true">
+        <h1>Tayyab - Full Stack Developer | React &amp; Node.js Expert</h1>
         <p>Expert Full Stack Developer specializing in React, Node.js, Express, MongoDB. 3+ years experience, 1150+ LeetCode problems solved. Building scalable web applications and modern digital solutions.</p>
         <h2>About</h2>
         <p>Passionate web developer and computer engineering student with 3+ years of hands-on experience in building full-stack applications.</p>
