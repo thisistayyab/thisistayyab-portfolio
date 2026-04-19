@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -36,6 +36,12 @@ const PrivacyPolicy = lazy(() =>
 const TermsOfService = lazy(() =>
   import('./pages/TermsOfService').then(module => {
     return { default: module.TermsOfService };
+  })
+);
+
+const NotFound = lazy(() =>
+  import('./pages/NotFound').then(module => {
+    return { default: module.NotFound };
   })
 );
 
@@ -228,7 +234,14 @@ function App() {
               <TermsOfService isDesktop={isDesktop} />
             </Suspense>
           } />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<div className="min-h-screen bg-[#020205]" />}>
+                <NotFound isDesktop={isDesktop} />
+              </Suspense>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -64,12 +64,31 @@ export function BlogPost({ isDesktop }: BlogPostProps) {
 
     if (!post) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-[#020205] text-white">
-                <div className="text-center">
-                    <h1 className="text-4xl font-bold mb-4">Article Not Found</h1>
-                    <Button onClick={() => navigate('/blog')}>Back to Blog</Button>
-                </div>
-            </div>
+            <>
+                <SEOHead
+                    title="Article not found | Tayyab"
+                    description="This blog post does not exist or is no longer published."
+                    noIndex
+                />
+                <GlobalBackground isDesktop={isDesktop} showTechIcons={false} />
+                <main className="relative z-10 min-h-screen flex flex-col pt-32 text-white">
+                    <div className="mb-4">
+                        <AppAppBar />
+                    </div>
+                    <div className="flex-grow flex flex-col items-center justify-center px-4 pb-16">
+                        <div className="text-center max-w-md">
+                            <h1 className="text-3xl md:text-4xl font-bold mb-3">Article not found</h1>
+                            <p className="text-gray-400 mb-8">
+                                The link may be wrong or this post may have been removed.
+                            </p>
+                            <Button onClick={() => navigate('/blog')} className="bg-blue-600 hover:bg-blue-500">
+                                Back to articles
+                            </Button>
+                        </div>
+                    </div>
+                    <Footer />
+                </main>
+            </>
         );
     }
 

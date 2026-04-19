@@ -111,6 +111,10 @@ export default function AppAppBar() {
         return;
       }
 
+      const isPortfolioRoute = ['/', '/about', '/projects', '/experience', '/testimonials', '/services', '/insights', '/profiles', '/contact'].includes(
+        location.pathname
+      );
+
       // Process immediately - no throttling or delays
       // Re-fetch sections on each scroll to ensure elements are available
       const sections = navItems.map(item => ({
@@ -159,13 +163,12 @@ export default function AppAppBar() {
 
       // When on the portfolio page, the "blog" section (Insights) must map to /insights, not /blog,
       // so scrolling to Insights doesn’t navigate to the full blog page and cause a reload.
-      const isPortfolioRoute = ['/', '/about', '/projects', '/experience', '/testimonials', '/services', '/insights', '/profiles', '/contact'].includes(location.pathname);
       if (foundSection && currentSection === '/blog' && isPortfolioRoute) {
         currentSection = '/insights';
       }
 
-      // Update state if section changed
-      if (foundSection && currentSection && currentSection !== activeSection) {
+      // Update state if section changed (portfolio shell only — same DOM sections as nav)
+      if (isPortfolioRoute && foundSection && currentSection && currentSection !== activeSection) {
         setActiveSection(currentSection);
 
         // Update URL using React Router navigate (without triggering scroll)
@@ -177,16 +180,19 @@ export default function AppAppBar() {
         }
       }
 
-      // Handle top of page (home section)
-      // Only redirect if we are not on a standalone page (like /blog or /login)
-      const isStandalonePage = location.pathname.startsWith('/blog') || ['/login', '/privacy', '/terms'].includes(location.pathname);
+      // Handle top of page (home section): only sync URL to "/" on the single-page portfolio shell.
+      // On 404 and other pages there are no section elements, so foundSection stays false and this must not run.
+      const isStandalonePage =
+        location.pathname.startsWith('/blog') ||
+        location.pathname.startsWith('/dashboard') ||
+        ['/login', '/privacy', '/terms'].includes(location.pathname);
       // Don't override when user explicitly clicked "View All Articles" to go to blog
       const directBlogNav = sessionStorage.getItem('direct-nav-to-blog') === 'true';
       if (directBlogNav) {
         sessionStorage.removeItem('direct-nav-to-blog');
       }
 
-      if (!foundSection && window.scrollY < 100 && !isStandalonePage && !directBlogNav) {
+      if (!foundSection && window.scrollY < 100 && !isStandalonePage && !directBlogNav && isPortfolioRoute) {
         if (activeSection !== '/') {
           setActiveSection('/');
           if (location.pathname !== '/') {

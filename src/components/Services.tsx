@@ -67,7 +67,7 @@ function Services() {
       "url": `${baseUrl}/#services`,
       "image": "https://thisistayyab.dev/assets/profile-C5yXg1a2.webp",
       "priceRange": "$$",
-      "telephone": "+923001234567",
+      "telephone": "+923028742525",
       "provider": {
         "@type": "Person",
         "@id": `${baseUrl}/#person`,

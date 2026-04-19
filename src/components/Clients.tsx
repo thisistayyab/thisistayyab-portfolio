@@ -114,7 +114,7 @@ function Clients() {
             "description": "Professional web development services including full-stack development, React, Node.js, Express, MongoDB, and MERN stack development.",
             "priceRange": "$$",
             "image": "https://thisistayyab.dev/assets/profile-C5yXg1a2.webp",
-            "telephone": "+923001234567",
+            "telephone": "+923028742525",
             "address": {
               "@type": "PostalAddress",
               "addressCountry": "PK",
