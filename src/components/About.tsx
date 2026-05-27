@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import aboutImg from '../assets/about.webp';
+import aboutImg from '../assets/about.avif';
 import cv from "../assets/Tayyab's CV.pdf";
 import { socialLinks } from '../data/socialLinks';
 import { SocialIcon } from './ui/social-icon';
@@ -51,10 +51,14 @@ function About() {
         <img
           src={aboutImg}
           alt="Tayyab - Full Stack Web Developer and Computer Engineering Student portrait photo. Professional developer specializing in React, Node.js, Express, and MongoDB with 3+ years of experience."
+          title="Tayyab - Full Stack Web Developer portrait"
           loading="lazy"
+          decoding="async"
+          fetchPriority="low"
           width="450"
           height="600"
           className="w-full block rounded-2xl relative z-[2]"
+          itemProp="image"
         />
       </Card>
 
