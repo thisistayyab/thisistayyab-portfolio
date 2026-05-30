@@ -47,12 +47,6 @@ function HomeBlog() {
             id="blog"
             aria-labelledby="blog-heading"
         >
-            {/* Background Elements */}
-            <div
-                className="absolute top-[20%] right-[10%] w-[300px] h-[300px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"
-                aria-hidden="true"
-            />
-
             <motion.div
                 className="mb-16 flex flex-col items-center gap-6 text-center"
                 initial={{ opacity: 0, y: -20 }}

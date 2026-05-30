@@ -13,12 +13,6 @@ export function BlogCTA() {
                 viewport={{ once: true }}
                 className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl p-8 md:p-12 text-center"
             >
-                {/* Background Gradients */}
-                <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-                    <div className="absolute top-[-50%] right-[-10%] w-[300px] h-[300px] bg-blue-500/20 rounded-full blur-[100px]" />
-                    <div className="absolute bottom-[-50%] left-[-10%] w-[300px] h-[300px] bg-purple-500/20 rounded-full blur-[100px]" />
-                </div>
-
                 <div className="relative z-10 flex flex-col items-center">
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}

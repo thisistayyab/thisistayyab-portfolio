@@ -58,11 +58,6 @@ function Header() {
 
       {/* Header Container */}
       <div className="max-w-[1200px] mx-auto px-4 pt-40 pb-32 flex items-center justify-center min-h-[80vh] relative overflow-hidden" id="home">
-        {/* Animated Background Circles */}
-        <div className="absolute w-[300px] h-[300px] bg-blue-500 top-[10%] left-[10%] opacity-15 rounded-full blur-[80px] animate-float pointer-events-none z-0" style={{ animationDelay: '0s' }} />
-        <div className="absolute w-[250px] h-[250px] bg-purple-500 top-[60%] right-[15%] opacity-12 rounded-full blur-[80px] animate-float pointer-events-none z-0" style={{ animationDelay: '2s' }} />
-        <div className="absolute w-[200px] h-[200px] bg-pink-500 bottom-[10%] left-1/2 -translate-x-1/2 opacity-10 rounded-full blur-[80px] animate-float pointer-events-none z-0" style={{ animationDelay: '4s' }} />
-
         {/* Header Content */}
         <div className="text-center max-w-[900px] mx-auto relative z-[2]">
           <p

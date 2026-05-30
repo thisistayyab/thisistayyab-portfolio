@@ -198,12 +198,6 @@ function Projects() {
       aria-labelledby="projects-heading"
       role="region"
     >
-      {/* Blurred Circle Background */}
-      <div
-        className="absolute top-[60%] left-[70%] w-[180px] h-[180px] bg-[#7952B3] rounded-full blur-[90px] opacity-[0.13] z-0"
-        aria-hidden="true"
-      />
-
       {/* Header */}
       <motion.div
         className="mb-16 flex flex-col items-center justify-between gap-8"

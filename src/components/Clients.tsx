@@ -190,18 +190,6 @@ function Clients() {
       aria-labelledby="testimonials-heading"
       role="region"
     >
-      {/* Blurred Circle Background */}
-      <div
-        className="absolute w-[350px] h-[350px] bg-purple-500 top-[20%] left-[10%] rounded-full blur-[100px] opacity-[0.15] z-0 animate-float pointer-events-none"
-        style={{ animationDelay: '0s' }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute w-[300px] h-[300px] bg-blue-500 bottom-[20%] right-[15%] rounded-full blur-[100px] opacity-[0.12] z-0 animate-float pointer-events-none"
-        style={{ animationDelay: '3s' }}
-        aria-hidden="true"
-      />
-
       {/* Header */}
       <motion.div
         className="relative z-[2] text-center mb-16"

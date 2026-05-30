@@ -13,38 +13,6 @@ export const GlobalBackground: React.FC<GlobalBackgroundProps> = ({
 }) => {
   return (
     <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-      {/* Blurred Circles */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '10%',
-          left: '10%',
-          width: 200,
-          height: 200,
-          background: '#ee9821',
-          borderRadius: '50%',
-          filter: 'blur(100px)',
-          opacity: 0.3,
-          zIndex: 1,
-        }}
-        aria-hidden="true"
-      />
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '10%',
-          right: '10%',
-          width: 250,
-          height: 250,
-          background: '#f8f208',
-          borderRadius: '50%',
-          filter: 'blur(120px)',
-          opacity: 0.2,
-          zIndex: 1,
-        }}
-        aria-hidden="true"
-      />
-      
       {/* Tech Icons: animated on desktop, still on mobile - only show if enabled */}
       {showTechIcons && (
         <div style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>

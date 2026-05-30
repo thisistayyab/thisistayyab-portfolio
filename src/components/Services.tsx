@@ -175,18 +175,6 @@ function Services() {
       aria-labelledby="services-heading"
       role="region"
     >
-      {/* Floating background circles */}
-      <div
-        className="absolute top-[10%] right-[10%] w-[350px] h-[350px] bg-blue-500 rounded-full blur-[100px] opacity-[0.15] z-0 animate-float"
-        aria-hidden="true"
-        style={{ animationDelay: '0s' }}
-      />
-      <div
-        className="absolute bottom-[20%] left-[15%] w-[300px] h-[300px] bg-purple-500 rounded-full blur-[100px] opacity-[0.12] z-0 animate-float"
-        aria-hidden="true"
-        style={{ animationDelay: '3s' }}
-      />
-
       {/* Header */}
       <motion.div
         className="relative z-[2] text-center mb-12"

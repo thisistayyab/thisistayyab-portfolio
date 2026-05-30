@@ -20,7 +20,7 @@ function Portfolio({ isDesktop }: PortfolioProps) {
 
   return (
     <>
-      {/* Global Animated Background: Blurred Circles and Tech Icons */}
+      {/* Global Animated Background: Tech Icons */}
       <GlobalBackground isDesktop={isDesktop} showTechIcons={true} />
       {/* Main Content */}
       <main

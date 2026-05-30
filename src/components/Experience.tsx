@@ -223,12 +223,6 @@ function Experience() {
       aria-labelledby="experience-heading"
       role="region"
     >
-      {/* Blurred Circle Background */}
-      <div
-        className="absolute top-[30%] right-[10%] w-[200px] h-[200px] bg-blue-500 rounded-full blur-[100px] opacity-[0.15] z-0"
-        aria-hidden="true"
-      />
-
       {/* Header */}
       <motion.div
         className="relative z-[2] text-center mb-16"

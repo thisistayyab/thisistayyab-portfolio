@@ -29,17 +29,6 @@ function About() {
       id="about"
       aria-labelledby="about-heading"
     >
-      {/* Colorful background circles - decorative */}
-      <div 
-        className="absolute w-[300px] h-[300px] bg-blue-500 top-[20%] left-[60%] opacity-15 rounded-full blur-[100px] animate-float pointer-events-none z-0" 
-        style={{ animationDelay: '0s' }}
-        aria-hidden="true"
-      />
-      <div 
-        className="absolute w-[250px] h-[250px] bg-pink-500 bottom-[10%] right-[10%] opacity-12 rounded-full blur-[100px] animate-float pointer-events-none z-0" 
-        style={{ animationDelay: '4s' }}
-        aria-hidden="true"
-      />
       
       {/* About Image Card */}
       <Card 
