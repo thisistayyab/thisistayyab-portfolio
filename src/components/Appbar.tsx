@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { navItems } from '../data/navigation';
+import { navItems, scrollSyncNavItems } from '../data/navigation';
 import { Button } from './ui/button';
 import {
   Sheet,
@@ -64,8 +64,6 @@ export default function AppAppBar() {
       // Wait until we're actually at the target section before re-enabling scroll detection
       const routeToSection: Record<string, string> = {
         '/': 'home',
-        '/about': 'about',
-        '/projects': 'project',
         '/experience': 'experience',
         '/testimonials': 'client',
         '/services': 'services',
@@ -132,13 +130,13 @@ export default function AppAppBar() {
         return;
       }
 
-      const isPortfolioRoute = ['/', '/about', '/projects', '/experience', '/testimonials', '/services', '/insights', '/contact'].includes(
+      const isPortfolioRoute = ['/', '/experience', '/testimonials', '/services', '/insights', '/contact'].includes(
         location.pathname
       );
 
       // Process immediately - no throttling or delays
       // Re-fetch sections on each scroll to ensure elements are available
-      const sections = navItems.map(item => ({
+      const sections = scrollSyncNavItems.map(item => ({
         id: item.sectionId,
         element: document.getElementById(item.sectionId),
         href: item.href,

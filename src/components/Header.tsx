@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import aboutImg from '../assets/about.avif';
 import cv from "../assets/Tayyab's CV.pdf";
 import { heroStats } from '../data/heroStats';
 import { heroTags } from '../data/heroTags';
 import { socialLinksHeader } from '../data/socialLinks';
 import { HeaderGraphBackground } from './HeaderGraphBackground';
+import { HeroCtaLink } from './ui/hero-cta-link';
 
 function Header() {
   return (
@@ -140,19 +140,19 @@ function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.34, duration: 0.5 }}
               >
-                <Link to="/projects" className="hero-cta-primary" title="View Tayyab's web development projects">
+                <HeroCtaLink to="/projects" title="View Tayyab's web development projects">
                   View My Work
                   <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
-                </Link>
-                <a
+                </HeroCtaLink>
+                <HeroCtaLink
                   href={cv}
                   download
-                  className="hero-cta-secondary"
+                  variant="secondary"
                   title="Download Tayyab's Full Stack Developer CV"
                 >
                   Download CV
                   <Download className="size-[1.05rem]" aria-hidden="true" />
-                </a>
+                </HeroCtaLink>
               </motion.div>
             </div>
           </div>

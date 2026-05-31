@@ -10,6 +10,7 @@ import project9 from '../assets/project-9.png';
 import project10 from '../assets/project-10.png';
 import project11 from '../assets/p-11.png'
 import project12 from '../assets/p-12.png'
+import type { ProjectTag, TextSegment } from './projectsContent';
 
 export interface Technology {
   label: string;
@@ -26,11 +27,9 @@ export interface Project {
   description: string;
   technologies: Technology[];
   button: string;
-}
-
-export interface Filter {
-  label: string;
-  value: string;
+  featured?: boolean;
+  cardSummary?: TextSegment[];
+  tags?: ProjectTag[];
 }
 
 export const projects: Project[] = [
@@ -40,14 +39,32 @@ export const projects: Project[] = [
     img: project12,
     link: 'https://qr.menuorderai.com/',
     name: 'Menu-OrderAI QR',
-    description: `MenuOrderAI QR is an AI-powered QR code menu ordering system that enables restaurants to provide contactless dining experiences. Built with React, TypeScript, and Supabase, the platform allows customers to scan QR codes to instantly access digital menus with AI-powered meal recommendations. The system analyzes menu items in real-time to highlight GLP-1 friendly, high-protein, and low-carb options, helping health-conscious diners make informed choices. Features include real-time menu analysis, personalized recommendations, nutritional insights, and seamless ordering integration. The application demonstrates expertise in AI integration, real-time data processing, and creating user-friendly mobile-first experiences.`,
+    description:
+      'An AI-powered QR menu ordering system built for restaurants that want contactless dining. Customers scan, browse, and order — no app download needed. Built with React, TypeScript, and Supabase with real-time order syncing and a full restaurant dashboard.',
+    cardSummary: [
+      { text: 'An ' },
+      { text: 'AI-powered QR menu ordering system', bold: true },
+      {
+        text: ' built for restaurants that want contactless dining. Customers scan, browse, and order — no app download needed. Built with ',
+      },
+      { text: 'React, TypeScript, and Supabase', bold: true },
+      { text: ' with real-time order syncing and a full restaurant dashboard.' },
+    ],
+    tags: [
+      { label: 'React', variant: 'tech' },
+      { label: 'TypeScript', variant: 'tech' },
+      { label: 'Supabase', variant: 'tech' },
+      { label: 'AI Integration', variant: 'feature' },
+      { label: 'Real-time DB', variant: 'feature' },
+    ],
     technologies: [
       { label: 'React', color: '#61dafb', width: '95%' },
       { label: 'TypeScript', color: '#3178c6', width: '90%' },
       { label: 'Supabase', color: '#3ECF8E', width: '85%' },
       { label: 'AI Integration', color: '#10b981', width: '80%' },
     ],
-    button: 'Live View'
+    button: 'Live View',
+    featured: true,
   },
   {
     id: 2,
@@ -55,14 +72,33 @@ export const projects: Project[] = [
     img: project11,
     link: 'https://www.menuorderai.com/',
     name: 'Menu-OrderAI Website',
-    description: `MenuOrderAI is a comprehensive WordPress website for an AI-powered dining app that helps health-conscious diners and GLP-1 medication users make smarter restaurant choices. The website showcases the app's features including real-time menu analysis, GLP-1 friendly meal recommendations, high-protein and low-carb filtering, and nutritional insights. Built with WordPress, the site features responsive design, SEO optimization, and seamless integration with app store listings. The platform serves as both a marketing website and informational resource, explaining how AI technology transforms restaurant dining experiences. This project demonstrates expertise in WordPress development, content management, SEO best practices, and creating conversion-focused landing pages.`,
+    description:
+      'The marketing and product site for an AI-powered dining app that helps health-conscious users find GLP-1-friendly, high-protein meals at nearby restaurants. Built on WordPress with custom PHP, fully SEO-optimized, and conversion-focused from day one.',
+    cardSummary: [
+      { text: 'The marketing and product site for an ' },
+      { text: 'AI-powered dining app', bold: true },
+      {
+        text: ' that helps health-conscious users find GLP-1-friendly, high-protein meals at nearby restaurants. Built on ',
+      },
+      { text: 'WordPress with custom PHP', bold: true },
+      { text: ', fully ' },
+      { text: 'SEO-optimized', bold: true },
+      { text: ', and conversion-focused from day one.' },
+    ],
+    tags: [
+      { label: 'WordPress', variant: 'tech' },
+      { label: 'PHP', variant: 'tech' },
+      { label: 'SEO Optimized', variant: 'feature' },
+      { label: 'Responsive Design', variant: 'feature' },
+    ],
     technologies: [
       { label: 'WordPress', color: '#21759b', width: '95%' },
       { label: 'PHP', color: '#777bb4', width: '80%' },
       { label: 'SEO', color: '#f59e0b', width: '90%' },
       { label: 'Responsive Design', color: '#8b5cf6', width: '85%' },
     ],
-    button: 'Live View'
+    button: 'Live View',
+    featured: true,
   },
   {
     id: 3,
@@ -70,14 +106,32 @@ export const projects: Project[] = [
     img: project8,
     link: 'https://7opportunity.vercel.app/',
     name: '7Opportunity',
-    description: `7Opportunity is a sleek, animated multi-section website built to serve as a personal brand and marketing platform. It integrates smooth scrolling, dynamic transitions, and an interactive UI to provide an engaging experience. The backend, powered by Supabase, handles user inquiries, data storage, and dynamic content integration for maximum functionality. The site was carefully designed to be fully responsive, adapting seamlessly to various screen sizes and ensuring consistent performance. 7Opportunity demonstrates advanced frontend development skills with Framer Motion animations, backend integration, and modern deployment practices on Vercel.`,
+    description:
+      'A personal brand and marketing platform with smooth scroll animations, multi-section layout, and a custom Express.js + Supabase API backend. Built to perform on mobile, score 90+ on Lighthouse, and convert visitors into leads — not just look good.',
+    cardSummary: [
+      { text: 'A ' },
+      { text: 'personal brand and marketing platform', bold: true },
+      { text: ' with smooth scroll animations, multi-section layout, and a custom ' },
+      { text: 'Express.js + Supabase API', bold: true },
+      { text: ' backend. Built to perform on mobile, score ' },
+      { text: '90+ on Lighthouse', bold: true },
+      { text: ', and convert visitors into leads — not just look good.' },
+    ],
+    tags: [
+      { label: 'React', variant: 'tech' },
+      { label: 'Supabase', variant: 'tech' },
+      { label: 'Express.js', variant: 'tech' },
+      { label: 'API Development', variant: 'feature' },
+      { label: 'Lighthouse 90+', variant: 'feature' },
+    ],
     technologies: [
       { label: 'React', color: '#61dafb', width: '90%' },
       { label: 'Supabase', color: '#3ECF8E', width: '75%' },
       { label: 'Express.js', color: '#ab4908ff', width: '75%' },
       { label: 'API Development', color: '#2563EB', width: '95%' },
     ],
-    button: 'Live View'
+    button: 'Live View',
+    featured: true,
   },
   {
     id: 4,
@@ -216,8 +270,4 @@ export const projects: Project[] = [
   },
 ];
 
-export const filters: Filter[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Web Apps', value: 'web' },
-  { label: 'Problem Solving', value: 'design' },
-];
+export const featuredProjects = projects.filter(project => project.featured);

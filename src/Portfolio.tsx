@@ -1,8 +1,8 @@
 import './App.css';
 import Header from './components/Header';
 import Experience from './components/Experience';
-import About from './components/About';
-import Projects from './components/Projects';
+import HomeAboutPreview from './components/HomeAboutPreview';
+import HomeProjectsPreview from './components/HomeProjectsPreview';
 import Services from './components/Services';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -31,8 +31,8 @@ function Portfolio({ isDesktop }: PortfolioProps) {
         style={{ position: 'relative', zIndex: 5 }}
       >
         <Header />
-        <About />
-        <Projects />
+        <HomeAboutPreview />
+        <HomeProjectsPreview />
         <Experience />
         <Clients />
         <Services />

@@ -876,7 +876,8 @@ body {
     gap: 0.85rem;
   }
 
-  .hero-cta-primary {
+  .hero-cta-primary,
+  .btn-cta-primary {
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
@@ -893,14 +894,16 @@ body {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
 
-  .hero-cta-primary:hover {
+  .hero-cta-primary:hover,
+  .btn-cta-primary:hover {
     transform: translateY(-2px);
     box-shadow:
       0 14px 34px rgba(124, 58, 237, 0.42),
       0 0 48px rgba(59, 130, 246, 0.24);
   }
 
-  .hero-cta-secondary {
+  .hero-cta-secondary,
+  .btn-cta-secondary {
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -921,7 +924,8 @@ body {
     transition: box-shadow 0.25s ease, transform 0.25s ease;
   }
 
-  .hero-cta-secondary::before {
+  .hero-cta-secondary::before,
+  .btn-cta-secondary::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -939,17 +943,50 @@ body {
     pointer-events: none;
   }
 
-  .hero-cta-secondary > * {
+  .hero-cta-secondary > *,
+  .btn-cta-secondary > * {
     position: relative;
     z-index: 1;
   }
 
-  .hero-cta-secondary:hover {
+  .hero-cta-secondary:hover,
+  .btn-cta-secondary:hover {
     transform: translateY(-2px);
     box-shadow:
       0 14px 36px rgba(0, 0, 0, 0.42),
       0 0 28px rgba(59, 130, 246, 0.18),
       0 0 44px rgba(139, 92, 246, 0.14);
+  }
+
+  .btn-cta-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    height: auto;
+    padding: 0.9rem 0.35rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: #94a3b8;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    transition: color 0.2s ease;
+  }
+
+  .btn-cta-link:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transform: none;
+    box-shadow: none;
   }
 
   .hero-visual {

@@ -31,11 +31,11 @@ const routeMetaTags: Record<string, RouteMetaTags> = {
       'Tayyab, Full Stack Developer, React developer, Next.js developer, Node.js developer, PostgreSQL developer, REST API developer, freelance web developer, full stack for hire, web application development, SaaS developer, portfolio',
   },
   '/about': {
-    title: 'About Tayyab - Full Stack Developer | Professional Background',
+    title: 'About Tayyab | Full Stack Developer — Background & Achievements',
     description:
-      'Learn about Tayyab - A dedicated full-stack web developer with 3+ years of experience, 1150+ LeetCode problems solved, and expertise in React, Node.js, Express, and MongoDB.',
+      'Meet Tayyab, a full stack web developer with 3+ years of experience, 15+ projects shipped, and 1,150+ LeetCode problems solved. Expert in React, Next.js, Node.js, and PostgreSQL.',
     keywords:
-      'About Tayyab, Full Stack Developer background, React developer experience, Node.js developer profile, web developer portfolio, computer engineering student',
+      'About Tayyab, full stack developer biography, React developer background, Node.js developer profile, web developer achievements, hire full stack developer',
   },
   '/projects': {
     title: 'Projects - Web Development Portfolio | Tayyab',

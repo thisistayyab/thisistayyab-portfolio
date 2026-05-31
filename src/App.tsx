@@ -15,6 +15,14 @@ const Dashboard = lazy(() =>
   })
 );
 
+const AboutPage = lazy(() =>
+  import('./pages/AboutPage').then(module => ({ default: module.AboutPage }))
+);
+
+const ProjectsPage = lazy(() =>
+  import('./pages/ProjectsPage').then(module => ({ default: module.ProjectsPage }))
+);
+
 const BlogList = lazy(() =>
   import('./pages/BlogList').then(module => {
     return { default: module.BlogList };
@@ -86,8 +94,6 @@ function ScrollToSection() {
       // Map routes to section IDs (/insights = portfolio page scrolled to articles section)
       const routeToSection: Record<string, string> = {
         '/': 'home',
-        '/about': 'about',
-        '/projects': 'project',
         '/experience': 'experience',
         '/testimonials': 'client',
         '/services': 'services',
@@ -205,8 +211,22 @@ function App() {
             }
           />
           <Route path="/" element={<Portfolio isDesktop={isDesktop} />} />
-          <Route path="/about" element={<Portfolio isDesktop={isDesktop} />} />
-          <Route path="/projects" element={<Portfolio isDesktop={isDesktop} />} />
+          <Route
+            path="/about"
+            element={
+              <Suspense fallback={<div className="min-h-screen bg-[#020106]" />}>
+                <AboutPage isDesktop={isDesktop} />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              <Suspense fallback={<div className="min-h-screen bg-[#020106]" />}>
+                <ProjectsPage isDesktop={isDesktop} />
+              </Suspense>
+            }
+          />
           <Route path="/experience" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/testimonials" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/services" element={<Portfolio isDesktop={isDesktop} />} />

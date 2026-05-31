@@ -7,7 +7,7 @@ Tayyab (thisistayyab) is a full-stack web developer and computer engineering stu
 ## Key Pages
 
 - [Home](https://thisistayyab.dev/): Portfolio homepage with services overview
-- [About](https://thisistayyab.dev/about): Professional background and skills
+- [About](https://thisistayyab.dev/about): Full professional background, achievements, skills, and biography (standalone page)
 - [Projects](https://thisistayyab.dev/projects): Full-stack web development projects including MenuOrderAI, Taynio Chat, Taylance CRM
 - [Services](https://thisistayyab.dev/services): Web development services offered
 - [Experience](https://thisistayyab.dev/experience): Professional work experience
