@@ -117,7 +117,11 @@ body.keyboard-navigation *:focus-visible {
 
   /* Background Colors (Dark Mode) */
   --background-paper: hsl(220, 30%, 7%);
-  --background-default: hsl(220, 35%, 3%);
+  --background-default: #020106;
+
+  --site-bg-base: #020106;
+  --site-bg-deep: #010004;
+  --site-bg-mid: #05040c;
 
   /* Typography */
   --font-family: 'Outfit', sans-serif;
@@ -183,8 +187,8 @@ body.keyboard-navigation *:focus-visible {
   --scrollbar-track-color: #1e1e1e;
   --radius: 0.625rem;
   /* Shadcn UI Theme - Mapped from MUI Theme */
-  /* Background matches MUI: hsl(220, 35%, 3%) = #0a192f (secondary-color) */
-  --background: hsl(220, 35%, 3%);
+  /* Background matches site dark theme */
+  --background: #020106;
   --foreground: #ffffff;
   /* Card matches MUI paper: hsl(220, 30%, 7%) */
   --card: hsl(220, 30%, 7%);
@@ -220,10 +224,6 @@ body.keyboard-navigation *:focus-visible {
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.1);
   --sidebar-ring: #1677ff;
-
-  --site-bg-base: #020106;
-  --site-bg-deep: #010004;
-  --site-bg-mid: #05040c;
 }
 
 /* Global Styles */
@@ -256,7 +256,6 @@ body.keyboard-navigation *:focus-visible {
 
 body {
   font-family: var(--font-family) !important;
-  background-color: var(--site-bg-base);
 }
 
 @theme inline {
@@ -298,11 +297,44 @@ body {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-site-base: var(--site-bg-base);
+  --background-image-site-ambient:
+    radial-gradient(ellipse 90% 55% at 50% -8%, rgba(139, 92, 246, 0.05), transparent 62%),
+    radial-gradient(ellipse 45% 35% at 100% 40%, rgba(99, 102, 241, 0.035), transparent 65%),
+    radial-gradient(ellipse 40% 30% at 0% 70%, rgba(124, 58, 237, 0.03), transparent 68%);
+  --background-image-site-stars:
+    radial-gradient(1px 1px at 6% 10%, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(1px 1px at 16% 24%, rgba(199, 210, 254, 0.45), transparent),
+    radial-gradient(1px 1px at 28% 6%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 41% 38%, rgba(226, 232, 240, 0.35), transparent),
+    radial-gradient(1px 1px at 52% 14%, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(1px 1px at 64% 52%, rgba(196, 181, 253, 0.3), transparent),
+    radial-gradient(1px 1px at 74% 20%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 86% 44%, rgba(226, 232, 240, 0.32), transparent),
+    radial-gradient(1px 1px at 8% 58%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 92% 72%, rgba(199, 210, 254, 0.28), transparent);
+  --background-image-site-stars-fine:
+    radial-gradient(1px 1px at 20px 40px, rgba(255, 255, 255, 0.22), transparent),
+    radial-gradient(1px 1px at 80px 120px, rgba(199, 210, 254, 0.18), transparent),
+    radial-gradient(1px 1px at 140px 60px, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(1px 1px at 180px 160px, rgba(226, 232, 240, 0.16), transparent);
+  --animate-header-graph-drift: header-graph-drift 28s ease-in-out infinite;
+
+  @keyframes header-graph-drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+      transform: translate3d(0, -8px, 0);
+    }
+  }
 }
 
 .dark {
   /* Dark mode uses same colors as default (already dark theme) */
-  --background: hsl(220, 35%, 3%);
+  --background: #020106;
   --foreground: #ffffff;
   --card: hsl(220, 30%, 7%);
   --card-foreground: #ffffff;
@@ -600,69 +632,6 @@ body {
       0 0 20px color-mix(in srgb, var(--icon-hover-color) 20%, transparent);
   }
 
-  /* Site background */
-  .site-background {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  .site-background__base {
-    position: absolute;
-    inset: 0;
-    background: var(--site-bg-base);
-  }
-
-  .site-background__ambient {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 90% 55% at 50% -8%, rgba(139, 92, 246, 0.05), transparent 62%),
-      radial-gradient(ellipse 45% 35% at 100% 40%, rgba(99, 102, 241, 0.035), transparent 65%),
-      radial-gradient(ellipse 40% 30% at 0% 70%, rgba(124, 58, 237, 0.03), transparent 68%);
-  }
-
-  .site-background__stars {
-    position: absolute;
-    inset: 0;
-    opacity: 0.55;
-    background-image:
-      radial-gradient(1px 1px at 6% 10%, rgba(255, 255, 255, 0.65), transparent),
-      radial-gradient(1px 1px at 16% 24%, rgba(199, 210, 254, 0.45), transparent),
-      radial-gradient(1px 1px at 28% 6%, rgba(255, 255, 255, 0.5), transparent),
-      radial-gradient(1px 1px at 41% 38%, rgba(226, 232, 240, 0.35), transparent),
-      radial-gradient(1px 1px at 52% 14%, rgba(255, 255, 255, 0.55), transparent),
-      radial-gradient(1px 1px at 64% 52%, rgba(196, 181, 253, 0.3), transparent),
-      radial-gradient(1px 1px at 74% 20%, rgba(255, 255, 255, 0.45), transparent),
-      radial-gradient(1px 1px at 86% 44%, rgba(226, 232, 240, 0.32), transparent),
-      radial-gradient(1px 1px at 8% 58%, rgba(255, 255, 255, 0.4), transparent),
-      radial-gradient(1px 1px at 92% 72%, rgba(199, 210, 254, 0.28), transparent);
-  }
-
-  .site-background__stars--fine {
-    opacity: 0.3;
-    background-size: 220px 220px;
-    background-image:
-      radial-gradient(1px 1px at 20px 40px, rgba(255, 255, 255, 0.22), transparent),
-      radial-gradient(1px 1px at 80px 120px, rgba(199, 210, 254, 0.18), transparent),
-      radial-gradient(1px 1px at 140px 60px, rgba(255, 255, 255, 0.2), transparent),
-      radial-gradient(1px 1px at 180px 160px, rgba(226, 232, 240, 0.16), transparent);
-  }
-
-  .site-background__icons {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-
-  .site-background__icon {
-    position: absolute;
-    object-fit: contain;
-    will-change: transform;
-  }
-
   /* Hero section — reference-style split layout */
   .hero-section {
     --hero-glass-bg: rgba(6, 4, 14, 0.38);
@@ -771,7 +740,7 @@ body {
     border-radius: 9999px;
     padding: 0.55rem 1rem 0.55rem 0.7rem;
     border: none;
-    background: var(--hero-glass-bg);
+    background-color: rgba(8, 12, 26, 0.82);
     box-shadow: var(--hero-glass-shadow);
     backdrop-filter: var(--hero-glass-blur);
     -webkit-backdrop-filter: var(--hero-glass-blur);
@@ -1159,47 +1128,27 @@ body {
   }
 
   .hero-status-badge {
-    position: relative;
-    z-index: 4;
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    gap: 0.55rem;
-    padding: 0.55rem 0.95rem;
-    border-radius: 9999px;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: #e2e8f0;
-    isolation: isolate;
-    overflow: hidden;
-    border: none;
-    background: var(--hero-glass-bg);
-    box-shadow: var(--hero-glass-shadow);
-    backdrop-filter: var(--hero-glass-blur);
-    -webkit-backdrop-filter: var(--hero-glass-blur);
-  }
-
-  .hero-status-badge::before {
-    content: '';
     position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: var(--hero-glass-rim);
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
+    z-index: 6;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+    left: 50%;
+    bottom: 1.75rem;
+    transform: translateX(-50%);
+    background-color: rgba(8, 12, 26, 0.96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
-  .hero-status-badge > * {
-    position: relative;
-    z-index: 1;
+  @media (min-width: 1024px) {
+    .hero-status-badge {
+      left: auto;
+      right: 1.5rem;
+      bottom: 2.5rem;
+      transform: none;
+    }
   }
 
   .hero-status-dot {
@@ -1208,15 +1157,6 @@ body {
     border-radius: 9999px;
     background: #22c55e;
     box-shadow: 0 0 10px rgba(34, 197, 94, 0.85);
-  }
-
-  @media (min-width: 1024px) {
-    .hero-status-badge {
-      position: absolute;
-      top: 50%;
-      right: calc(-112% - 1rem);
-      transform: translateY(-50%);
-    }
   }
 
   .hero-stats {

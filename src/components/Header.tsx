@@ -6,25 +6,16 @@ import cv from "../assets/Tayyab's CV.pdf";
 import { heroStats } from '../data/heroStats';
 import { heroTags } from '../data/heroTags';
 import { socialLinksHeader } from '../data/socialLinks';
-import AppAppBar from './Appbar';
-import { SocialIcon } from './ui/social-icon';
+import { HeaderGraphBackground } from './HeaderGraphBackground';
 
 function Header() {
-  const getPlatformName = (href: string): string => {
-    if (href.includes('github')) return 'GitHub';
-    if (href.includes('linkedin')) return 'LinkedIn';
-    if (href.includes('leetcode')) return 'LeetCode';
-    if (href.startsWith('mailto:')) return 'Email';
-    return '';
-  };
-
   return (
     <header
-      className="relative overflow-hidden bg-transparent pt-[calc(var(--template-frame-height,0px)+88px)]"
+      className="relative isolate overflow-hidden bg-transparent pt-[calc(var(--template-frame-height,0px)+88px)]"
       itemScope
       itemType="https://schema.org/Person"
     >
-      <AppAppBar />
+      <HeaderGraphBackground />
 
       <meta itemProp="name" content="Tayyab" />
       <meta itemProp="jobTitle" content="Full Stack Web Developer" />
@@ -62,22 +53,7 @@ function Header() {
         }}
       />
 
-      <div className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 flex-col gap-4 z-10">
-        {socialLinksHeader.map((link, i) => (
-          <SocialIcon
-            key={i}
-            Icon={link.Icon}
-            size={48}
-            iconSize={link.size}
-            href={link.href}
-            ariaLabel={link.ariaLabel}
-            color={link.color}
-            platformName={getPlatformName(link.href)}
-          />
-        ))}
-      </div>
-
-      <div className="hero-section mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-4" id="home">
+      <div className="hero-section relative z-[1] mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-4" id="home">
         <div className="hero-main">
           <div className="hero-content relative z-[2]">
             <motion.p
@@ -178,11 +154,6 @@ function Header() {
                   <Download className="size-[1.05rem]" aria-hidden="true" />
                 </a>
               </motion.div>
-
-              <div className="hero-status-badge">
-                <span className="hero-status-dot" aria-hidden="true" />
-                Available for work
-              </div>
             </div>
           </div>
 
@@ -204,6 +175,11 @@ function Header() {
                 fetchPriority="high"
                 itemProp="image"
               />
+
+              <div className="hero-greeting-badge hero-status-badge">
+                <span className="hero-status-dot shrink-0" aria-hidden="true" />
+                <span className="text-[0.95rem] font-medium text-slate-100">Available for work</span>
+              </div>
 
               <motion.figure
                 className="hero-code-card"

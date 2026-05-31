@@ -49,7 +49,7 @@ button {
 
 body {
   color: var(--white);
-  background-color: var(--site-bg-base, #020106);
+  background-color: var(--background);
   /* Performance optimizations */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

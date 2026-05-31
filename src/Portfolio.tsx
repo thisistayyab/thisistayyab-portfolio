@@ -7,6 +7,7 @@ import Services from './components/Services';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { GlobalBackground } from './components/GlobalBackground';
+import AppAppBar from './components/Appbar';
 import Clients from './components/Clients';
 import HomeBlog from './components/HomeBlog';
 
@@ -21,6 +22,7 @@ function Portfolio({ isDesktop }: PortfolioProps) {
     <>
       {/* Global Animated Background: Tech Icons */}
       <GlobalBackground isDesktop={isDesktop} showTechIcons={true} />
+      <AppAppBar />
       {/* Main Content */}
       <main
         id="main-content"

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { techIcons } from '../data/techIcons';
 
 interface GlobalBackgroundProps {
@@ -6,23 +7,28 @@ interface GlobalBackgroundProps {
   showTechIcons?: boolean;
 }
 
+const layerClass = 'pointer-events-none absolute inset-0';
+
 export function GlobalBackground({ isDesktop, showTechIcons = true }: GlobalBackgroundProps) {
   return (
-    <div className="site-background" aria-hidden="true">
-      <div className="site-background__base" />
-      <div className="site-background__ambient" />
-      <div className="site-background__stars" />
-      <div className="site-background__stars site-background__stars--fine" />
+    <div
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      aria-hidden="true"
+    >
+      <div className={cn(layerClass, 'bg-site-base')} />
+      <div className={cn(layerClass, 'bg-site-ambient')} />
+      <div className={cn(layerClass, 'bg-site-stars opacity-55')} />
+      <div className={cn(layerClass, 'bg-site-stars-fine bg-[length:220px_220px] opacity-30')} />
 
       {showTechIcons && (
-        <div className="site-background__icons">
-          {techIcons.map((item, i) =>
+        <div className={cn(layerClass, 'z-[1]')}>
+          {techIcons.map((item) =>
             isDesktop ? (
               <motion.img
                 key={item.alt}
                 src={item.src}
                 alt=""
-                className="site-background__icon"
+                className="absolute object-contain will-change-transform"
                 style={{
                   top: item.top,
                   left: item.left,
@@ -40,7 +46,7 @@ export function GlobalBackground({ isDesktop, showTechIcons = true }: GlobalBack
                 key={item.alt}
                 src={item.src}
                 alt=""
-                className="site-background__icon"
+                className="absolute object-contain"
                 style={{
                   top: item.top,
                   left: item.left,
