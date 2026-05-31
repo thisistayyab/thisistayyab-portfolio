@@ -1,12 +1,15 @@
 import { motion } from 'framer-motion';
+import { ArrowRight, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import AppAppBar from './Appbar';
+import aboutImg from '../assets/about.avif';
+import cv from "../assets/Tayyab's CV.pdf";
+import { heroStats } from '../data/heroStats';
+import { heroTags } from '../data/heroTags';
 import { socialLinksHeader } from '../data/socialLinks';
-import { Button } from './ui/button';
+import AppAppBar from './Appbar';
 import { SocialIcon } from './ui/social-icon';
 
 function Header() {
-  // Helper to determine platform name from href
   const getPlatformName = (href: string): string => {
     if (href.includes('github')) return 'GitHub';
     if (href.includes('linkedin')) return 'LinkedIn';
@@ -16,10 +19,17 @@ function Header() {
   };
 
   return (
-    <header className="relative overflow-hidden pt-[100px] bg-transparent">
+    <header
+      className="relative overflow-hidden bg-transparent pt-[calc(var(--template-frame-height,0px)+88px)]"
+      itemScope
+      itemType="https://schema.org/Person"
+    >
       <AppAppBar />
-      
-      {/* Structured Data for Social Profiles */}
+
+      <meta itemProp="name" content="Tayyab" />
+      <meta itemProp="jobTitle" content="Full Stack Web Developer" />
+      <meta itemProp="url" content="https://thisistayyab.dev" />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -28,8 +38,20 @@ function Header() {
             '@type': 'Person',
             '@id': 'https://thisistayyab.dev/#person',
             name: 'Tayyab',
-            jobTitle: 'Full-Stack Web Developer & AI/ML Enthusiast',
+            jobTitle: 'Full Stack Developer | React & Node.js Expert',
+            description:
+              'Full stack developer specializing in React, Next.js, Node.js, and PostgreSQL. 3+ years experience building fast, scalable web applications. 1,150+ LeetCode problems solved. 15+ projects completed.',
             url: 'https://thisistayyab.dev',
+            knowsAbout: [
+              'React',
+              'Next.js',
+              'Node.js',
+              'PostgreSQL',
+              'REST API',
+              'TypeScript',
+              'Full Stack Development',
+              'Web Application Development',
+            ],
             sameAs: socialLinksHeader
               .filter(link => !link.href.startsWith('mailto:'))
               .map(link => link.href),
@@ -39,8 +61,7 @@ function Header() {
           }),
         }}
       />
-      
-      {/* Header Social Icons - Desktop Only */}
+
       <div className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 flex-col gap-4 z-10">
         {socialLinksHeader.map((link, i) => (
           <SocialIcon
@@ -56,53 +77,183 @@ function Header() {
         ))}
       </div>
 
-      {/* Header Container */}
-      <div className="max-w-[1200px] mx-auto px-4 pt-40 pb-32 flex items-center justify-center min-h-[80vh] relative overflow-hidden" id="home">
-        {/* Header Content */}
-        <div className="text-center max-w-[900px] mx-auto relative z-[2]">
-          <p
-            className="mb-6 text-[1.3rem] font-medium bg-gradient-to-br from-slate-400 to-blue-400 bg-clip-text text-transparent tracking-[2px] uppercase"
-            aria-hidden="true"
-          >
-            Crafting Digital Excellence
-          </p>
-          
-          <motion.h1
-            className="mb-8 text-[clamp(2rem,5vw,4rem)] font-extrabold leading-[1.2] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-purple-400 animate-text-shimmer"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 1 }}
-          >
-            Hi, I'm <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent animate-name-glow relative">Tayyab</span> — Full Stack Web Developer | React & Node.js Expert
-          </motion.h1>
-          
-          <motion.p
-            className="mb-10 text-[#94a3b8] text-[1.1rem] leading-[1.8] max-w-[700px] mx-auto"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 1 }}
-          >
-            I'm a passionate web developer and computer engineering student with 3+ years of hands-on experience in building full-stack applications. I specialize in creating clean, responsive UIs with React and robust backends using modern technologies.<br /><br />
-            Beyond development, I've solved over 1150+ LeetCode problems, strengthening my core in Data Structures and Algorithms — giving me an edge in building optimized, scalable solutions.
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-          >
-            <Button
-              asChild
-              variant="default"
-              glowColor="rgba(59, 130, 246, 0.6)"
-              className="hover:scale-105 active:scale-95"
+      <div className="hero-section mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-4" id="home">
+        <div className="hero-main">
+          <div className="hero-content relative z-[2]">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              className="hero-eyebrow sr-only"
             >
-              <Link to="/contact">
-                Hire Me Now
-              </Link>
-            </Button>
+              Crafting Digital Excellence
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              className="hero-greeting-badge mb-7 inline-flex items-center gap-2.5"
+            >
+              <span className="hero-wave" aria-hidden="true">
+                👋
+              </span>
+              <span className="text-[0.95rem] font-medium text-slate-100">Hi, I&apos;m Tayyab</span>
+            </motion.div>
+
+            <motion.h1
+              className="hero-title mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08, duration: 0.55 }}
+              itemProp="jobTitle"
+            >
+              <span className="hero-title-line text-white">Full Stack</span>
+              <span className="hero-title-line hero-title-gradient">Developer</span>
+              <span className="sr-only">
+                {' '}
+                — Tayyab | React Developer, Next.js Developer, Node.js Developer, PostgreSQL, REST API, Full
+                Stack Developer for Hire
+              </span>
+            </motion.h1>
+
+            <motion.p
+              className="hero-subtitle mb-5 max-w-[620px]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.16, duration: 0.55 }}
+            >
+              I design and build{' '}
+              <strong className="hero-highlight font-semibold">fast, scalable web applications</strong> that
+              rank, perform, and convert — from pixel-perfect React frontends to production-grade Node.js
+              backends.
+            </motion.p>
+
+            <motion.p
+              className="hero-seo-text mb-6 max-w-[620px]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.22, duration: 0.55 }}
+              itemProp="description"
+            >
+              With <strong>3+ years of hands-on full stack development</strong>, I&apos;ve shipped real-world
+              projects using React, Next.js, Node.js, and PostgreSQL. I write clean, maintainable code backed by
+              a deep understanding of data structures — having solved{' '}
+              <strong>1,150+ LeetCode problems</strong>. Whether you need a landing page, a SaaS dashboard, or a
+              full backend API, I build solutions that are engineered to last.
+            </motion.p>
+
+            <motion.ul
+              className="hero-tags mb-8 list-none"
+              aria-label="Core skills and services"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.28, duration: 0.5 }}
+            >
+              {heroTags.map(tag => (
+                <li key={tag}>
+                  <span className="hero-tag">{tag}</span>
+                </li>
+              ))}
+            </motion.ul>
+
+            <div className="hero-actions-bar">
+              <motion.div
+                className="hero-actions"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.34, duration: 0.5 }}
+              >
+                <Link to="/projects" className="hero-cta-primary" title="View Tayyab's web development projects">
+                  View My Work
+                  <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
+                </Link>
+                <a
+                  href={cv}
+                  download
+                  className="hero-cta-secondary"
+                  title="Download Tayyab's Full Stack Developer CV"
+                >
+                  Download CV
+                  <Download className="size-[1.05rem]" aria-hidden="true" />
+                </a>
+              </motion.div>
+
+              <div className="hero-status-badge">
+                <span className="hero-status-dot" aria-hidden="true" />
+                Available for work
+              </div>
+            </div>
+          </div>
+
+          <motion.div
+            className="hero-visual"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18, duration: 0.65 }}
+          >
+            <div className="hero-visual-stage">
+              <img
+                src={aboutImg}
+                alt="Tayyab - Full Stack Web Developer and Computer Engineering Student portrait photo. Professional developer specializing in React, Node.js, Express, and MongoDB with 3+ years of experience."
+                title="Tayyab - Full Stack Web Developer"
+                width={540}
+                height={620}
+                className="hero-portrait"
+                loading="eager"
+                fetchPriority="high"
+                itemProp="image"
+              />
+
+              <motion.figure
+                className="hero-code-card"
+                initial={{ opacity: 0, y: 12, rotate: -7 }}
+                animate={{ opacity: 1, y: 0, rotate: -7 }}
+                transition={{ delay: 0.45, duration: 0.55 }}
+              >
+                <figcaption className="sr-only">Developer profile code snippet</figcaption>
+                <pre>
+                  <code>
+                    <span className="hero-code-keyword">const</span>{' '}
+                    <span className="hero-code-name">developer</span> = {'{'}
+                    {'\n  '}
+                    <span className="hero-code-key">name</span>:{' '}
+                    <span className="hero-code-string">&quot;Tayyab&quot;</span>,
+                    {'\n  '}
+                    <span className="hero-code-key">role</span>:{' '}
+                    <span className="hero-code-string">&quot;Full Stack Developer&quot;</span>,
+                    {'\n  '}
+                    <span className="hero-code-key">passion</span>:{' '}
+                    <span className="hero-code-string">
+                      &quot;Building amazing things on the web&quot;
+                    </span>
+                    {'\n}'}
+                  </code>
+                </pre>
+              </motion.figure>
+            </div>
           </motion.div>
         </div>
+
+        <motion.section
+          className="hero-stats"
+          aria-label="Professional highlights"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.38, duration: 0.55 }}
+        >
+          {heroStats.map(({ icon: Icon, value, label, tone }) => (
+            <article key={label} className={`hero-stat-card hero-stat-card--${tone}`}>
+              <span className={`hero-stat-icon hero-stat-icon--${tone}`} aria-hidden="true">
+                <Icon className="hero-stat-icon-svg" strokeWidth={2} />
+              </span>
+              <div className="hero-stat-copy">
+                <p className="hero-stat-value">{value}</p>
+                <p className="hero-stat-label">{label}</p>
+              </div>
+            </article>
+          ))}
+        </motion.section>
       </div>
     </header>
   );

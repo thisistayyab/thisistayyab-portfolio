@@ -24,11 +24,11 @@ const notFoundMeta: RouteMetaTags = {
 
 const routeMetaTags: Record<string, RouteMetaTags> = {
   '/': {
-    title: 'Tayyab - Full Stack Developer | React & Node.js Expert',
+    title: 'Tayyab - Full Stack Developer | React, Next.js & Node.js Expert',
     description:
-      'Hire Tayyab - Expert Full Stack Developer specializing in React, Node.js, Express, MongoDB. 3+ years experience, 1150+ LeetCode problems solved.',
+      'Hire Tayyab — full stack developer building fast, scalable web apps with React, Next.js, Node.js, and PostgreSQL. 3+ years experience, 1,150+ LeetCode problems, 15+ projects completed.',
     keywords:
-      'Tayyab, Full Stack Developer, React developer, Node.js developer, Express developer, MongoDB developer, JavaScript developer, TypeScript developer, MERN stack developer, web development services, portfolio, React portfolio, Node.js portfolio, full stack web development',
+      'Tayyab, Full Stack Developer, React developer, Next.js developer, Node.js developer, PostgreSQL developer, REST API developer, freelance web developer, full stack for hire, web application development, SaaS developer, portfolio',
   },
   '/about': {
     title: 'About Tayyab - Full Stack Developer | Professional Background',
