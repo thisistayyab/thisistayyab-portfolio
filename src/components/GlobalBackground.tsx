@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { techIcons } from '../data/techIcons';
 
@@ -7,52 +6,56 @@ interface GlobalBackgroundProps {
   showTechIcons?: boolean;
 }
 
-export const GlobalBackground: React.FC<GlobalBackgroundProps> = ({ 
-  isDesktop, 
-  showTechIcons = true 
-}) => {
+export function GlobalBackground({ isDesktop, showTechIcons = true }: GlobalBackgroundProps) {
   return (
-    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-      {/* Tech Icons: animated on desktop, still on mobile - only show if enabled */}
+    <div className="site-background" aria-hidden="true">
+      <div className="site-background__base" />
+      <div className="site-background__ambient" />
+      <div className="site-background__stars" />
+      <div className="site-background__stars site-background__stars--fine" />
+
       {showTechIcons && (
-        <div style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
-          {isDesktop
-            ? techIcons.map((item, i) => (
-                <motion.img
-                  key={i}
-                  src={item.src}
-                  alt={item.alt}
-                  style={{
-                    position: 'absolute',
-                    width: 40,
-                    height: 40,
-                    top: item.top,
-                    left: item.left,
-                    opacity: 0.18,
-                    willChange: 'transform',
-                  }}
-                  initial={{ y: -20, x: 0 }}
-                  animate={{ y: [0, 20, 0], x: [0, -20, 0] }}
-                  transition={{ duration: item.duration, repeat: Infinity }}
-                />
-              ))
-            : techIcons.map((item, i) => (
-                <img
-                  key={i}
-                  src={item.src}
-                  alt={item.alt}
-                  style={{
-                    position: 'absolute',
-                    width: 40,
-                    height: 40,
-                    top: item.top,
-                    left: item.left,
-                    opacity: 0.18,
-                  }}
-                />
-              ))}
+        <div className="site-background__icons">
+          {techIcons.map((item, i) =>
+            isDesktop ? (
+              <motion.img
+                key={item.alt}
+                src={item.src}
+                alt=""
+                className="site-background__icon"
+                style={{
+                  top: item.top,
+                  left: item.left,
+                  width: item.size ?? 40,
+                  height: item.size ?? 40,
+                  opacity: item.opacity ?? 0.18,
+                  filter: item.blur ? `blur(${item.blur}px)` : undefined,
+                }}
+                initial={{ y: -12, x: 0 }}
+                animate={{ y: [0, 14, 0], x: [0, -10, 0] }}
+                transition={{ duration: item.duration, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            ) : (
+              <img
+                key={item.alt}
+                src={item.src}
+                alt=""
+                className="site-background__icon"
+                style={{
+                  top: item.top,
+                  left: item.left,
+                  width: item.size ?? 40,
+                  height: item.size ?? 40,
+                  opacity: item.opacity ?? 0.18,
+                  filter: item.blur ? `blur(${item.blur}px)` : undefined,
+                }}
+                loading="lazy"
+                decoding="async"
+              />
+            ),
+          )}
         </div>
       )}
     </div>
   );
-};
+}

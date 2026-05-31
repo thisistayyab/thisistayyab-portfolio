@@ -220,6 +220,10 @@ body.keyboard-navigation *:focus-visible {
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.1);
   --sidebar-ring: #1677ff;
+
+  --site-bg-base: #020106;
+  --site-bg-deep: #010004;
+  --site-bg-mid: #05040c;
 }
 
 /* Global Styles */
@@ -252,11 +256,7 @@ body.keyboard-navigation *:focus-visible {
 
 body {
   font-family: var(--font-family) !important;
-  /* Background matches MUI theme: hsl(220, 35%, 3%) with gradient overlay */
-  background-image: radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 35%, 3%));
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-color: hsl(220, 35%, 3%);
+  background-color: var(--site-bg-base);
 }
 
 @theme inline {
@@ -600,9 +600,72 @@ body {
       0 0 20px color-mix(in srgb, var(--icon-hover-color) 20%, transparent);
   }
 
+  /* Site background */
+  .site-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .site-background__base {
+    position: absolute;
+    inset: 0;
+    background: var(--site-bg-base);
+  }
+
+  .site-background__ambient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 55% at 50% -8%, rgba(139, 92, 246, 0.05), transparent 62%),
+      radial-gradient(ellipse 45% 35% at 100% 40%, rgba(99, 102, 241, 0.035), transparent 65%),
+      radial-gradient(ellipse 40% 30% at 0% 70%, rgba(124, 58, 237, 0.03), transparent 68%);
+  }
+
+  .site-background__stars {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+    background-image:
+      radial-gradient(1px 1px at 6% 10%, rgba(255, 255, 255, 0.65), transparent),
+      radial-gradient(1px 1px at 16% 24%, rgba(199, 210, 254, 0.45), transparent),
+      radial-gradient(1px 1px at 28% 6%, rgba(255, 255, 255, 0.5), transparent),
+      radial-gradient(1px 1px at 41% 38%, rgba(226, 232, 240, 0.35), transparent),
+      radial-gradient(1px 1px at 52% 14%, rgba(255, 255, 255, 0.55), transparent),
+      radial-gradient(1px 1px at 64% 52%, rgba(196, 181, 253, 0.3), transparent),
+      radial-gradient(1px 1px at 74% 20%, rgba(255, 255, 255, 0.45), transparent),
+      radial-gradient(1px 1px at 86% 44%, rgba(226, 232, 240, 0.32), transparent),
+      radial-gradient(1px 1px at 8% 58%, rgba(255, 255, 255, 0.4), transparent),
+      radial-gradient(1px 1px at 92% 72%, rgba(199, 210, 254, 0.28), transparent);
+  }
+
+  .site-background__stars--fine {
+    opacity: 0.3;
+    background-size: 220px 220px;
+    background-image:
+      radial-gradient(1px 1px at 20px 40px, rgba(255, 255, 255, 0.22), transparent),
+      radial-gradient(1px 1px at 80px 120px, rgba(199, 210, 254, 0.18), transparent),
+      radial-gradient(1px 1px at 140px 60px, rgba(255, 255, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 180px 160px, rgba(226, 232, 240, 0.16), transparent);
+  }
+
+  .site-background__icons {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .site-background__icon {
+    position: absolute;
+    object-fit: contain;
+    will-change: transform;
+  }
+
   /* Hero section — reference-style split layout */
   .hero-section {
-    --hero-glass-bg: rgba(8, 12, 26, 0.36);
+    --hero-glass-bg: rgba(6, 4, 14, 0.38);
     --hero-glass-blur: blur(20px) saturate(170%);
     --hero-glass-rim: linear-gradient(
       135deg,
