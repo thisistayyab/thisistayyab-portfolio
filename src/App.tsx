@@ -92,7 +92,6 @@ function ScrollToSection() {
         '/testimonials': 'client',
         '/services': 'services',
         '/insights': 'blog',
-        '/profiles': 'profiles',
         '/contact': 'contact',
       };
 
@@ -212,7 +211,6 @@ function App() {
           <Route path="/testimonials" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/services" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/insights" element={<Portfolio isDesktop={isDesktop} />} />
-          <Route path="/profiles" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/contact" element={<Portfolio isDesktop={isDesktop} />} />
           <Route path="/blog" element={
             <Suspense fallback={<div className="min-h-screen bg-black" />}>

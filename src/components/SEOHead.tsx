@@ -71,12 +71,6 @@ const routeMetaTags: Record<string, RouteMetaTags> = {
       'Latest articles and tips on web development, React, Node.js, and performance — highlighted on the portfolio.',
     keywords: 'developer insights, web development articles, React tips, Node.js, portfolio blog section',
   },
-  '/profiles': {
-    title: 'Profiles - Professional Platforms | Tayyab',
-    description:
-      "Explore Tayyab's professional profiles on GitHub, LinkedIn, Upwork, Fiverr, LeetCode, Credly, and other platforms. Connect on your preferred platform.",
-    keywords: 'GitHub profile, LinkedIn profile, Upwork profile, Fiverr profile, LeetCode profile, developer profiles',
-  },
   '/contact': {
     title: 'Contact - Get In Touch | Tayyab',
     description:

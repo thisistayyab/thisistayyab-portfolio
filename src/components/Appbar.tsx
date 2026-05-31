@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Menu } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import logo from '../assets/favicon.png';
 import { navItems } from '../data/navigation';
 import { Button } from './ui/button';
 import {
@@ -11,6 +10,29 @@ import {
   SheetHeader,
   SheetTitle,
 } from './ui/sheet';
+
+const linkDescriptions: Record<string, string> = {
+  Home: "Return to the home page showcasing Tayyab's portfolio introduction and overview",
+  About: "Learn about Tayyab's background, skills, and experience as a Full Stack Developer",
+  Projects: "View Tayyab's portfolio of web development projects and applications",
+  Testimonials: "Read client testimonials and feedback about Tayyab's work",
+  Experience: "Explore Tayyab's professional experience and career journey",
+  Services: 'Browse professional web development services including full-stack development, React, Node.js, MongoDB, SEO optimization, and more',
+  Insights: 'Read articles and tips on web development, React, Node.js, and performance',
+  Contact: 'Get in touch with Tayyab for web development projects and opportunities',
+};
+
+const navLinks = navItems.filter(item => item.href !== '/contact');
+const contactItem = navItems.find(item => item.href === '/contact');
+
+function NavOrb() {
+  return (
+    <span className="relative flex h-4 w-4 shrink-0 items-center justify-center" aria-hidden="true">
+      <span className="absolute inset-0 rounded-full bg-blue-400/40 blur-[4px]" />
+      <span className="relative h-3 w-3 rounded-full bg-gradient-to-br from-blue-200 via-purple-400 to-blue-600 shadow-[0_0_10px_rgba(59,130,246,0.75)]" />
+    </span>
+  );
+}
 
 export default function AppAppBar() {
   const [open, setOpen] = useState<boolean>(false);
@@ -48,7 +70,6 @@ export default function AppAppBar() {
         '/testimonials': 'client',
         '/services': 'services',
         '/insights': 'blog',
-        '/profiles': 'profiles',
         '/contact': 'contact',
       };
 
@@ -111,7 +132,7 @@ export default function AppAppBar() {
         return;
       }
 
-      const isPortfolioRoute = ['/', '/about', '/projects', '/experience', '/testimonials', '/services', '/insights', '/profiles', '/contact'].includes(
+      const isPortfolioRoute = ['/', '/about', '/projects', '/experience', '/testimonials', '/services', '/insights', '/contact'].includes(
         location.pathname
       );
 
@@ -218,236 +239,191 @@ export default function AppAppBar() {
     };
   }, [location.pathname, navigate, isScrolling, isProgrammaticScroll, activeSection]);
 
+  const handleNavClick = (href: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+    (e.currentTarget as HTMLElement).blur();
+    setActiveSection(href);
+    setIsProgrammaticScroll(true);
+  };
+
+  const letsTalkDesktopClassName = [
+    'nav-cta group hidden shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white no-underline transition-all duration-300 lg:inline-flex lg:ml-6',
+    'hover:brightness-110',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+    activeSection === '/contact' ? 'brightness-110' : '',
+  ].join(' ');
+
+  const letsTalkMobileClassName = [
+    'nav-cta group inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-white no-underline transition-all duration-300',
+    'hover:brightness-110',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+    activeSection === '/contact' ? 'brightness-110' : '',
+  ].join(' ');
+
+  const navLinkClassName = (href: string) =>
+    [
+      'shrink-0 rounded-full px-2.5 py-1.5 text-xs font-medium text-white/90 no-underline transition-all duration-300 sm:px-3 sm:py-2 sm:text-sm lg:px-3.5 lg:py-2',
+      'hover:bg-blue-500/10 hover:text-white',
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+      activeSection === href ? 'bg-blue-500/15 text-white shadow-[inset_0_0_12px_rgba(59,130,246,0.12)]' : '',
+    ].join(' ');
+
   return (
     <div>
       <nav
-        className="fixed top-[calc(var(--template-frame-height,0px)+28px)] left-0 right-0 z-[1100] flex justify-center px-3"
+        className="fixed top-[calc(var(--template-frame-height,0px)+20px)] left-0 right-0 z-[1100] flex justify-center px-5 sm:px-6 lg:px-4 pointer-events-none"
         role="navigation"
         aria-label="Main navigation"
         itemScope
         itemType="https://schema.org/SiteNavigationElement"
       >
-        {/* Structured Data for Navigation */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SiteNavigationElement",
-              "name": "Main Navigation",
-              "itemListElement": navItems.map((item, index) => ({
-                "@type": "ListItem",
-                "position": index + 1,
-                "name": item.label,
-                "url": `${baseUrl}${item.href}`
-              }))
-            })
+              '@context': 'https://schema.org',
+              '@type': 'SiteNavigationElement',
+              name: 'Main Navigation',
+              itemListElement: navItems.map((item, index) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                name: item.label,
+                url: `${baseUrl}${item.href}`,
+              })),
+            }),
           }}
         />
-        <div className="w-full max-w-[1200px]">
-          <div className="flex items-center relative rounded-[8px] backdrop-blur-[20px] border border-white/10 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 shadow-[0_8px_32px_rgba(0,0,0,0.3),0_0_40px_rgba(59,130,246,0.1)] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.4),0_0_60px_rgba(59,130,246,0.2)] hover:border-white/20 py-3 px-3 sm:px-4 lg:px-5">
-            {/* Top gradient border */}
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-60" />
 
-            {/* Logo and Title */}
-            <div className="flex items-center gap-1 flex-shrink-0" itemScope itemType="https://schema.org/Organization">
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Link
-                  to="/"
-                  aria-label="Go to home page - Tayyab's Portfolio"
-                  className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded"
-                  tabIndex={0}
-                  onClick={(e) => {
-                    // Remove focus after mouse click to prevent focus ring
-                    (e.currentTarget as HTMLElement).blur();
-                  }}
-                >
-                  <img
-                    src={logo}
-                    alt="Tayyab - Full Stack Web Developer and AI/ML Enthusiast Logo"
-                    width="24"
-                    height="24"
-                    className="w-6 h-6"
-                    loading="eager"
-                    fetchPriority="high"
-                    itemProp="logo"
-                    itemScope
-                    itemType="https://schema.org/ImageObject"
-                  />
-                </Link>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-              >
-                <Link
-                  to="/"
-                  aria-label="Go to home page - Tayyab's Portfolio"
-                  className="block"
-                >
-                  <div className="font-bold tracking-[1px] text-[17px] block bg-gradient-to-br from-white via-slate-400 to-blue-400 bg-clip-text text-transparent whitespace-nowrap" itemProp="name">
-                    <span aria-hidden="true">ayyab's Portfolio</span>
-                    <span className="sr-only">Tayyab's Portfolio - Full Stack Web Developer and AI/ML Enthusiast</span>
-                  </div>
-                </Link>
-              </motion.div>
-            </div>
+        <div className="nav-capsule pointer-events-auto flex w-full max-w-[min(100%,1200px)] min-w-0 items-center rounded-full px-5 py-2.5 sm:px-4 lg:w-auto lg:justify-center lg:gap-1 lg:px-6 lg:py-2.5">
+          {/* Mobile — brand title left, hamburger right */}
+          <div className="flex w-full items-center justify-between gap-4 px-1 lg:hidden">
+            <Link
+              to="/"
+              className="nav-mobile-brand min-w-0 flex-1 truncate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              aria-label="Go to home page - Tayyab's Portfolio"
+              onClick={e => handleNavClick('/', e)}
+            >
+              Tayyab&apos;s Portfolio
+            </Link>
 
-            {/* Desktop Nav - Left aligned with margin - Show only on large screens (1024px+) */}
-            <ul className="hidden lg:flex items-center gap-2 ml-6 p-2 list-none" role="menubar" aria-label="Main navigation menu">
-              {navItems.map((item, index) => {
-                const linkDescriptions: Record<string, string> = {
-                  'Home': 'Return to the home page showcasing Tayyab\'s portfolio introduction and overview',
-                  'About': 'Learn about Tayyab\'s background, skills, and experience as a Full Stack Developer',
-                  'Projects': 'View Tayyab\'s portfolio of web development projects and applications',
-                  'Testimonials': 'Read client testimonials and feedback about Tayyab\'s work',
-                  'Experience': 'Explore Tayyab\'s professional experience and career journey',
-                  'Services': 'Browse professional web development services including full-stack development, React, Node.js, MongoDB, SEO optimization, and more',
-                  'Profiles': 'Explore Tayyab\'s professional profiles on GitHub, LinkedIn, Upwork, Fiverr, LeetCode, Credly, and other platforms',
-                  'Contact': 'Get in touch with Tayyab for web development projects and opportunities'
-                };
-                return (
-                  <li key={item.label} role="none" itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+            <motion.div whileTap={{ scale: 0.92 }}>
+              <Button
+                variant="ghost"
+                aria-label="Open navigation menu"
+                aria-expanded={open}
+                aria-controls="mobile-navigation-menu"
+                onClick={() => setOpen(true)}
+                className="h-9 w-9 min-h-0 rounded-none border-0 bg-transparent p-0 text-white shadow-none hover:bg-transparent hover:text-white/80 [&_svg]:!size-6 [&_svg]:shrink-0"
+              >
+                <Menu strokeWidth={1.75} aria-hidden="true" />
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Desktop — centered links + Let's Talk */}
+          <ul
+            className="hidden list-none items-center gap-1 lg:flex"
+            role="menubar"
+            aria-label="Main navigation menu"
+          >
+            {navLinks.map((item, index) => (
+              <li key={item.label} role="none" itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                <Link
+                  to={item.href}
+                  role="menuitem"
+                  aria-label={linkDescriptions[item.label] || `Navigate to ${item.label} section`}
+                  title={`${linkDescriptions[item.label] || `Go to ${item.label} section`} - Tayyab's Portfolio`}
+                  aria-current={activeSection === item.href ? 'page' : undefined}
+                  className={navLinkClassName(item.href)}
+                  itemProp="url"
+                  onClick={e => handleNavClick(item.href, e)}
+                >
+                  <span itemProp="name">{item.label}</span>
+                  <meta itemProp="position" content={String(index + 1)} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {contactItem && (
+            <Link
+              to={contactItem.href}
+              className={letsTalkDesktopClassName}
+              aria-label={linkDescriptions.Contact}
+              aria-current={activeSection === '/contact' ? 'page' : undefined}
+              onClick={e => handleNavClick('/contact', e)}
+            >
+              <NavOrb />
+              <span>Let&apos;s Talk</span>
+            </Link>
+          )}
+        </div>
+      </nav>
+
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent
+          side="right"
+          id="mobile-navigation-menu"
+          aria-label="Mobile navigation menu"
+          aria-modal="true"
+          className="nav-mobile-sheet top-[var(--template-frame-height,0px)] h-[calc(100dvh-var(--template-frame-height,0px))] w-[min(88vw,340px)] gap-0 border-0 bg-transparent p-0 shadow-none lg:hidden [&>button]:right-5 [&>button]:top-6 [&>button]:flex [&>button]:h-10 [&>button]:w-10 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-none [&>button]:border-0 [&>button]:bg-transparent [&>button]:p-0 [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-none [&>button]:hover:bg-transparent [&>button]:hover:text-white/80 [&>button>svg]:h-5 [&>button>svg]:w-5 [&>button]:focus-visible:outline-none [&>button]:focus-visible:ring-2 [&>button]:focus-visible:ring-blue-500"
+        >
+          <SheetHeader className="sr-only">
+            <SheetTitle>Tayyab&apos;s Portfolio - Navigation Menu</SheetTitle>
+          </SheetHeader>
+
+          <div className="nav-mobile-sheet-panel flex h-full flex-col overflow-y-auto p-6 pt-20">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-blue-300/70">Menu</p>
+            <nav role="navigation" aria-label="Mobile navigation menu" className="flex flex-1 flex-col">
+              <ul className="list-none space-y-2" role="menu" aria-label="Navigation links">
+                {navLinks.map((item, index) => (
+                  <li key={item.label} role="none">
                     <motion.div
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                      whileHover={{ y: -5 }}
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.03, duration: 0.22 }}
                     >
                       <Link
                         to={item.href}
                         role="menuitem"
                         aria-label={linkDescriptions[item.label] || `Navigate to ${item.label} section`}
-                        aria-description={linkDescriptions[item.label] || `Go to ${item.label} section of Tayyab's portfolio`}
-                        title={`${linkDescriptions[item.label] || `Go to ${item.label} section`} - Tayyab's Portfolio`}
                         aria-current={activeSection === item.href ? 'page' : undefined}
-                        className={`group relative text-white/90 no-underline px-4 py-3 bg-transparent rounded-[10px] font-medium text-[0.95rem] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-white/5 hover:text-white hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:bg-white/5 ${activeSection === item.href
-                          ? 'bg-white/10 text-white'
-                          : ''
-                          }`}
-                        itemProp="url"
-                        tabIndex={0}
-                        onClick={(e) => {
-                          (e.currentTarget as HTMLElement).blur();
-                          setActiveSection(item.href);
-                          setIsProgrammaticScroll(true);
+                        className={[
+                          'nav-mobile-link block px-4 py-3.5 text-[0.95rem] font-medium text-white/90 no-underline transition-all duration-300',
+                          activeSection === item.href ? 'nav-mobile-link--active' : '',
+                        ].join(' ')}
+                        onClick={e => {
+                          handleNavClick(item.href, e);
+                          setOpen(false);
                         }}
                       >
-                        <span itemProp="name">{item.label}</span>
-                        <meta itemProp="position" content={String(index + 1)} />
-                        <span
-                          className={`nav-underline absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-sm ${activeSection === item.href
-                            ? 'w-full'
-                            : 'w-0 group-hover:w-full'
-                            }`}
-                          aria-hidden="true"
-                        />
+                        {item.label}
                       </Link>
                     </motion.div>
                   </li>
-                );
-              })}
-            </ul>
+                ))}
+              </ul>
 
-            {/* Mobile Nav - Show on mobile and tablet (up to 1023px) */}
-            <div className="flex lg:hidden flex-shrink-0 ml-auto">
-              <motion.div whileTap={{ scale: 0.9 }}>
-                <Button
-                  variant="ghost"
-                  aria-label="Open mobile navigation menu"
-                  aria-expanded={open}
-                  aria-controls="mobile-navigation-menu"
-                  onClick={() => setOpen(true)}
-                  className="text-white hover:bg-white/10 w-10 h-10 p-0 flex items-center justify-center min-h-0 [&_svg]:!size-7 [&_svg]:shrink-0"
-                >
-                  <Menu strokeWidth={1.5} aria-hidden="true" />
-                  <span className="sr-only">Open navigation menu</span>
-                </Button>
-              </motion.div>
-              <Sheet open={open} onOpenChange={setOpen}>
-                <SheetContent
-                  side="top"
-                  id="mobile-navigation-menu"
-                  aria-label="Mobile navigation menu"
-                  aria-modal="true"
-                  className="bg-[#0b0c10] h-screen p-2 top-[var(--template-frame-height,0px)] [&>button]:text-white [&>button]:hover:bg-white/10 [&>button]:w-10 [&>button]:h-10 [&>button]:top-4 [&>button]:right-4 [&>button>svg]:w-5 [&>button>svg]:h-5 [&>button]:opacity-100 [&>button]:bg-transparent [&>button]:border-0 [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:p-0 [&>button]:focus-visible:outline-none [&>button]:focus-visible:ring-2 [&>button]:focus-visible:ring-blue-500 [&>button]:focus-visible:ring-offset-2"
-                >
-                  <SheetHeader>
-                    <SheetTitle className="sr-only">Tayyab's Portfolio - Navigation Menu</SheetTitle>
-                  </SheetHeader>
-                  <AnimatePresence>
-                    {open && (
-                      <motion.nav
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.3 }}
-                        role="navigation"
-                        aria-label="Mobile navigation menu"
-                        aria-modal="true"
-                      >
-                        <ul className="list-none" role="menu" aria-label="Navigation links">
-                          {navItems.map((item, index) => {
-                            const linkDescriptions: Record<string, string> = {
-                              'Home': 'Return to the home page showcasing Tayyab\'s portfolio introduction and overview',
-                              'About': 'Learn about Tayyab\'s background, skills, and experience as a Full Stack Developer',
-                              'Projects': 'View Tayyab\'s portfolio of web development projects and applications',
-                              'Testimonials': 'Read client testimonials and feedback about Tayyab\'s work',
-                              'Experience': 'Explore Tayyab\'s professional experience and career journey',
-                              'Services': 'Browse professional web development services including full-stack development, React, Node.js, MongoDB, SEO optimization, and more',
-                              'Profiles': 'Explore Tayyab\'s professional profiles on GitHub, LinkedIn, Upwork, Fiverr, LeetCode, Credly, and other platforms',
-                              'Contact': 'Get in touch with Tayyab for web development projects and opportunities'
-                            };
-                            return (
-                              <li key={item.label} role="none">
-                                <motion.div
-                                  initial={{ opacity: 0, x: -20 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: index * 0.1, duration: 0.3 }}
-                                  whileHover={{ x: 10 }}
-                                >
-                                  <Link
-                                    to={item.href}
-                                    role="menuitem"
-                                    aria-label={linkDescriptions[item.label] || `Navigate to ${item.label} section`}
-                                    aria-description={linkDescriptions[item.label] || `Go to ${item.label} section of Tayyab's portfolio`}
-                                    title={`${linkDescriptions[item.label] || `Go to ${item.label} section`} - Tayyab's Portfolio`}
-                                    aria-current={activeSection === item.href ? 'page' : undefined}
-                                    className={`block text-white py-3 px-4 hover:bg-white/5 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:bg-white/5 ${activeSection === item.href
-                                      ? 'bg-white/10 font-semibold'
-                                      : ''
-                                      }`}
-                                    onClick={(e) => {
-                                      // Remove focus after mouse click to prevent focus ring
-                                      (e.currentTarget as HTMLElement).blur();
-                                      // Immediately update active section and disable scroll detection
-                                      setActiveSection(item.href);
-                                      setIsProgrammaticScroll(true);
-                                      setOpen(false);
-                                    }}
-                                    tabIndex={0}
-                                  >
-                                    {item.label}
-                                  </Link>
-                                </motion.div>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                        <div className="my-6 border-t border-gray-800" aria-hidden="true" />
-                      </motion.nav>
-                    )}
-                  </AnimatePresence>
-                </SheetContent>
-              </Sheet>
-            </div>
+              {contactItem && (
+                <div className="mt-auto pt-8">
+                  <Link
+                    to={contactItem.href}
+                    className={letsTalkMobileClassName}
+                    aria-label={linkDescriptions.Contact}
+                    aria-current={activeSection === '/contact' ? 'page' : undefined}
+                    onClick={e => {
+                      handleNavClick('/contact', e);
+                      setOpen(false);
+                    }}
+                  >
+                    <NavOrb />
+                    <span>Let&apos;s Talk</span>
+                  </Link>
+                </div>
+              )}
+            </nav>
           </div>
-        </div>
-      </nav>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

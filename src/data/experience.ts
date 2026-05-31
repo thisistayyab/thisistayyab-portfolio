@@ -46,7 +46,7 @@ export const experiences: Experience[] = [
     iconSize: 32,
     color: '#3b82f6',
     title: 'Full Stack Developer',
-    company: 'Taylance Technologies',
+    company: 'Taylance Tech',
     period: 'Apr 2023 - Present',
     description: 'Building modern, scalable software solutions across full-stack web development, AI integration, and automation. Responsible for developing complete MERN applications and designing efficient architectures.',
     technologies: ['Node.js', 'Full-Stack Development', 'AI Integration', 'Automation']

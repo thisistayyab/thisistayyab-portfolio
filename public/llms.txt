@@ -13,7 +13,6 @@ Tayyab (thisistayyab) is a full-stack web developer and computer engineering stu
 - [Experience](https://thisistayyab.dev/experience): Professional work experience
 - [Contact](https://thisistayyab.dev/contact): Hire for web development projects
 - [Blog](https://thisistayyab.dev/blog): Web development insights and articles (posts added dynamically; full list in sitemap: https://thisistayyab.dev/sitemap.xml)
-- [Profiles](https://thisistayyab.dev/profiles): GitHub, LinkedIn, Upwork, Fiverr, LeetCode
 
 ## Optional
 

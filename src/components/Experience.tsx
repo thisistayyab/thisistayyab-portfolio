@@ -129,7 +129,7 @@ function Experience() {
               "name": exp.company,
               ...(exp.company === 'Upwork' && { "sameAs": 'https://www.upwork.com' }),
               ...(exp.company === 'Fiverr' && { "sameAs": 'https://www.fiverr.com' }),
-              ...(exp.company === 'Taylance Technologies' && { "sameAs": baseUrl })
+              ...(exp.company === 'Taylance Tech' && { "sameAs": 'https://taylancetech.com' })
             },
             "skills": exp.technologies.join(", ")
           } : {

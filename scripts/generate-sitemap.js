@@ -51,7 +51,6 @@ const generateSitemap = async () => {
         { path: '/testimonials', changefreq: 'monthly', priority: '0.8' },
         { path: '/services', changefreq: 'monthly', priority: '0.9' },
         { path: '/blog', changefreq: 'weekly', priority: '0.9' },
-        { path: '/profiles', changefreq: 'monthly', priority: '0.8' },
         { path: '/contact', changefreq: 'monthly', priority: '0.9' },
         { path: '/privacy', changefreq: 'yearly', priority: '0.5' },
         { path: '/terms', changefreq: 'yearly', priority: '0.5' }
