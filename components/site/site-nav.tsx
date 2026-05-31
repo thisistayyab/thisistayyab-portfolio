@@ -5,9 +5,16 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
-import { NavCtaLink } from "@/components/site/cta-link"
 import { JsonLd } from "@/components/site/json-ld"
 import { NavOrb } from "@/components/site/nav-orb"
+import {
+  navCapsuleClassName,
+  navCtaClassName,
+  navMobileBrandClassName,
+  navMobileLinkActiveClassName,
+  navMobileLinkClassName,
+  navMobileSheetPanelClassName,
+} from "@/components/site/site-styles"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -66,18 +73,11 @@ export function SiteNav() {
   const [open, setOpen] = useState(false)
   const { isActive } = useActiveHref()
 
-  const letsTalkDesktopClassName = cn(
-    "nav-cta group hidden shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white no-underline lg:inline-flex lg:ml-6",
-    "hover:brightness-110",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
-    isActive("/#contact") && "brightness-110",
-  )
-
-  const letsTalkMobileClassName = cn(
-    "nav-cta group inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-white no-underline",
-    "hover:brightness-110",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
-    isActive("/#contact") && "brightness-110",
+  const letsTalkClassName = cn(
+    navCtaClassName,
+    "shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+    isActive("/#contact") &&
+      "shadow-[0_0_36px_rgba(59,130,246,0.24),inset_0_1px_0_rgba(59,130,246,0.2),inset_0_-1px_0_rgba(139,92,246,0.18)]",
   )
 
   return (
@@ -103,11 +103,19 @@ export function SiteNav() {
         itemScope
         itemType="https://schema.org/SiteNavigationElement"
       >
-        <div className="nav-capsule pointer-events-auto flex w-full max-w-[min(100%,1200px)] min-w-0 items-center rounded-full px-5 py-2.5 sm:px-4 lg:w-auto lg:justify-center lg:gap-1 lg:px-6 lg:py-2.5">
+        <div
+          className={cn(
+            navCapsuleClassName,
+            "pointer-events-auto flex w-full max-w-[min(100%,1200px)] min-w-0 items-center px-5 py-2.5 sm:px-4 lg:w-auto lg:justify-center lg:gap-1 lg:px-6 lg:py-2.5",
+          )}
+        >
           <div className="flex w-full items-center justify-between gap-4 px-1 lg:hidden">
             <Link
               href="/"
-              className="nav-mobile-brand min-w-0 flex-1 truncate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              className={cn(
+                navMobileBrandClassName,
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+              )}
               aria-label={`Go to home page - ${SITE_NAME}`}
             >
               {SITE_NAME}
@@ -157,7 +165,7 @@ export function SiteNav() {
           {contactItem && (
             <Link
               href={contactItem.href}
-              className={letsTalkDesktopClassName}
+              className={cn(letsTalkClassName, "hidden lg:ml-6 lg:inline-flex")}
               aria-label={contactItem.description}
               aria-current={isActive(contactItem.href) ? "page" : undefined}
               title={`${contactItem.description} - ${SITE_NAME}`}
@@ -174,13 +182,14 @@ export function SiteNav() {
           side="right"
           id="mobile-navigation-menu"
           aria-label="Mobile navigation menu"
-          className="nav-mobile-sheet top-0 h-dvh w-[min(88vw,340px)] gap-0 border-0 bg-transparent p-0 shadow-none lg:hidden [&>button]:right-5 [&>button]:top-6 [&>button]:flex [&>button]:h-10 [&>button]:w-10 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-none [&>button]:border-0 [&>button]:bg-transparent [&>button]:p-0 [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-none [&>button]:hover:bg-transparent [&>button]:hover:text-white/80 [&>button>svg]:h-5 [&>button>svg]:w-5"
+          overlayClassName="bg-black/78 backdrop-blur-[12px]"
+          className="top-0 h-dvh w-[min(88vw,340px)] gap-0 border-0 bg-transparent p-0 shadow-none lg:hidden [&>button]:right-5 [&>button]:top-6 [&>button]:flex [&>button]:h-10 [&>button]:w-10 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-none [&>button]:border-0 [&>button]:bg-transparent [&>button]:p-0 [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-none [&>button]:hover:bg-transparent [&>button]:hover:text-white/80 [&>button>svg]:h-5 [&>button>svg]:w-5"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>{SITE_NAME} - Navigation Menu</SheetTitle>
           </SheetHeader>
 
-          <div className="nav-mobile-sheet-panel flex h-full flex-col overflow-y-auto p-6 pt-20">
+          <div className={cn(navMobileSheetPanelClassName, "flex flex-col p-6 pt-20")}>
             <p className="mb-5 text-xs font-semibold tracking-[0.2em] text-blue-300/70 uppercase">
               Menu
             </p>
@@ -198,8 +207,8 @@ export function SiteNav() {
                       aria-label={item.description}
                       aria-current={isActive(item.href) ? "page" : undefined}
                       className={cn(
-                        "nav-mobile-link block px-4 py-3.5 text-[0.95rem] font-medium text-white/90 no-underline transition-colors duration-300",
-                        isActive(item.href) && "nav-mobile-link--active",
+                        navMobileLinkClassName,
+                        isActive(item.href) && navMobileLinkActiveClassName,
                       )}
                       onClick={() => setOpen(false)}
                     >
@@ -213,7 +222,7 @@ export function SiteNav() {
                 <div className="mt-auto pt-8">
                   <Link
                     href={contactItem.href}
-                    className={letsTalkMobileClassName}
+                    className={cn(letsTalkClassName, "inline-flex w-full justify-center px-4 py-2.5")}
                     aria-label={contactItem.description}
                     aria-current={isActive(contactItem.href) ? "page" : undefined}
                     title={`${contactItem.description} - ${SITE_NAME}`}

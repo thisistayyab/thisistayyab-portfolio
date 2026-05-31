@@ -11,9 +11,17 @@ import type { Metadata } from "next"
 import Image from "next/image"
 
 import { CtaLink } from "@/components/site/cta-link"
-import { GlassSurface, navGlassClassName, type GlassRim } from "@/components/site/glass-surface"
+import { GlassSurface, type GlassRim } from "@/components/site/glass-surface"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
+import {
+  glassBadgeClassName,
+  heroTagClassName,
+  navGlassClassName,
+  statCardClassName,
+  statIconClassName,
+  statusBadgeClassName,
+} from "@/components/site/site-styles"
 import {
   homeMetadata,
   profileEmail,
@@ -97,15 +105,25 @@ export default function HomePage() {
         <HeaderGraphBackground />
 
         <div
-          className="hero-section relative z-[1] mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-4"
+          className="relative z-[1] mx-auto flex min-h-[calc(100dvh-108px)] max-w-[1200px] flex-col gap-8 px-5 pb-10 sm:px-6 lg:px-4"
           id="home"
         >
-          <div className="hero-main">
-            <div className="hero-content relative z-[2]">
-              <p className="hero-eyebrow sr-only">Crafting Digital Excellence</p>
+          <div className="grid flex-1 grid-cols-1 items-center gap-10 pt-6 max-lg:justify-items-center lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:gap-4 lg:pt-8">
+            <div className="relative z-[2] text-left max-lg:flex max-lg:flex-col max-lg:items-center max-lg:text-center">
+              <p className="sr-only text-[0.72rem] font-semibold tracking-[0.22em] text-slate-400/85 uppercase">
+                Crafting Digital Excellence
+              </p>
 
-              <div className="hero-greeting-badge mb-7 inline-flex items-center gap-2.5">
-                <span className="hero-wave" aria-hidden="true">
+              <div
+                className={cn(
+                  glassBadgeClassName,
+                  "mb-7 inline-flex items-center gap-2.5",
+                )}
+              >
+                <span
+                  className="inline-flex drop-shadow-[0_0_8px_rgba(251,146,60,0.45)]"
+                  aria-hidden="true"
+                >
                   👋
                 </span>
                 <span className="text-[0.95rem] font-medium text-slate-100">
@@ -113,9 +131,14 @@ export default function HomePage() {
                 </span>
               </div>
 
-              <h1 className="hero-title mb-6" itemProp="jobTitle">
-                <span className="hero-title-line text-white">Full Stack</span>
-                <span className="hero-title-line hero-title-gradient">Developer</span>
+              <h1
+                className="mb-6 text-[clamp(2.75rem,7.5vw,4.75rem)] leading-[0.98] font-extrabold tracking-[-0.03em]"
+                itemProp="jobTitle"
+              >
+                <span className="block text-white">Full Stack</span>
+                <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
+                  Developer
+                </span>
                 <span className="sr-only">
                   {" "}
                   — Tayyab | React Developer, Next.js Developer, Node.js Developer,
@@ -123,9 +146,9 @@ export default function HomePage() {
                 </span>
               </h1>
 
-              <p className="hero-subtitle mb-5 max-w-[620px]">
+              <p className="mb-5 max-w-[620px] text-[clamp(1rem,2.2vw,1.125rem)] leading-[1.65] text-slate-400 max-lg:mx-auto">
                 I design and build{" "}
-                <strong className="hero-highlight font-semibold">
+                <strong className="font-semibold text-cyan-300">
                   fast, scalable web applications
                 </strong>{" "}
                 that rank, perform, and convert — from pixel-perfect React frontends
@@ -133,7 +156,7 @@ export default function HomePage() {
               </p>
 
               <p
-                className="hero-seo-text mb-6 max-w-[620px]"
+                className="mb-6 max-w-[620px] text-[0.92rem] leading-[1.75] text-slate-400/82 max-lg:mx-auto [&_strong]:font-semibold [&_strong]:text-slate-300"
                 itemProp="description"
               >
                 With <strong>3+ years of hands-on full stack development</strong>,
@@ -152,7 +175,7 @@ export default function HomePage() {
                 >
                   {heroTags.map((tag) => (
                     <li key={tag}>
-                      <span className="hero-tag">{tag}</span>
+                      <span className={heroTagClassName}>{tag}</span>
                     </li>
                   ))}
                 </ul>
@@ -178,8 +201,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="hero-visual">
-              <div className="hero-visual-stage">
+            <div className="relative mx-auto flex min-h-[380px] w-full max-w-[620px] items-end justify-center lg:mx-0 lg:min-h-[560px] lg:max-w-none lg:justify-end">
+              <div className="relative mx-auto w-[min(100%,580px)] min-h-[clamp(400px,78vw,580px)] sm:w-[min(100%,620px)] sm:min-h-[clamp(440px,62vw,580px)] lg:ml-auto lg:mr-[-0.5rem] lg:w-[min(100%,640px)] lg:min-h-[480px]">
                 <Image
                   src="/images/about.avif"
                   alt="Tayyab - Full Stack Web Developer and Computer Engineering Student portrait photo. Professional developer specializing in React, Node.js, Express, and MongoDB with 3+ years of experience."
@@ -187,12 +210,20 @@ export default function HomePage() {
                   width={540}
                   height={620}
                   priority
-                  className="hero-portrait"
+                  className="relative z-[2] mx-auto block w-[min(100%,460px)] object-contain object-bottom drop-shadow-[0_24px_48px_rgba(0,0,0,0.45)] [mask-image:linear-gradient(to_bottom,#000_78%,transparent_100%)] sm:w-[min(100%,500px)] lg:-ml-4 lg:mr-auto lg:w-[min(100%,540px)]"
                   itemProp="image"
                 />
 
-                <div className="hero-greeting-badge hero-status-badge">
-                  <span className="hero-status-dot shrink-0" aria-hidden="true" />
+                <div
+                  className={cn(
+                    statusBadgeClassName,
+                    "absolute bottom-7 left-1/2 z-[6] inline-flex -translate-x-1/2 items-center gap-2.5 lg:right-6 lg:bottom-10 lg:left-auto lg:translate-x-0",
+                  )}
+                >
+                  <span
+                    className="size-[0.55rem] shrink-0 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.85)]"
+                    aria-hidden="true"
+                  />
                   <span className="text-[0.95rem] font-medium text-slate-100">
                     Available for work
                   </span>
@@ -201,25 +232,28 @@ export default function HomePage() {
                 <GlassSurface
                   as="figure"
                   rim="nav"
-                  className={cn("hero-code-card", navGlassClassName)}
+                  className={cn(
+                    navGlassClassName,
+                    "absolute right-1 bottom-[4.75rem] z-[5] m-0 hidden w-[min(248px,88vw)] max-w-[calc(100%-1rem)] -rotate-[7deg] origin-center rounded-2xl p-4 sm:block sm:top-[47%] sm:right-[-2%] sm:bottom-auto sm:w-[min(250px,38vw)] md:top-[45%] md:right-[-3%] md:w-[255px] lg:top-[44%] lg:right-[-2%] lg:w-[268px] xl:top-[43%] xl:right-[-4%]",
+                  )}
                 >
                   <figcaption className="sr-only">Developer profile code snippet</figcaption>
-                  <pre>
+                  <pre className="relative z-[1] m-0 font-mono text-[0.68rem] leading-[1.55] whitespace-pre-wrap">
                     <code>
-                      <span className="hero-code-keyword">const</span>{" "}
-                      <span className="hero-code-name">developer</span> = {"{"}
+                      <span className="text-purple-400">const</span>{" "}
+                      <span className="text-blue-300">developer</span> = {"{"}
                       {"\n  "}
-                      <span className="hero-code-key">name</span>:{" "}
-                      <span className="hero-code-string">&quot;Tayyab&quot;</span>,
+                      <span className="text-fuchsia-400">name</span>:{" "}
+                      <span className="text-green-300">&quot;Tayyab&quot;</span>,
                       {"\n  "}
-                      <span className="hero-code-key">role</span>:{" "}
-                      <span className="hero-code-string">
+                      <span className="text-fuchsia-400">role</span>:{" "}
+                      <span className="text-green-300">
                         &quot;Full Stack Developer&quot;
                       </span>
                       ,
                       {"\n  "}
-                      <span className="hero-code-key">passion</span>:{" "}
-                      <span className="hero-code-string">
+                      <span className="text-fuchsia-400">passion</span>:{" "}
+                      <span className="text-green-300">
                         &quot;Building amazing things on the web&quot;
                       </span>
                       {"\n}"}
@@ -230,28 +264,32 @@ export default function HomePage() {
             </div>
           </div>
 
-          <section className="hero-stats" aria-label="Professional highlights">
+          <section
+            className="mt-auto grid grid-cols-2 gap-3.5 pt-2 lg:grid-cols-4 lg:gap-4"
+            aria-label="Professional highlights"
+          >
             {heroStats.map(({ icon: Icon, value, label, tone }) => (
               <GlassSurface
                 key={label}
                 as="article"
                 rim={tone}
-                className={cn("hero-stat-card", navGlassClassName)}
+                className={statCardClassName}
               >
                 <GlassSurface
                   as="span"
                   rim={tone}
-                  className={cn(
-                    "hero-stat-icon inline-flex size-11 shrink-0 items-center justify-center rounded-[0.7rem]",
-                    "bg-[rgba(6,10,22,0.92)]",
-                  )}
+                  className={statIconClassName(tone)}
                   aria-hidden="true"
                 >
-                  <Icon className="hero-stat-icon-svg relative z-[1]" strokeWidth={2} />
+                  <Icon className="relative z-[1] size-5 sm:size-[1.35rem]" strokeWidth={2} />
                 </GlassSurface>
-                <div className="hero-stat-copy">
-                  <p className="hero-stat-value">{value}</p>
-                  <p className="hero-stat-label">{label}</p>
+                <div className="flex min-w-0 flex-col gap-[0.2rem]">
+                  <p className="m-0 text-[clamp(1.35rem,3.2vw,1.65rem)] leading-[1.05] font-bold text-white">
+                    {value}
+                  </p>
+                  <p className="m-0 text-[clamp(0.72rem,2vw,0.82rem)] leading-[1.35] text-slate-50/82">
+                    {label}
+                  </p>
                 </div>
               </GlassSurface>
             ))}

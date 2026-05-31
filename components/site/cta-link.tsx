@@ -1,6 +1,11 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
 
+import {
+  ctaPrimaryClassName,
+  ctaSecondaryClassName,
+  navCtaClassName,
+} from "@/components/site/site-styles"
 import { cn } from "@/lib/utils"
 
 type CtaLinkProps = {
@@ -21,7 +26,7 @@ export function CtaLink({
   children,
 }: CtaLinkProps) {
   const classes = cn(
-    variant === "primary" ? "btn-cta-primary" : "btn-cta-secondary",
+    variant === "primary" ? ctaPrimaryClassName : ctaSecondaryClassName,
     className,
   )
 
@@ -61,8 +66,10 @@ export function NavCtaLink({
       title={title}
       onClick={onClick}
       className={cn(
-        "nav-cta group inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white no-underline transition-all duration-300 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
-        active && "brightness-110",
+        navCtaClassName,
+        "group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+        active &&
+          "shadow-[0_0_36px_rgba(59,130,246,0.24),inset_0_1px_0_rgba(59,130,246,0.2),inset_0_-1px_0_rgba(139,92,246,0.18)]",
         className,
       )}
     >
