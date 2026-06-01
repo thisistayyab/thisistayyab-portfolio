@@ -275,6 +275,35 @@
 }
 
 /* Let's Talk nav CTA — glow on hover (no lift; matches original portfolio) */
+@keyframes tech-icon-float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-10px, 14px);
+  }
+}
+
+.tech-icon-float {
+  animation: tech-icon-float ease-in-out infinite;
+}
+
+.social-icon:hover {
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.2),
+    0 0 20px color-mix(in srgb, var(--icon-hover-color) 20%, transparent);
+}
+
+.social-icon:focus-visible {
+  outline: 2px solid var(--icon-color);
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--icon-color) 30%, transparent),
+    0 15px 30px rgba(0, 0, 0, 0.2),
+    0 0 20px color-mix(in srgb, var(--icon-hover-color) 20%, transparent);
+}
+
 .nav-cta-glow::after {
   content: "";
   position: absolute;

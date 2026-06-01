@@ -296,6 +296,67 @@ export default function HomePage() {
           </section>
         </div>
       </header>
+
+      <section
+        className="relative mx-auto max-w-[1200px] px-5 py-20 sm:px-6 lg:px-4"
+        aria-labelledby="home-about-heading"
+      >
+        <div className="relative z-[2] mx-auto max-w-3xl text-center">
+          <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/70 uppercase">
+            About
+          </p>
+
+          <h2
+            id="home-about-heading"
+            className="mx-auto mb-6 max-w-4xl text-[clamp(1.85rem,5vw,2.75rem)] leading-[1.15] font-bold tracking-tight text-white"
+          >
+            <span className="block">
+              Full stack developer who ships{" "}
+              <span className="whitespace-nowrap bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
+                real products
+              </span>
+            </span>
+            <span className="block">— not just code</span>
+          </h2>
+
+          <div className="mx-auto mb-8 h-px w-12 bg-white/15" aria-hidden="true" />
+
+          <p className="mb-5 text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
+            I&apos;m Tayyab — a{" "}
+            <strong className="font-semibold text-slate-200">full stack web developer</strong>{" "}
+            with 3+ years of experience building production-ready{" "}
+            <strong className="font-semibold text-slate-200">
+              React and Node.js applications
+            </strong>{" "}
+            for startups, SaaS products, and growing businesses.
+          </p>
+
+          <p className="mb-5 text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
+            My work spans the entire stack: responsive React UIs, REST and GraphQL APIs,
+            PostgreSQL databases, and cloud deployments. I don&apos;t just write code — I
+            think about{" "}
+            <strong className="font-semibold text-slate-200">
+              performance, maintainability, and scalability
+            </strong>{" "}
+            from day one. Having solved over{" "}
+            <strong className="font-semibold text-slate-200">1,150+ LeetCode problems</strong>,
+            I bring strong algorithmic thinking to every backend challenge, whether it&apos;s
+            optimizing queries, designing data models, or building features that hold up under
+            real traffic. If you&apos;re looking to{" "}
+            <strong className="font-semibold text-slate-200">
+              hire a full stack developer
+            </strong>{" "}
+            who ships clean, tested, production-grade software — let&apos;s talk.
+          </p>
+
+          <div className="mt-2 flex justify-center">
+            <CtaLink href="/about" title="Read Tayyab's full professional background and achievements">
+              Learn more about Tayyab
+              <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
+            </CtaLink>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

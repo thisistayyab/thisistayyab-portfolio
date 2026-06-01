@@ -106,6 +106,9 @@ const statIconToneClasses: Partial<Record<GlassRim, string>> = {
   pink: "shadow-[0_0_18px_rgba(217,70,239,0.22)] [&_svg]:text-fuchsia-300 [&_svg]:drop-shadow-[0_0_6px_rgba(232,121,249,0.78)]",
 }
 
+export const heroActionsClassName =
+  "flex w-full flex-wrap items-center justify-center gap-[0.85rem] lg:justify-start"
+
 export function statIconClassName(tone: GlassRim) {
   return cn(
     "inline-flex size-11 shrink-0 items-center justify-center rounded-[0.7rem] sm:size-12",
