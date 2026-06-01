@@ -14,6 +14,8 @@ import { CtaLink } from "@/components/site/cta-link"
 import { GlassSurface, type GlassRim } from "@/components/site/glass-surface"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
+import type { PortfolioProject } from "@/components/site/project-card"
+import { ProjectsShowcase } from "@/components/site/projects-showcase"
 import {
   glassBadgeClassName,
   heroTagClassName,
@@ -26,6 +28,7 @@ import {
   homeMetadata,
   profileEmail,
   profileSameAs,
+  projectImageUrl,
   SITE_URL,
 } from "@/lib/site"
 import { cn } from "@/lib/utils"
@@ -56,6 +59,68 @@ const heroTags = [
   "LeetCode 1150+",
 ] as const
 
+const homeFeaturedProjects: PortfolioProject[] = [
+  {
+    id: 1,
+    slug: "taylance-tech",
+    name: "Taylance Tech",
+    roleLabel: "My company",
+    image: "/images/projects/taylance-tech.webp",
+    imageAlt:
+      "Taylance Tech software studio homepage screenshot — founder-led Next.js website built by Tayyab, full stack web developer",
+    imageTitle: "Taylance Tech founder-led studio | Tayyab full stack web developer portfolio",
+    link: "https://taylancetech.com/",
+    description:
+      "The company I founded and launched: a founder-led software studio for web, mobile, SaaS, and AI automation. Built with Next.js for performance and SEO — fully my product and brand.",
+    tags: [
+      { label: "My company", variant: "feature" },
+      { label: "Next.js", variant: "tech" },
+      { label: "Founder-led", variant: "feature" },
+      { label: "SaaS studio", variant: "feature" },
+    ],
+    ctaLabel: "Live View",
+  },
+  {
+    id: 2,
+    slug: "taylance-crm",
+    name: "Taylance CRM",
+    roleLabel: "Studio product",
+    image: "/images/projects/taylance-crm.jpg",
+    imageAlt:
+      "Taylance CRM dashboard screenshot — React and Express.js CRM built by Tayyab under Taylance Tech studio",
+    imageTitle: "Taylance CRM React dashboard | Tayyab featured portfolio project",
+    link: "https://taylancecrm.vercel.app/",
+    description:
+      "A CRM product under my Taylance Tech studio: clients, leads, and projects in one dashboard. React, Express.js, and Material UI — my own product.",
+    tags: [
+      { label: "Studio product", variant: "feature" },
+      { label: "React", variant: "tech" },
+      { label: "Express.js", variant: "tech" },
+      { label: "REST API", variant: "feature" },
+    ],
+    ctaLabel: "Live View",
+  },
+  {
+    id: 3,
+    slug: "taynio-chat",
+    name: "Taynio Chat",
+    image: "/images/projects/taynio-chat.png",
+    imageAlt:
+      "Taynio Chat real-time messaging application screenshot — React, Node.js, and Socket.IO app built by Tayyab",
+    imageTitle: "Taynio Chat React messaging app | Tayyab featured full stack project",
+    link: "https://github.com/thisistayyab/Taynio-chat",
+    description:
+      "Taynio Chat is a real-time messaging application built with React, Node.js, and Socket.IO, designed for fast, secure, and reliable communication. It enables instant message exchange, active user presence detection, and seamless real-time updates without page reloads.",
+    tags: [
+      { label: "React", variant: "tech" },
+      { label: "Node.js", variant: "tech" },
+      { label: "Socket.IO", variant: "tech" },
+      { label: "Real-time", variant: "feature" },
+    ],
+    ctaLabel: "Repo Link",
+  },
+]
+
 const heroStats: {
   icon: LucideIcon
   value: string
@@ -71,6 +136,33 @@ const heroStats: {
 export default function HomePage() {
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Featured Web Development Projects by Tayyab",
+          itemListElement: homeFeaturedProjects.map((project, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "SoftwareApplication",
+              name: project.name,
+              description: project.description,
+              url: project.link,
+              image: {
+                "@type": "ImageObject",
+                url: projectImageUrl(project.image),
+                contentUrl: projectImageUrl(project.image),
+                name: project.imageTitle,
+                caption: project.imageAlt,
+                description: project.imageAlt,
+              },
+              applicationCategory: "WebApplication",
+            },
+          })),
+        }}
+      />
+
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -352,6 +444,58 @@ export default function HomePage() {
           <div className="mt-2 flex justify-center">
             <CtaLink href="/about" title="Read Tayyab's full professional background and achievements">
               Learn more about Tayyab
+              <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
+            </CtaLink>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="project"
+        className="relative mx-auto max-w-[1200px] px-5 py-20 sm:px-6 lg:px-4"
+        aria-labelledby="home-projects-heading"
+      >
+        <div className="relative z-[2]">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/70 uppercase">
+              Projects
+            </p>
+
+            <h2
+              id="home-projects-heading"
+              className="mx-auto max-w-4xl text-[clamp(1.85rem,5vw,2.75rem)] leading-[1.15] font-bold tracking-tight text-white"
+            >
+              <span className="block">
+                Live products built with{" "}
+                <span className="whitespace-nowrap bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
+                  real users
+                </span>
+              </span>
+              <span className="block">in mind</span>
+            </h2>
+
+            <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
+
+            <p className="text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
+              Deployed{" "}
+              <strong className="font-semibold text-slate-200">full-stack web applications</strong>{" "}
+              built with React, Next.js, Node.js, and PostgreSQL — used by real people, not just UI
+              mockups or tutorial clones. Explore SaaS dashboards, REST APIs, Supabase backends,
+              and production-ready client work.
+            </p>
+          </div>
+
+          <ProjectsShowcase
+            projects={homeFeaturedProjects}
+            listLabel="Featured full stack web development projects"
+          />
+
+          <div className="mt-10 flex justify-center">
+            <CtaLink
+              href="/projects"
+              title="View Tayyab's complete web development project portfolio"
+            >
+              View all projects
               <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
             </CtaLink>
           </div>

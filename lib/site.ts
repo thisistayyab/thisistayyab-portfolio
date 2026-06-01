@@ -1,6 +1,11 @@
 export const SITE_URL = "https://thisistayyab.dev"
 export const SITE_NAME = "Tayyab's Portfolio"
 
+/** Absolute URL for a static project screenshot (SEO / JSON-LD). */
+export function projectImageUrl(path: string) {
+  return `${SITE_URL}${path}`
+}
+
 export interface NavItem {
   label: string
   href: string
