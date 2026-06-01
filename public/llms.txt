@@ -1,0 +1,21 @@
+# Tayyab — Full Stack Developer Portfolio
+
+> https://thisistayyab.dev
+
+Tayyab builds production web applications with React, Next.js, Node.js, PostgreSQL, SaaS platforms, APIs, and AI automation.
+
+## Main pages
+
+- Home: https://thisistayyab.dev/
+- About: https://thisistayyab.dev/about
+- Projects: https://thisistayyab.dev/projects
+- Experience: https://thisistayyab.dev/experience
+- Services: https://thisistayyab.dev/services
+- Testimonials: https://thisistayyab.dev/testimonials
+- Blog: https://thisistayyab.dev/blog
+- Contact: https://thisistayyab.dev/contact
+
+## Blog
+
+Articles are published dynamically at https://thisistayyab.dev/blog/{slug}.
+Sitemap: https://thisistayyab.dev/sitemap.xml

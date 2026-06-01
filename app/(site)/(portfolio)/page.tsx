@@ -21,7 +21,9 @@ import {
 } from "@/components/site/experience-roadmap"
 import { ProjectsShowcase } from "@/components/site/projects-showcase"
 import { buildServicesItemListJsonLd } from "@/components/site/services-json-ld"
+import { BlogHomePreview } from "@/components/blog/blog-home-preview"
 import { ContactHomePreview } from "@/components/site/contact-home-preview"
+import { getFeaturedPosts } from "@/lib/blog/queries"
 import { ServicesHomePreview } from "@/components/site/services-home-preview"
 import { buildTestimonialsItemListJsonLd } from "@/components/site/testimonials-json-ld"
 import { TestimonialsSection } from "@/components/site/testimonials-section"
@@ -151,7 +153,8 @@ const heroStats: {
   { icon: Smile, value: "100%", label: "Client Satisfaction", tone: "pink" },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredBlogPosts = await getFeaturedPosts(3)
   return (
     <>
       <JsonLd data={buildExperienceItemListJsonLd(careerRoadmapMilestones, SITE_URL, "/")} />
@@ -550,6 +553,8 @@ export default function HomePage() {
       <TestimonialsSection testimonials={homeTestimonials} variant="home" />
 
       <ServicesHomePreview services={portfolioServices} />
+
+      <BlogHomePreview posts={featuredBlogPosts} />
 
       <ContactHomePreview />
     </>

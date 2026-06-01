@@ -10,15 +10,17 @@ export function isBlogPath(pathname: string) {
 }
 
 export const blogIndexMetadata = {
-  title: "Blog - Insights & Articles | Tayyab",
+  title: "Blog | Full Stack Development Articles — React, Next.js & Node.js",
   description:
-    "Articles on web development, React, Next.js, Node.js, performance, and the future of tech — written by Tayyab.",
+    "Read Tayyab's blog on full stack development: React, Next.js, Node.js, PostgreSQL, SaaS architecture, APIs, performance, and AI automation.",
   keywords: [
-    "web development blog",
+    "full stack development blog",
     "React articles",
-    "Next.js tips",
-    "Node.js tutorials",
-    "developer insights",
-    "full stack blog",
+    "Next.js tutorials",
+    "Node.js blog",
+    "web development articles",
+    "SaaS development",
+    "API design",
+    "Tayyab developer blog",
   ],
 } as const

@@ -34,6 +34,12 @@ export function blogPostPageMetadata(post: {
   const title = post.seo_title || post.title
   const description = post.seo_description || post.excerpt
 
+  const imageUrl = post.cover_image?.startsWith("http")
+    ? post.cover_image
+    : post.cover_image
+      ? `${SITE_URL}${post.cover_image.startsWith("/") ? post.cover_image : `/${post.cover_image}`}`
+      : undefined
+
   return {
     title,
     description,
@@ -45,13 +51,13 @@ export function blogPostPageMetadata(post: {
       url,
       type: "article",
       publishedTime: post.published_at ?? undefined,
-      images: post.cover_image ? [{ url: post.cover_image, alt: post.title }] : undefined,
+      images: imageUrl ? [{ url: imageUrl, alt: post.title }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: post.cover_image ? [post.cover_image] : undefined,
+      images: imageUrl ? [imageUrl] : undefined,
     },
   }
 }

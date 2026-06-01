@@ -21,6 +21,19 @@ export type BlogPost = {
   view_count: number
   tags: string[]
   author: BlogAuthor | null
+  updated_at?: string | null
+}
+
+export type BlogAuthorRecord = BlogAuthor & {
+  bio?: string | null
+  created_at?: string
+}
+
+export type BlogCategory = {
+  id: string
+  name: string
+  slug: string
+  description?: string | null
 }
 
 export type BlogPostSummary = Pick<

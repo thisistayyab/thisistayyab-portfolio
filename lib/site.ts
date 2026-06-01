@@ -47,9 +47,10 @@ export const navItems: NavItem[] = [
       "Browse full stack software services — SaaS, APIs, AI automation, React, Next.js, Node.js, and PostgreSQL",
   },
   {
-    label: "Insights",
+    label: "Blog",
     href: "/blog",
-    description: "Read articles and tips on web development, React, Node.js, and performance",
+    description:
+      "Read articles on full stack development, React, Next.js, Node.js, SaaS, and AI automation",
   },
   {
     label: "Contact",
