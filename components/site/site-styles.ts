@@ -6,6 +6,14 @@ export type GlassRim = "default" | "nav" | "violet" | "purple" | "blue" | "pink"
 export const navGlassClassName =
   "bg-[rgba(8,12,26,0.72)] shadow-[0_10px_36px_rgba(0,0,0,0.45),0_0_32px_rgba(59,130,246,0.12),0_0_48px_rgba(139,92,246,0.08)] backdrop-blur-[24px] backdrop-saturate-[170%]"
 
+/** Experience / project cards — no backdrop-blur or hover lift (prevents hover jerk). */
+export const contentCardClassName = cn(
+  "bg-[rgba(8,12,26,0.78)] shadow-[0_8px_32px_rgba(0,0,0,0.18)]",
+  "transition-[border-color,box-shadow] duration-300 ease-out",
+  "hover:border-white/15",
+  "hover:shadow-[0_16px_48px_rgba(0,0,0,0.28),0_0_32px_rgba(59,130,246,0.1)]",
+)
+
 /** Floating nav capsule — slightly lighter fill than cards */
 export const navCapsuleClassName = cn(
   "relative isolate overflow-hidden rounded-full border-0",

@@ -15,7 +15,12 @@ import { GlassSurface, type GlassRim } from "@/components/site/glass-surface"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
 import type { PortfolioProject } from "@/components/site/project-card"
+import {
+  buildExperienceItemListJsonLd,
+  ExperienceHomePreview,
+} from "@/components/site/experience-roadmap"
 import { ProjectsShowcase } from "@/components/site/projects-showcase"
+import { careerRoadmapMilestones } from "@/app/(site)/(portfolio)/experience/page"
 import {
   glassBadgeClassName,
   heroTagClassName,
@@ -136,6 +141,8 @@ const heroStats: {
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={buildExperienceItemListJsonLd(careerRoadmapMilestones, SITE_URL, "/")} />
+
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -501,6 +508,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <ExperienceHomePreview
+        latestMilestone={careerRoadmapMilestones[0]}
+        upcomingMilestones={careerRoadmapMilestones.slice(1, 4)}
+      />
     </>
   )
 }

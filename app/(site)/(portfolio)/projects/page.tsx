@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import type { PortfolioProject } from "@/components/site/project-card"
+import { FaqSection } from "@/components/site/faq-section"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
 import { ProjectsShowcase } from "@/components/site/projects-showcase"
@@ -256,24 +257,22 @@ const portfolioProjects: PortfolioProject[] = [
 
 const projectsFaq = [
   {
-    question: "What types of web development projects does Tayyab build?",
+    question: "What kind of projects are these?",
     answer:
-      "Tayyab builds full-stack web applications including SaaS dashboards, REST and GraphQL APIs, React and Next.js frontends, PostgreSQL and MongoDB backends, real-time apps, CRM systems, and SEO-optimized marketing sites for startups and growing businesses.",
+      "Live web apps and products — SaaS tools, APIs, CRMs, and marketing sites. Built for real use, not mockups.",
   },
   {
-    question: "Which technologies appear most often in this portfolio?",
-    answer:
-      "The portfolio highlights React, TypeScript, Node.js, Express.js, Next.js, Supabase, PostgreSQL, MongoDB, Socket.IO, Stripe integrations, and performance-focused deployments — chosen for maintainability and production reliability.",
+    question: "What technologies do you use most?",
+    answer: "React, Next.js, TypeScript, Node.js, PostgreSQL, MongoDB, and Supabase.",
   },
   {
-    question: "Are these live production projects or concept designs?",
-    answer:
-      "Most entries are deployed applications with live URLs or public repositories, built for real users, client work, or production-ready demos — not static mockups or tutorial clones.",
+    question: "Are these deployed projects?",
+    answer: "Yes. Most have a live link or a public repo.",
   },
   {
-    question: 'What does "Client project" mean on a card?',
+    question: 'What does "Client project" mean?',
     answer:
-      "It means I built the software for a private client as freelance work. I am credited as the developer; the product, brand, and intellectual property belong to the client. There was no separate formal contract listed on this portfolio — only a clear attribution of roles.",
+      "I built it for a client as freelance work. They own the product; I am listed as the developer.",
   },
 ] as const
 
@@ -456,40 +455,26 @@ export default function ProjectsPage() {
           />
         </section>
 
-        <section
+        <FaqSection
           className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4"
-          aria-labelledby="projects-faq-heading"
-        >
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 sm:p-10">
-            <h2 id="projects-faq-heading" className="text-2xl font-bold text-white">
-              Frequently asked questions
-            </h2>
-            <p className="mt-2 text-slate-400">
-              Common questions about this React and Node.js project portfolio.
-            </p>
-            <dl className="mt-8 space-y-6">
-              {projectsFaq.map((item) => (
-                <div key={item.question}>
-                  <dt className="text-base font-semibold text-slate-200">{item.question}</dt>
-                  <dd className="mt-2 text-sm leading-relaxed text-slate-400 sm:text-base">
-                    {item.answer}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-8 text-sm text-slate-500">
-              Looking for background and approach? Read the{" "}
-              <Link href="/about" className="text-violet-300 hover:text-violet-200">
-                about page
-              </Link>{" "}
-              or{" "}
-              <Link href="/#contact" className="text-violet-300 hover:text-violet-200">
-                get in touch
-              </Link>{" "}
-              to discuss your next project.
-            </p>
-          </div>
-        </section>
+          headingId="projects-faq-heading"
+          description="Quick answers about this portfolio."
+          items={projectsFaq}
+          footerLead="Want to know more about how I work?"
+          ctas={[
+            {
+              label: "About Tayyab",
+              href: "/about",
+              title: "Read Tayyab's full stack developer background and story",
+            },
+            {
+              label: "Get in touch",
+              href: "/#contact",
+              variant: "secondary",
+              title: "Contact Tayyab for freelance or contract web development",
+            },
+          ]}
+        />
       </article>
     </>
   )

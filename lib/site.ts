@@ -32,7 +32,7 @@ export const navItems: NavItem[] = [
   },
   {
     label: "Experience",
-    href: "/#experience",
+    href: "/experience",
     description: "Explore Tayyab's professional experience and career journey",
   },
   {

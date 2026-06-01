@@ -315,8 +315,8 @@ export default function AboutPage() {
 
                 <p className="mt-4 max-w-2xl text-base leading-[1.85] text-slate-400">
                   I&apos;m Tayyab, a full stack web developer with 3+ years of hands-on experience
-                  delivering production-ready applications for clients on Upwork and Fiverr. I
-                  recently founded{" "}
+                  delivering production-ready applications for clients on Upwork and Fiverr. A studio
+                  I&apos;ve envisioned since 2023 became real when I launched{" "}
                   <a
                     href={TAYLANCE_TECH_URL}
                     target="_blank"
@@ -324,8 +324,8 @@ export default function AboutPage() {
                     className={aboutInlineLinkClassName}
                   >
                     Taylance Tech
-                  </a>
-                  — a studio I launched to help businesses ship React and Node.js products with
+                  </a>{" "}
+                  in 2026 — to help businesses ship React and Node.js products with
                   reliable engineering, clear communication, and code built for the long term. My
                   work spans responsive interfaces, robust APIs, PostgreSQL data layers, and
                   deployments engineered for real-world traffic.
@@ -480,7 +480,8 @@ export default function AboutPage() {
               <p className="text-base leading-[1.85] text-slate-400 sm:text-[1.05rem]">
                 My freelance work on Upwork and Fiverr has earned consistent five-star feedback,
                 with clients citing responsiveness, technical clarity, and on-time delivery.
-                Building on that experience, I recently launched{" "}
+                Building on that experience, I fulfilled a goal I&apos;ve held since 2023 by
+                launching{" "}
                 <a
                   href={TAYLANCE_TECH_URL}
                   target="_blank"
@@ -489,7 +490,7 @@ export default function AboutPage() {
                 >
                   Taylance Tech
                 </a>{" "}
-                as founder — a web development studio focused on full stack products where code
+                in 2026 — a web development studio focused on full stack products where code
                 quality, thoughtful architecture, and long-term maintainability come first.
               </p>
               <p className="text-base leading-[1.85] text-slate-400 sm:text-[1.05rem]">
