@@ -17,12 +17,12 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { RiGithubFill, RiLinkedinFill, RiMailLine } from "react-icons/ri"
 import { SiLeetcode } from "react-icons/si"
 
 import { CtaLink } from "@/components/site/cta-link"
+import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { GlassSurface, type GlassRim } from "@/components/site/glass-surface"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
@@ -34,7 +34,15 @@ import {
   statCardClassName,
   statIconClassName,
 } from "@/components/site/site-styles"
-import { profileEmail, profileSameAs, SITE_URL } from "@/lib/site"
+import { imageSeoUrl } from "@/lib/image"
+import {
+  FEATURED_OG_ALT,
+  featuredOgImageUrl,
+  PROFILE_IMAGE,
+  profileEmail,
+  profileSameAs,
+  SITE_URL,
+} from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 const TAYLANCE_TECH_URL = "https://taylancetech.com"
@@ -205,7 +213,7 @@ export const metadata: Metadata = {
     description: aboutSubtitle,
     url: `${SITE_URL}/about`,
     type: "profile",
-    images: [{ url: `${SITE_URL}/images/about.avif`, alt: "Tayyab — Full Stack Developer" }],
+    images: [{ url: featuredOgImageUrl(), alt: FEATURED_OG_ALT }],
   },
 }
 
@@ -231,7 +239,7 @@ export default function AboutPage() {
           jobTitle: "Founder of Taylance Tech & Full Stack Web Developer",
           description: aboutSubtitle,
           url: SITE_URL,
-          image: `${SITE_URL}/images/about.avif`,
+          image: imageSeoUrl(PROFILE_IMAGE, SITE_URL),
           email: profileEmail,
           sameAs: [...profileSameAs],
           worksFor: {
@@ -364,8 +372,8 @@ export default function AboutPage() {
                     "rounded-2xl p-3 shadow-[0_24px_64px_rgba(0,0,0,0.45),0_0_48px_rgba(139,92,246,0.15)]",
                   )}
                 >
-                  <Image
-                    src="/images/about.avif"
+                  <OptimizedPicture
+                    src={PROFILE_IMAGE}
                     alt="Tayyab — full stack web developer specializing in React, Next.js, Node.js, and PostgreSQL"
                     title="Tayyab — Full Stack Developer"
                     width={340}

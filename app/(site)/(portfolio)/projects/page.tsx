@@ -51,7 +51,7 @@ const portfolioProjects: PortfolioProject[] = [
     slug: "taylance-crm",
     name: "Taylance CRM",
     roleLabel: "Studio product",
-    image: "/images/projects/taylance-crm.jpg",
+    image: "/images/projects/taylance-crm.webp",
     imageAlt:
       "Taylance CRM dashboard screenshot — React and Express.js full stack CRM product built by Tayyab under the Taylance Tech software studio",
     imageTitle: "Taylance CRM React dashboard | Tayyab full stack portfolio project",
@@ -72,7 +72,7 @@ const portfolioProjects: PortfolioProject[] = [
     name: "7Opportunity",
     roleLabel: "Client project",
     isClientWork: true,
-    image: "/images/projects/tayyab-7opportunity-react-marketing-platform.png",
+    image: "/images/projects/tayyab-7opportunity-react-marketing-platform.webp",
     imageAlt:
       "7Opportunity marketing platform homepage screenshot — freelance client web application built by Tayyab with React, Express.js, and Supabase, optimized for mobile and Lighthouse performance",
     imageTitle:
@@ -97,7 +97,7 @@ const portfolioProjects: PortfolioProject[] = [
     name: "7Options",
     roleLabel: "Client project",
     isClientWork: true,
-    image: "/images/projects/7options.png",
+    image: "/images/projects/7options.webp",
     imageAlt:
       "7Options subscription and billing dashboard screenshot — freelance client SaaS built by Tayyab with React, Express.js, Supabase, and payment integrations",
     imageTitle:
@@ -120,7 +120,7 @@ const portfolioProjects: PortfolioProject[] = [
     name: "7TalentHub",
     roleLabel: "Client project",
     isClientWork: true,
-    image: "/images/projects/7talenthub.png",
+    image: "/images/projects/7talenthub.webp",
     imageAlt:
       "7TalentHub company CRM interface screenshot — internal freelance client application built by Tayyab with React, Node.js, and Supabase for talent and employee management",
     imageTitle:
@@ -143,7 +143,7 @@ const portfolioProjects: PortfolioProject[] = [
     id: 6,
     slug: "notehub",
     name: "NoteHub",
-    image: "/images/projects/notehub.png",
+    image: "/images/projects/notehub.webp",
     imageAlt:
       "NoteHub note-taking application screenshot — full stack React and Express.js web app with MongoDB built by Tayyab for creating and organizing user notes",
     imageTitle: "NoteHub React note-taking app | Tayyab full stack web developer portfolio",
@@ -162,7 +162,7 @@ const portfolioProjects: PortfolioProject[] = [
     id: 7,
     slug: "leetcode-profile",
     name: "LeetCode Profile",
-    image: "/images/projects/leetcode-profile.png",
+    image: "/images/projects/leetcode-profile.webp",
     imageAlt:
       "Tayyab LeetCode developer profile screenshot showing 1,150+ solved algorithm and data structure problems in C++ — competitive programming portfolio",
     imageTitle: "Tayyab LeetCode profile | 1150+ DSA problems solved — full stack developer",
@@ -181,7 +181,7 @@ const portfolioProjects: PortfolioProject[] = [
     id: 8,
     slug: "taynio-chat",
     name: "Taynio Chat",
-    image: "/images/projects/taynio-chat.png",
+    image: "/images/projects/taynio-chat.webp",
     imageAlt:
       "Taynio Chat real-time messaging application screenshot — React and Node.js web app with Socket.IO built by Tayyab for instant chat and presence",
     imageTitle: "Taynio Chat React real-time messaging app | Tayyab full stack portfolio",
@@ -219,7 +219,7 @@ const portfolioProjects: PortfolioProject[] = [
     id: 10,
     slug: "editwave",
     name: "EditWave",
-    image: "/images/projects/editwave.png",
+    image: "/images/projects/editwave.webp",
     imageAlt:
       "EditWave in-browser text editor screenshot — React rich editing web application with responsive UI built by Tayyab",
     imageTitle: "EditWave React browser text editor | Tayyab full stack portfolio project",
@@ -238,7 +238,7 @@ const portfolioProjects: PortfolioProject[] = [
     id: 11,
     slug: "shahid-portfolio",
     name: "Shahid's Portfolio",
-    image: "/images/projects/shahid-portfolio.png",
+    image: "/images/projects/shahid-portfolio.webp",
     imageAlt:
       "Shahid personal portfolio website screenshot — React developer portfolio with modern responsive UI built by Tayyab",
     imageTitle: "Shahid React portfolio website | Tayyab full stack web developer project",
@@ -346,7 +346,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${SITE_URL}/images/projects/taylance-tech.webp`,
+        url: `${SITE_URL}/images/projects/taylance-tech.avif`,
         alt: "Taylance Tech — founder-led software studio",
       },
     ],

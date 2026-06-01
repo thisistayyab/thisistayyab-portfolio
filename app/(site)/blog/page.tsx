@@ -5,10 +5,11 @@ import { JsonLd } from "@/components/site/json-ld"
 import { BLOG_INDEX_PATH, blogIndexMetadata } from "@/lib/blog/config"
 import { buildBlogBreadcrumbJsonLd, buildBlogIndexJsonLd } from "@/lib/blog/json-ld"
 import { blogIndexPageMetadata } from "@/lib/blog/metadata"
-import { BLOG_REVALIDATE_SECONDS, getPublishedPosts } from "@/lib/blog/queries"
+import { getPublishedPosts } from "@/lib/blog/queries"
 
 export const metadata = blogIndexPageMetadata()
-export const revalidate = BLOG_REVALIDATE_SECONDS
+/** ISR — keep in sync with `BLOG_REVALIDATE_SECONDS` in `lib/blog/queries.ts` */
+export const revalidate = 300
 
 export default async function BlogIndexPage() {
   const posts = await getPublishedPosts()

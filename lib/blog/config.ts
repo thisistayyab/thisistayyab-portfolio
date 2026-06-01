@@ -1,5 +1,4 @@
 export const BLOG_INDEX_PATH = "/blog" as const
-export const HOME_BLOG_SECTION_ID = "blog" as const
 
 export function blogPostPath(slug: string) {
   return `${BLOG_INDEX_PATH}/${slug}` as const

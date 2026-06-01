@@ -1,4 +1,4 @@
-/** EmailJS — same field names as the legacy portfolio form (`user_name`, `user_email`, `subject`, `message`). */
+/** EmailJS contact form field names (`user_name`, `user_email`, `subject`, `message`). */
 export function getEmailJsConfig() {
   return {
     serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "",

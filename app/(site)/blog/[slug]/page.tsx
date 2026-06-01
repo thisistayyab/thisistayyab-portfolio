@@ -10,12 +10,7 @@ import { JsonLd } from "@/components/site/json-ld"
 import { BLOG_INDEX_PATH } from "@/lib/blog/config"
 import { buildBlogBreadcrumbJsonLd, buildBlogPostingJsonLd } from "@/lib/blog/json-ld"
 import { blogPostPageMetadata } from "@/lib/blog/metadata"
-import {
-  BLOG_REVALIDATE_SECONDS,
-  getAllPostSlugs,
-  getPostBySlug,
-  getRelatedPosts,
-} from "@/lib/blog/queries"
+import { getAllPostSlugs, getPostBySlug, getRelatedPosts } from "@/lib/blog/queries"
 import { blogImageUrl, formatBlogDate } from "@/lib/blog/utils"
 import { contentCardClassName } from "@/components/site/site-styles"
 import { cn } from "@/lib/utils"
@@ -24,7 +19,8 @@ type BlogPostPageProps = {
   params: Promise<{ slug: string }>
 }
 
-export const revalidate = BLOG_REVALIDATE_SECONDS
+/** ISR — keep in sync with `BLOG_REVALIDATE_SECONDS` in `lib/blog/queries.ts` */
+export const revalidate = 300
 export const dynamicParams = true
 
 export async function generateStaticParams() {

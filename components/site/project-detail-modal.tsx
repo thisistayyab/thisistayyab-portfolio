@@ -1,10 +1,10 @@
 "use client"
 
 import { ExternalLink, X } from "lucide-react"
-import Image from "next/image"
 import { useEffect } from "react"
 
 import type { PortfolioProject } from "@/components/site/project-card"
+import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { ctaPrimaryClassName } from "@/components/site/site-styles"
 import { SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
@@ -64,16 +64,16 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
           <X className="size-5" aria-hidden="true" />
         </button>
 
-        <Image
-          src={project.image}
-          alt={project.imageAlt}
-          title={project.imageTitle}
-          width={720}
-          height={405}
-          sizes="(max-width: 768px) 100vw, 720px"
-          className="mb-6 w-full rounded-xl border border-white/10 object-cover"
-          itemProp="image"
-        />
+        <div className="relative mb-6 aspect-[16/10] w-full overflow-hidden rounded-xl border border-white/10 bg-[linear-gradient(135deg,#12141c,#1a1d2b)]">
+          <OptimizedPicture
+            src={project.image}
+            alt={project.imageAlt}
+            title={project.imageTitle}
+            fill
+            sizes="(max-width: 768px) 100vw, 720px"
+            itemProp="image"
+          />
+        </div>
 
         <h2
           id="project-modal-title"

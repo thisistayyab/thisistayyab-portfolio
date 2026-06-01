@@ -16,6 +16,8 @@ Open [http://localhost:3000](http://localhost:3000).
 - Blog: `/blog`
 - Admin: `/login` → `/dashboard/blog`
 
+Blog database setup: run [`supabase/schema.sql`](./supabase/schema.sql) and [`supabase/rls-policies.sql`](./supabase/rls-policies.sql) in the Supabase SQL editor.
+
 ## Deploy on Vercel
 
 1. Push this repo to GitHub and [import the project on Vercel](https://vercel.com/new).
@@ -29,7 +31,6 @@ Open [http://localhost:3000](http://localhost:3000).
 | File | Purpose |
 |------|---------|
 | [`vercel.json`](./vercel.json) | Security/cache headers (sitemap, images, `llms.txt`) |
-| [`.vercelignore`](./.vercelignore) | Excludes `portfolio old` from uploads |
 | [`.node-version`](./.node-version) | Node 20 for builds |
 | [`vercel.env.example`](./vercel.env.example) | Env vars to paste into Vercel dashboard |
 
@@ -37,6 +38,13 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - Submit `https://thisistayyab.dev/sitemap.xml` in [Google Search Console](https://search.google.com/search-console).
 - Publish posts from `/dashboard/blog`; ISR refreshes public pages within ~5 minutes.
+
+## Images
+
+- Place new **Taylance Tech** screenshot as `taylancetech.png` in the repo root, then run `npm run optimize:images`.
+- Portfolio photos and project shots are served as **AVIF + WebP** pairs under `public/images/` for fast loads and SEO.
+- Hero / Open Graph portrait: `public/images/about.avif` + `about.webp` (stylized cutout — do not overwrite from `about.jpg` without intent).
+- Unused / alternate files: `public/assets-archive/` (see `index.html`, `noindex` listing page; image URLs remain reachable).
 
 ## Scripts
 
@@ -46,3 +54,4 @@ Open [http://localhost:3000](http://localhost:3000).
 | `npm run build` | Production build |
 | `npm run start` | Run production build locally |
 | `npm run lint` | ESLint |
+| `npm run optimize:images` | Regenerate AVIF/WebP from source PNGs/JPGs (requires ffmpeg) |

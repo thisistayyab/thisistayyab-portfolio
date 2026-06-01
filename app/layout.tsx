@@ -2,7 +2,13 @@ import type { Metadata } from "next"
 import { Bricolage_Grotesque, Outfit } from "next/font/google"
 
 import { GlobalBackground } from "@/components/site/global-background"
-import { homeMetadata, SITE_URL } from "@/lib/site"
+import {
+  FEATURED_OG_ALT,
+  FEATURED_OG_DIMENSIONS,
+  featuredOgImageUrl,
+  homeMetadata,
+  SITE_URL,
+} from "@/lib/site"
 
 import "./globals.css"
 
@@ -22,6 +28,7 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: "Tayyab Portfolio",
   title: {
     default: homeMetadata.title,
     template: "%s | Tayyab",
@@ -30,6 +37,11 @@ export const metadata: Metadata = {
   keywords: [...homeMetadata.keywords],
   authors: [{ name: "Tayyab", url: SITE_URL }],
   creator: "Tayyab",
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png" }],
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "256x256" }],
+  },
   robots: {
     index: true,
     follow: true,
@@ -47,14 +59,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
-    siteName: "Tayyab - Full Stack Developer",
+    siteName: "Tayyab — Full Stack Developer",
     title: homeMetadata.title,
     description: homeMetadata.description,
+    images: [
+      {
+        url: featuredOgImageUrl(),
+        width: FEATURED_OG_DIMENSIONS.width,
+        height: FEATURED_OG_DIMENSIONS.height,
+        alt: FEATURED_OG_ALT,
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: homeMetadata.title,
     description: homeMetadata.description,
+    images: [featuredOgImageUrl()],
   },
 }
 

@@ -69,7 +69,7 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
       url: SITE_URL,
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/images/about.avif`,
+        url: `${SITE_URL}/icon.png`,
       },
     },
     datePublished: post.published_at || post.updated_at || undefined,

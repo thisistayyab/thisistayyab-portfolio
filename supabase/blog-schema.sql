@@ -1,5 +1,6 @@
--- Blog tables for Tayyab portfolio (reference — apply in Supabase SQL editor)
--- See portfolio old/supabase_schema.sql for full definitions.
+-- Blog CMS reference — apply in Supabase SQL editor
+-- Full table definitions: supabase/schema.sql
+-- RLS + admin write policies: supabase/rls-policies.sql
 
 -- Admin users: id must match Supabase Auth user UUID
 -- CREATE TABLE admin_users (
@@ -9,6 +10,3 @@
 --   last_login TIMESTAMPTZ,
 --   created_at TIMESTAMPTZ DEFAULT NOW()
 -- );
-
--- Public read policies + authenticated admin write policies must be configured in Supabase
--- for posts, authors, categories, and post_categories.

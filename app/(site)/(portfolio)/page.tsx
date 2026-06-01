@@ -8,9 +8,8 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import type { Metadata } from "next"
-import Image from "next/image"
-
 import { CtaLink } from "@/components/site/cta-link"
+import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { GlassSurface, type GlassRim } from "@/components/site/glass-surface"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
@@ -38,8 +37,10 @@ import {
   statIconClassName,
   statusBadgeClassName,
 } from "@/components/site/site-styles"
+import { imageSeoUrl } from "@/lib/image"
 import {
   homeMetadata,
+  PROFILE_IMAGE,
   profileEmail,
   profileSameAs,
   projectImageUrl,
@@ -105,7 +106,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     slug: "taylance-crm",
     name: "Taylance CRM",
     roleLabel: "Studio product",
-    image: "/images/projects/taylance-crm.jpg",
+    image: "/images/projects/taylance-crm.webp",
     imageAlt:
       "Taylance CRM dashboard screenshot — React and Express.js CRM built by Tayyab under Taylance Tech studio",
     imageTitle: "Taylance CRM React dashboard | Tayyab featured portfolio project",
@@ -124,7 +125,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     id: 3,
     slug: "taynio-chat",
     name: "Taynio Chat",
-    image: "/images/projects/taynio-chat.png",
+    image: "/images/projects/taynio-chat.webp",
     imageAlt:
       "Taynio Chat real-time messaging application screenshot — React, Node.js, and Socket.IO app built by Tayyab",
     imageTitle: "Taynio Chat React messaging app | Tayyab featured full stack project",
@@ -216,7 +217,7 @@ export default async function HomePage() {
           description:
             "Full stack developer specializing in React, Next.js, Node.js, and PostgreSQL. 3+ years experience building fast, scalable web applications. 1,150+ LeetCode problems solved. 15+ projects completed.",
           url: SITE_URL,
-          image: `${SITE_URL}/images/about.avif`,
+          image: imageSeoUrl(PROFILE_IMAGE, SITE_URL),
           knowsAbout: [
             "React",
             "Next.js",
@@ -338,14 +339,15 @@ export default async function HomePage() {
 
             <div className="relative mx-auto flex min-h-[380px] w-full max-w-[620px] items-end justify-center lg:mx-0 lg:min-h-[560px] lg:max-w-none lg:justify-end">
               <div className="relative mx-auto w-[min(100%,580px)] min-h-[clamp(400px,78vw,580px)] sm:w-[min(100%,620px)] sm:min-h-[clamp(440px,62vw,580px)] lg:ml-auto lg:mr-[-0.5rem] lg:w-[min(100%,640px)] lg:min-h-[480px]">
-                <Image
-                  src="/images/about.avif"
-                  alt="Tayyab - Full Stack Web Developer and Computer Engineering Student portrait photo. Professional developer specializing in React, Node.js, Express, and MongoDB with 3+ years of experience."
-                  title="Tayyab - Full Stack Web Developer"
+                <OptimizedPicture
+                  src={PROFILE_IMAGE}
+                  alt="Tayyab — Full Stack Developer portrait. Professional photo of Tayyab, React and Node.js engineer with 3+ years building web applications."
+                  title="Tayyab — Full Stack Developer"
                   width={540}
                   height={620}
                   priority
-                  className="relative z-[2] mx-auto block w-[min(100%,460px)] object-contain object-bottom drop-shadow-[0_24px_48px_rgba(0,0,0,0.45)] [mask-image:linear-gradient(to_bottom,#000_78%,transparent_100%)] sm:w-[min(100%,500px)] lg:-ml-4 lg:mr-auto lg:w-[min(100%,540px)]"
+                  pictureClassName="relative z-[2] mx-auto w-[min(100%,460px)] sm:w-[min(100%,500px)] lg:-ml-4 lg:mr-auto lg:w-[min(100%,540px)]"
+                  className="mx-auto block w-full object-contain object-bottom drop-shadow-[0_24px_48px_rgba(0,0,0,0.45)] [mask-image:linear-gradient(to_bottom,#000_78%,transparent_100%)]"
                   itemProp="image"
                 />
 

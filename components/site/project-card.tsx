@@ -1,6 +1,6 @@
 import { ExternalLink } from "lucide-react"
-import Image from "next/image"
 
+import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { ctaPrimaryClassName, ctaSecondaryClassName } from "@/components/site/site-styles"
 import { projectImageUrl } from "@/lib/site"
 import { cn } from "@/lib/utils"
@@ -78,15 +78,14 @@ export function ProjectCard({ project, onLearnMore, priority }: ProjectCardProps
 
       <div className="relative aspect-[16/10] overflow-hidden bg-[linear-gradient(135deg,#12141c,#1a1d2b)]">
         <meta itemProp="contentUrl" content={imageAbsoluteUrl} />
-        <Image
+        <OptimizedPicture
           src={project.image}
           alt={project.imageAlt}
           title={project.imageTitle}
-          width={640}
-          height={400}
+          fill
           sizes={PROJECT_CARD_IMAGE_SIZES}
           priority={priority}
-          className="h-full w-full object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.03]"
+          className="transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.03]"
           itemProp="image"
         />
         <div

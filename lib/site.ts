@@ -1,9 +1,24 @@
+import { imageSeoUrl } from "@/lib/image"
+
 export const SITE_URL = "https://thisistayyab.dev"
 export const SITE_NAME = "Tayyab's Portfolio"
 
-/** Absolute URL for a static project screenshot (SEO / JSON-LD). */
+/** Absolute URL for a static project screenshot (SEO / JSON-LD) — prefers AVIF. */
 export function projectImageUrl(path: string) {
-  return `${SITE_URL}${path}`
+  return imageSeoUrl(path, SITE_URL)
+}
+
+/** Hero / profile portrait — stylized cutout (AVIF + WebP under /public/images/about.*). */
+export const PROFILE_IMAGE = "/images/about.avif" as const
+
+/** Full hero banner for link previews (Open Graph / Twitter) — 1200×630 JPG. */
+export const FEATURED_OG_IMAGE = "/images/og.jpg" as const
+export const FEATURED_OG_DIMENSIONS = { width: 1200, height: 630 } as const
+export const FEATURED_OG_ALT =
+  "Tayyab — Full Stack Developer | React, Next.js & Node.js" as const
+
+export function featuredOgImageUrl(siteUrl: string = SITE_URL) {
+  return `${siteUrl}${FEATURED_OG_IMAGE}`
 }
 
 export interface NavItem {
