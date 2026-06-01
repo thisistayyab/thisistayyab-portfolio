@@ -37,14 +37,14 @@ export const navItems: NavItem[] = [
   },
   {
     label: "Testimonials",
-    href: "/#client",
+    href: "/testimonials",
     description: "Read client testimonials and feedback about Tayyab's work",
   },
   {
     label: "Services",
-    href: "/#services",
+    href: "/services",
     description:
-      "Browse professional web development services including full-stack development, React, Node.js, and SEO optimization",
+      "Browse full stack software services — SaaS, APIs, AI automation, React, Next.js, Node.js, and PostgreSQL",
   },
   {
     label: "Insights",
@@ -53,11 +53,16 @@ export const navItems: NavItem[] = [
   },
   {
     label: "Contact",
-    href: "/#contact",
+    href: "/contact",
     description:
-      "Get in touch with Tayyab for web development projects and opportunities",
+      "Contact Tayyab for full stack software, SaaS, API, and AI automation projects",
   },
 ]
+
+/** Navbar + footer CTA */
+export const letsTalkHref = "/contact"
+export const letsTalkDescription =
+  "Get in touch with Tayyab for full stack software, SaaS, API, and AI automation projects"
 
 export const profileSameAs = [
   "https://github.com/thisistayyab",

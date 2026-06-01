@@ -108,6 +108,11 @@
 }
 
 .dark {
+  --scrollbar-size: 10px;
+  --scrollbar-track: rgba(8, 12, 26, 0.72);
+  --scrollbar-thumb: rgba(99, 102, 241, 0.52);
+  --scrollbar-thumb-hover: rgba(139, 92, 246, 0.72);
+  --scrollbar-thumb-active: rgba(96, 165, 250, 0.85);
   --background: #020106;
   --foreground: #ffffff;
   --card: oklch(0.205 0 0);
@@ -150,6 +155,9 @@
   }
   html {
     @apply font-sans scroll-smooth;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   }
 }
 
@@ -201,6 +209,72 @@
   .font-brand {
     font-family: var(--font-bricolage), var(--font-outfit), sans-serif;
   }
+}
+
+/* Site scrollbar — slim glass thumb, violet/blue glow (matches nav & cards) */
+*::-webkit-scrollbar {
+  width: var(--scrollbar-size, 10px);
+  height: var(--scrollbar-size, 10px);
+}
+
+*::-webkit-scrollbar-track {
+  background: linear-gradient(
+    180deg,
+    rgba(2, 1, 6, 0.92) 0%,
+    var(--scrollbar-track, rgba(8, 12, 26, 0.65)) 42%,
+    rgba(88, 28, 135, 0.08) 100%
+  );
+  box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.04);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  border: 2px solid rgba(2, 1, 6, 0.88);
+  background: linear-gradient(
+    180deg,
+    rgba(96, 165, 250, 0.58) 0%,
+    rgba(139, 92, 246, 0.52) 45%,
+    rgba(99, 102, 241, 0.55) 100%
+  );
+  box-shadow:
+    0 0 16px rgba(59, 130, 246, 0.2),
+    0 0 24px rgba(139, 92, 246, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(67, 56, 202, 0.25);
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  border-color: rgba(59, 130, 246, 0.22);
+  background: linear-gradient(
+    180deg,
+    rgba(147, 197, 253, 0.78) 0%,
+    rgba(167, 139, 250, 0.72) 48%,
+    rgba(129, 140, 248, 0.75) 100%
+  );
+  box-shadow:
+    0 0 22px rgba(59, 130, 246, 0.32),
+    0 0 32px rgba(139, 92, 246, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(
+    180deg,
+    rgba(191, 219, 254, 0.88) 0%,
+    rgba(196, 181, 253, 0.82) 50%,
+    rgba(165, 180, 252, 0.85) 100%
+  );
+  box-shadow:
+    0 0 28px rgba(139, 92, 246, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+*::-webkit-scrollbar-corner {
+  background: rgba(2, 1, 6, 0.92);
 }
 
 /* Glass rim borders — pseudo-element masks Tailwind can't express cleanly */

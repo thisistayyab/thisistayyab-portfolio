@@ -280,7 +280,7 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "@id": `${SITE_URL}/projects#itemlist`,
+    "@id": `${SITE_URL}/projects`,
     name: "Tayyab Full Stack Web Development Portfolio",
     description: projectsPageIntro,
     numberOfItems: projects.length,
@@ -289,12 +289,10 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
       position: index + 1,
       item: {
         "@type": "SoftwareApplication",
-        "@id": `${SITE_URL}/projects#${project.slug}`,
+        "@id": project.link || `${SITE_URL}/projects`,
         name: project.name,
         description: project.description,
-        url: project.ctaDisabled
-          ? `${SITE_URL}/projects#${project.slug}`
-          : project.link,
+        url: project.ctaDisabled ? `${SITE_URL}/projects` : project.link,
         image: {
           "@type": "ImageObject",
           url: projectImageUrl(project.image),
@@ -389,7 +387,7 @@ export default function ProjectsPage() {
             jobTitle: "Full Stack Web Developer",
             url: SITE_URL,
           },
-          mainEntity: { "@id": `${SITE_URL}/projects#itemlist` },
+          mainEntity: { "@id": `${SITE_URL}/projects` },
         }}
       />
       <JsonLd
@@ -469,7 +467,7 @@ export default function ProjectsPage() {
             },
             {
               label: "Get in touch",
-              href: "/#contact",
+              href: "/contact",
               variant: "secondary",
               title: "Contact Tayyab for freelance or contract web development",
             },

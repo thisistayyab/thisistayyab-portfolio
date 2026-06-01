@@ -10,7 +10,7 @@ import { NavCtaLink } from "@/components/site/cta-link"
 import { NavOrb } from "@/components/site/nav-orb"
 import { GlassSurface } from "@/components/site/glass-surface"
 import { contentCardClassName, navGlassClassName } from "@/components/site/site-styles"
-import { navItems, profileEmail, SITE_NAME, SITE_URL } from "@/lib/site"
+import { letsTalkDescription, letsTalkHref, navItems, profileEmail, SITE_NAME, SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 const TAYLANCE_TECH_URL = "https://taylancetech.com"
@@ -45,7 +45,7 @@ const footerSocialLinks: {
   },
 ]
 
-const exploreLinks = navItems.filter((item) => item.href !== "/#contact")
+const exploreLinks = navItems.filter((item) => item.href !== "/contact")
 
 export function SiteFooter() {
   const year = new Date().getFullYear()
@@ -63,7 +63,7 @@ export function SiteFooter() {
         data={{
           "@context": "https://schema.org",
           "@type": "WPFooter",
-          "@id": `${SITE_URL}/#footer`,
+          "@id": SITE_URL,
           url: SITE_URL,
           copyrightYear: year,
           copyrightHolder: {
@@ -128,8 +128,8 @@ export function SiteFooter() {
             </div>
 
             <NavCtaLink
-              href="/#contact"
-              title="Contact Tayyab for web development work"
+              href={letsTalkHref}
+              title={letsTalkDescription}
               className="w-fit"
             >
               <NavOrb />

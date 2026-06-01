@@ -3,7 +3,7 @@
 import { Menu } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { JsonLd } from "@/components/site/json-ld"
 import { NavOrb } from "@/components/site/nav-orb"
@@ -23,34 +23,21 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { isBlogPath } from "@/lib/blog/config"
-import { navItems, SITE_NAME, SITE_URL } from "@/lib/site"
+import { letsTalkDescription, letsTalkHref, navItems, SITE_NAME, SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-const navLinks = navItems.filter((item) => item.href !== "/#contact")
-const contactItem = navItems.find((item) => item.href === "/#contact")
+const navLinks = navItems.filter((item) => item.href !== "/contact")
 
 function useActiveHref() {
   const pathname = usePathname()
-  const [hash, setHash] = useState("")
-
-  useEffect(() => {
-    const updateHash = () => setHash(window.location.hash)
-    updateHash()
-    window.addEventListener("hashchange", updateHash)
-    return () => window.removeEventListener("hashchange", updateHash)
-  }, [pathname])
 
   const isActive = (href: string) => {
     if (href === "/") {
-      return pathname === "/" && (!hash || hash === "#home")
+      return pathname === "/"
     }
 
     if (href === "/blog") {
       return isBlogPath(pathname)
-    }
-
-    if (href.startsWith("/#")) {
-      return pathname === "/" && hash === href.slice(1)
     }
 
     return pathname === href
@@ -76,7 +63,7 @@ export function SiteNav() {
   const letsTalkClassName = cn(
     navCtaClassName,
     "shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
-    isActive("/#contact") &&
+    isActive(letsTalkHref) &&
       "shadow-[0_0_36px_rgba(59,130,246,0.24),inset_0_1px_0_rgba(59,130,246,0.2),inset_0_-1px_0_rgba(139,92,246,0.18)]",
   )
 
@@ -162,18 +149,16 @@ export function SiteNav() {
             ))}
           </ul>
 
-          {contactItem && (
-            <Link
-              href={contactItem.href}
-              className={cn(letsTalkClassName, "hidden lg:ml-6 lg:inline-flex")}
-              aria-label={contactItem.description}
-              aria-current={isActive(contactItem.href) ? "page" : undefined}
-              title={`${contactItem.description} - ${SITE_NAME}`}
-            >
-              <NavOrb />
-              <span>Let&apos;s Talk</span>
-            </Link>
-          )}
+          <Link
+            href={letsTalkHref}
+            className={cn(letsTalkClassName, "hidden lg:ml-6 lg:inline-flex")}
+            aria-label={letsTalkDescription}
+            aria-current={isActive(letsTalkHref) ? "page" : undefined}
+            title={`${letsTalkDescription} - ${SITE_NAME}`}
+          >
+            <NavOrb />
+            <span>Let&apos;s Talk</span>
+          </Link>
         </div>
       </nav>
 
@@ -218,21 +203,19 @@ export function SiteNav() {
                 ))}
               </ul>
 
-              {contactItem && (
-                <div className="mt-auto pt-8">
-                  <Link
-                    href={contactItem.href}
-                    className={cn(letsTalkClassName, "inline-flex w-full justify-center px-4 py-2.5")}
-                    aria-label={contactItem.description}
-                    aria-current={isActive(contactItem.href) ? "page" : undefined}
-                    title={`${contactItem.description} - ${SITE_NAME}`}
-                    onClick={() => setOpen(false)}
-                  >
-                    <NavOrb />
-                    <span>Let&apos;s Talk</span>
-                  </Link>
-                </div>
-              )}
+              <div className="mt-auto pt-8">
+                <Link
+                  href={letsTalkHref}
+                  className={cn(letsTalkClassName, "inline-flex w-full justify-center px-4 py-2.5")}
+                  aria-label={letsTalkDescription}
+                  aria-current={isActive(letsTalkHref) ? "page" : undefined}
+                  title={`${letsTalkDescription} - ${SITE_NAME}`}
+                  onClick={() => setOpen(false)}
+                >
+                  <NavOrb />
+                  <span>Let&apos;s Talk</span>
+                </Link>
+              </div>
             </nav>
           </div>
         </SheetContent>

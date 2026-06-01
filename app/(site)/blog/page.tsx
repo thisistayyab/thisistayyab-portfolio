@@ -17,11 +17,11 @@ export default async function BlogIndexPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          "@id": `${SITE_URL}${BLOG_INDEX_PATH}#page`,
+          "@id": `${SITE_URL}${BLOG_INDEX_PATH}`,
           name: blogIndexMetadata.title,
           description: blogIndexMetadata.description,
           url: `${SITE_URL}${BLOG_INDEX_PATH}`,
-          isPartOf: { "@id": `${SITE_URL}/#website` },
+          isPartOf: { "@type": "WebSite", name: "Tayyab Portfolio", url: SITE_URL },
           mainEntity: {
             "@type": "ItemList",
             itemListElement: posts.map((post, index) => ({

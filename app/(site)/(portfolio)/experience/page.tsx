@@ -351,7 +351,7 @@ export default function ExperiencePage() {
             },
             {
               label: "Get in touch",
-              href: "/#contact",
+              href: "/contact",
               variant: "secondary",
               title: "Contact Tayyab for freelance or contract web development",
             },

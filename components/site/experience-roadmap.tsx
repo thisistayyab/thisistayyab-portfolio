@@ -457,7 +457,7 @@ export function buildExperienceItemListJsonLd(
   siteUrl: string,
   pagePath: string,
 ) {
-  const baseId = pagePath === "/" ? `${siteUrl}/#experience` : `${siteUrl}${pagePath}#roadmap`
+  const baseId = pagePath === "/" ? `${siteUrl}/experience` : `${siteUrl}/experience`
 
   return {
     "@context": "https://schema.org",
@@ -474,7 +474,7 @@ export function buildExperienceItemListJsonLd(
         position: index + 1,
         item: {
           "@type": "OrganizationRole",
-          "@id": `${siteUrl}/experience#experience-${milestone.slug}`,
+          "@id": `${siteUrl}/experience`,
           roleName: milestone.roleTitle,
           description: milestone.description,
           startDate: milestone.startDate,
@@ -508,6 +508,6 @@ export function buildExperienceWebPageJsonLd(
       jobTitle: "Full Stack Web Developer",
       url: siteUrl,
     },
-    mainEntity: { "@id": `${siteUrl}/experience#roadmap` },
+    mainEntity: { "@id": `${siteUrl}/experience` },
   }
 }

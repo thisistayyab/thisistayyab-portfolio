@@ -20,7 +20,14 @@ import {
   ExperienceHomePreview,
 } from "@/components/site/experience-roadmap"
 import { ProjectsShowcase } from "@/components/site/projects-showcase"
+import { buildServicesItemListJsonLd } from "@/components/site/services-json-ld"
+import { ContactHomePreview } from "@/components/site/contact-home-preview"
+import { ServicesHomePreview } from "@/components/site/services-home-preview"
+import { buildTestimonialsItemListJsonLd } from "@/components/site/testimonials-json-ld"
+import { TestimonialsSection } from "@/components/site/testimonials-section"
 import { careerRoadmapMilestones } from "@/app/(site)/(portfolio)/experience/page"
+import { portfolioServices } from "@/app/(site)/(portfolio)/services/page"
+import { testimonials as homeTestimonials } from "@/app/(site)/(portfolio)/testimonials/page"
 import {
   glassBadgeClassName,
   heroTagClassName,
@@ -52,6 +59,12 @@ export const metadata: Metadata = {
     type: "website",
   },
 }
+
+const homeTestimonialsIntro =
+  "Client feedback from freelance and contract web development work on Tayyab's portfolio."
+
+const homeServicesIntro =
+  "Full stack software development by Tayyab: SaaS products, web applications, Node.js APIs, AI automation, PostgreSQL, deployment, and technical SEO."
 
 const heroTags = [
   "React Developer",
@@ -143,6 +156,26 @@ export default function HomePage() {
     <>
       <JsonLd data={buildExperienceItemListJsonLd(careerRoadmapMilestones, SITE_URL, "/")} />
 
+      {homeTestimonials.length > 0 && (
+        <JsonLd
+          data={buildTestimonialsItemListJsonLd(
+            homeTestimonials,
+            SITE_URL,
+            "/",
+            homeTestimonialsIntro,
+          )}
+        />
+      )}
+
+      <JsonLd
+        data={buildServicesItemListJsonLd(
+          portfolioServices,
+          SITE_URL,
+          "/",
+          homeServicesIntro,
+        )}
+      />
+
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -174,7 +207,7 @@ export default function HomePage() {
         data={{
           "@context": "https://schema.org",
           "@type": "Person",
-          "@id": `${SITE_URL}/#person`,
+          "@id": `${SITE_URL}/about`,
           name: "Tayyab",
           jobTitle: "Full Stack Developer | React & Node.js Expert",
           description:
@@ -513,6 +546,12 @@ export default function HomePage() {
         latestMilestone={careerRoadmapMilestones[0]}
         upcomingMilestones={careerRoadmapMilestones.slice(1, 4)}
       />
+
+      <TestimonialsSection testimonials={homeTestimonials} variant="home" />
+
+      <ServicesHomePreview services={portfolioServices} />
+
+      <ContactHomePreview />
     </>
   )
 }

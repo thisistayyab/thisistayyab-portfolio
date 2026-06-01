@@ -226,7 +226,7 @@ export default function AboutPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "Person",
-          "@id": `${SITE_URL}/about#person`,
+          "@id": `${SITE_URL}/about`,
           name: "Tayyab",
           jobTitle: "Founder of Taylance Tech & Full Stack Web Developer",
           description: aboutSubtitle,
@@ -238,7 +238,7 @@ export default function AboutPage() {
             "@type": "Organization",
             name: "Taylance Tech",
             url: TAYLANCE_TECH_URL,
-            founder: { "@id": `${SITE_URL}/about#person` },
+            founder: { "@id": `${SITE_URL}/about` },
           },
           knowsAbout: [
             "React",
@@ -642,7 +642,7 @@ export default function AboutPage() {
                 <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
               </CtaLink>
               <CtaLink
-                href="/#contact"
+                href="/contact"
                 variant="secondary"
                 title="Contact Tayyab for web development work"
               >
