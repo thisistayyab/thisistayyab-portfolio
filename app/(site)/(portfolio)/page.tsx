@@ -239,7 +239,7 @@ export default async function HomePage() {
       />
 
       <header
-        className="relative isolate overflow-hidden bg-transparent pt-[88px]"
+        className="relative isolate bg-transparent pt-[88px]"
         itemScope
         itemType="https://schema.org/Person"
       >
@@ -247,11 +247,11 @@ export default async function HomePage() {
         <HeaderGraphBackground />
 
         <div
-          className="relative z-[1] mx-auto flex min-h-[calc(100dvh-108px)] max-w-[1200px] flex-col gap-8 px-5 pb-10 sm:px-6 lg:px-4"
+          className="relative z-[1] mx-auto flex min-h-[calc(100dvh-108px)] w-full min-w-0 max-w-[1200px] flex-col gap-8 px-4 pb-10 sm:px-6 lg:px-8"
           id="home"
         >
-          <div className="grid flex-1 grid-cols-1 items-center gap-10 pt-6 max-lg:justify-items-center lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:gap-4 lg:pt-8">
-            <div className="relative z-[2] text-left max-lg:flex max-lg:flex-col max-lg:items-center max-lg:text-center">
+          <div className="grid min-w-0 flex-1 grid-cols-1 items-center gap-10 pt-6 max-lg:justify-items-stretch lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:gap-4 lg:pt-8">
+            <div className="relative z-[2] w-full min-w-0 max-w-full text-left max-lg:flex max-lg:flex-col max-lg:items-stretch max-lg:text-center">
               <p className="sr-only text-[0.72rem] font-semibold tracking-[0.22em] text-slate-400/85 uppercase">
                 Crafting Digital Excellence
               </p>
@@ -259,7 +259,7 @@ export default async function HomePage() {
               <div
                 className={cn(
                   glassBadgeClassName,
-                  "mb-7 inline-flex items-center gap-2.5",
+                  "mb-7 inline-flex w-fit max-w-full items-center gap-2.5 max-lg:mx-auto",
                 )}
               >
                 <span
@@ -273,9 +273,9 @@ export default async function HomePage() {
                 </span>
               </div>
 
-              <h1 className="mb-6 text-[clamp(2.75rem,7.5vw,4.75rem)] leading-[0.98] font-extrabold tracking-[-0.03em]">
+              <h1 className="mb-6 w-full max-w-full text-[clamp(2.25rem,7.5vw,4.75rem)] leading-[1.02] font-extrabold tracking-tight sm:text-[clamp(2.75rem,7.5vw,4.75rem)] sm:leading-[0.98] lg:tracking-[-0.03em]">
                 <span className="block text-white">Full Stack</span>
-                <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text pb-[0.04em] text-transparent">
                   Developer
                 </span>
                 <span className="sr-only">
@@ -285,7 +285,7 @@ export default async function HomePage() {
                 </span>
               </h1>
 
-              <p className="mb-5 max-w-[620px] text-[clamp(1rem,2.2vw,1.125rem)] leading-[1.65] text-slate-400 max-lg:mx-auto">
+              <p className="mb-5 w-full max-w-[620px] text-[clamp(1rem,2.2vw,1.125rem)] leading-[1.65] text-slate-400 max-lg:mx-auto">
                 I design and build{" "}
                 <strong className="font-semibold text-cyan-300">
                   fast, scalable web applications
@@ -295,7 +295,7 @@ export default async function HomePage() {
               </p>
 
               <p
-                className="mb-6 max-w-[620px] text-[0.92rem] leading-[1.75] text-slate-400/82 max-lg:mx-auto [&_strong]:font-semibold [&_strong]:text-slate-300"
+                className="mb-6 w-full max-w-[620px] text-[0.92rem] leading-[1.75] text-slate-400/82 max-lg:mx-auto [&_strong]:font-semibold [&_strong]:text-slate-300"
                 itemProp="description"
               >
                 With <strong>3+ years of hands-on full stack development</strong>,
@@ -307,9 +307,9 @@ export default async function HomePage() {
                 are engineered to last.
               </p>
 
-              <div className="flex flex-col gap-8">
+              <div className="flex w-full min-w-0 max-w-full flex-col gap-8">
                 <ul
-                  className="flex flex-wrap justify-center gap-2 p-0 lg:justify-start"
+                  className="flex w-full min-w-0 flex-wrap justify-center gap-2 p-0 lg:justify-start"
                   aria-label="Core skills and services"
                 >
                   {heroTags.map((tag) => (
@@ -319,7 +319,7 @@ export default async function HomePage() {
                   ))}
                 </ul>
 
-                <div className="flex flex-wrap items-center justify-center gap-3.5 lg:justify-start">
+                <div className="flex w-full min-w-0 flex-wrap items-center justify-center gap-3.5 lg:justify-start">
                   <CtaLink
                     href="/projects"
                     title="View Tayyab's web development projects"
@@ -340,8 +340,8 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="relative mx-auto flex min-h-[380px] w-full max-w-[620px] items-end justify-center lg:mx-0 lg:min-h-[560px] lg:max-w-none lg:justify-end">
-              <div className="relative mx-auto w-[min(100%,580px)] min-h-[clamp(400px,78vw,580px)] sm:w-[min(100%,620px)] sm:min-h-[clamp(440px,62vw,580px)] lg:ml-auto lg:mr-[-0.5rem] lg:w-[min(100%,640px)] lg:min-h-[480px]">
+            <div className="relative mx-auto flex min-h-[380px] w-full min-w-0 max-w-full items-end justify-center overflow-x-clip sm:max-w-[620px] lg:mx-0 lg:min-h-[560px] lg:max-w-none lg:justify-end lg:overflow-visible">
+              <div className="relative mx-auto w-full min-w-0 max-w-[min(100%,580px)] min-h-[clamp(400px,78vw,580px)] sm:max-w-[620px] sm:min-h-[clamp(440px,62vw,580px)] lg:ml-auto lg:mr-[-0.5rem] lg:w-[min(100%,640px)] lg:min-h-[480px]">
                 <OptimizedPicture
                   src={PROFILE_IMAGE}
                   alt="Tayyab — Full Stack Developer portrait. Professional photo of Tayyab, React and Node.js engineer with 3+ years building web applications."

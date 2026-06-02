@@ -9,7 +9,7 @@ export default function SiteLayout({
   return (
     <div className="relative z-[1] flex min-h-dvh flex-col">
       <SiteNav />
-      <main className="relative flex flex-1 flex-col">{children}</main>
+      <main className="relative flex min-w-0 flex-1 flex-col overflow-x-clip">{children}</main>
       <SiteFooter />
     </div>
   )
