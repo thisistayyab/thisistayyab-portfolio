@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Bricolage_Grotesque, Outfit } from "next/font/google"
 
 import { GlobalBackground } from "@/components/site/global-background"
@@ -97,6 +99,8 @@ export default function RootLayout({
       <body className="relative min-h-full bg-background font-sans text-foreground">
         <GlobalBackground />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
