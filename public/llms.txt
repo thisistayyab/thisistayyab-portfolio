@@ -1,21 +1,21 @@
-# Tayyab - Full Stack Developer
+# Tayyab — Full Stack Developer Portfolio
 
-> Expert Full Stack Developer specializing in React, Node.js, Express, MongoDB. 3+ years of professional experience building scalable web applications. Solved 1150+ LeetCode problems. Available for freelance web development. Email: thisistayyab@outlook.com
+> https://thisistayyab.dev
 
-Tayyab (thisistayyab) is a full-stack web developer and computer engineering student offering custom web development services including React frontend, Node.js/Express backend, MongoDB, WordPress, and AI integration.
+Tayyab builds production web applications with React, Next.js, Node.js, PostgreSQL, SaaS platforms, APIs, and AI automation.
 
-## Key Pages
+## Main pages
 
-- [Home](https://thisistayyab.dev/): Portfolio homepage with services overview
-- [About](https://thisistayyab.dev/about): Professional background and skills
-- [Projects](https://thisistayyab.dev/projects): Full-stack web development projects including MenuOrderAI, Taynio Chat, Taylance CRM
-- [Services](https://thisistayyab.dev/services): Web development services offered
-- [Experience](https://thisistayyab.dev/experience): Professional work experience
-- [Contact](https://thisistayyab.dev/contact): Hire for web development projects
-- [Blog](https://thisistayyab.dev/blog): Web development insights and articles (posts added dynamically; full list in sitemap: https://thisistayyab.dev/sitemap.xml)
+- Home: https://thisistayyab.dev/
+- About: https://thisistayyab.dev/about
+- Projects: https://thisistayyab.dev/projects
+- Experience: https://thisistayyab.dev/experience
+- Services: https://thisistayyab.dev/services
+- Testimonials: https://thisistayyab.dev/testimonials
+- Blog: https://thisistayyab.dev/blog
+- Contact: https://thisistayyab.dev/contact
 
-## Optional
+## Blog
 
-- [Testimonials](https://thisistayyab.dev/testimonials): Client reviews
-- [Privacy Policy](https://thisistayyab.dev/privacy): Privacy policy
-- [Terms of Service](https://thisistayyab.dev/terms): Terms of service
+Articles are published dynamically at https://thisistayyab.dev/blog/{slug}.
+Sitemap: https://thisistayyab.dev/sitemap.xml
