@@ -33,7 +33,7 @@ export function BlogCard({ post, priority = false }: BlogCardProps) {
           // eslint-disable-next-line @next/next/no-img-element -- CMS cover URLs vary by host
           <img
             src={cover}
-            alt=""
+            alt={post.title}
             className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
             loading={priority ? "eager" : "lazy"}
             decoding="async"

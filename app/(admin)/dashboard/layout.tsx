@@ -1,8 +1,14 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { requireActiveAdmin } from "@/lib/auth/admin"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  robots: { index: false, follow: false },
+}
 
 export default async function DashboardLayout({
   children,
@@ -34,9 +40,9 @@ export default async function DashboardLayout({
             <p className="text-xs font-semibold tracking-[0.15em] text-blue-300/70 uppercase">
               Tayyab Portfolio
             </p>
-            <h1 className="text-lg font-bold">Blog CMS</h1>
+            <p className="text-lg font-bold">Blog CMS</p>
           </div>
-          <nav className="flex items-center gap-3 text-sm">
+          <nav className="flex items-center gap-3 text-sm" aria-label="Dashboard">
             <Link href="/blog" className="text-slate-400 no-underline hover:text-white" target="_blank">
               View blog
             </Link>

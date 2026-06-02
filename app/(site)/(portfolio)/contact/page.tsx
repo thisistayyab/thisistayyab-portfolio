@@ -11,6 +11,7 @@ import {
 import { FaqSection } from "@/components/site/faq-section"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
+import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
 const pageLead =
@@ -46,25 +47,17 @@ const contactFaq = [
   },
 ] as const
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Contact | Hire Tayyab — Full Stack Developer",
   description: pageMetaDescription,
-  keywords: [...contactKeywords],
-  alternates: {
-    canonical: `${SITE_URL}/contact`,
-  },
+  canonicalPath: "/contact",
+  keywords: contactKeywords,
   openGraph: {
     title: "Contact Tayyab | Full Stack Developer",
     description: pageMetaDescription,
-    url: `${SITE_URL}/contact`,
-    type: "website",
   },
-  twitter: {
-    card: "summary",
-    title: "Contact Tayyab | Full Stack Developer",
-    description: pageMetaDescription,
-  },
-}
+  twitter: { card: "summary" },
+})
 
 export default function ContactPage() {
   return (

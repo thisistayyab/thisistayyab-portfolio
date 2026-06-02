@@ -7,6 +7,7 @@ import { FaqSection } from "@/components/site/faq-section"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
 import { ProjectsShowcase } from "@/components/site/projects-showcase"
+import { buildPageMetadata } from "@/lib/site-metadata"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
 
 const projectsPageIntro =
@@ -331,32 +332,25 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
   }
 }
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Projects | Full Stack Web Development Portfolio — React, Next.js & Node.js",
   description:
     "Browse Tayyab's full-stack web development portfolio: Taylance Tech studio, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
-  keywords: [...projectsKeywords],
-  alternates: {
-    canonical: `${SITE_URL}/projects`,
-  },
+  canonicalPath: "/projects",
+  keywords: projectsKeywords,
   openGraph: {
     title: "Web Development Projects | Tayyab — React & Node.js Portfolio",
     description: projectsPageIntro,
-    url: `${SITE_URL}/projects`,
-    type: "website",
-    images: [
-      {
-        url: `${SITE_URL}/images/projects/taylance-tech.avif`,
-        alt: "Taylance Tech — founder-led software studio",
-      },
-    ],
+  },
+  ogImage: {
+    url: `${SITE_URL}/images/projects/taylance-tech.avif`,
+    alt: "Taylance Tech — founder-led software studio",
   },
   twitter: {
-    card: "summary_large_image",
     title: "Full Stack Web Development Projects | Tayyab",
     description: projectsPageIntro,
   },
-}
+})
 
 export default function ProjectsPage() {
   return (

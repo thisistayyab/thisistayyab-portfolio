@@ -42,6 +42,9 @@ export default async function BlogIndexPage() {
         </header>
 
         <div className="relative z-[2]">
+          <h2 id="blog-articles-heading" className="sr-only">
+            Published articles
+          </h2>
           {posts.length === 0 ? (
             <div className="mx-auto max-w-lg rounded-xl border border-dashed border-white/15 bg-white/[0.03] p-10 text-center">
               <p className="text-slate-400">

@@ -11,14 +11,18 @@ type TestimonialsSectionProps = {
   testimonials: HomeTestimonial[]
   /** Home preview: anchor id + link to full page */
   variant?: "home" | "page"
+  /** Page route uses h1; home preview uses h2 under the hero h1. */
+  headingLevel?: "h1" | "h2"
 }
 
 export function TestimonialsSection({
   testimonials,
   variant = "page",
+  headingLevel,
 }: TestimonialsSectionProps) {
   const isHome = variant === "home"
   const headingId = isHome ? "home-testimonials-heading" : "testimonials-page-heading"
+  const HeadingTag = headingLevel ?? (isHome ? "h2" : "h1")
 
   return (
     <section
@@ -40,7 +44,7 @@ export function TestimonialsSection({
           <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-emerald-300/80 uppercase">
             Testimonials
           </p>
-          <h2
+          <HeadingTag
             id={headingId}
             className="mx-auto max-w-4xl text-[clamp(1.85rem,5vw,2.75rem)] leading-[1.15] font-bold tracking-tight text-white"
           >
@@ -50,7 +54,7 @@ export function TestimonialsSection({
                 working together
               </span>
             </span>
-          </h2>
+          </HeadingTag>
           <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
           <p className="text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
             Feedback from clients on freelance and contract web projects.

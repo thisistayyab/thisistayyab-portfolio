@@ -13,6 +13,7 @@ import { HeaderGraphBackground } from "@/components/site/header-graph-background
 import { JsonLd } from "@/components/site/json-ld"
 import { GlassSurface } from "@/components/site/glass-surface"
 import { navGlassClassName } from "@/components/site/site-styles"
+import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
@@ -214,25 +215,20 @@ const experienceFaq = [
   },
 ] as const
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Experience | Full Stack Developer Career Roadmap — Tayyab",
   description: experiencePageIntro,
-  keywords: [...experienceKeywords],
-  alternates: {
-    canonical: `${SITE_URL}/experience`,
-  },
+  canonicalPath: "/experience",
+  keywords: experienceKeywords,
   openGraph: {
     title: "Full Stack Developer Experience & Career Roadmap | Tayyab",
     description: experiencePageIntro,
-    url: `${SITE_URL}/experience`,
-    type: "website",
   },
   twitter: {
-    card: "summary_large_image",
     title: "Career Roadmap | Tayyab — React & Node.js Full Stack Developer",
     description: experiencePageIntro,
   },
-}
+})
 
 export default function ExperiencePage() {
   const pageTitle = "Tayyab Full Stack Developer Experience & Career Roadmap"

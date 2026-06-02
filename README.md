@@ -41,6 +41,7 @@ Blog database setup: run [`supabase/schema.sql`](./supabase/schema.sql) and [`su
 
 ## Images
 
+- **Favicon:** replace repo-root `favicon.png`, then run `npm run generate:favicons` (updates `app/icon.png`, `app/apple-icon.png`, and `public/` icons).
 - Place new **Taylance Tech** screenshot as `taylancetech.png` in the repo root, then run `npm run optimize:images`.
 - Portfolio photos and project shots are served as **AVIF + WebP** pairs under `public/images/` for fast loads and SEO.
 - Hero / Open Graph portrait: `public/images/about.avif` + `about.webp` (stylized cutout — do not overwrite from `about.jpg` without intent).
@@ -55,3 +56,4 @@ Blog database setup: run [`supabase/schema.sql`](./supabase/schema.sql) and [`su
 | `npm run start` | Run production build locally |
 | `npm run lint` | ESLint |
 | `npm run optimize:images` | Regenerate AVIF/WebP from source PNGs/JPGs (requires ffmpeg) |
+| `npm run generate:favicons` | Regenerate favicon / PWA icons from `favicon.png` (requires ffmpeg) |

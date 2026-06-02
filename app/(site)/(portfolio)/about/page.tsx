@@ -35,14 +35,8 @@ import {
   statIconClassName,
 } from "@/components/site/site-styles"
 import { imageSeoUrl } from "@/lib/image"
-import {
-  FEATURED_OG_ALT,
-  featuredOgImageUrl,
-  PROFILE_IMAGE,
-  profileEmail,
-  profileSameAs,
-  SITE_URL,
-} from "@/lib/site"
+import { buildPageMetadata } from "@/lib/site-metadata"
+import { PROFILE_IMAGE, profileEmail, profileSameAs, SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 const TAYLANCE_TECH_URL = "https://taylancetech.com"
@@ -200,22 +194,18 @@ const aboutSocialLinks = [
   },
 ] as const
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "About Tayyab | Full Stack Developer — React, Next.js & Node.js Expert",
   description:
     "Meet Tayyab — founder of Taylance Tech and full stack web developer with 3+ years of experience shipping React, Next.js, and Node.js applications. 15+ projects delivered, 1,150+ LeetCode problems solved. Available for freelance and contract work.",
-  keywords: [...aboutKeywords],
-  alternates: {
-    canonical: `${SITE_URL}/about`,
-  },
+  canonicalPath: "/about",
+  keywords: aboutKeywords,
   openGraph: {
+    type: "profile",
     title: "About Tayyab | Full Stack Web Developer",
     description: aboutSubtitle,
-    url: `${SITE_URL}/about`,
-    type: "profile",
-    images: [{ url: featuredOgImageUrl(), alt: FEATURED_OG_ALT }],
   },
-}
+})
 
 export default function AboutPage() {
   return (

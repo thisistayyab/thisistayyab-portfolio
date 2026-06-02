@@ -11,6 +11,7 @@ import {
   buildTestimonialsWebPageJsonLd,
 } from "@/components/site/testimonials-json-ld"
 import { TestimonialsSection } from "@/components/site/testimonials-section"
+import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
 const pageIntro =
@@ -28,20 +29,16 @@ export const testimonials: HomeTestimonial[] = [
   },
 ]
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Testimonials | Client Reviews — Tayyab",
   description:
     "Read what clients say about working with Tayyab on React, Next.js, and full stack web development projects.",
-  alternates: {
-    canonical: `${SITE_URL}/testimonials`,
-  },
+  canonicalPath: "/testimonials",
   openGraph: {
     title: "Client Testimonials | Tayyab — Full Stack Developer",
     description: pageIntro,
-    url: `${SITE_URL}/testimonials`,
-    type: "website",
   },
-}
+})
 
 export default function TestimonialsPage() {
   return (
@@ -70,7 +67,7 @@ export default function TestimonialsPage() {
         </div>
       </header>
 
-      <TestimonialsSection testimonials={testimonials} variant="page" />
+      <TestimonialsSection testimonials={testimonials} variant="page" headingLevel="h1" />
       </article>
     </>
   )

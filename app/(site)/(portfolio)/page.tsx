@@ -49,7 +49,7 @@ import {
 import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
-  title: homeMetadata.title,
+  title: { absolute: homeMetadata.title },
   description: homeMetadata.description,
   keywords: [...homeMetadata.keywords],
   alternates: {
@@ -60,6 +60,11 @@ export const metadata: Metadata = {
     description: homeMetadata.description,
     url: SITE_URL,
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: homeMetadata.title,
+    description: homeMetadata.description,
   },
 }
 
@@ -238,6 +243,7 @@ export default async function HomePage() {
         itemScope
         itemType="https://schema.org/Person"
       >
+        <meta itemProp="name" content="Tayyab" />
         <HeaderGraphBackground />
 
         <div
@@ -267,10 +273,7 @@ export default async function HomePage() {
                 </span>
               </div>
 
-              <h1
-                className="mb-6 text-[clamp(2.75rem,7.5vw,4.75rem)] leading-[0.98] font-extrabold tracking-[-0.03em]"
-                itemProp="jobTitle"
-              >
+              <h1 className="mb-6 text-[clamp(2.75rem,7.5vw,4.75rem)] leading-[0.98] font-extrabold tracking-[-0.03em]">
                 <span className="block text-white">Full Stack</span>
                 <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
                   Developer

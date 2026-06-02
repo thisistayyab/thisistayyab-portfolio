@@ -1,23 +1,16 @@
 import type { Metadata } from "next"
 
 import { blogIndexMetadata, BLOG_INDEX_PATH } from "@/lib/blog/config"
+import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
 export function blogIndexPageMetadata(): Metadata {
-  const url = `${SITE_URL}${BLOG_INDEX_PATH}`
-
-  return {
+  return buildPageMetadata({
     title: blogIndexMetadata.title,
     description: blogIndexMetadata.description,
-    keywords: [...blogIndexMetadata.keywords],
-    alternates: { canonical: url },
-    openGraph: {
-      title: blogIndexMetadata.title,
-      description: blogIndexMetadata.description,
-      url,
-      type: "website",
-    },
-  }
+    canonicalPath: BLOG_INDEX_PATH,
+    keywords: blogIndexMetadata.keywords,
+  })
 }
 
 export function blogPostPageMetadata(post: {
@@ -41,7 +34,7 @@ export function blogPostPageMetadata(post: {
       : undefined
 
   return {
-    title,
+    title: { absolute: title },
     description,
     keywords: post.seo_keywords ?? undefined,
     alternates: { canonical: url },

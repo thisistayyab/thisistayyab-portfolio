@@ -24,6 +24,7 @@ import {
   buildServicesWebPageJsonLd,
 } from "@/components/site/services-json-ld"
 import { ServicesSection } from "@/components/site/services-section"
+import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
 /** Visible hero copy — keep distinct from the h1 to avoid repetition. */
@@ -211,25 +212,16 @@ const servicesFaq = [
   },
 ] as const
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Services | Full Stack Developer & Software Engineer — Tayyab",
   description: pageMetaDescription,
-  keywords: [...servicesKeywords],
-  alternates: {
-    canonical: `${SITE_URL}/services`,
-  },
+  canonicalPath: "/services",
+  keywords: servicesKeywords,
   openGraph: {
     title: "Full Stack Development Services | Tayyab",
     description: pageMetaDescription,
-    url: `${SITE_URL}/services`,
-    type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Full Stack Development Services | Tayyab",
-    description: pageMetaDescription,
-  },
-}
+})
 
 export default function ServicesPage() {
   return (

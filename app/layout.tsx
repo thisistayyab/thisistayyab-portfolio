@@ -39,8 +39,12 @@ export const metadata: Metadata = {
   creator: "Tayyab",
   manifest: "/site.webmanifest",
   icons: {
-    icon: [{ url: "/icon.png", type: "image/png" }],
-    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "256x256" }],
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
   robots: {
     index: true,
