@@ -14,6 +14,8 @@ Tayyab builds production web applications with React, Next.js, Node.js, PostgreS
 - Testimonials: https://thisistayyab.dev/testimonials
 - Blog: https://thisistayyab.dev/blog
 - Contact: https://thisistayyab.dev/contact
+- Privacy: https://thisistayyab.dev/privacy
+- Terms: https://thisistayyab.dev/terms
 
 ## Blog
 

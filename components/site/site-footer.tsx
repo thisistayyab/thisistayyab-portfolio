@@ -215,7 +215,32 @@ export function SiteFooter() {
           <p className="text-xs text-slate-500 sm:text-sm">
             &copy; {year} Tayyab. All rights reserved.
           </p>
-          <p className="text-xs text-slate-500">Built with Next.js · Available worldwide</p>
+          <nav
+            className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-500 sm:text-sm"
+            aria-label="Legal"
+          >
+            <Link
+              href="/privacy"
+              className="transition-colors hover:text-slate-300"
+              title="Privacy Policy"
+            >
+              Privacy
+            </Link>
+            <span className="text-slate-700" aria-hidden="true">
+              ·
+            </span>
+            <Link
+              href="/terms"
+              className="transition-colors hover:text-slate-300"
+              title="Terms of Service"
+            >
+              Terms
+            </Link>
+            <span className="hidden text-slate-700 sm:inline" aria-hidden="true">
+              ·
+            </span>
+            <span className="hidden sm:inline">Built with Next.js · Available worldwide</span>
+          </nav>
         </div>
       </div>
     </footer>
