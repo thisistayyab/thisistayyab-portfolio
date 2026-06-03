@@ -1,9 +1,11 @@
 import type { Metadata } from "next"
+import { GoogleAnalytics } from "@next/third-parties/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Bricolage_Grotesque, Outfit } from "next/font/google"
 
 import { GlobalBackground } from "@/components/site/global-background"
+import { GA_MEASUREMENT_ID, isGoogleAnalyticsEnabled } from "@/lib/google-analytics"
 import {
   FEATURED_OG_ALT,
   FEATURED_OG_DIMENSIONS,
@@ -101,6 +103,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
+        {isGoogleAnalyticsEnabled() ? <GoogleAnalytics gaId={GA_MEASUREMENT_ID} /> : null}
       </body>
     </html>
   )

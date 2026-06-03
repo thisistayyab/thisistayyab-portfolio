@@ -39,6 +39,7 @@ Blog database setup: run [`supabase/schema.sql`](./supabase/schema.sql) and [`su
 - Submit `https://thisistayyab.dev/sitemap.xml` in [Google Search Console](https://search.google.com/search-console).
 - Publish posts from `/dashboard/blog`; ISR refreshes public pages within ~5 minutes.
 - **Vercel Analytics:** enable **Analytics** (and optionally **Speed Insights**) under [Project → Analytics](https://vercel.com/docs/analytics) in the Vercel dashboard. The app includes `@vercel/analytics` and `@vercel/speed-insights` in `app/layout.tsx` — no env vars required on Vercel.
+- **Google Analytics 4:** set `NEXT_PUBLIC_GA_MEASUREMENT_ID` (see `vercel.env.example`). Loaded via `@next/third-parties/google` when the ID is present.
 
 ## Images
 
