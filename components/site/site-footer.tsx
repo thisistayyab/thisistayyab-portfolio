@@ -45,7 +45,11 @@ const footerSocialLinks: {
   },
 ]
 
-const exploreLinks = navItems.filter((item) => item.href !== "/contact")
+const exploreLinks = [
+  ...navItems.filter((item) => item.href !== "/contact"),
+  { label: "Privacy", href: "/privacy", description: "Privacy policy" },
+  { label: "Terms", href: "/terms", description: "Terms of service" },
+]
 
 export function SiteFooter() {
   const year = new Date().getFullYear()

@@ -38,6 +38,7 @@ import {
   statusBadgeClassName,
 } from "@/components/site/site-styles"
 import { imageSeoUrl } from "@/lib/image"
+import { buildPageMetadata } from "@/lib/site-metadata"
 import {
   homeMetadata,
   PROFILE_IMAGE,
@@ -48,25 +49,17 @@ import {
 } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-export const metadata: Metadata = {
-  title: { absolute: homeMetadata.title },
+export const metadata: Metadata = buildPageMetadata({
+  title: homeMetadata.title,
   description: homeMetadata.description,
-  keywords: [...homeMetadata.keywords],
-  alternates: {
-    canonical: SITE_URL,
-  },
+  canonicalPath: "/",
+  keywords: homeMetadata.keywords,
   openGraph: {
     title: homeMetadata.title,
     description: homeMetadata.description,
-    url: SITE_URL,
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: homeMetadata.title,
-    description: homeMetadata.description,
-  },
-}
+})
 
 const homeTestimonialsIntro =
   "Client feedback from freelance and contract web development work on Tayyab's portfolio."
@@ -218,7 +211,7 @@ export default async function HomePage() {
           "@type": "Person",
           "@id": `${SITE_URL}/about`,
           name: "Tayyab",
-          jobTitle: "Full Stack Developer | React & Node.js Expert",
+          jobTitle: "Full Stack Developer",
           description:
             "Full stack developer specializing in React, Next.js, Node.js, and PostgreSQL. 3+ years experience building fast, scalable web applications. 1,150+ LeetCode problems solved. 15+ projects completed.",
           url: SITE_URL,
@@ -278,12 +271,11 @@ export default async function HomePage() {
                 <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text pb-[0.04em] text-transparent">
                   Developer
                 </span>
-                <span className="sr-only">
-                  {" "}
-                  — Tayyab | React Developer, Next.js Developer, Node.js Developer,
-                  PostgreSQL, REST API, Full Stack Developer for Hire
-                </span>
               </h1>
+              <p className="sr-only">
+                Tayyab — full stack developer for hire. React, Next.js, Node.js, PostgreSQL, and
+                REST APIs.
+              </p>
 
               <p className="mb-5 w-full max-w-[620px] text-[clamp(1rem,2.2vw,1.125rem)] leading-[1.65] text-slate-400 max-lg:mx-auto">
                 I design and build{" "}

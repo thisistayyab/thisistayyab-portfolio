@@ -89,9 +89,11 @@ export const profileSameAs = [
 export const profileEmail = "thisistayyab@outlook.com"
 
 export const homeMetadata = {
-  title: "Tayyab - Full Stack Developer | React, Next.js & Node.js Expert",
+  /** ~55 chars — within common SERP title limits (AIOSEO flags 60+). */
+  title: "Tayyab | Full Stack Developer — React & Next.js",
+  /** ~155 chars — within meta description limits (AIOSEO flags 160+). */
   description:
-    "Hire Tayyab — full stack developer building fast, scalable web apps with React, Next.js, Node.js, and PostgreSQL. 3+ years experience, 1,150+ LeetCode problems, 15+ projects completed.",
+    "Hire Tayyab for React, Next.js & Node.js apps. Full stack developer with 3+ years, 15+ projects, and 1,150+ LeetCode. SaaS, APIs & PostgreSQL.",
   keywords: [
     "Tayyab",
     "Full Stack Developer",
