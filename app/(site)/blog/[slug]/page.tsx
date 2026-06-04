@@ -1,4 +1,5 @@
 import { ArrowLeft, Calendar, Clock } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
@@ -106,8 +107,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 itemType="https://schema.org/Person"
               >
                 {post.author.avatar_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={blogImageUrl(post.author.avatar_url) ?? post.author.avatar_url}
                     alt={`${post.author.name} avatar`}
                     width={40}
@@ -143,11 +143,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {cover ? (
           <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={cover}
               alt={`Cover image for ${post.title}`}
-              className="size-full object-cover"
+              fill
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover"
+              priority
               itemProp="image"
             />
           </div>

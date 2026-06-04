@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
+import { JsonLd } from "@/components/site/json-ld"
 import { LegalPageShell } from "@/components/site/legal-page-shell"
 import {
   LEGAL_BUSINESS_NAME,
@@ -11,6 +12,7 @@ import {
 } from "@/lib/legal"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { isGoogleAnalyticsEnabled } from "@/lib/google-analytics"
+import { SITE_URL } from "@/lib/site"
 
 const description =
   "Privacy policy for thisistayyab.dev — how Tayyab collects and uses data when you browse, contact, or read the blog, including Google Analytics and third-party tools."
@@ -30,6 +32,17 @@ export default function PrivacyPolicyPage() {
   const analyticsEnabled = isGoogleAnalyticsEnabled()
 
   return (
+    <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+            { "@type": "ListItem", position: 2, name: "Privacy Policy", item: `${SITE_URL}/privacy` },
+          ],
+        }}
+      />
     <LegalPageShell
       eyebrow="Legal"
       title="Privacy Policy"
@@ -195,5 +208,6 @@ export default function PrivacyPolicyPage() {
         <a href={`mailto:${LEGAL_CONTACT_EMAIL}`}>{LEGAL_CONTACT_EMAIL}</a>.
       </p>
     </LegalPageShell>
+    </>
   )
 }

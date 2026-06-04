@@ -35,7 +35,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/taylance-tech.webp",
     imageAlt:
       "Taylance Tech software studio homepage screenshot — founder-led Next.js website for web, mobile, and SaaS built by Tayyab, full stack web developer",
-    imageTitle: "Taylance Tech founder-led studio | Tayyab full stack web developer portfolio",
+    imageTitle: "Taylance Tech homepage",
     link: "https://taylancetech.com/",
     description:
       "The company I founded and launched: Taylance Tech is a founder-led software studio offering web, mobile, SaaS, and AI automation for startups. I designed and built this Next.js site for performance, SEO, and clear positioning — it is fully my product and brand.",
@@ -56,7 +56,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/taylance-crm.webp",
     imageAlt:
       "Taylance CRM dashboard screenshot — React and Express.js full stack CRM product built by Tayyab under the Taylance Tech software studio",
-    imageTitle: "Taylance CRM React dashboard | Tayyab full stack portfolio project",
+    imageTitle: "Taylance CRM dashboard",
     link: "https://taylancecrm.vercel.app/",
     description:
       "A full-featured CRM product under the Taylance Tech studio: manage clients, leads, and projects from one dashboard. Built with React, Express.js, and Material UI — my own product, not client work.",
@@ -77,8 +77,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/tayyab-7opportunity-react-marketing-platform.webp",
     imageAlt:
       "7Opportunity marketing platform homepage screenshot — freelance client web application built by Tayyab with React, Express.js, and Supabase, optimized for mobile and Lighthouse performance",
-    imageTitle:
-      "7Opportunity React marketing platform screenshot | Client project by Tayyab full stack developer",
+    imageTitle: "7Opportunity marketing platform",
     link: "",
     description:
       "Freelance client project: a marketing platform with scroll-driven sections, lead-focused layout, and an Express.js + Supabase API backend. Built for strong mobile performance and Lighthouse scores. I list my development role only; the product and IP belong to the client. The live app is internal to the client and not linked here.",
@@ -102,8 +101,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/7options.webp",
     imageAlt:
       "7Options subscription and billing dashboard screenshot — freelance client SaaS built by Tayyab with React, Express.js, Supabase, and payment integrations",
-    imageTitle:
-      "7Options React subscription platform | Client project by Tayyab full stack developer",
+    imageTitle: "7Options subscription platform",
     link: "https://7options.vercel.app/",
     description:
       "Freelance client project: a full stack subscription and account management platform with user dashboards, plans, payments, and admin workflows. Delivered without a formal IP contract; ownership stays with the client. A public demo is available at the link below.",
@@ -125,8 +123,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/7talenthub.webp",
     imageAlt:
       "7TalentHub company CRM interface screenshot — internal freelance client application built by Tayyab with React, Node.js, and Supabase for talent and employee management",
-    imageTitle:
-      "7TalentHub React CRM screenshot | Internal client project by Tayyab full stack developer",
+    imageTitle: "7TalentHub CRM interface",
     link: "",
     description:
       "Freelance client project: a company CRM for employee relations, talent tracking, and performance analytics. Built with React, Node.js, and Supabase. I list my development role only; the product and IP belong to the client. The live app is internal and not linked here.",
@@ -148,7 +145,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/notehub.webp",
     imageAlt:
       "NoteHub note-taking application screenshot — full stack React and Express.js web app with MongoDB built by Tayyab for creating and organizing user notes",
-    imageTitle: "NoteHub React note-taking app | Tayyab full stack web developer portfolio",
+    imageTitle: "NoteHub note-taking app",
     link: "https://notehub-thisistayyab.vercel.app/",
     description:
       "NoteHub is a modern note-taking web application that allows users to create, organize, and edit notes seamlessly in a clean, distraction-free interface. Built with React and Express.js, the app connects to a MongoDB database for secure storage and retrieval of user notes.",
@@ -167,7 +164,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/leetcode-profile.webp",
     imageAlt:
       "Tayyab LeetCode developer profile screenshot showing 1,150+ solved algorithm and data structure problems in C++ — competitive programming portfolio",
-    imageTitle: "Tayyab LeetCode profile | 1150+ DSA problems solved — full stack developer",
+    imageTitle: "Tayyab LeetCode profile",
     link: "https://leetcode.com/u/thisistayyab/",
     description:
       "My LeetCode profile reflects a strong foundation in Data Structures and Algorithms with over 1,150+ problems solved. This extensive problem-solving practice demonstrates deep expertise in algorithm design, time complexity optimization, and mastery of programming paradigms using C++ as the primary language.",
@@ -186,7 +183,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/taynio-chat.webp",
     imageAlt:
       "Taynio Chat real-time messaging application screenshot — React and Node.js web app with Socket.IO built by Tayyab for instant chat and presence",
-    imageTitle: "Taynio Chat React real-time messaging app | Tayyab full stack portfolio",
+    imageTitle: "Taynio Chat messaging app",
     link: "https://github.com/thisistayyab/Taynio-chat",
     description:
       "Taynio Chat is a real-time messaging application built with React, Node.js, and Socket.IO, designed for fast, secure, and reliable communication. It enables instant message exchange, active user presence detection, and seamless real-time updates without page reloads.",
@@ -205,7 +202,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/newswave.webp",
     imageAlt:
       "NewsWave news aggregator homepage screenshot — React web application with live third-party news API integration built by Tayyab",
-    imageTitle: "NewsWave React news aggregator | Tayyab full stack developer portfolio",
+    imageTitle: "NewsWave news aggregator",
     link: "https://newswave-thisistayyab.netlify.app/",
     description:
       "NewsWave is a dynamic news aggregator application designed to keep users informed with the latest headlines from around the world. Built with React and integrated with third-party news APIs, it fetches live articles and presents them in a structured, visually appealing layout.",
@@ -224,7 +221,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/editwave.webp",
     imageAlt:
       "EditWave in-browser text editor screenshot — React rich editing web application with responsive UI built by Tayyab",
-    imageTitle: "EditWave React browser text editor | Tayyab full stack portfolio project",
+    imageTitle: "EditWave browser text editor",
     link: "https://thisistayyab.github.io/EditWave/",
     description:
       "EditWave is a browser-based text editor web application designed to offer a smooth and modern editing experience. With a clean and minimalistic UI, it supports real-time text manipulation and formatting, making it ideal for quick note-taking or drafting documents.",
@@ -243,7 +240,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/shahid-portfolio.webp",
     imageAlt:
       "Shahid personal portfolio website screenshot — React developer portfolio with modern responsive UI built by Tayyab",
-    imageTitle: "Shahid React portfolio website | Tayyab full stack web developer project",
+    imageTitle: "Shahid portfolio website",
     link: "https://thisistayyab.github.io/kashif-project/",
     description:
       "Shahid's Portfolio is a modern personal branding website built to showcase projects, achievements, and skills with elegance. Developed with React, JavaScript, and CSS, the portfolio highlights clean UI design principles with smooth transitions, hover effects, and a modular layout.",
@@ -349,11 +346,11 @@ export const metadata: Metadata = buildPageMetadata({
       "Browse Tayyab's full-stack portfolio: Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
   },
   ogImage: {
-    url: `${SITE_URL}/images/projects/taylance-tech.webp`,
-    alt: "Taylance Tech — founder-led software studio",
+    url: `${SITE_URL}/images/og.jpg`,
+    alt: "Tayyab — Full Stack Developer Portfolio",
     width: 1200,
     height: 630,
-    type: "image/webp",
+    type: "image/jpeg",
   },
   twitter: {
     title: "Full Stack Web Development Projects | Tayyab",

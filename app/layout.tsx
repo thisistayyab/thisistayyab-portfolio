@@ -58,11 +58,15 @@ export const metadata: Metadata = {
       index: true,
       follow: true,
       "max-image-preview": "large",
+      "max-video-preview": -1,
       "max-snippet": -1,
     },
   },
   alternates: {
     canonical: SITE_URL,
+    languages: {
+      "en-US": SITE_URL,
+    },
   },
   openGraph: {
     type: "website",

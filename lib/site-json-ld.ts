@@ -12,7 +12,7 @@ export function buildWebSiteJsonLd(siteUrl: string) {
       "@type": "Person",
       "@id": personId(siteUrl),
       name: "Tayyab",
-      url: personId(siteUrl),
+      url: siteUrl,
     },
   }
 }

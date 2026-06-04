@@ -46,8 +46,8 @@ const footerSocialLinks: {
 
 const exploreLinks = [
   ...navItems.filter((item) => item.href !== "/contact"),
-  { label: "Privacy", href: "/privacy", description: "Privacy policy" },
-  { label: "Terms", href: "/terms", description: "Terms of service" },
+  { label: "Privacy", href: "/privacy", description: "Privacy policy for thisistayyab.dev" },
+  { label: "Terms", href: "/terms", description: "Terms of service for thisistayyab.dev" },
 ]
 
 export function SiteFooter() {
@@ -130,14 +130,14 @@ export function SiteFooter() {
               <ul className="list-none space-y-2.5">
                 {exploreCol1.map((item) => (
                   <li key={item.href}>
-                    <FooterNavLink href={item.href} label={item.label} />
+                    <FooterNavLink href={item.href} label={item.label} title={item.description} />
                   </li>
                 ))}
               </ul>
               <ul className="list-none space-y-2.5">
                 {exploreCol2.map((item) => (
                   <li key={item.href}>
-                    <FooterNavLink href={item.href} label={item.label} />
+                    <FooterNavLink href={item.href} label={item.label} title={item.description} />
                   </li>
                 ))}
               </ul>
@@ -234,11 +234,11 @@ export function SiteFooter() {
   )
 }
 
-function FooterNavLink({ href, label }: { href: string; label: string }) {
+function FooterNavLink({ href, label, title }: { href: string; label: string; title?: string }) {
   return (
     <Link
       href={href}
-      title={label}
+      title={title || label}
       className="group inline-flex items-center gap-2 text-sm text-slate-400 no-underline transition-colors duration-200 hover:text-white"
     >
       <span

@@ -35,6 +35,15 @@ export const metadata: Metadata = buildPageMetadata({
   description:
     "Read what clients say about working with Tayyab on React, Next.js, and full stack web development projects.",
   canonicalPath: "/testimonials",
+  keywords: [
+    "Tayyab client reviews",
+    "full stack developer testimonials",
+    "freelance developer feedback",
+    "React developer reviews",
+    "web development client testimonials",
+    "Fiverr developer reviews",
+    "Upwork developer feedback",
+  ],
   openGraph: {
     title: "Client Testimonials | Tayyab — Full Stack Developer",
     description: pageIntro,

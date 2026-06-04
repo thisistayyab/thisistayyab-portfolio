@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
+import { JsonLd } from "@/components/site/json-ld"
 import { LegalPageShell } from "@/components/site/legal-page-shell"
 import {
   LEGAL_BUSINESS_NAME,
@@ -10,6 +11,7 @@ import {
   LEGAL_STUDIO_URL,
 } from "@/lib/legal"
 import { buildPageMetadata } from "@/lib/site-metadata"
+import { SITE_URL } from "@/lib/site"
 
 const description =
   "Terms of Service for thisistayyab.dev — website use, inquiries, and how Taylance Tech software development engagements are agreed after contact."
@@ -27,6 +29,17 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function TermsOfServicePage() {
   return (
+    <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+            { "@type": "ListItem", position: 2, name: "Terms of Service", item: `${SITE_URL}/terms` },
+          ],
+        }}
+      />
     <LegalPageShell
       eyebrow="Legal"
       title="Terms of Service"
@@ -183,5 +196,6 @@ export default function TermsOfServicePage() {
         <Link href="/contact">contact page</Link>.
       </p>
     </LegalPageShell>
+    </>
   )
 }

@@ -81,7 +81,7 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
       "@id": url,
     },
     keywords: post.tags.length ? post.tags.join(", ") : post.seo_keywords?.join(", "),
-    articleSection: post.tags[0],
+    articleSection: post.tags[0] || "Full Stack Development",
     wordCount: post.content.replace(/<[^>]+>/g, " ").split(/\s+/g).filter(Boolean).length,
   }
 }

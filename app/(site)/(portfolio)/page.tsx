@@ -91,7 +91,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     image: "/images/projects/taylance-tech.webp",
     imageAlt:
       "Taylance Tech software studio homepage screenshot — founder-led Next.js website built by Tayyab, full stack web developer",
-    imageTitle: "Taylance Tech founder-led studio | Tayyab full stack web developer portfolio",
+    imageTitle: "Taylance Tech homepage",
     link: "https://taylancetech.com/",
     description:
       "The company I founded and launched: a founder-led software studio for web, mobile, SaaS, and AI automation. Built with Next.js for performance and SEO — fully my product and brand.",
@@ -111,7 +111,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     image: "/images/projects/taylance-crm.webp",
     imageAlt:
       "Taylance CRM dashboard screenshot — React and Express.js CRM built by Tayyab under Taylance Tech studio",
-    imageTitle: "Taylance CRM React dashboard | Tayyab featured portfolio project",
+    imageTitle: "Taylance CRM dashboard",
     link: "https://taylancecrm.vercel.app/",
     description:
       "A CRM product under my Taylance Tech studio: clients, leads, and projects in one dashboard. React, Express.js, and Material UI — my own product.",
@@ -130,7 +130,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     image: "/images/projects/taynio-chat.webp",
     imageAlt:
       "Taynio Chat real-time messaging application screenshot — React, Node.js, and Socket.IO app built by Tayyab",
-    imageTitle: "Taynio Chat React messaging app | Tayyab featured full stack project",
+    imageTitle: "Taynio Chat messaging app",
     link: "https://github.com/thisistayyab/Taynio-chat",
     description:
       "Taynio Chat is a real-time messaging application built with React, Node.js, and Socket.IO, designed for fast, secure, and reliable communication. It enables instant message exchange, active user presence detection, and seamless real-time updates without page reloads.",
@@ -301,13 +301,12 @@ export default async function HomePage() {
                   className="mb-6 w-full max-w-[620px] text-[0.92rem] leading-[1.75] text-slate-400/82 max-lg:mx-auto [&_strong]:font-semibold [&_strong]:text-slate-300"
                   itemProp="description"
                 >
-                With <strong>3+ years of hands-on full stack development</strong>,
-                I&apos;ve shipped real-world projects using React, Next.js, Node.js,
-                and PostgreSQL. I write clean, maintainable code backed by a deep
-                understanding of data structures — having solved{" "}
-                <strong>1,150+ LeetCode problems</strong>. Whether you need a landing
-                page, a SaaS dashboard, or a full backend API, I build solutions that
-                are engineered to last.
+                With <strong>3+ years shipping code that handles real traffic</strong>,
+                I&apos;ve turned product ideas into live applications using React, Next.js,
+                Node.js, and PostgreSQL. My engineering decisions are backed by deep
+                algorithmic practice — <strong>1,150+ LeetCode problems solved</strong>.
+                Whether you need a landing page, a SaaS dashboard, or a full backend API,
+                I deliver software that&apos;s built to last.
               </p>
               </HeroItem>
 
@@ -473,29 +472,25 @@ export default async function HomePage() {
           <p className="mb-5 text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
             I&apos;m Tayyab — a{" "}
             <strong className="font-semibold text-slate-200">full stack web developer</strong>{" "}
-            with 3+ years of experience building production-ready{" "}
+            who partners with startups, SaaS teams, and growing businesses to turn product
+            ideas into{" "}
             <strong className="font-semibold text-slate-200">
-              React and Node.js applications
-            </strong>{" "}
-            for startups, SaaS products, and growing businesses.
+              reliable, well-architected software
+            </strong>.
           </p>
 
           <p className="mb-5 text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
-            My work spans the entire stack: responsive React UIs, REST and GraphQL APIs,
-            PostgreSQL databases, and cloud deployments. I don&apos;t just write code — I
-            think about{" "}
+            From responsive React interfaces and RESTful APIs to PostgreSQL data layers
+            and cloud deployments, I own the full delivery cycle. Every decision —
+            from component architecture to database indexing — is guided by a focus on{" "}
             <strong className="font-semibold text-slate-200">
-              performance, maintainability, and scalability
-            </strong>{" "}
-            from day one. Having solved over{" "}
-            <strong className="font-semibold text-slate-200">1,150+ LeetCode problems</strong>,
-            I bring strong algorithmic thinking to every backend challenge, whether it&apos;s
-            optimizing queries, designing data models, or building features that hold up under
-            real traffic. If you&apos;re looking to{" "}
+              performance, maintainability, and long-term value
+            </strong>.{" "}
+            If you&apos;re looking to{" "}
             <strong className="font-semibold text-slate-200">
-              hire a full stack developer
+              hire a developer who treats your product like their own
             </strong>{" "}
-            who ships clean, tested, production-grade software — let&apos;s talk.
+            — let&apos;s talk.
           </p>
 
           <div className="mt-2 flex justify-center">
@@ -535,10 +530,9 @@ export default async function HomePage() {
 
             <p className="text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
               Deployed{" "}
-              <strong className="font-semibold text-slate-200">full-stack web applications</strong>{" "}
-              built with React, Next.js, Node.js, and PostgreSQL — used by real people, not just UI
-              mockups or tutorial clones. Explore SaaS dashboards, REST APIs, Supabase backends,
-              and production-ready client work.
+              <strong className="font-semibold text-slate-200">web applications used by real people</strong>{" "}
+              — not UI mockups or tutorial clones. SaaS dashboards, REST APIs, Supabase backends,
+              and client work built with React, Next.js, Node.js, and PostgreSQL.
             </p>
           </div>
 
