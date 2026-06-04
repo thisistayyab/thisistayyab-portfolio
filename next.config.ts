@@ -1,5 +1,19 @@
 import type { NextConfig } from "next"
 
+function webmasterRewrites(): { source: string; destination: string }[] {
+  const rewrites: { source: string; destination: string }[] = []
+
+  const googleFile = process.env.GOOGLE_SITE_VERIFICATION_FILE?.trim()
+  if (googleFile) {
+    rewrites.push({
+      source: `/${googleFile}`,
+      destination: "/webmaster/google-file",
+    })
+  }
+
+  return rewrites
+}
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -7,6 +21,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "thisistayyab.dev" },
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
+  },
+  async rewrites() {
+    return webmasterRewrites()
   },
   async redirects() {
     return [

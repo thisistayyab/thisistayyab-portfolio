@@ -6,6 +6,7 @@ import { Bricolage_Grotesque, Outfit } from "next/font/google"
 
 import { GlobalBackground } from "@/components/site/global-background"
 import { GA_MEASUREMENT_ID, isGoogleAnalyticsEnabled } from "@/lib/google-analytics"
+import { buildWebmasterVerificationMetadata } from "@/lib/webmaster-verification"
 import {
   FEATURED_OG_ALT,
   FEATURED_OG_DIMENSIONS,
@@ -86,6 +87,7 @@ export const metadata: Metadata = {
     description: homeMetadata.description,
     images: [featuredOgImageUrl()],
   },
+  verification: buildWebmasterVerificationMetadata(),
 }
 
 export default function RootLayout({
