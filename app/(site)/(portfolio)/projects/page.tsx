@@ -7,6 +7,7 @@ import { FaqSection } from "@/components/site/faq-section"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
 import { ProjectsShowcase } from "@/components/site/projects-showcase"
+import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
 
@@ -415,26 +416,32 @@ export default function ProjectsPage() {
               </Link>
             </div>
 
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/80 uppercase">
-                Portfolio
-              </p>
-              <h1 className="text-[clamp(2rem,5.5vw,3.25rem)] leading-[1.08] font-bold tracking-tight text-white">
-                Full stack web development projects
-              </h1>
-              <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
-              <p className="text-base leading-relaxed text-slate-400 sm:text-lg sm:leading-[1.8]">
-                {projectsPageIntro}
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-slate-500">
-                React · Next.js · Node.js · TypeScript · PostgreSQL · MongoDB · Supabase · REST
-                APIs · SaaS · Real-time apps
-              </p>
-            </div>
+            <PageHeaderStagger className="mx-auto max-w-3xl text-center">
+              <PageHeaderItem>
+                <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/80 uppercase">
+                  Portfolio
+                </p>
+              </PageHeaderItem>
+              <PageHeaderItem>
+                <h1 className="text-[clamp(2rem,5.5vw,3.25rem)] leading-[1.08] font-bold tracking-tight text-white">
+                  Full stack web development projects
+                </h1>
+              </PageHeaderItem>
+              <PageHeaderItem>
+                <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
+                <p className="text-base leading-relaxed text-slate-400 sm:text-lg sm:leading-[1.8]">
+                  {projectsPageIntro}
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-slate-500">
+                  React · Next.js · Node.js · TypeScript · PostgreSQL · MongoDB · Supabase · REST
+                  APIs · SaaS · Real-time apps
+                </p>
+              </PageHeaderItem>
+            </PageHeaderStagger>
           </div>
         </header>
 
-        <section
+        <MotionSection
           className="mx-auto max-w-[1200px] px-5 pb-16 sm:px-6 lg:px-4"
           aria-labelledby="projects-grid-heading"
         >
@@ -445,8 +452,9 @@ export default function ProjectsPage() {
             projects={portfolioProjects}
             listLabel="Full stack web development portfolio projects"
           />
-        </section>
+        </MotionSection>
 
+        <MotionSection>
         <FaqSection
           className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4"
           headingId="projects-faq-heading"
@@ -467,6 +475,7 @@ export default function ProjectsPage() {
             },
           ]}
         />
+        </MotionSection>
       </article>
     </>
   )

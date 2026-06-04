@@ -48,6 +48,10 @@ import {
   SITE_URL,
 } from "@/lib/site"
 import { cn } from "@/lib/utils"
+import { FadeIn } from "@/components/motion/fade-in"
+import { StaggerContainer, StaggerItem } from "@/components/motion/stagger-reveal"
+import { ParallaxScroll } from "@/components/motion/parallax-scroll"
+import { HeroStagger, HeroItem, HeroImageReveal, WordPullUp } from "@/components/motion/hero-reveal"
 
 export const metadata: Metadata = buildPageMetadata({
   title: homeMetadata.title,
@@ -244,17 +248,18 @@ export default async function HomePage() {
           id="home"
         >
           <div className="grid min-w-0 flex-1 grid-cols-1 items-center gap-10 pt-6 max-lg:justify-items-stretch lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:gap-4 lg:pt-8">
-            <div className="relative z-[2] w-full min-w-0 max-w-full text-left max-lg:flex max-lg:flex-col max-lg:items-stretch max-lg:text-center">
+            <HeroStagger className="relative z-[2] w-full min-w-0 max-w-full text-left max-lg:flex max-lg:flex-col max-lg:items-stretch max-lg:text-center">
               <p className="sr-only text-[0.72rem] font-semibold tracking-[0.22em] text-slate-400/85 uppercase">
                 Crafting Digital Excellence
               </p>
 
-              <div
-                className={cn(
-                  glassBadgeClassName,
-                  "mb-7 inline-flex w-fit max-w-full items-center gap-2.5 max-lg:mx-auto",
-                )}
-              >
+              <HeroItem>
+                <div
+                  className={cn(
+                    glassBadgeClassName,
+                    "mb-7 inline-flex w-fit max-w-full items-center gap-2.5 max-lg:mx-auto",
+                  )}
+                >
                 <span
                   className="inline-flex drop-shadow-[0_0_8px_rgba(251,146,60,0.45)]"
                   aria-hidden="true"
@@ -264,32 +269,38 @@ export default async function HomePage() {
                 <span className="text-[0.95rem] font-medium text-slate-100">
                   Hi, I&apos;m Tayyab
                 </span>
-              </div>
+                </div>
+              </HeroItem>
 
-              <h1 className="mb-6 w-full max-w-full text-[clamp(2.25rem,7.5vw,4.75rem)] leading-[1.02] font-extrabold tracking-tight sm:text-[clamp(2.75rem,7.5vw,4.75rem)] sm:leading-[0.98] lg:tracking-[-0.03em]">
-                <span className="block text-white">Full Stack</span>
-                <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text pb-[0.04em] text-transparent">
-                  Developer
-                </span>
-              </h1>
+              <HeroItem>
+                <h1 className="mb-6 w-full max-w-full text-[clamp(2.25rem,7.5vw,4.75rem)] leading-[1.02] font-extrabold tracking-tight sm:text-[clamp(2.75rem,7.5vw,4.75rem)] sm:leading-[0.98] lg:tracking-[-0.03em]">
+                  <WordPullUp text="Full Stack" className="block text-white" />
+                  <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text pb-[0.04em] text-transparent">
+                    Developer
+                  </span>
+                </h1>
+              </HeroItem>
               <p className="sr-only">
                 Tayyab — full stack developer for hire. React, Next.js, Node.js, PostgreSQL, and
                 REST APIs.
               </p>
 
-              <p className="mb-5 w-full max-w-[620px] text-[clamp(1rem,2.2vw,1.125rem)] leading-[1.65] text-slate-400 max-lg:mx-auto">
-                I design and build{" "}
-                <strong className="font-semibold text-cyan-300">
-                  fast, scalable web applications
-                </strong>{" "}
-                that rank, perform, and convert — from pixel-perfect React frontends
-                to production-grade Node.js backends.
-              </p>
+              <HeroItem>
+                <p className="mb-5 w-full max-w-[620px] text-[clamp(1rem,2.2vw,1.125rem)] leading-[1.65] text-slate-400 max-lg:mx-auto">
+                  I design and build{" "}
+                  <strong className="font-semibold text-cyan-300">
+                    fast, scalable web applications
+                  </strong>{" "}
+                  that rank, perform, and convert — from pixel-perfect React frontends
+                  to production-grade Node.js backends.
+                </p>
+              </HeroItem>
 
-              <p
-                className="mb-6 w-full max-w-[620px] text-[0.92rem] leading-[1.75] text-slate-400/82 max-lg:mx-auto [&_strong]:font-semibold [&_strong]:text-slate-300"
-                itemProp="description"
-              >
+              <HeroItem>
+                <p
+                  className="mb-6 w-full max-w-[620px] text-[0.92rem] leading-[1.75] text-slate-400/82 max-lg:mx-auto [&_strong]:font-semibold [&_strong]:text-slate-300"
+                  itemProp="description"
+                >
                 With <strong>3+ years of hands-on full stack development</strong>,
                 I&apos;ve shipped real-world projects using React, Next.js, Node.js,
                 and PostgreSQL. I write clean, maintainable code backed by a deep
@@ -298,18 +309,20 @@ export default async function HomePage() {
                 page, a SaaS dashboard, or a full backend API, I build solutions that
                 are engineered to last.
               </p>
+              </HeroItem>
 
-              <div className="flex w-full min-w-0 max-w-full flex-col gap-8">
-                <ul
+              <HeroItem>
+                <div className="flex w-full min-w-0 max-w-full flex-col gap-8">
+                  <StaggerContainer
                   className="flex w-full min-w-0 flex-wrap justify-center gap-2 p-0 lg:justify-start"
                   aria-label="Core skills and services"
                 >
                   {heroTags.map((tag) => (
-                    <li key={tag}>
+                    <StaggerItem key={tag}>
                       <span className={heroTagClassName}>{tag}</span>
-                    </li>
+                    </StaggerItem>
                   ))}
-                </ul>
+                </StaggerContainer>
 
                 <div className="flex w-full min-w-0 flex-wrap items-center justify-center gap-3.5 lg:justify-start">
                   <CtaLink
@@ -317,34 +330,37 @@ export default async function HomePage() {
                     title="View Tayyab's web development projects"
                   >
                     View My Work
-                    <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
-                  </CtaLink>
-                  <CtaLink
-                    href="/Tayyab-CV.pdf"
-                    download
-                    variant="secondary"
-                    title="Download Tayyab's Full Stack Developer CV"
-                  >
-                    Download CV
-                    <Download className="size-[1.05rem]" aria-hidden="true" />
-                  </CtaLink>
+                      <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
+                    </CtaLink>
+                    <CtaLink
+                      href="/Tayyab-CV.pdf"
+                      download
+                      variant="secondary"
+                      title="Download Tayyab's Full Stack Developer CV"
+                    >
+                      Download CV
+                      <Download className="size-[1.05rem]" aria-hidden="true" />
+                    </CtaLink>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </HeroItem>
+            </HeroStagger>
 
             <div className="relative mx-auto flex min-h-[380px] w-full min-w-0 max-w-full items-end justify-center overflow-x-clip sm:max-w-[620px] lg:mx-0 lg:min-h-[560px] lg:max-w-none lg:justify-end lg:overflow-visible">
-              <div className="relative mx-auto w-full min-w-0 max-w-[min(100%,580px)] min-h-[clamp(400px,78vw,580px)] sm:max-w-[620px] sm:min-h-[clamp(440px,62vw,580px)] lg:ml-auto lg:mr-[-0.5rem] lg:w-[min(100%,640px)] lg:min-h-[480px]">
-                <OptimizedPicture
-                  src={PROFILE_IMAGE}
-                  alt="Tayyab — Full Stack Developer portrait. Professional photo of Tayyab, React and Node.js engineer with 3+ years building web applications."
-                  title="Tayyab — Full Stack Developer"
-                  width={540}
-                  height={620}
-                  priority
-                  pictureClassName="relative z-[2] mx-auto w-[min(100%,460px)] sm:w-[min(100%,500px)] lg:-ml-4 lg:mr-auto lg:w-[min(100%,540px)]"
-                  className="mx-auto block w-full object-contain object-bottom drop-shadow-[0_24px_48px_rgba(0,0,0,0.45)] [mask-image:linear-gradient(to_bottom,#000_78%,transparent_100%)]"
-                  itemProp="image"
-                />
+              <HeroImageReveal className="relative mx-auto w-full min-w-0 max-w-[min(100%,580px)] min-h-[clamp(400px,78vw,580px)] sm:max-w-[620px] sm:min-h-[clamp(440px,62vw,580px)] lg:ml-auto lg:mr-[-0.5rem] lg:w-[min(100%,640px)] lg:min-h-[480px]">
+                <ParallaxScroll offset={30}>
+                  <OptimizedPicture
+                    src={PROFILE_IMAGE}
+                    alt="Tayyab — Full Stack Developer portrait. Professional photo of Tayyab, React and Node.js engineer with 3+ years building web applications."
+                    title="Tayyab — Full Stack Developer"
+                    width={540}
+                    height={620}
+                    priority
+                    pictureClassName="relative z-[2] mx-auto w-[min(100%,460px)] sm:w-[min(100%,500px)] lg:-ml-4 lg:mr-auto lg:w-[min(100%,540px)]"
+                    className="mx-auto block w-full object-contain object-bottom drop-shadow-[0_24px_48px_rgba(0,0,0,0.45)] [mask-image:linear-gradient(to_bottom,#000_78%,transparent_100%)]"
+                    itemProp="image"
+                  />
+                </ParallaxScroll>
 
                 <div
                   className={cn(
@@ -392,40 +408,41 @@ export default async function HomePage() {
                     </code>
                   </pre>
                 </GlassSurface>
-              </div>
+              </HeroImageReveal>
             </div>
           </div>
 
-          <section
+          <StaggerContainer
             className="mt-auto grid grid-cols-2 gap-3.5 pt-2 lg:grid-cols-4 lg:gap-4"
             aria-label="Professional highlights"
           >
             {heroStats.map(({ icon: Icon, value, label, tone }) => (
-              <GlassSurface
-                key={label}
-                as="article"
-                rim={tone}
-                className={statCardClassName}
-              >
+              <StaggerItem key={label}>
                 <GlassSurface
-                  as="span"
+                  as="article"
                   rim={tone}
-                  className={statIconClassName(tone)}
-                  aria-hidden="true"
+                  className={statCardClassName}
                 >
-                  <Icon className="relative z-[1] size-5 sm:size-[1.35rem]" strokeWidth={2} />
+                  <GlassSurface
+                    as="span"
+                    rim={tone}
+                    className={statIconClassName(tone)}
+                    aria-hidden="true"
+                  >
+                    <Icon className="relative z-[1] size-5 sm:size-[1.35rem]" strokeWidth={2} />
+                  </GlassSurface>
+                  <div className="flex min-w-0 flex-col gap-[0.2rem]">
+                    <p className="m-0 text-[clamp(1.35rem,3.2vw,1.65rem)] leading-[1.05] font-bold text-white">
+                      {value}
+                    </p>
+                    <p className="m-0 text-[clamp(0.72rem,2vw,0.82rem)] leading-[1.35] text-slate-50/82">
+                      {label}
+                    </p>
+                  </div>
                 </GlassSurface>
-                <div className="flex min-w-0 flex-col gap-[0.2rem]">
-                  <p className="m-0 text-[clamp(1.35rem,3.2vw,1.65rem)] leading-[1.05] font-bold text-white">
-                    {value}
-                  </p>
-                  <p className="m-0 text-[clamp(0.72rem,2vw,0.82rem)] leading-[1.35] text-slate-50/82">
-                    {label}
-                  </p>
-                </div>
-              </GlassSurface>
+              </StaggerItem>
             ))}
-          </section>
+          </StaggerContainer>
         </div>
       </header>
 
@@ -433,7 +450,7 @@ export default async function HomePage() {
         className="relative mx-auto max-w-[1200px] px-5 py-20 sm:px-6 lg:px-4"
         aria-labelledby="home-about-heading"
       >
-        <div className="relative z-[2] mx-auto max-w-3xl text-center">
+        <FadeIn className="relative z-[2] mx-auto max-w-3xl text-center">
           <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/70 uppercase">
             About
           </p>
@@ -487,7 +504,7 @@ export default async function HomePage() {
               <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
             </CtaLink>
           </div>
-        </div>
+        </FadeIn>
       </section>
 
       <section
@@ -495,7 +512,7 @@ export default async function HomePage() {
         className="relative mx-auto max-w-[1200px] px-5 py-20 sm:px-6 lg:px-4"
         aria-labelledby="home-projects-heading"
       >
-        <div className="relative z-[2]">
+        <FadeIn className="relative z-[2]">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/70 uppercase">
               Projects
@@ -539,21 +556,31 @@ export default async function HomePage() {
               <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
             </CtaLink>
           </div>
-        </div>
+        </FadeIn>
       </section>
 
-      <ExperienceHomePreview
-        latestMilestone={careerRoadmapMilestones[0]}
-        upcomingMilestones={careerRoadmapMilestones.slice(1, 4)}
-      />
+      <FadeIn>
+        <ExperienceHomePreview
+          latestMilestone={careerRoadmapMilestones[0]}
+          upcomingMilestones={careerRoadmapMilestones.slice(1, 4)}
+        />
+      </FadeIn>
 
-      <TestimonialsSection testimonials={homeTestimonials} variant="home" />
+      <FadeIn>
+        <TestimonialsSection testimonials={homeTestimonials} variant="home" />
+      </FadeIn>
 
-      <ServicesHomePreview services={portfolioServices} />
+      <FadeIn>
+        <ServicesHomePreview services={portfolioServices} />
+      </FadeIn>
 
-      <BlogHomePreview posts={featuredBlogPosts} />
+      <FadeIn>
+        <BlogHomePreview posts={featuredBlogPosts} />
+      </FadeIn>
 
-      <ContactHomePreview />
+      <FadeIn>
+        <ContactHomePreview />
+      </FadeIn>
     </>
   )
 }

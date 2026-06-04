@@ -13,6 +13,7 @@ import { HeaderGraphBackground } from "@/components/site/header-graph-background
 import { JsonLd } from "@/components/site/json-ld"
 import { GlassSurface } from "@/components/site/glass-surface"
 import { navGlassClassName } from "@/components/site/site-styles"
+import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
@@ -275,27 +276,36 @@ export default function ExperiencePage() {
               </Link>
             </div>
 
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-violet-300/80 uppercase">
-                Career roadmap
-              </p>
-              <h1
-                className="text-[clamp(2rem,5.5vw,3.25rem)] leading-[1.1] font-bold tracking-tight text-white"
-                itemProp="name"
-              >
-                Full stack developer{" "}
-                <span className="bg-gradient-to-r from-purple-400 via-violet-400 to-sky-400 bg-clip-text text-transparent">
-                  experience timeline
-                </span>
-              </h1>
-              <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg sm:leading-[1.85]" itemProp="description">
-                {experiencePageIntro}
-              </p>
-            </div>
+            <PageHeaderStagger className="mx-auto max-w-3xl text-center">
+              <PageHeaderItem>
+                <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-violet-300/80 uppercase">
+                  Career roadmap
+                </p>
+              </PageHeaderItem>
+              <PageHeaderItem>
+                <h1
+                  className="text-[clamp(2rem,5.5vw,3.25rem)] leading-[1.1] font-bold tracking-tight text-white"
+                  itemProp="name"
+                >
+                  Full stack developer{" "}
+                  <span className="bg-gradient-to-r from-purple-400 via-violet-400 to-sky-400 bg-clip-text text-transparent">
+                    experience timeline
+                  </span>
+                </h1>
+              </PageHeaderItem>
+              <PageHeaderItem>
+                <p
+                  className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg sm:leading-[1.85]"
+                  itemProp="description"
+                >
+                  {experiencePageIntro}
+                </p>
+              </PageHeaderItem>
+            </PageHeaderStagger>
           </div>
         </header>
 
-        <section
+        <MotionSection
           className="relative mx-auto max-w-[1200px] px-5 pb-12 sm:px-6 lg:px-4"
           aria-labelledby="roadmap-heading"
         >
@@ -331,10 +341,10 @@ export default function ExperiencePage() {
           <div id="roadmap" className="scroll-mt-28">
             <ExperienceRoadmap milestones={careerRoadmapMilestones} />
           </div>
-        </section>
+        </MotionSection>
 
+        <MotionSection className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4">
         <FaqSection
-          className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4"
           headingId="experience-faq-heading"
           description="Quick answers about my roles, studio, and client work."
           items={experienceFaq}
@@ -353,6 +363,7 @@ export default function ExperiencePage() {
             },
           ]}
         />
+        </MotionSection>
       </article>
     </>
   )

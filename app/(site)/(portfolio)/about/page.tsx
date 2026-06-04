@@ -37,6 +37,7 @@ import {
 import { imageSeoUrl } from "@/lib/image"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { PROFILE_IMAGE, profileEmail, profileSameAs, SITE_URL } from "@/lib/site"
+import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { cn } from "@/lib/utils"
 
 const TAYLANCE_TECH_URL = "https://taylancetech.com"
@@ -277,7 +278,7 @@ export default function AboutPage() {
               </Link>
             </div>
 
-            <div
+            <PageHeaderStagger
               className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)] lg:gap-16"
               itemScope
               itemType="https://schema.org/Person"
@@ -294,6 +295,7 @@ export default function AboutPage() {
                 <meta key={url} itemProp="sameAs" content={url} />
               ))}
 
+              <PageHeaderItem>
               <div>
                 <p className="mb-4 text-xs font-semibold tracking-[0.22em] text-blue-300/80 uppercase">
                   About Tayyab
@@ -349,7 +351,9 @@ export default function AboutPage() {
                   Available for remote freelance &amp; contract work worldwide
                 </p>
               </div>
+              </PageHeaderItem>
 
+              <PageHeaderItem>
               <div className="relative mx-auto w-full max-w-[340px] lg:mx-0 lg:max-w-none">
                 <div
                   className="pointer-events-none absolute -inset-8 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.35)_0%,rgba(59,130,246,0.12)_45%,transparent_70%)] blur-2xl"
@@ -382,11 +386,12 @@ export default function AboutPage() {
                   </div>
                 </GlassSurface>
               </div>
-            </div>
+              </PageHeaderItem>
+            </PageHeaderStagger>
           </div>
         </header>
 
-        <section
+        <MotionSection
           className="relative mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-4"
           aria-label="Professional metrics"
         >
@@ -405,9 +410,9 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </MotionSection>
 
-        <section
+        <MotionSection
           className="mx-auto max-w-[1200px] px-5 py-20 sm:px-6 lg:px-4"
           aria-labelledby="expertise-heading"
         >
@@ -451,9 +456,9 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </MotionSection>
 
-        <section
+        <MotionSection
           className="mx-auto max-w-[1200px] px-5 pb-20 sm:px-6 lg:px-4"
           aria-labelledby="background-heading"
         >
@@ -499,9 +504,9 @@ export default function AboutPage() {
               </p>
             </div>
           </GlassSurface>
-        </section>
+        </MotionSection>
 
-        <section
+        <MotionSection
           className="mx-auto max-w-[1200px] px-5 pb-20 sm:px-6 lg:px-4"
           aria-labelledby="skills-heading"
         >
@@ -538,9 +543,9 @@ export default function AboutPage() {
               </GlassSurface>
             ))}
           </div>
-        </section>
+        </MotionSection>
 
-        <section
+        <MotionSection
           className="mx-auto max-w-[1200px] px-5 pb-20 sm:px-6 lg:px-4"
           aria-labelledby="principles-heading"
         >
@@ -575,9 +580,9 @@ export default function AboutPage() {
               </li>
             ))}
           </ol>
-        </section>
+        </MotionSection>
 
-        <section className="mx-auto max-w-[1200px] px-5 pb-20 sm:px-6 lg:px-4">
+        <MotionSection className="mx-auto max-w-[1200px] px-5 pb-20 sm:px-6 lg:px-4">
           <blockquote
             className={cn(
               "relative overflow-hidden rounded-2xl border-0 p-8 sm:p-10",
@@ -598,9 +603,9 @@ export default function AboutPage() {
               — Tayyab on engineering discipline
             </footer>
           </blockquote>
-        </section>
+        </MotionSection>
 
-        <section
+        <MotionSection
           className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4"
           aria-labelledby="about-cta-heading"
         >
@@ -668,7 +673,7 @@ export default function AboutPage() {
               ))}
             </div>
           </GlassSurface>
-        </section>
+        </MotionSection>
       </article>
     </>
   )

@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link"
+import { motion } from "framer-motion"
 import type { ReactNode } from "react"
 
 import {
@@ -17,6 +20,8 @@ type CtaLinkProps = {
   children: ReactNode
 }
 
+const MotionLink = motion(Link as any)
+
 export function CtaLink({
   href,
   variant = "primary",
@@ -30,18 +35,24 @@ export function CtaLink({
     className,
   )
 
+  const animationProps = {
+    whileHover: { scale: 1.05 },
+    whileTap: { scale: 0.95 },
+    transition: { type: "spring" as const, stiffness: 400, damping: 25 }
+  }
+
   if (download || href.startsWith("http") || href.endsWith(".pdf")) {
     return (
-      <a href={href} download={download} title={title} className={classes}>
+      <motion.a href={href} download={download} title={title} className={classes} {...animationProps}>
         {children}
-      </a>
+      </motion.a>
     )
   }
 
   return (
-    <Link href={href} title={title} className={classes}>
+    <MotionLink href={href} title={title} className={classes} {...animationProps}>
       {children}
-    </Link>
+    </MotionLink>
   )
 }
 

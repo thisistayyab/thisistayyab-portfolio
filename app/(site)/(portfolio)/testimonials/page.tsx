@@ -11,6 +11,7 @@ import {
   buildTestimonialsWebPageJsonLd,
 } from "@/components/site/testimonials-json-ld"
 import { TestimonialsSection } from "@/components/site/testimonials-section"
+import { MotionSection } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
@@ -67,7 +68,9 @@ export default function TestimonialsPage() {
         </div>
       </header>
 
-      <TestimonialsSection testimonials={testimonials} variant="page" headingLevel="h1" />
+      <MotionSection>
+        <TestimonialsSection testimonials={testimonials} variant="page" headingLevel="h1" />
+      </MotionSection>
       </article>
     </>
   )

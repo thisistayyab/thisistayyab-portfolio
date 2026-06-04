@@ -1,6 +1,8 @@
 import Link from "next/link"
 
 import { BlogListClient } from "@/components/blog/blog-list-client"
+import { PortfolioMotionLayout } from "@/components/motion/portfolio-motion-layout"
+import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { JsonLd } from "@/components/site/json-ld"
 import { BLOG_INDEX_PATH, blogIndexMetadata } from "@/lib/blog/config"
 import { buildBlogBreadcrumbJsonLd, buildBlogIndexJsonLd } from "@/lib/blog/json-ld"
@@ -15,7 +17,7 @@ export default async function BlogIndexPage() {
   const posts = await getPublishedPosts()
 
   return (
-    <>
+    <PortfolioMotionLayout>
       <JsonLd data={buildBlogIndexJsonLd(posts, blogIndexMetadata.description)} />
       <JsonLd data={buildBlogBreadcrumbJsonLd()} />
 
@@ -29,19 +31,27 @@ export default async function BlogIndexPage() {
           aria-hidden="true"
         />
 
-        <header className="relative z-[2] mx-auto mb-12 max-w-3xl text-center lg:mb-14">
-          <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/80 uppercase">Blog</p>
-          <h1 className="text-[clamp(2rem,5vw,3rem)] leading-[1.12] font-bold tracking-tight text-white">
-            Full stack development{" "}
-            <span className="bg-gradient-to-r from-blue-300 via-violet-300 to-purple-400 bg-clip-text text-transparent">
-              articles
-            </span>
-          </h1>
-          <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
-          <p className="text-base leading-relaxed text-slate-400 sm:text-lg">{blogIndexMetadata.description}</p>
-        </header>
+        <PageHeaderStagger className="relative z-[2] mx-auto mb-12 max-w-3xl text-center lg:mb-14">
+          <PageHeaderItem>
+            <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/80 uppercase">Blog</p>
+          </PageHeaderItem>
+          <PageHeaderItem>
+            <h1 className="text-[clamp(2rem,5vw,3rem)] leading-[1.12] font-bold tracking-tight text-white">
+              Full stack development{" "}
+              <span className="bg-gradient-to-r from-blue-300 via-violet-300 to-purple-400 bg-clip-text text-transparent">
+                articles
+              </span>
+            </h1>
+          </PageHeaderItem>
+          <PageHeaderItem>
+            <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
+            <p className="text-base leading-relaxed text-slate-400 sm:text-lg">
+              {blogIndexMetadata.description}
+            </p>
+          </PageHeaderItem>
+        </PageHeaderStagger>
 
-        <div className="relative z-[2]">
+        <MotionSection className="relative z-[2]">
           <h2 id="blog-articles-heading" className="sr-only">
             Published articles
           </h2>
@@ -63,8 +73,8 @@ export default async function BlogIndexPage() {
           ) : (
             <BlogListClient posts={posts} />
           )}
-        </div>
+        </MotionSection>
       </div>
-    </>
+    </PortfolioMotionLayout>
   )
 }

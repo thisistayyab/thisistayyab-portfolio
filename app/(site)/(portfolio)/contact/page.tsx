@@ -11,6 +11,7 @@ import {
 import { FaqSection } from "@/components/site/faq-section"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
+import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
@@ -82,30 +83,38 @@ export default function ContactPage() {
               </Link>
             </div>
 
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/80 uppercase">
-                Contact
-              </p>
-              <h1
-                id="contact-page-heading"
-                className="mx-auto max-w-4xl text-[clamp(2rem,5.5vw,3.25rem)] leading-[1.12] font-bold tracking-tight text-white"
-              >
-                <span className="block">Let&apos;s discuss</span>
-                <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
-                  your project
-                </span>
-              </h1>
-              <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
-              <p className="text-base leading-relaxed text-slate-400 sm:text-lg sm:leading-[1.75]">
-                {pageLead}
-              </p>
-            </div>
+            <PageHeaderStagger className="mx-auto max-w-3xl text-center">
+              <PageHeaderItem>
+                <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/80 uppercase">
+                  Contact
+                </p>
+              </PageHeaderItem>
+              <PageHeaderItem>
+                <h1
+                  id="contact-page-heading"
+                  className="mx-auto max-w-4xl text-[clamp(2rem,5.5vw,3.25rem)] leading-[1.12] font-bold tracking-tight text-white"
+                >
+                  <span className="block">Let&apos;s discuss</span>
+                  <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
+                    your project
+                  </span>
+                </h1>
+              </PageHeaderItem>
+              <PageHeaderItem>
+                <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
+                <p className="text-base leading-relaxed text-slate-400 sm:text-lg sm:leading-[1.75]">
+                  {pageLead}
+                </p>
+              </PageHeaderItem>
+            </PageHeaderStagger>
           </div>
         </header>
 
-        <ContactSection />
+        <MotionSection>
+          <ContactSection />
+        </MotionSection>
 
-        <div className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4">
+        <MotionSection className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4">
           <FaqSection
             headingId="contact-faq-heading"
             title="Contact FAQ"
@@ -125,7 +134,7 @@ export default function ContactPage() {
               },
             ]}
           />
-        </div>
+        </MotionSection>
       </article>
     </>
   )

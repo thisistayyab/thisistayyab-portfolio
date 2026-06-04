@@ -24,6 +24,7 @@ import {
   buildServicesWebPageJsonLd,
 } from "@/components/site/services-json-ld"
 import { ServicesSection } from "@/components/site/services-section"
+import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
@@ -254,31 +255,39 @@ export default function ServicesPage() {
               </Link>
             </div>
 
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/80 uppercase">
-                Services
-              </p>
-              <h1
-                id="services-page-heading"
-                className="mx-auto max-w-4xl text-[clamp(2rem,5.5vw,3.25rem)] leading-[1.12] font-bold tracking-tight text-white"
-              >
-                <span className="block">Full stack software</span>
-                <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
-                  built to ship
-                </span>
-              </h1>
-              <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
-              <p className="text-base leading-relaxed text-slate-400 sm:text-lg sm:leading-[1.75]">
-                {pageLead}
-              </p>
-              <p className="mt-5 text-sm leading-relaxed text-slate-500">{pageStackNote}</p>
-            </div>
+            <PageHeaderStagger className="mx-auto max-w-3xl text-center">
+              <PageHeaderItem>
+                <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-blue-300/80 uppercase">
+                  Services
+                </p>
+              </PageHeaderItem>
+              <PageHeaderItem>
+                <h1
+                  id="services-page-heading"
+                  className="mx-auto max-w-4xl text-[clamp(2rem,5.5vw,3.25rem)] leading-[1.12] font-bold tracking-tight text-white"
+                >
+                  <span className="block">Full stack software</span>
+                  <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
+                    built to ship
+                  </span>
+                </h1>
+              </PageHeaderItem>
+              <PageHeaderItem>
+                <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
+                <p className="text-base leading-relaxed text-slate-400 sm:text-lg sm:leading-[1.75]">
+                  {pageLead}
+                </p>
+                <p className="mt-5 text-sm leading-relaxed text-slate-500">{pageStackNote}</p>
+              </PageHeaderItem>
+            </PageHeaderStagger>
           </div>
         </header>
 
-        <ServicesSection services={portfolioServices} showEngagement className="pt-4" />
+        <MotionSection>
+          <ServicesSection services={portfolioServices} showEngagement className="pt-4" />
+        </MotionSection>
 
-        <div className="mx-auto max-w-[1200px] px-5 pb-20 sm:px-6 lg:px-4">
+        <MotionSection className="mx-auto max-w-[1200px] px-5 pb-20 sm:px-6 lg:px-4">
           <FaqSection
             headingId="services-faq-heading"
             title="Services FAQ"
@@ -298,7 +307,7 @@ export default function ServicesPage() {
               },
             ]}
           />
-        </div>
+        </MotionSection>
       </article>
     </>
   )
