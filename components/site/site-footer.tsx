@@ -4,13 +4,12 @@ import { RiGithubFill, RiLinkedinFill } from "react-icons/ri"
 import { SiLeetcode } from "react-icons/si"
 import Link from "next/link"
 
-import { JsonLd } from "@/components/site/json-ld"
 import { SocialIcon } from "@/components/site/social-icon"
 import { NavCtaLink } from "@/components/site/cta-link"
 import { NavOrb } from "@/components/site/nav-orb"
 import { GlassSurface } from "@/components/site/glass-surface"
 import { contentCardClassName, navGlassClassName } from "@/components/site/site-styles"
-import { letsTalkDescription, letsTalkHref, navItems, profileEmail, SITE_NAME, SITE_URL } from "@/lib/site"
+import { letsTalkDescription, letsTalkHref, navItems, profileEmail, SITE_NAME } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 const TAYLANCE_TECH_URL = "https://taylancetech.com"
@@ -63,22 +62,6 @@ export function SiteFooter() {
       role="contentinfo"
       aria-label="Site footer"
     >
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "WPFooter",
-          "@id": SITE_URL,
-          url: SITE_URL,
-          copyrightYear: year,
-          copyrightHolder: {
-            "@type": "Person",
-            name: "Tayyab",
-            url: SITE_URL,
-            email: profileEmail,
-          },
-        }}
-      />
-
       <div
         className="pointer-events-none absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent"
         aria-hidden="true"

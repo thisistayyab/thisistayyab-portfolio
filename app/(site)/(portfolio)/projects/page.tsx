@@ -278,11 +278,13 @@ const projectsFaq = [
   },
 ] as const
 
+const PROJECTS_LIST_ID = `${SITE_URL}/projects#portfolio`
+
 function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "@id": `${SITE_URL}/projects`,
+    "@id": PROJECTS_LIST_ID,
     name: "Tayyab Full Stack Web Development Portfolio",
     description: projectsPageIntro,
     numberOfItems: projects.length,
@@ -307,8 +309,9 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
         operatingSystem: "Web Browser",
         author: {
           "@type": "Person",
+          "@id": `${SITE_URL}/about`,
           name: "Tayyab",
-          url: SITE_URL,
+          url: `${SITE_URL}/about`,
           jobTitle: "Full Stack Web Developer",
         },
         ...(project.client
@@ -322,8 +325,9 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
             ? {
                 maintainer: {
                   "@type": "Person",
+                  "@id": `${SITE_URL}/about`,
                   name: "Tayyab",
-                  url: SITE_URL,
+                  url: `${SITE_URL}/about`,
                   jobTitle: "Full Stack Web Developer",
                 },
               }
@@ -334,18 +338,22 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
 }
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Projects | Full Stack Web Development Portfolio — React, Next.js & Node.js",
+  title: "Projects | Full Stack Portfolio — React & Next.js",
   description:
-    "Browse Tayyab's full-stack web development portfolio: Taylance Tech studio, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
+    "Browse Tayyab's full-stack portfolio: Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
   canonicalPath: "/projects",
   keywords: projectsKeywords,
   openGraph: {
-    title: "Web Development Projects | Tayyab — React & Node.js Portfolio",
-    description: projectsPageIntro,
+    title: "Web Development Projects | Tayyab",
+    description:
+      "Browse Tayyab's full-stack portfolio: Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
   },
   ogImage: {
-    url: `${SITE_URL}/images/projects/taylance-tech.avif`,
+    url: `${SITE_URL}/images/projects/taylance-tech.webp`,
     alt: "Taylance Tech — founder-led software studio",
+    width: 1200,
+    height: 630,
+    type: "image/webp",
   },
   twitter: {
     title: "Full Stack Web Development Projects | Tayyab",
@@ -378,11 +386,12 @@ export default function ProjectsPage() {
           isPartOf: { "@type": "WebSite", url: SITE_URL, name: "Tayyab Portfolio" },
           about: {
             "@type": "Person",
+            "@id": `${SITE_URL}/about`,
             name: "Tayyab",
             jobTitle: "Full Stack Web Developer",
-            url: SITE_URL,
+            url: `${SITE_URL}/about`,
           },
-          mainEntity: { "@id": `${SITE_URL}/projects` },
+          mainEntity: { "@id": PROJECTS_LIST_ID },
         }}
       />
       <JsonLd

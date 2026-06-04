@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
           "/login",
           "/api/",
           "/webmaster/",
-          "/assets-archive/index.html",
+          "/assets-archive/",
         ],
       },
     ],

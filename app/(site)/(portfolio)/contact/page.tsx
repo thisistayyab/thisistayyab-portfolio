@@ -19,7 +19,7 @@ const pageLead =
   "Reach out to discuss full stack software, SaaS products, APIs, or AI automation. Share your goals, timeline, and any technical context so we can plan the right next step."
 
 const pageMetaDescription =
-  "Contact Tayyab — full stack developer for SaaS, web applications, Node.js APIs, PostgreSQL, AI automation, and production deployments. Based in Pakistan, working with clients worldwide."
+  "Contact Tayyab for full stack work — SaaS, Next.js APIs, PostgreSQL, and AI automation. Pakistan-based, available remote worldwide."
 
 const contactKeywords = [
   "contact full stack developer",

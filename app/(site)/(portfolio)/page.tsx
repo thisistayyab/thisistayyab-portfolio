@@ -218,7 +218,7 @@ export default async function HomePage() {
           jobTitle: "Full Stack Developer",
           description:
             "Full stack developer specializing in React, Next.js, Node.js, and PostgreSQL. 3+ years experience building fast, scalable web applications. 1,150+ LeetCode problems solved. 15+ projects completed.",
-          url: SITE_URL,
+          url: `${SITE_URL}/about`,
           image: imageSeoUrl(PROFILE_IMAGE, SITE_URL),
           knowsAbout: [
             "React",

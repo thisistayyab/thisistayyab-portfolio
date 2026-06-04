@@ -44,8 +44,20 @@ const defaultOgImage = (): OgImage => ({
 
 function resolveOgImages(ogImage?: OgImage | string): OgImage[] {
   if (!ogImage) return [defaultOgImage()]
-  if (typeof ogImage === "string") return [{ url: ogImage, alt: FEATURED_OG_ALT }]
-  return [ogImage]
+  if (typeof ogImage === "string") {
+    return [{ url: ogImage, alt: FEATURED_OG_ALT, ...FEATURED_OG_DIMENSIONS, type: "image/jpeg" }]
+  }
+  const defaults = defaultOgImage()
+  return [
+    {
+      ...defaults,
+      ...ogImage,
+      alt: ogImage.alt || defaults.alt,
+      width: ogImage.width ?? defaults.width,
+      height: ogImage.height ?? defaults.height,
+      type: ogImage.type ?? defaults.type,
+    },
+  ]
 }
 
 /** Consistent page metadata: absolute titles, canonical, Open Graph, and Twitter. */

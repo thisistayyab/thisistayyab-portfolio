@@ -214,7 +214,7 @@ const servicesFaq = [
 ] as const
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Services | Full Stack Developer & Software Engineer — Tayyab",
+  title: "Services | Full Stack Developer — Tayyab",
   description: pageMetaDescription,
   canonicalPath: "/services",
   keywords: servicesKeywords,

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { CtaLink } from "@/components/site/cta-link"
 import { GlassSurface, type GlassRim } from "@/components/site/glass-surface"
 import { contentCardClassName, navGlassClassName, statIconClassName } from "@/components/site/site-styles"
+import { pageFragmentId } from "@/lib/json-ld-ids"
 import { cn } from "@/lib/utils"
 
 export type ExperienceIcon = "rocket" | "briefcase" | "compass"
@@ -452,12 +453,16 @@ export function ExperienceHomePreview({
   )
 }
 
+export function experienceListId(siteUrl: string, pagePath: string) {
+  return pageFragmentId(siteUrl, pagePath === "/" ? "/" : "/experience", "career-roadmap")
+}
+
 export function buildExperienceItemListJsonLd(
   milestones: CareerMilestone[],
   siteUrl: string,
   pagePath: string,
 ) {
-  const baseId = pagePath === "/" ? `${siteUrl}/experience` : `${siteUrl}/experience`
+  const baseId = experienceListId(siteUrl, pagePath)
 
   return {
     "@context": "https://schema.org",
@@ -474,7 +479,7 @@ export function buildExperienceItemListJsonLd(
         position: index + 1,
         item: {
           "@type": "OrganizationRole",
-          "@id": `${siteUrl}/experience`,
+          "@id": `${siteUrl}/experience#${milestone.id}`,
           roleName: milestone.roleTitle,
           description: milestone.description,
           startDate: milestone.startDate,
@@ -508,6 +513,6 @@ export function buildExperienceWebPageJsonLd(
       jobTitle: "Full Stack Web Developer",
       url: siteUrl,
     },
-    mainEntity: { "@id": `${siteUrl}/experience` },
+    mainEntity: { "@id": experienceListId(siteUrl, "/experience") },
   }
 }

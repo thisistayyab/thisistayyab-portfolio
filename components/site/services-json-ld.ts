@@ -1,7 +1,9 @@
 import type { PortfolioService } from "@/components/site/service-card"
+import { pageFragmentId, personId } from "@/lib/json-ld-ids"
 
-function servicesListId(siteUrl: string, pagePath: string) {
-  return pagePath === "/" ? `${siteUrl}/services` : `${siteUrl}/services`
+export function servicesListId(siteUrl: string, pagePath: string) {
+  const path = pagePath === "/" ? "/" : "/services"
+  return pageFragmentId(siteUrl, path, "services-list")
 }
 
 export function buildServicesItemListJsonLd(
@@ -22,14 +24,15 @@ export function buildServicesItemListJsonLd(
       position: index + 1,
       item: {
         "@type": "Service",
-        "@id": `${siteUrl}/services`,
+        "@id": `${siteUrl}/services#${service.slug}`,
         name: service.title,
         description: service.description,
         provider: {
           "@type": "Person",
+          "@id": personId(siteUrl),
           name: "Tayyab",
           jobTitle: "Full Stack Developer",
-          url: siteUrl,
+          url: personId(siteUrl),
         },
         areaServed: "Worldwide",
       },
@@ -51,7 +54,7 @@ export function buildServicesWebPageJsonLd(siteUrl: string, description: string)
       url: siteUrl,
     },
     mainEntity: {
-      "@id": `${siteUrl}/services`,
+      "@id": servicesListId(siteUrl, "/services"),
     },
   }
 }

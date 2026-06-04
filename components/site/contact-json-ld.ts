@@ -1,4 +1,5 @@
-import { profileEmail, profileSameAs, SITE_URL } from "@/lib/site"
+import { personId } from "@/lib/json-ld-ids"
+import { profileEmail, profileSameAs } from "@/lib/site"
 
 export function buildContactBreadcrumbJsonLd(siteUrl: string) {
   return {
@@ -26,10 +27,11 @@ export function buildContactPageJsonLd(siteUrl: string, description: string) {
     },
     mainEntity: {
       "@type": "Person",
+      "@id": personId(siteUrl),
       name: "Tayyab",
       jobTitle: "Full Stack Developer",
       email: profileEmail,
-      url: siteUrl,
+      url: personId(siteUrl),
       sameAs: [...profileSameAs],
       contactPoint: {
         "@type": "ContactPoint",

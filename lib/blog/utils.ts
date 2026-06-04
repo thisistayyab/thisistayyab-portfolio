@@ -55,10 +55,5 @@ export function formatBlogDate(iso: string | null | undefined) {
   })
 }
 
-export async function pingSearchEnginesForSitemap() {
-  const sitemapUrl = encodeURIComponent(`${SITE_URL}/sitemap.xml`)
-  await Promise.allSettled([
-    fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`),
-    fetch(`https://www.bing.com/ping?sitemap=${sitemapUrl}`),
-  ])
-}
+/** No-op: Google deprecated the public sitemap ping endpoint; submit via Search Console instead. */
+export async function pingSearchEnginesForSitemap() {}

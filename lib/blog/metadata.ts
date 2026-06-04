@@ -2,7 +2,12 @@ import type { Metadata } from "next"
 
 import { blogIndexMetadata, BLOG_INDEX_PATH } from "@/lib/blog/config"
 import { buildPageMetadata } from "@/lib/site-metadata"
-import { SITE_URL } from "@/lib/site"
+import {
+  FEATURED_OG_ALT,
+  FEATURED_OG_DIMENSIONS,
+  featuredOgImageUrl,
+  SITE_URL,
+} from "@/lib/site"
 
 export function blogIndexPageMetadata(): Metadata {
   return buildPageMetadata({
@@ -33,6 +38,18 @@ export function blogPostPageMetadata(post: {
       ? `${SITE_URL}${post.cover_image.startsWith("/") ? post.cover_image : `/${post.cover_image}`}`
       : undefined
 
+  const ogImages = imageUrl
+    ? [{ url: imageUrl, alt: post.title }]
+    : [
+        {
+          url: featuredOgImageUrl(),
+          alt: FEATURED_OG_ALT,
+          width: FEATURED_OG_DIMENSIONS.width,
+          height: FEATURED_OG_DIMENSIONS.height,
+          type: "image/jpeg",
+        },
+      ]
+
   return {
     title: { absolute: title },
     description,
@@ -44,13 +61,13 @@ export function blogPostPageMetadata(post: {
       url,
       type: "article",
       publishedTime: post.published_at ?? undefined,
-      images: imageUrl ? [{ url: imageUrl, alt: post.title }] : undefined,
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: imageUrl ? [imageUrl] : undefined,
+      images: ogImages.map((img) => img.url),
     },
   }
 }

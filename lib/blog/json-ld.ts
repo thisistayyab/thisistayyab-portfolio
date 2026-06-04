@@ -1,6 +1,7 @@
 import { BLOG_INDEX_PATH } from "@/lib/blog/config"
 import type { BlogPost, BlogPostSummary } from "@/lib/blog/types"
 import { blogImageUrl } from "@/lib/blog/utils"
+import { personId } from "@/lib/json-ld-ids"
 import { SITE_URL } from "@/lib/site"
 
 export function buildBlogIndexJsonLd(posts: BlogPostSummary[], description: string) {
@@ -60,8 +61,9 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
     image: image ? [image] : undefined,
     author: {
       "@type": "Person",
+      "@id": personId(SITE_URL),
       name: post.author?.name || "Tayyab",
-      url: SITE_URL,
+      url: personId(SITE_URL),
     },
     publisher: {
       "@type": "Organization",

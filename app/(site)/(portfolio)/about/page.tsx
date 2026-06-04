@@ -196,9 +196,9 @@ const aboutSocialLinks = [
 ] as const
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "About Tayyab | Full Stack Developer — React, Next.js & Node.js Expert",
+  title: "About Tayyab | Full Stack Developer — React & Next.js",
   description:
-    "Meet Tayyab — founder of Taylance Tech and full stack web developer with 3+ years of experience shipping React, Next.js, and Node.js applications. 15+ projects delivered, 1,150+ LeetCode problems solved. Available for freelance and contract work.",
+    "Meet Tayyab — founder of Taylance Tech and full stack developer (React, Next.js, Node.js). 3+ years, 15+ projects, 1,150+ LeetCode. Available for hire.",
   canonicalPath: "/about",
   keywords: aboutKeywords,
   openGraph: {
@@ -229,7 +229,7 @@ export default function AboutPage() {
           name: "Tayyab",
           jobTitle: "Founder of Taylance Tech & Full Stack Web Developer",
           description: aboutSubtitle,
-          url: SITE_URL,
+          url: `${SITE_URL}/about`,
           image: imageSeoUrl(PROFILE_IMAGE, SITE_URL),
           email: profileEmail,
           sameAs: [...profileSameAs],

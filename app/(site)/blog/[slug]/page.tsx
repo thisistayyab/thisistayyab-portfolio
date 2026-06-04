@@ -109,7 +109,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={blogImageUrl(post.author.avatar_url) ?? post.author.avatar_url}
-                    alt=""
+                    alt={`${post.author.name} avatar`}
                     width={40}
                     height={40}
                     className="size-10 rounded-full border border-white/10 object-cover"

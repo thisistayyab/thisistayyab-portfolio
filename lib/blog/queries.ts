@@ -126,8 +126,11 @@ export async function getPublishedPostsForSitemap(): Promise<SitemapPostEntry[]>
     .eq("published", true)
     .not("slug", "is", null)
 
-  if (error || !data) {
-    if (error) console.error("[blog] getPublishedPostsForSitemap:", error.message)
+  if (error) {
+    throw new Error(`[blog] getPublishedPostsForSitemap: ${error.message}`)
+  }
+
+  if (!data) {
     return []
   }
 

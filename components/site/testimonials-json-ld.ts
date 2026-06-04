@@ -1,7 +1,12 @@
 import type { HomeTestimonial } from "@/components/site/testimonial-card"
+import { pageFragmentId, personId } from "@/lib/json-ld-ids"
 
-function reviewsListId(siteUrl: string, pagePath: string) {
-  return pagePath === "/" ? `${siteUrl}/testimonials` : `${siteUrl}/testimonials`
+export function testimonialsListId(siteUrl: string, pagePath: string) {
+  return pageFragmentId(
+    siteUrl,
+    pagePath === "/" ? "/" : "/testimonials",
+    "testimonials-list",
+  )
 }
 
 export function buildTestimonialsItemListJsonLd(
@@ -10,7 +15,7 @@ export function buildTestimonialsItemListJsonLd(
   pagePath: string,
   description: string,
 ) {
-  const listId = reviewsListId(siteUrl, pagePath)
+  const listId = testimonialsListId(siteUrl, pagePath)
 
   return {
     "@context": "https://schema.org",
@@ -38,9 +43,10 @@ export function buildTestimonialsItemListJsonLd(
         },
         itemReviewed: {
           "@type": "Person",
+          "@id": personId(siteUrl),
           name: "Tayyab",
           jobTitle: "Full Stack Web Developer",
-          url: siteUrl,
+          url: personId(siteUrl),
         },
         ...(item.image ? { image: `${siteUrl}${item.image}` } : {}),
       },
@@ -62,7 +68,7 @@ export function buildTestimonialsWebPageJsonLd(siteUrl: string, description: str
       url: siteUrl,
     },
     mainEntity: {
-      "@id": `${siteUrl}/testimonials`,
+      "@id": testimonialsListId(siteUrl, "/testimonials"),
     },
   }
 }
