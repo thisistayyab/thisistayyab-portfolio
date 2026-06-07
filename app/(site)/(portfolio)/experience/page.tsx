@@ -28,17 +28,17 @@ export const careerRoadmapMilestones: CareerMilestone[] = [
     kind: "founder",
     phase: "Studio launch",
     roadmapYear: "2026",
-    roleTitle: "Founder & Full Stack Developer",
+    roleTitle: "Co-Founder & Lead Developer",
     organization: "Taylance Tech",
     organizationUrl: TAYLANCE_TECH_URL,
     periodLabel: "Founded 2026 · Vision since 2023",
     startDate: "2026-01-01",
     isCurrent: true,
-    platformLabel: "Founder-led software studio",
+    platformLabel: "Co-founder-led software agency",
     summary:
-      "My software studio for web, SaaS, and AI products — launched in 2026, planned since 2023.",
+      "Co-founder-led software agency for web, mobile, SaaS, and AI — launched in 2026, planned since 2023.",
     description:
-      "I run Taylance Tech as a founder-led studio. I build full-stack products for startups: React and Next.js front ends, Node.js APIs, and deployments built to last.",
+      "I co-founded Taylance Tech with two partners. I lead web, mobile, and AI development — React and Next.js front ends, Node.js APIs, and deployments built to last.",
     responsibilities: [
       "Product planning, architecture, and delivery.",
       "React, Next.js, and Node.js development.",
@@ -48,7 +48,7 @@ export const careerRoadmapMilestones: CareerMilestone[] = [
       "Launched taylancetech.com and Taylance CRM.",
       "Delivered client and studio products end to end.",
     ],
-    skills: ["Next.js", "React", "Node.js", "SaaS", "AI integration", "SEO", "Founder-led"],
+    skills: ["Next.js", "React", "Node.js", "SaaS", "AI integration", "SEO", "Co-founder-led"],
     rim: "violet",
     accentBorderClass: "border-l-violet-500",
     icon: "rocket",
@@ -164,7 +164,7 @@ export const careerRoadmapMilestones: CareerMilestone[] = [
       "I focused on React, Node.js, and freelance delivery — and on the goal of launching Taylance Tech.",
     outcomes: [
       "Studio vision set in 2023, launched in 2026.",
-      "Three years of client work before founding Taylance Tech.",
+      "Three years of client work before co-founding Taylance Tech.",
     ],
     skills: ["React", "Node.js", "Problem solving", "Freelance discipline", "Product thinking"],
     rim: "violet",
@@ -174,13 +174,13 @@ export const careerRoadmapMilestones: CareerMilestone[] = [
 ]
 
 const experiencePageIntro =
-  "Tayyab's career as a full stack developer — founder of Taylance Tech (2026), freelance on Upwork and Fiverr, and selected client work."
+  "Tayyab's career as a full stack developer — co-founder of Taylance Tech (2026), freelance on Upwork and Fiverr, and selected client work."
 
 const experienceKeywords = [
   "Tayyab full stack developer experience",
   "React developer career history",
   "Node.js freelance developer roadmap",
-  "Taylance Tech founder",
+  "Taylance Tech co-founder",
   "Upwork full stack developer",
   "Fiverr web developer experience",
   "software engineer career timeline",
@@ -194,12 +194,12 @@ const experienceFaq = [
   {
     question: "What do you do today?",
     answer:
-      "I am Founder and Full Stack Developer at Taylance Tech. I also take freelance work on Upwork and Fiverr.",
+      "I am Co-Founder and Lead Developer at Taylance Tech. I also take freelance work on Upwork and Fiverr.",
   },
   {
     question: "When did you start Taylance Tech?",
     answer:
-      "The studio launched in 2026. I had planned it since 2023 while building skills through freelance work.",
+      "The agency launched in 2026 with two co-founders. I had planned it since 2023 while building skills through freelance work.",
   },
   {
     question: "Why is Order AI LLC not in Projects?",

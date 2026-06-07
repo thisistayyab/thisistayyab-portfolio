@@ -47,7 +47,7 @@ const aboutInlineLinkClassName =
   "font-medium text-violet-300 underline decoration-violet-400/40 underline-offset-2 transition-colors hover:text-violet-200 hover:decoration-violet-300/60"
 
 const aboutSubtitle =
-  "Founder of Taylance Tech and full stack developer specializing in React, Next.js, Node.js, and PostgreSQL — helping startups, SaaS companies, and growing businesses turn ideas into polished, maintainable software."
+  "Co-Founder & Lead Developer at Taylance Tech and full stack developer specializing in React, Next.js, Node.js, and PostgreSQL — helping startups, SaaS companies, and growing businesses turn ideas into polished, maintainable software."
 
 const aboutKeywords = [
   "Tayyab full stack developer",
@@ -199,7 +199,7 @@ const aboutSocialLinks = [
 export const metadata: Metadata = buildPageMetadata({
   title: "About Tayyab | Full Stack Developer — React & Next.js",
   description:
-    "Meet Tayyab — founder of Taylance Tech and full stack developer (React, Next.js, Node.js). 3+ years, 15+ projects, 1,150+ LeetCode. Available for hire.",
+    "Meet Tayyab — co-founder of Taylance Tech and full stack developer (React, Next.js, Node.js). 3+ years, 15+ projects, 1,150+ LeetCode. Available for hire.",
   canonicalPath: "/about",
   keywords: aboutKeywords,
   openGraph: {
@@ -257,7 +257,7 @@ export default function AboutPage() {
               <meta itemProp="name" content="Tayyab" />
               <meta
                 itemProp="jobTitle"
-                content="Founder of Taylance Tech & Full Stack Web Developer"
+                content="Co-Founder & Lead Developer at Taylance Tech"
               />
               <meta itemProp="url" content={`${SITE_URL}/about`} />
               <meta itemProp="description" content={aboutSubtitle} />
@@ -352,7 +352,7 @@ export default function AboutPage() {
                       "absolute bottom-6 left-1/2 flex w-[calc(100%-2rem)] -translate-x-1/2 justify-center text-center text-xs font-medium text-slate-200",
                     )}
                   >
-                    Founder, Taylance Tech · Full Stack Developer
+                    Co-Founder & Lead Developer, Taylance Tech
                   </div>
                 </GlassSurface>
               </div>
@@ -454,7 +454,7 @@ export default function AboutPage() {
                 My freelance work on Upwork and Fiverr has earned consistent five-star feedback,
                 with clients citing responsiveness, technical clarity, and on-time delivery.
                 Building on that experience, I fulfilled a goal I&apos;ve held since 2023 by
-                launching{" "}
+                co-founding{" "}
                 <a
                   href={TAYLANCE_TECH_URL}
                   target="_blank"
@@ -463,8 +463,9 @@ export default function AboutPage() {
                 >
                   Taylance Tech
                 </a>{" "}
-                in 2026 — a web development studio focused on full stack products where code
-                quality, thoughtful architecture, and long-term maintainability come first.
+                in 2026 — a co-founder-led software agency for web, mobile, SaaS, AI automation, and
+                UI/UX, where code quality, thoughtful architecture, and long-term maintainability
+                come first.
               </p>
               <p className="text-base leading-[1.85] text-slate-400 sm:text-[1.05rem]">
                 Whether you need a senior developer for a greenfield build, help rescuing a legacy

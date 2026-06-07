@@ -43,7 +43,7 @@ export default function TermsOfServicePage() {
     <LegalPageShell
       eyebrow="Legal"
       title="Terms of Service"
-      lead={`These terms apply to ${LEGAL_SITE_URL}, ${LEGAL_OPERATOR_NAME}'s personal portfolio. I founded and run ${LEGAL_BUSINESS_NAME} (${LEGAL_STUDIO_URL}). You can contact me here or through the company site; paid software work is agreed in writing through ${LEGAL_BUSINESS_NAME}, not purchased on this portfolio.`}
+      lead={`These terms apply to ${LEGAL_SITE_URL}, ${LEGAL_OPERATOR_NAME}'s personal portfolio. I am a co-founder of ${LEGAL_BUSINESS_NAME} (${LEGAL_STUDIO_URL}). You can contact me here or through the company site; paid software work is agreed in writing through ${LEGAL_BUSINESS_NAME}, not purchased on this portfolio.`}
     >
       <h2 id="acceptance">Agreement</h2>
       <p>
@@ -56,7 +56,7 @@ export default function TermsOfServicePage() {
       <p>
         {LEGAL_SITE_URL} is <strong>{LEGAL_OPERATOR_NAME}&apos;s</strong> personal portfolio —
         projects, blog, and contact. It is separate from, but connected to,{" "}
-        <strong>{LEGAL_BUSINESS_NAME}</strong>, the software company I founded and launched at{" "}
+        <strong>{LEGAL_BUSINESS_NAME}</strong>, the co-founder-led software agency I co-founded at{" "}
         <a href={LEGAL_STUDIO_URL} rel="noopener noreferrer" target="_blank">
           taylancetech.com
         </a>

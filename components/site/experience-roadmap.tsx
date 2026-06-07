@@ -470,7 +470,7 @@ export function buildExperienceItemListJsonLd(
     "@id": baseId,
     name: "Tayyab Full Stack Developer Career Roadmap",
     description:
-      "Professional experience of Tayyab: founder of Taylance Tech (launched 2026, envisioned since 2023), Upwork and Fiverr freelance delivery, and confidential Upwork contract work for Order AI LLC.",
+      "Professional experience of Tayyab: co-founder of Taylance Tech (launched 2026, envisioned since 2023), Upwork and Fiverr freelance delivery, and confidential Upwork contract work for Order AI LLC.",
     numberOfItems: milestones.filter((m) => m.kind !== "vision").length,
     itemListElement: milestones
       .filter((m) => m.kind !== "vision")

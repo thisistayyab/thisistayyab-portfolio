@@ -46,12 +46,12 @@ export default function PrivacyPolicyPage() {
     <LegalPageShell
       eyebrow="Legal"
       title="Privacy Policy"
-      lead={`This policy covers ${LEGAL_SITE_URL} — ${LEGAL_OPERATOR_NAME}'s personal portfolio — including when you contact me here, read the blog, or use analytics on this site. I am the founder of ${LEGAL_BUSINESS_NAME} (${LEGAL_STUDIO_URL}); client work is delivered through the company after we agree in writing.`}
+      lead={`This policy covers ${LEGAL_SITE_URL} — ${LEGAL_OPERATOR_NAME}'s personal portfolio — including when you contact me here, read the blog, or use analytics on this site. I am a co-founder of ${LEGAL_BUSINESS_NAME} (${LEGAL_STUDIO_URL}); client work is delivered through the company after we agree in writing.`}
     >
       <h2 id="who-we-are">Who we are</h2>
       <p>
         <strong>{LEGAL_OPERATOR_NAME}</strong> operates this portfolio at {LEGAL_SITE_URL} and is
-        the founder of <strong>{LEGAL_BUSINESS_NAME}</strong>, a launched software company at{" "}
+        a co-founder of <strong>{LEGAL_BUSINESS_NAME}</strong>, a co-founder-led software agency at{" "}
         <a href={LEGAL_STUDIO_URL} rel="noopener noreferrer" target="_blank">
           taylancetech.com
         </a>

@@ -82,7 +82,7 @@ export function SiteFooter() {
                 Node.js.
               </p>
               <p className="mt-2 text-sm text-slate-500">
-                Founder at{" "}
+                Co-Founder at{" "}
                 <Link
                   href={TAYLANCE_TECH_URL}
                   target="_blank"

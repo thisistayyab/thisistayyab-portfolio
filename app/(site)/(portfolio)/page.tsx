@@ -84,17 +84,17 @@ const homeFeaturedProjects: PortfolioProject[] = [
     id: 1,
     slug: "taylance-tech",
     name: "Taylance Tech",
-    roleLabel: "My company",
+    roleLabel: "Co-founded company",
     image: "/images/projects/taylance-tech.webp",
     imageAlt: "Taylance Tech homepage",
     imageTitle: "Taylance Tech homepage",
     link: "https://taylancetech.com/",
     description:
-      "The company I founded and launched: a founder-led software studio for web, mobile, SaaS, and AI automation. Built with Next.js for performance and SEO — fully my product and brand.",
+      "Co-founded in 2026: a co-founder-led software agency for web, mobile, SaaS, AI automation, and UI/UX. I lead development and built the Next.js site for performance and SEO.",
     tags: [
-      { label: "My company", variant: "feature" },
+      { label: "Co-founded", variant: "feature" },
       { label: "Next.js", variant: "tech" },
-      { label: "Founder-led", variant: "feature" },
+      { label: "Co-founder-led", variant: "feature" },
       { label: "SaaS studio", variant: "feature" },
     ],
     ctaLabel: "Live View",
@@ -109,7 +109,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     imageTitle: "Taylance CRM dashboard",
     link: "https://taylancecrm.vercel.app/",
     description:
-      "A CRM product under my Taylance Tech studio: clients, leads, and projects in one dashboard. React, Express.js, and Material UI — my own product.",
+      "A CRM product under Taylance Tech: clients, leads, and projects in one dashboard. React, Express.js, and Material UI — a studio product.",
     tags: [
       { label: "Studio product", variant: "feature" },
       { label: "React", variant: "tech" },

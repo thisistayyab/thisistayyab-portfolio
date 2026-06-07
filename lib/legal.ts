@@ -3,7 +3,7 @@ import { profileEmail, SITE_URL } from "@/lib/site"
 /** Operator name shown in legal documents. */
 export const LEGAL_OPERATOR_NAME = "Tayyab"
 
-/** Tayyab's launched software company (founder-led studio). Site: taylancetech.com */
+/** Tayyab's co-founded software agency. Site: taylancetech.com */
 export const LEGAL_BUSINESS_NAME = "Taylance Tech"
 
 export const LEGAL_STUDIO_URL = "https://taylancetech.com"
