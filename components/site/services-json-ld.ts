@@ -1,5 +1,6 @@
 import type { PortfolioService } from "@/components/site/service-card"
 import { pageFragmentId, personId } from "@/lib/json-ld-ids"
+import { SITE_BRAND } from "@/lib/site"
 
 export function servicesListId(siteUrl: string, pagePath: string) {
   const path = pagePath === "/" ? "/" : "/services"
@@ -50,8 +51,9 @@ export function buildServicesWebPageJsonLd(siteUrl: string, description: string)
     url: `${siteUrl}/services`,
     isPartOf: {
       "@type": "WebSite",
-      name: "Tayyab Portfolio",
-      url: siteUrl,
+      "@id": `${siteUrl}/#website`,
+      name: SITE_BRAND,
+      url: `${siteUrl}/`,
     },
     mainEntity: {
       "@id": servicesListId(siteUrl, "/services"),

@@ -37,7 +37,7 @@ const pageStackNote =
 
 /** Metadata and JSON-LD — factual, not duplicated word-for-word in the hero. */
 const pageMetaDescription =
-  "Full stack developer Tayyab — SaaS products, web applications, Node.js APIs, PostgreSQL, AI automation, auth, deployment, and technical SEO for startups and product teams."
+  "Full stack developer Tayyab — SaaS, web apps, Node.js APIs, PostgreSQL, AI automation, and technical SEO for startups and product teams."
 
 const servicesKeywords = [
   "hire full stack developer",

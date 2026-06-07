@@ -35,6 +35,7 @@ import {
   statIconClassName,
 } from "@/components/site/site-styles"
 import { imageSeoUrl } from "@/lib/image"
+import { buildPersonJsonLd } from "@/lib/person-json-ld"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { PROFILE_IMAGE, profileEmail, profileSameAs, SITE_URL } from "@/lib/site"
 import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
@@ -70,7 +71,7 @@ const aboutStatCards: {
   { icon: Sparkles, value: "3+", label: "Years in Production", tone: "violet" },
   { icon: Rocket, value: "15+", label: "Projects Shipped", tone: "purple" },
   { icon: Code2, value: "1150+", label: "Problems Solved", tone: "blue" },
-  { icon: LineChart, value: "100%", label: "Client Satisfaction", tone: "pink" },
+  { icon: LineChart, value: "5.0", label: "Fiverr Rating", tone: "pink" },
 ]
 
 const aboutExpertisePillars: {
@@ -221,38 +222,7 @@ export default function AboutPage() {
           ],
         }}
       />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Person",
-          "@id": `${SITE_URL}/about`,
-          name: "Tayyab",
-          jobTitle: "Founder of Taylance Tech & Full Stack Web Developer",
-          description: aboutSubtitle,
-          url: `${SITE_URL}/about`,
-          image: imageSeoUrl(PROFILE_IMAGE, SITE_URL),
-          email: profileEmail,
-          sameAs: [...profileSameAs],
-          worksFor: {
-            "@type": "Organization",
-            name: "Taylance Tech",
-            url: TAYLANCE_TECH_URL,
-            founder: { "@id": `${SITE_URL}/about` },
-          },
-          knowsAbout: [
-            "React",
-            "Next.js",
-            "Node.js",
-            "TypeScript",
-            "PostgreSQL",
-            "REST API",
-            "GraphQL",
-            "Web Application Development",
-            "SaaS Development",
-            "Full Stack Development",
-          ],
-        }}
-      />
+      <JsonLd data={buildPersonJsonLd(SITE_URL, aboutSubtitle)} />
 
       <article
         className="relative z-[5]"
@@ -289,7 +259,7 @@ export default function AboutPage() {
                 itemProp="jobTitle"
                 content="Founder of Taylance Tech & Full Stack Web Developer"
               />
-              <meta itemProp="url" content={SITE_URL} />
+              <meta itemProp="url" content={`${SITE_URL}/about`} />
               <meta itemProp="description" content={aboutSubtitle} />
               {profileSameAs.map((url) => (
                 <meta key={url} itemProp="sameAs" content={url} />
@@ -368,7 +338,7 @@ export default function AboutPage() {
                 >
                   <OptimizedPicture
                     src={PROFILE_IMAGE}
-                    alt="Tayyab — full stack web developer specializing in React, Next.js, Node.js, and PostgreSQL"
+                    alt="Professional portrait of Tayyab, full stack developer"
                     title="Tayyab — Full Stack Developer"
                     width={340}
                     height={420}

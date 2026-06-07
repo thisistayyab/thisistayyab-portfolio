@@ -94,7 +94,7 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
         <link
           itemProp="url"
           href={
-            project.ctaDisabled ? `${SITE_URL}/projects` : project.link || `${SITE_URL}/projects`
+            project.ctaDisabled ? `${SITE_URL}/projects#${project.slug}` : project.link || `${SITE_URL}/projects#${project.slug}`
           }
         />
 

@@ -1,5 +1,5 @@
 import { personId } from "@/lib/json-ld-ids"
-import { profileEmail, profileSameAs } from "@/lib/site"
+import { profileEmail, profileSameAs, SITE_BRAND } from "@/lib/site"
 
 export function buildContactBreadcrumbJsonLd(siteUrl: string) {
   return {
@@ -22,8 +22,9 @@ export function buildContactPageJsonLd(siteUrl: string, description: string) {
     url: `${siteUrl}/contact`,
     isPartOf: {
       "@type": "WebSite",
-      name: "Tayyab Portfolio",
-      url: siteUrl,
+      "@id": `${siteUrl}/#website`,
+      name: SITE_BRAND,
+      url: `${siteUrl}/`,
     },
     mainEntity: {
       "@type": "Person",

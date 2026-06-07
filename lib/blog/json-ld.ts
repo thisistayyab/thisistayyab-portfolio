@@ -2,7 +2,7 @@ import { BLOG_INDEX_PATH } from "@/lib/blog/config"
 import type { BlogPost, BlogPostSummary } from "@/lib/blog/types"
 import { blogImageUrl } from "@/lib/blog/utils"
 import { personId } from "@/lib/json-ld-ids"
-import { SITE_URL } from "@/lib/site"
+import { SITE_BRAND, SITE_URL } from "@/lib/site"
 
 export function buildBlogIndexJsonLd(posts: BlogPostSummary[], description: string) {
   return {
@@ -12,7 +12,7 @@ export function buildBlogIndexJsonLd(posts: BlogPostSummary[], description: stri
     name: "Blog | Tayyab — Full Stack Development Articles",
     description,
     url: `${SITE_URL}${BLOG_INDEX_PATH}`,
-    isPartOf: { "@type": "WebSite", name: "Tayyab Portfolio", url: SITE_URL },
+    isPartOf: { "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: SITE_BRAND, url: `${SITE_URL}/` },
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: posts.length,
@@ -52,10 +52,13 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
   const url = `${SITE_URL}${BLOG_INDEX_PATH}/${post.slug}`
   const image = blogImageUrl(post.cover_image)
 
+  const published = post.published_at || post.updated_at || new Date().toISOString()
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "@id": url,
+    url,
     headline: post.seo_title || post.title,
     description: post.seo_description || post.excerpt,
     image: image ? [image] : undefined,
@@ -66,16 +69,13 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
       url: personId(SITE_URL),
     },
     publisher: {
-      "@type": "Organization",
+      "@type": "Person",
+      "@id": personId(SITE_URL),
       name: "Tayyab",
-      url: SITE_URL,
-      logo: {
-        "@type": "ImageObject",
-        url: `${SITE_URL}/icon.png`,
-      },
+      url: personId(SITE_URL),
     },
-    datePublished: post.published_at || post.updated_at || undefined,
-    dateModified: post.updated_at || post.published_at || undefined,
+    datePublished: published,
+    dateModified: post.updated_at || post.published_at || published,
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": url,

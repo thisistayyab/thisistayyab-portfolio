@@ -1,7 +1,9 @@
 import { imageSeoUrl } from "@/lib/image"
 
 export const SITE_URL = "https://thisistayyab.dev"
-export const SITE_NAME = "Tayyab's Portfolio"
+/** Consistent brand across metadata, JSON-LD, manifest, and nav. */
+export const SITE_BRAND = "Tayyab — Full Stack Developer"
+export const SITE_NAME = SITE_BRAND
 
 /** Absolute URL for a static project screenshot (SEO / JSON-LD) — prefers AVIF. */
 export function projectImageUrl(path: string) {

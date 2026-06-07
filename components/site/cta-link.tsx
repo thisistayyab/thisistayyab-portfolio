@@ -43,7 +43,14 @@ export function CtaLink({
 
   if (download || href.startsWith("http") || href.endsWith(".pdf")) {
     return (
-      <motion.a href={href} download={download} title={title} className={classes} {...animationProps}>
+      <motion.a
+        href={href}
+        download={download}
+        title={title}
+        className={classes}
+        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+        {...animationProps}
+      >
         {children}
       </motion.a>
     )

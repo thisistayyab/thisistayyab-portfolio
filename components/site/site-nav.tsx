@@ -5,7 +5,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 
-import { JsonLd } from "@/components/site/json-ld"
 import { NavOrb } from "@/components/site/nav-orb"
 import {
   navCapsuleClassName,
@@ -23,7 +22,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { isBlogPath } from "@/lib/blog/config"
-import { letsTalkDescription, letsTalkHref, navItems, SITE_NAME, SITE_URL } from "@/lib/site"
+import { letsTalkDescription, letsTalkHref, navItems, SITE_NAME } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 const navLinks = navItems.filter((item) => item.href !== "/contact")
@@ -69,20 +68,6 @@ export function SiteNav() {
 
   return (
     <>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "SiteNavigationElement",
-          name: "Main Navigation",
-          itemListElement: navItems.map((item, index) => ({
-            "@type": "ListItem",
-            position: index + 1,
-            name: item.label,
-            url: `${SITE_URL}${item.href}`,
-          })),
-        }}
-      />
-
       <nav
         className="pointer-events-none fixed top-5 right-0 left-0 z-[1100] flex justify-center px-5 sm:px-6 lg:px-4"
         role="navigation"

@@ -1,5 +1,6 @@
 import type { HomeTestimonial } from "@/components/site/testimonial-card"
-import { pageFragmentId, personId } from "@/lib/json-ld-ids"
+import { pageFragmentId } from "@/lib/json-ld-ids"
+import { SITE_BRAND } from "@/lib/site"
 
 export function testimonialsListId(siteUrl: string, pagePath: string) {
   return pageFragmentId(
@@ -9,6 +10,10 @@ export function testimonialsListId(siteUrl: string, pagePath: string) {
   )
 }
 
+/**
+ * Client quotes as Quotation — not Review schema.
+ * Google rejects self-serving Review markup and does not support Person/Organization as itemReviewed.
+ */
 export function buildTestimonialsItemListJsonLd(
   items: HomeTestimonial[],
   siteUrl: string,
@@ -28,25 +33,12 @@ export function buildTestimonialsItemListJsonLd(
       "@type": "ListItem",
       position: index + 1,
       item: {
-        "@type": "Review",
-        author: {
+        "@type": "Quotation",
+        text: item.quote,
+        creator: {
           "@type": "Person",
           name: item.name,
           jobTitle: item.role,
-        },
-        reviewBody: item.quote,
-        reviewRating: {
-          "@type": "Rating",
-          ratingValue: item.rating ?? 5,
-          bestRating: 5,
-          worstRating: 1,
-        },
-        itemReviewed: {
-          "@type": "Person",
-          "@id": personId(siteUrl),
-          name: "Tayyab",
-          jobTitle: "Full Stack Web Developer",
-          url: personId(siteUrl),
         },
         ...(item.image ? { image: `${siteUrl}${item.image}` } : {}),
       },
@@ -64,8 +56,9 @@ export function buildTestimonialsWebPageJsonLd(siteUrl: string, description: str
     url: `${siteUrl}/testimonials`,
     isPartOf: {
       "@type": "WebSite",
-      name: "Tayyab Portfolio",
-      url: siteUrl,
+      "@id": `${siteUrl}/#website`,
+      name: SITE_BRAND,
+      url: `${siteUrl}/`,
     },
     mainEntity: {
       "@id": testimonialsListId(siteUrl, "/testimonials"),

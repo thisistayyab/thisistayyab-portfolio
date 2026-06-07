@@ -9,7 +9,7 @@ export function isBlogPath(pathname: string) {
 }
 
 export const blogIndexMetadata = {
-  title: "Blog | Full Stack Development Articles — React, Next.js & Node.js",
+  title: "Blog | Full Stack Development — React & Next.js",
   description:
     "Read Tayyab's blog on full stack development: React, Next.js, Node.js, PostgreSQL, SaaS architecture, APIs, performance, and AI automation.",
   keywords: [

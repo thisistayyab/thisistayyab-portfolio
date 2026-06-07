@@ -127,7 +127,8 @@ export async function getPublishedPostsForSitemap(): Promise<SitemapPostEntry[]>
     .not("slug", "is", null)
 
   if (error) {
-    throw new Error(`[blog] getPublishedPostsForSitemap: ${error.message}`)
+    console.error(`[blog] getPublishedPostsForSitemap: ${error.message}`)
+    return []
   }
 
   if (!data) {

@@ -71,7 +71,7 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
   return {
     title: { absolute: input.title },
     description: input.description,
-    keywords: input.keywords ? [...input.keywords] : undefined,
+    ...(input.keywords ? { keywords: [...input.keywords] } : {}),
     alternates: { canonical },
     openGraph: {
       title: ogTitle,

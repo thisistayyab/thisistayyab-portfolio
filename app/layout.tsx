@@ -33,14 +33,13 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  applicationName: "Tayyab Portfolio",
+  applicationName: "Tayyab — Full Stack Developer",
   title: {
     default: homeMetadata.title,
     template: "%s | Tayyab",
   },
   description: homeMetadata.description,
-  keywords: [...homeMetadata.keywords],
-  authors: [{ name: "Tayyab", url: SITE_URL }],
+  authors: [{ name: "Tayyab", url: `${SITE_URL}/about` }],
   creator: "Tayyab",
   manifest: "/site.webmanifest",
   icons: {
@@ -63,15 +62,12 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: SITE_URL,
-    languages: {
-      "en-US": SITE_URL,
-    },
+    canonical: `${SITE_URL}/`,
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: SITE_URL,
+    url: `${SITE_URL}/`,
     siteName: "Tayyab — Full Stack Developer",
     title: homeMetadata.title,
     description: homeMetadata.description,

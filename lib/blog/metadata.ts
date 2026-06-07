@@ -53,7 +53,7 @@ export function blogPostPageMetadata(post: {
   return {
     title: { absolute: title },
     description,
-    keywords: post.seo_keywords ?? undefined,
+    ...(post.seo_keywords?.length ? { keywords: post.seo_keywords } : {}),
     alternates: { canonical: url },
     openGraph: {
       title,

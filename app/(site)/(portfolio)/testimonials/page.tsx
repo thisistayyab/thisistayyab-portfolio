@@ -26,7 +26,7 @@ export const testimonials: HomeTestimonial[] = [
     via: "Fiverr",
     viaUrl: "https://www.fiverr.com",
     rating: 5,
-    quote: "Attentive, thorough and thorough; mission successfully completed.",
+    quote: "Attentive and thorough; mission successfully completed.",
   },
 ]
 

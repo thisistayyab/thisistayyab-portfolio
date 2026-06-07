@@ -12,7 +12,7 @@ import { BLOG_INDEX_PATH } from "@/lib/blog/config"
 import { buildBlogBreadcrumbJsonLd, buildBlogPostingJsonLd } from "@/lib/blog/json-ld"
 import { blogPostPageMetadata } from "@/lib/blog/metadata"
 import { getAllPostSlugs, getPostBySlug, getRelatedPosts } from "@/lib/blog/queries"
-import { blogImageUrl, formatBlogDate } from "@/lib/blog/utils"
+import { blogImageUrl, formatBlogDate, sanitizeBlogContentHtml } from "@/lib/blog/utils"
 import { contentCardClassName } from "@/components/site/site-styles"
 import { cn } from "@/lib/utils"
 
@@ -157,7 +157,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div
           className={cn(contentCardClassName, "blog-prose rounded-2xl border border-white/10 p-6 sm:p-10")}
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{ __html: sanitizeBlogContentHtml(post.content) }}
           itemProp="articleBody"
         />
       </article>

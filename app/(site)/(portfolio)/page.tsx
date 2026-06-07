@@ -37,13 +37,10 @@ import {
   statIconClassName,
   statusBadgeClassName,
 } from "@/components/site/site-styles"
-import { imageSeoUrl } from "@/lib/image"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import {
   homeMetadata,
   PROFILE_IMAGE,
-  profileEmail,
-  profileSameAs,
   projectImageUrl,
   SITE_URL,
 } from "@/lib/site"
@@ -89,8 +86,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     name: "Taylance Tech",
     roleLabel: "My company",
     image: "/images/projects/taylance-tech.webp",
-    imageAlt:
-      "Taylance Tech software studio homepage screenshot — founder-led Next.js website built by Tayyab, full stack web developer",
+    imageAlt: "Taylance Tech homepage",
     imageTitle: "Taylance Tech homepage",
     link: "https://taylancetech.com/",
     description:
@@ -109,8 +105,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     name: "Taylance CRM",
     roleLabel: "Studio product",
     image: "/images/projects/taylance-crm.webp",
-    imageAlt:
-      "Taylance CRM dashboard screenshot — React and Express.js CRM built by Tayyab under Taylance Tech studio",
+    imageAlt: "Taylance CRM dashboard",
     imageTitle: "Taylance CRM dashboard",
     link: "https://taylancecrm.vercel.app/",
     description:
@@ -128,8 +123,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     slug: "taynio-chat",
     name: "Taynio Chat",
     image: "/images/projects/taynio-chat.webp",
-    imageAlt:
-      "Taynio Chat real-time messaging application screenshot — React, Node.js, and Socket.IO app built by Tayyab",
+    imageAlt: "Taynio Chat messaging app",
     imageTitle: "Taynio Chat messaging app",
     link: "https://github.com/thisistayyab/Taynio-chat",
     description:
@@ -153,7 +147,7 @@ const heroStats: {
   { icon: Sparkles, value: "3+", label: "Years Experience", tone: "violet" },
   { icon: Rocket, value: "15+", label: "Projects Completed", tone: "purple" },
   { icon: Code2, value: "1150+", label: "Problems Solved", tone: "blue" },
-  { icon: Smile, value: "100%", label: "Client Satisfaction", tone: "pink" },
+  { icon: Smile, value: "5.0", label: "Fiverr Rating", tone: "pink" },
 ]
 
 export default async function HomePage() {
@@ -192,9 +186,10 @@ export default async function HomePage() {
             position: index + 1,
             item: {
               "@type": "SoftwareApplication",
+              "@id": `${SITE_URL}/projects#${project.slug}`,
               name: project.name,
               description: project.description,
-              url: project.link,
+              url: project.link || `${SITE_URL}/projects#${project.slug}`,
               image: {
                 "@type": "ImageObject",
                 url: projectImageUrl(project.image),
@@ -209,38 +204,9 @@ export default async function HomePage() {
         }}
       />
 
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Person",
-          "@id": `${SITE_URL}/about`,
-          name: "Tayyab",
-          jobTitle: "Full Stack Developer",
-          description:
-            "Full stack developer specializing in React, Next.js, Node.js, and PostgreSQL. 3+ years experience building fast, scalable web applications. 1,150+ LeetCode problems solved. 15+ projects completed.",
-          url: `${SITE_URL}/about`,
-          image: imageSeoUrl(PROFILE_IMAGE, SITE_URL),
-          knowsAbout: [
-            "React",
-            "Next.js",
-            "Node.js",
-            "PostgreSQL",
-            "REST API",
-            "TypeScript",
-            "Full Stack Development",
-            "Web Application Development",
-          ],
-          sameAs: [...profileSameAs],
-          email: profileEmail,
-        }}
-      />
-
       <header
         className="relative isolate bg-transparent pt-[88px]"
-        itemScope
-        itemType="https://schema.org/Person"
       >
-        <meta itemProp="name" content="Tayyab" />
         <HeaderGraphBackground />
 
         <div
@@ -350,7 +316,7 @@ export default async function HomePage() {
                 <ParallaxScroll offset={30}>
                   <OptimizedPicture
                     src={PROFILE_IMAGE}
-                    alt="Tayyab — Full Stack Developer portrait. Professional photo of Tayyab, React and Node.js engineer with 3+ years building web applications."
+                    alt="Professional portrait of Tayyab, full stack developer"
                     title="Tayyab — Full Stack Developer"
                     width={540}
                     height={620}

@@ -15,7 +15,7 @@ import { isGoogleAnalyticsEnabled } from "@/lib/google-analytics"
 import { SITE_URL } from "@/lib/site"
 
 const description =
-  "Privacy policy for thisistayyab.dev — how Tayyab collects and uses data when you browse, contact, or read the blog, including Google Analytics and third-party tools."
+  "How Tayyab collects and uses data on thisistayyab.dev when you browse, contact, or read the blog — including analytics and third-party tools."
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Privacy Policy | Tayyab — Full Stack Developer",

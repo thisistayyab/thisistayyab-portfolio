@@ -55,5 +55,18 @@ export function formatBlogDate(iso: string | null | undefined) {
   })
 }
 
+/** Prevent duplicate h1 when CMS HTML is injected below the page template h1. */
+export function sanitizeBlogContentHtml(html: string): string {
+  return html.replace(/<h1(\s[^>]*>|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>")
+}
+
+/** YYYY-MM-DD for sitemap lastmod — avoids noisy ISO timestamps from the database. */
+export function formatSitemapDate(iso: string | Date | null | undefined, fallback?: string): string {
+  if (!iso) return fallback ?? new Date().toISOString().slice(0, 10)
+  const date = typeof iso === "string" ? new Date(iso) : iso
+  if (Number.isNaN(date.getTime())) return fallback ?? new Date().toISOString().slice(0, 10)
+  return date.toISOString().slice(0, 10)
+}
+
 /** No-op: Google deprecated the public sitemap ping endpoint; submit via Search Console instead. */
 export async function pingSearchEnginesForSitemap() {}

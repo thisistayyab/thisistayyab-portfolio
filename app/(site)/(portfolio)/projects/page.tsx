@@ -33,8 +33,7 @@ const portfolioProjects: PortfolioProject[] = [
     name: "Taylance Tech",
     roleLabel: "My company",
     image: "/images/projects/taylance-tech.webp",
-    imageAlt:
-      "Taylance Tech software studio homepage screenshot — founder-led Next.js website for web, mobile, and SaaS built by Tayyab, full stack web developer",
+    imageAlt: "Taylance Tech homepage",
     imageTitle: "Taylance Tech homepage",
     link: "https://taylancetech.com/",
     description:
@@ -54,8 +53,7 @@ const portfolioProjects: PortfolioProject[] = [
     name: "Taylance CRM",
     roleLabel: "Studio product",
     image: "/images/projects/taylance-crm.webp",
-    imageAlt:
-      "Taylance CRM dashboard screenshot — React and Express.js full stack CRM product built by Tayyab under the Taylance Tech software studio",
+    imageAlt: "Taylance CRM dashboard",
     imageTitle: "Taylance CRM dashboard",
     link: "https://taylancecrm.vercel.app/",
     description:
@@ -75,8 +73,7 @@ const portfolioProjects: PortfolioProject[] = [
     roleLabel: "Client project",
     isClientWork: true,
     image: "/images/projects/tayyab-7opportunity-react-marketing-platform.webp",
-    imageAlt:
-      "7Opportunity marketing platform homepage screenshot — freelance client web application built by Tayyab with React, Express.js, and Supabase, optimized for mobile and Lighthouse performance",
+    imageAlt: "7Opportunity marketing platform",
     imageTitle: "7Opportunity marketing platform",
     link: "",
     description:
@@ -99,8 +96,7 @@ const portfolioProjects: PortfolioProject[] = [
     roleLabel: "Client project",
     isClientWork: true,
     image: "/images/projects/7options.webp",
-    imageAlt:
-      "7Options subscription and billing dashboard screenshot — freelance client SaaS built by Tayyab with React, Express.js, Supabase, and payment integrations",
+    imageAlt: "7Options subscription platform",
     imageTitle: "7Options subscription platform",
     link: "https://7options.vercel.app/",
     description:
@@ -121,8 +117,7 @@ const portfolioProjects: PortfolioProject[] = [
     roleLabel: "Client project",
     isClientWork: true,
     image: "/images/projects/7talenthub.webp",
-    imageAlt:
-      "7TalentHub company CRM interface screenshot — internal freelance client application built by Tayyab with React, Node.js, and Supabase for talent and employee management",
+    imageAlt: "7TalentHub CRM interface",
     imageTitle: "7TalentHub CRM interface",
     link: "",
     description:
@@ -143,8 +138,7 @@ const portfolioProjects: PortfolioProject[] = [
     slug: "notehub",
     name: "NoteHub",
     image: "/images/projects/notehub.webp",
-    imageAlt:
-      "NoteHub note-taking application screenshot — full stack React and Express.js web app with MongoDB built by Tayyab for creating and organizing user notes",
+    imageAlt: "NoteHub note-taking app",
     imageTitle: "NoteHub note-taking app",
     link: "https://notehub-thisistayyab.vercel.app/",
     description:
@@ -162,8 +156,7 @@ const portfolioProjects: PortfolioProject[] = [
     slug: "leetcode-profile",
     name: "LeetCode Profile",
     image: "/images/projects/leetcode-profile.webp",
-    imageAlt:
-      "Tayyab LeetCode developer profile screenshot showing 1,150+ solved algorithm and data structure problems in C++ — competitive programming portfolio",
+    imageAlt: "Tayyab LeetCode profile",
     imageTitle: "Tayyab LeetCode profile",
     link: "https://leetcode.com/u/thisistayyab/",
     description:
@@ -181,8 +174,7 @@ const portfolioProjects: PortfolioProject[] = [
     slug: "taynio-chat",
     name: "Taynio Chat",
     image: "/images/projects/taynio-chat.webp",
-    imageAlt:
-      "Taynio Chat real-time messaging application screenshot — React and Node.js web app with Socket.IO built by Tayyab for instant chat and presence",
+    imageAlt: "Taynio Chat messaging app",
     imageTitle: "Taynio Chat messaging app",
     link: "https://github.com/thisistayyab/Taynio-chat",
     description:
@@ -200,8 +192,7 @@ const portfolioProjects: PortfolioProject[] = [
     slug: "newswave",
     name: "NewsWave",
     image: "/images/projects/newswave.webp",
-    imageAlt:
-      "NewsWave news aggregator homepage screenshot — React web application with live third-party news API integration built by Tayyab",
+    imageAlt: "NewsWave news aggregator",
     imageTitle: "NewsWave news aggregator",
     link: "https://newswave-thisistayyab.netlify.app/",
     description:
@@ -219,8 +210,7 @@ const portfolioProjects: PortfolioProject[] = [
     slug: "editwave",
     name: "EditWave",
     image: "/images/projects/editwave.webp",
-    imageAlt:
-      "EditWave in-browser text editor screenshot — React rich editing web application with responsive UI built by Tayyab",
+    imageAlt: "EditWave browser text editor",
     imageTitle: "EditWave browser text editor",
     link: "https://thisistayyab.github.io/EditWave/",
     description:
@@ -238,8 +228,7 @@ const portfolioProjects: PortfolioProject[] = [
     slug: "shahid-portfolio",
     name: "Shahid's Portfolio",
     image: "/images/projects/shahid-portfolio.webp",
-    imageAlt:
-      "Shahid personal portfolio website screenshot — React developer portfolio with modern responsive UI built by Tayyab",
+    imageAlt: "Shahid portfolio website",
     imageTitle: "Shahid portfolio website",
     link: "https://thisistayyab.github.io/kashif-project/",
     description:
@@ -290,10 +279,10 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
       position: index + 1,
       item: {
         "@type": "SoftwareApplication",
-        "@id": project.link || `${SITE_URL}/projects`,
+        "@id": `${SITE_URL}/projects#${project.slug}`,
         name: project.name,
         description: project.description,
-        url: project.ctaDisabled ? `${SITE_URL}/projects` : project.link,
+        url: project.ctaDisabled ? `${SITE_URL}/projects#${project.slug}` : project.link || `${SITE_URL}/projects#${project.slug}`,
         image: {
           "@type": "ImageObject",
           url: projectImageUrl(project.image),
@@ -354,7 +343,8 @@ export const metadata: Metadata = buildPageMetadata({
   },
   twitter: {
     title: "Full Stack Web Development Projects | Tayyab",
-    description: projectsPageIntro,
+    description:
+      "Full stack portfolio: Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
   },
 })
 
@@ -380,7 +370,7 @@ export default function ProjectsPage() {
           name: "Tayyab Web Development Projects",
           description: projectsPageIntro,
           url: `${SITE_URL}/projects`,
-          isPartOf: { "@type": "WebSite", url: SITE_URL, name: "Tayyab Portfolio" },
+          isPartOf: { "@type": "WebSite", "@id": `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: "Tayyab — Full Stack Developer" },
           about: {
             "@type": "Person",
             "@id": `${SITE_URL}/about`,

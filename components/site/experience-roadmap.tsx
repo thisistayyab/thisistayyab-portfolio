@@ -506,12 +506,13 @@ export function buildExperienceWebPageJsonLd(
     name: pageTitle,
     description: pageDescription,
     url: `${siteUrl}/experience`,
-    isPartOf: { "@type": "WebSite", url: siteUrl, name: "Tayyab Portfolio" },
+    isPartOf: { "@type": "WebSite", "@id": `${siteUrl}/#website`, url: `${siteUrl}/`, name: "Tayyab — Full Stack Developer" },
     about: {
       "@type": "Person",
+      "@id": `${siteUrl}/about`,
       name: "Tayyab",
       jobTitle: "Full Stack Web Developer",
-      url: siteUrl,
+      url: `${siteUrl}/about`,
     },
     mainEntity: { "@id": experienceListId(siteUrl, "/experience") },
   }
