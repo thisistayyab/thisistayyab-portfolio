@@ -88,7 +88,7 @@ export const profileSameAs = [
   "https://leetcode.com/u/thisistayyab/",
 ] as const
 
-export const profileEmail = "thisistayyab@outlook.com"
+export const profileEmail = "tayyab@taylancetech.com"
 
 export const homeMetadata = {
   /** 50–60 chars for SERP title (SEO tools). */

@@ -165,7 +165,7 @@ const aboutSocialLinks = [
   {
     Icon: RiMailLine,
     iconSize: 20,
-    href: "mailto:thisistayyab@outlook.com?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A",
+    href: `mailto:${profileEmail}?subject=Let's%20Connect&body=Hi%20Tayyab,%0D%0A%0D%0A`,
     ariaLabel: "Email Me",
     color: "#0078d4",
     platformName: "Email",

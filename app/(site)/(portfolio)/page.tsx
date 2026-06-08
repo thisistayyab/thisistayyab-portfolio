@@ -107,7 +107,7 @@ const homeFeaturedProjects: PortfolioProject[] = [
     image: "/images/projects/taylance-crm.webp",
     imageAlt: "Taylance CRM dashboard",
     imageTitle: "Taylance CRM dashboard",
-    link: "https://taylancecrm.vercel.app/",
+    link: "https://crm.taylancetech.com/",
     description:
       "A CRM product under Taylance Tech: clients, leads, and projects in one dashboard. React, Express.js, and Material UI — a studio product.",
     tags: [
