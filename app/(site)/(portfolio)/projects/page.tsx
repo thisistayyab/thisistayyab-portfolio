@@ -194,7 +194,7 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/newswave.webp",
     imageAlt: "NewsWave news aggregator",
     imageTitle: "NewsWave news aggregator",
-    link: "https://newswave-thisistayyab.netlify.app/",
+    link: "https://newswave.thisistayyab.dev",
     description:
       "NewsWave is a dynamic news aggregator application designed to keep users informed with the latest headlines from around the world. Built with React and integrated with third-party news APIs, it fetches live articles and presents them in a structured, visually appealing layout.",
     tags: [
