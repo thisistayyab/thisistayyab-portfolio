@@ -24,6 +24,7 @@ import { BlogHomePreview } from "@/components/blog/blog-home-preview"
 import { ContactHomePreview } from "@/components/site/contact-home-preview"
 import { getFeaturedPosts } from "@/lib/blog/queries"
 import { ServicesHomePreview } from "@/components/site/services-home-preview"
+import { TechStackSection } from "@/components/site/tech-stack-section"
 import { buildTestimonialsItemListJsonLd } from "@/components/site/testimonials-json-ld"
 import { TestimonialsSection } from "@/components/site/testimonials-section"
 import { careerRoadmapMilestones } from "@/app/(site)/(portfolio)/experience/page"
@@ -147,7 +148,7 @@ const heroStats: {
   { icon: Sparkles, value: "3+", label: "Years Experience", tone: "violet" },
   { icon: Rocket, value: "15+", label: "Projects Completed", tone: "purple" },
   { icon: Code2, value: "1150+", label: "Problems Solved", tone: "blue" },
-  { icon: Smile, value: "5.0", label: "Fiverr Rating", tone: "pink" },
+  { icon: Smile, value: "100%", label: "Client Satisfaction", tone: "pink" },
 ]
 
 export default async function HomePage() {
@@ -467,6 +468,10 @@ export default async function HomePage() {
           </div>
         </FadeIn>
       </section>
+
+      <FadeIn>
+        <TechStackSection />
+      </FadeIn>
 
       <section
         id="project"

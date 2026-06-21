@@ -91,7 +91,7 @@ const aboutExpertisePillars: {
     icon: Zap,
     title: "Backend & APIs",
     description:
-      "RESTful and GraphQL APIs with Node.js and Express, structured for clarity, security, and scale — from authentication flows to third-party integrations.",
+      "RESTful APIs with Node.js, Express, and FastAPI — structured for clarity, security, and scale — from authentication flows to third-party integrations.",
     rim: "blue",
   },
   {
@@ -117,7 +117,7 @@ const aboutSkillGroups = [
   },
   {
     category: "Backend",
-    skills: ["Node.js", "Express", "REST APIs", "GraphQL", "Authentication", "Webhooks"],
+    skills: ["Node.js", "Express", "REST APIs", "FastAPI", "Authentication", "Webhooks"],
   },
   {
     category: "Data & Tools",

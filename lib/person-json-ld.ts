@@ -27,7 +27,7 @@ export function buildPersonJsonLd(siteUrl: string, description: string) {
       "TypeScript",
       "PostgreSQL",
       "REST API",
-      "GraphQL",
+      "FastAPI",
       "Web Application Development",
       "SaaS Development",
       "Full Stack Development",
