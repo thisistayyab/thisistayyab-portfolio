@@ -2,13 +2,14 @@
 
 > https://thisistayyab.dev
 
-Tayyab builds production web applications with React, Next.js, Node.js, PostgreSQL, SaaS platforms, APIs, and AI automation.
+Tayyab builds production web applications with React, Next.js, Node.js, PostgreSQL, SaaS platforms, APIs, and AI automation. Co-founder and lead developer at Taylance Tech.
 
 ## Main pages
 
 - Home: https://thisistayyab.dev/
 - About: https://thisistayyab.dev/about
 - Projects: https://thisistayyab.dev/projects
+- Tillqorin POS (portfolio case study): https://thisistayyab.dev/projects/tillqorin
 - Experience: https://thisistayyab.dev/experience
 - Services: https://thisistayyab.dev/services
 - Testimonials: https://thisistayyab.dev/testimonials
@@ -16,6 +17,14 @@ Tayyab builds production web applications with React, Next.js, Node.js, PostgreS
 - Contact: https://thisistayyab.dev/contact
 - Privacy: https://thisistayyab.dev/privacy
 - Terms: https://thisistayyab.dev/terms
+
+## Featured product — Tillqorin
+
+Tillqorin is Taylance Tech's web POS and billing platform (Commerce OS for retail). Tayyab led full-stack development.
+
+- Portfolio write-up: https://thisistayyab.dev/projects/tillqorin
+- Product marketing: https://taylancetech.com/products/tillqorin
+- Live app: https://pos.taylancetech.com
 
 ## Blog
 

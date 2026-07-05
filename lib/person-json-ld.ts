@@ -21,6 +21,9 @@ export function buildPersonJsonLd(siteUrl: string, description: string) {
       url: "https://taylancetech.com",
     },
     knowsAbout: [
+      "Tillqorin",
+      "POS software",
+      "Retail billing systems",
       "React",
       "Next.js",
       "Node.js",

@@ -95,9 +95,11 @@ export const homeMetadata = {
   title: "Tayyab | Full Stack Developer for Hire — React & Next.js",
   /** ~155 chars — within meta description limits (AIOSEO flags 160+). */
   description:
-    "Hire Tayyab for React, Next.js & Node.js apps. Full stack developer with 3+ years, 15+ projects, and 1,150+ LeetCode. SaaS, APIs & PostgreSQL.",
+    "Hire Tayyab for React, Next.js & Node.js apps. Full stack developer — Tillqorin POS, Taylance Tech, 3+ years, 15+ projects, 1,150+ LeetCode.",
   keywords: [
     "Tayyab",
+    "Tillqorin",
+    "Tillqorin POS developer",
     "Full Stack Developer",
     "React developer",
     "Next.js developer",

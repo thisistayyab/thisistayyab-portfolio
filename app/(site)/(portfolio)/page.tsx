@@ -8,6 +8,7 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import type { Metadata } from "next"
+import Link from "next/link"
 import { CtaLink } from "@/components/site/cta-link"
 import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { GlassSurface, type GlassRim } from "@/components/site/glass-surface"
@@ -39,6 +40,11 @@ import {
   statusBadgeClassName,
 } from "@/components/site/site-styles"
 import { buildPageMetadata } from "@/lib/site-metadata"
+import { tillqorinProject } from "@/lib/data/tillqorin-project"
+import {
+  buildPortfolioProjectSoftwareApplicationJsonLd,
+  projectPortfolioUrl,
+} from "@/lib/portfolio-project-json-ld"
 import {
   homeMetadata,
   PROFILE_IMAGE,
@@ -81,6 +87,7 @@ const heroTags = [
 ] as const
 
 const homeFeaturedProjects: PortfolioProject[] = [
+  tillqorinProject,
   {
     id: 1,
     slug: "taylance-tech",
@@ -118,24 +125,6 @@ const homeFeaturedProjects: PortfolioProject[] = [
       { label: "REST API", variant: "feature" },
     ],
     ctaLabel: "Live View",
-  },
-  {
-    id: 3,
-    slug: "taynio-chat",
-    name: "Taynio Chat",
-    image: "/images/projects/taynio-chat.webp",
-    imageAlt: "Taynio Chat messaging app",
-    imageTitle: "Taynio Chat messaging app",
-    link: "https://github.com/thisistayyab/Taynio-chat",
-    description:
-      "Taynio Chat is a real-time messaging application built with React, Node.js, and Socket.IO, designed for fast, secure, and reliable communication. It enables instant message exchange, active user presence detection, and seamless real-time updates without page reloads.",
-    tags: [
-      { label: "React", variant: "tech" },
-      { label: "Node.js", variant: "tech" },
-      { label: "Socket.IO", variant: "tech" },
-      { label: "Real-time", variant: "feature" },
-    ],
-    ctaLabel: "Repo Link",
   },
 ]
 
@@ -177,6 +166,8 @@ export default async function HomePage() {
         )}
       />
 
+      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
+
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -187,10 +178,10 @@ export default async function HomePage() {
             position: index + 1,
             item: {
               "@type": "SoftwareApplication",
-              "@id": `${SITE_URL}/projects#${project.slug}`,
+              "@id": projectPortfolioUrl(SITE_URL, project),
               name: project.name,
               description: project.description,
-              url: project.link || `${SITE_URL}/projects#${project.slug}`,
+              url: project.link || projectPortfolioUrl(SITE_URL, project),
               image: {
                 "@type": "ImageObject",
                 url: projectImageUrl(project.image),
@@ -502,8 +493,15 @@ export default async function HomePage() {
             <p className="text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
               Deployed{" "}
               <strong className="font-semibold text-slate-200">web applications used by real people</strong>{" "}
-              — not UI mockups or tutorial clones. SaaS dashboards, REST APIs, Supabase backends,
-              and client work built with React, Next.js, Node.js, and PostgreSQL.
+              — including{" "}
+              <Link
+                href="/projects/tillqorin"
+                className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
+              >
+                Tillqorin POS
+              </Link>
+              , SaaS dashboards, REST APIs, Supabase backends, and client work built with React,
+              Next.js, Node.js, and PostgreSQL.
             </p>
           </div>
 

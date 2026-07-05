@@ -9,13 +9,20 @@ import { JsonLd } from "@/components/site/json-ld"
 import { ProjectsShowcase } from "@/components/site/projects-showcase"
 import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
+import { tillqorinProject, tillqorinSeoKeywords } from "@/lib/data/tillqorin-project"
+import {
+  buildPortfolioProjectSoftwareApplicationJsonLd,
+  projectPortfolioUrl,
+} from "@/lib/portfolio-project-json-ld"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
 
 const projectsPageIntro =
-  "Explore full-stack web applications, SaaS products, and client projects built by Tayyab — a React, Next.js, and Node.js developer. Each project ships with production-grade APIs, databases, and user experiences designed for real traffic, SEO, and long-term maintainability."
+  "Explore full-stack web applications, SaaS products, and client projects built by Tayyab — a React, Next.js, and Node.js developer. Featured work includes Tillqorin POS (Commerce OS), Taylance Tech, Taylance CRM, and production apps with real APIs, databases, and SEO."
 
 const projectsKeywords = [
   "Tayyab web development portfolio",
+  "Tillqorin",
+  "Tillqorin POS",
   "React portfolio projects",
   "Next.js project examples",
   "Node.js full stack projects",
@@ -27,6 +34,7 @@ const projectsKeywords = [
 ] as const
 
 const portfolioProjects: PortfolioProject[] = [
+  tillqorinProject,
   {
     id: 1,
     slug: "taylance-tech",
@@ -279,10 +287,14 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
       position: index + 1,
       item: {
         "@type": "SoftwareApplication",
-        "@id": `${SITE_URL}/projects#${project.slug}`,
+        "@id": projectPortfolioUrl(SITE_URL, project),
         name: project.name,
         description: project.description,
-        url: project.ctaDisabled ? `${SITE_URL}/projects#${project.slug}` : project.link || `${SITE_URL}/projects#${project.slug}`,
+        url: project.ctaDisabled
+          ? projectPortfolioUrl(SITE_URL, project)
+          : project.detailPath
+            ? projectPortfolioUrl(SITE_URL, project)
+            : project.link || projectPortfolioUrl(SITE_URL, project),
         image: {
           "@type": "ImageObject",
           url: projectImageUrl(project.image),
@@ -326,13 +338,13 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
 export const metadata: Metadata = buildPageMetadata({
   title: "Projects | Full Stack Portfolio — React & Next.js",
   description:
-    "Browse Tayyab's full-stack portfolio: Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
+    "Browse Tayyab's full-stack portfolio — Tillqorin POS, Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
   canonicalPath: "/projects",
-  keywords: projectsKeywords,
+  keywords: [...tillqorinSeoKeywords, ...projectsKeywords],
   openGraph: {
     title: "Web Development Projects | Tayyab",
     description:
-      "Browse Tayyab's full-stack portfolio: Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
+      "Full-stack portfolio featuring Tillqorin POS, Taylance Tech, Taylance CRM, React and Node.js apps, and production-ready demos.",
   },
   ogImage: {
     url: `${SITE_URL}/images/og.jpg`,
@@ -344,7 +356,7 @@ export const metadata: Metadata = buildPageMetadata({
   twitter: {
     title: "Full Stack Web Development Projects | Tayyab",
     description:
-      "Full stack portfolio: Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
+      "Full stack portfolio: Tillqorin POS, Taylance Tech, Taylance CRM, React and Node.js apps, and production-ready demos.",
   },
 })
 
@@ -362,6 +374,7 @@ export default function ProjectsPage() {
         }}
       />
       <JsonLd data={buildProjectsItemListJsonLd(portfolioProjects)} />
+      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
       <JsonLd
         data={{
           "@context": "https://schema.org",

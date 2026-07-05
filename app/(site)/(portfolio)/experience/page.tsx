@@ -45,7 +45,7 @@ export const careerRoadmapMilestones: CareerMilestone[] = [
       "SEO, performance, and production launches.",
     ],
     outcomes: [
-      "Launched taylancetech.com and Taylance CRM.",
+      "Launched taylancetech.com, Taylance CRM, and Tillqorin POS.",
       "Delivered client and studio products end to end.",
     ],
     skills: ["Next.js", "React", "Node.js", "SaaS", "AI integration", "SEO", "Co-founder-led"],

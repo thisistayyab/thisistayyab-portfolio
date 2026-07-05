@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react"
+import Link from "next/link"
 
 import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { ctaPrimaryClassName, ctaSecondaryClassName } from "@/components/site/site-styles"
@@ -33,6 +34,14 @@ export type PortfolioProject = {
   roleLabel?: string
   /** True when built for a client (no formal contract / unnamed client). */
   isClientWork?: boolean
+  /** Indexable project page on this site (e.g. /projects/tillqorin). */
+  detailPath?: string
+  /** Live product URL, distinct from marketing `link`. */
+  appUrl?: string
+  alternateName?: string | readonly string[]
+  applicationCategory?: string
+  publisher?: { name: string; url: string }
+  seoKeywords?: readonly string[]
 }
 
 const EXCERPT_LENGTH = 120
@@ -172,14 +181,24 @@ export function ProjectCard({ project, onLearnMore, priority }: ProjectCardProps
               </a>
             )
           ) : null}
-          <button
-            type="button"
-            onClick={() => onLearnMore(project)}
-            className={cn(ctaSecondaryClassName, "cursor-pointer border-0 text-[0.88rem] px-5 py-3")}
-            aria-label={`Read full details about ${project.name}`}
-          >
-            Learn more
-          </button>
+          {project.detailPath ? (
+            <Link
+              href={project.detailPath}
+              className={cn(ctaSecondaryClassName, "text-[0.88rem] px-5 py-3")}
+              aria-label={`Read full details about ${project.name}`}
+            >
+              Learn more
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={() => onLearnMore(project)}
+              className={cn(ctaSecondaryClassName, "cursor-pointer border-0 text-[0.88rem] px-5 py-3")}
+              aria-label={`Read full details about ${project.name}`}
+            >
+              Learn more
+            </button>
+          )}
         </div>
       </div>
     </article>
