@@ -6,7 +6,12 @@ const ADMIN_PREFIX = "/dashboard"
 const LOGIN_PATH = "/login"
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname, searchParams } = request.nextUrl
+
+  /** Stale `?s=` search-box crawl from a previous version of the site — no search feature exists now. */
+  if (pathname === "/" && searchParams.has("s")) {
+    return NextResponse.redirect(new URL("/", request.url), 308)
+  }
 
   if (!pathname.startsWith(ADMIN_PREFIX) && pathname !== LOGIN_PATH) {
     return NextResponse.next()
@@ -28,5 +33,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login"],
+  matcher: ["/", "/dashboard/:path*", "/login"],
 }
