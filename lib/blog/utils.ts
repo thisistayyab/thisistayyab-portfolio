@@ -70,3 +70,21 @@ export function formatSitemapDate(iso: string | Date | null | undefined, fallbac
 
 /** No-op: Google deprecated the public sitemap ping endpoint; submit via Search Console instead. */
 export async function pingSearchEnginesForSitemap() {}
+
+/**
+ * Clears the Next.js ISR cache for the blog index, sitemap, and (if given) a post's own page.
+ * Without this, the CMS writes straight to Supabase from the browser and the public site can
+ * keep serving a stale cache — including a 404 cached from before the post was published — for
+ * up to `revalidate` seconds.
+ */
+export async function revalidateBlogPaths(slug?: string): Promise<void> {
+  try {
+    await fetch("/api/blog/revalidate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug }),
+    })
+  } catch (error) {
+    console.error("[blog] revalidateBlogPaths:", error)
+  }
+}

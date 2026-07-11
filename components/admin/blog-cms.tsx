@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { POST_SELECT } from "@/lib/blog/map"
 import type { BlogAuthorRecord, BlogCategory } from "@/lib/blog/types"
-import { pingSearchEnginesForSitemap, slugifyTitle } from "@/lib/blog/utils"
+import { pingSearchEnginesForSitemap, revalidateBlogPaths, slugifyTitle } from "@/lib/blog/utils"
 import { createSupabaseBrowserClient } from "@/lib/supabase/client"
 import { hasSupabaseEnv } from "@/lib/supabase/env"
 import { cn } from "@/lib/utils"
@@ -167,6 +167,7 @@ function PostsPanel() {
     if (postData.published) {
       void pingSearchEnginesForSitemap()
     }
+    await revalidateBlogPaths(postData.slug)
 
     setEditing(false)
     setCurrent({})
@@ -174,11 +175,15 @@ function PostsPanel() {
     await load()
   }
 
-  const remove = async (id: string) => {
+  const remove = async (id: string, slug: string) => {
     if (!confirm("Delete this article permanently?")) return
     const { error } = await supabase.from("posts").delete().eq("id", id)
-    if (error) alert(error.message)
-    else await load()
+    if (error) {
+      alert(error.message)
+      return
+    }
+    await revalidateBlogPaths(slug)
+    await load()
   }
 
   if (editing) {
@@ -389,7 +394,7 @@ function PostsPanel() {
               >
                 <Edit className="size-4" />
               </Button>
-              <Button type="button" variant="ghost" size="icon" onClick={() => void remove(post.id)}>
+              <Button type="button" variant="ghost" size="icon" onClick={() => void remove(post.id, post.slug)}>
                 <Trash2 className="size-4 text-red-400" />
               </Button>
             </div>

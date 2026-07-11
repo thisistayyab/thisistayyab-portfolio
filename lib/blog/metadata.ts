@@ -27,6 +27,9 @@ export function blogPostPageMetadata(post: {
   seo_keywords?: string[] | null
   cover_image?: string | null
   published_at?: string | null
+  updated_at?: string | null
+  tags?: string[]
+  author?: { name: string } | null
 }): Metadata {
   const url = `${SITE_URL}${BLOG_INDEX_PATH}/${post.slug}`
   const title = post.seo_title || post.title
@@ -61,6 +64,9 @@ export function blogPostPageMetadata(post: {
       url,
       type: "article",
       publishedTime: post.published_at ?? undefined,
+      modifiedTime: post.updated_at ?? undefined,
+      authors: post.author ? [post.author.name] : undefined,
+      tags: post.tags?.length ? post.tags : undefined,
       images: ogImages,
     },
     twitter: {
