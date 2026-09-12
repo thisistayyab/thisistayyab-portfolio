@@ -40,6 +40,7 @@ import {
   statusBadgeClassName,
 } from "@/components/site/site-styles"
 import { buildPageMetadata } from "@/lib/site-metadata"
+import { auditblocProject } from "@/lib/data/auditbloc-project"
 import { tillqorinProject } from "@/lib/data/tillqorin-project"
 import {
   buildPortfolioProjectSoftwareApplicationJsonLd,
@@ -87,9 +88,10 @@ const heroTags = [
 ] as const
 
 const homeFeaturedProjects: PortfolioProject[] = [
+  auditblocProject,
   tillqorinProject,
   {
-    id: 1,
+    id: 2,
     slug: "taylance-tech",
     name: "Taylance Tech",
     roleLabel: "Co-founded company",
@@ -104,25 +106,6 @@ const homeFeaturedProjects: PortfolioProject[] = [
       { label: "Next.js", variant: "tech" },
       { label: "Co-founder-led", variant: "feature" },
       { label: "SaaS studio", variant: "feature" },
-    ],
-    ctaLabel: "Live View",
-  },
-  {
-    id: 2,
-    slug: "taylance-crm",
-    name: "Taylance CRM",
-    roleLabel: "Studio product",
-    image: "/images/projects/taylance-crm.webp",
-    imageAlt: "Taylance CRM dashboard",
-    imageTitle: "Taylance CRM dashboard",
-    link: "https://crm.taylancetech.com/",
-    description:
-      "A CRM product under Taylance Tech: clients, leads, and projects in one dashboard. React, Express.js, and Material UI — a studio product.",
-    tags: [
-      { label: "Studio product", variant: "feature" },
-      { label: "React", variant: "tech" },
-      { label: "Express.js", variant: "tech" },
-      { label: "REST API", variant: "feature" },
     ],
     ctaLabel: "Live View",
   },
@@ -166,6 +149,7 @@ export default async function HomePage() {
         )}
       />
 
+      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
 
       <JsonLd
@@ -479,21 +463,27 @@ export default async function HomePage() {
               id="home-projects-heading"
               className="mx-auto max-w-4xl text-[clamp(1.85rem,5vw,2.75rem)] leading-[1.15] font-bold tracking-tight text-white"
             >
+              <span className="block">Production software for</span>
               <span className="block">
-                Live products built with{" "}
                 <span className="whitespace-nowrap bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text text-transparent">
-                  real users
+                  live operations
                 </span>
               </span>
-              <span className="block">in mind</span>
             </h2>
 
             <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
 
             <p className="text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
               Deployed{" "}
-              <strong className="font-semibold text-slate-200">web applications used by real people</strong>{" "}
+              <strong className="font-semibold text-slate-200">production web applications</strong>{" "}
               — including{" "}
+              <Link
+                href="/projects/auditbloc"
+                className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
+              >
+                AuditBloc
+              </Link>
+              ,{" "}
               <Link
                 href="/projects/tillqorin"
                 className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"

@@ -2,7 +2,7 @@
 
 import { Edit, Eye, Plus, Save, Search, Trash2, X } from "lucide-react"
 import Link from "next/link"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { POST_SELECT } from "@/lib/blog/map"
@@ -84,7 +84,7 @@ export function BlogCms() {
 }
 
 function PostsPanel() {
-  const supabase = createSupabaseBrowserClient()
+  const supabase = useMemo(() => createSupabaseBrowserClient(), [])
   const [posts, setPosts] = useState<AdminPostRow[]>([])
   const [authors, setAuthors] = useState<BlogAuthorRecord[]>([])
   const [categories, setCategories] = useState<BlogCategory[]>([])
@@ -106,8 +106,23 @@ function PostsPanel() {
   }, [supabase])
 
   useEffect(() => {
-    void load()
-  }, [load])
+    let cancelled = false
+
+    void Promise.all([
+      supabase.from("posts").select(POST_SELECT).order("created_at", { ascending: false }),
+      supabase.from("authors").select("*").order("created_at", { ascending: false }),
+      supabase.from("categories").select("*").order("name", { ascending: true }),
+    ]).then(([postsRes, authorsRes, categoriesRes]) => {
+      if (cancelled) return
+      if (postsRes.data) setPosts(postsRes.data as AdminPostRow[])
+      if (authorsRes.data) setAuthors(authorsRes.data as BlogAuthorRecord[])
+      if (categoriesRes.data) setCategories(categoriesRes.data as BlogCategory[])
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [supabase])
 
   const filtered = posts.filter(
     (p) =>
@@ -406,7 +421,7 @@ function PostsPanel() {
 }
 
 function AuthorsPanel() {
-  const supabase = createSupabaseBrowserClient()
+  const supabase = useMemo(() => createSupabaseBrowserClient(), [])
   const [authors, setAuthors] = useState<BlogAuthorRecord[]>([])
   const [editing, setEditing] = useState(false)
   const [current, setCurrent] = useState<Partial<BlogAuthorRecord>>({})
@@ -417,8 +432,21 @@ function AuthorsPanel() {
   }, [supabase])
 
   useEffect(() => {
-    void load()
-  }, [load])
+    let cancelled = false
+
+    void supabase
+      .from("authors")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        if (cancelled) return
+        setAuthors((data as BlogAuthorRecord[]) || [])
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [supabase])
 
   const save = async () => {
     if (!current.name) return
@@ -516,7 +544,7 @@ function AuthorsPanel() {
 }
 
 function CategoriesPanel() {
-  const supabase = createSupabaseBrowserClient()
+  const supabase = useMemo(() => createSupabaseBrowserClient(), [])
   const [categories, setCategories] = useState<BlogCategory[]>([])
   const [editing, setEditing] = useState(false)
   const [current, setCurrent] = useState<Partial<BlogCategory>>({})
@@ -527,8 +555,21 @@ function CategoriesPanel() {
   }, [supabase])
 
   useEffect(() => {
-    void load()
-  }, [load])
+    let cancelled = false
+
+    void supabase
+      .from("categories")
+      .select("*")
+      .order("name", { ascending: true })
+      .then(({ data }) => {
+        if (cancelled) return
+        setCategories((data as BlogCategory[]) || [])
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [supabase])
 
   const save = async () => {
     if (!current.name || !current.slug) return

@@ -6,7 +6,6 @@ import { useState } from "react"
 
 import { blogPostPath } from "@/lib/blog/config"
 import { SITE_URL } from "@/lib/site"
-import { cn } from "@/lib/utils"
 
 type BlogShareButtonsProps = {
   title: string

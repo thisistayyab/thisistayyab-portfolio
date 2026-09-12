@@ -20,7 +20,7 @@ type CtaLinkProps = {
   children: ReactNode
 }
 
-const MotionLink = motion(Link as any)
+const MotionLink = motion.create(Link)
 
 export function CtaLink({
   href,

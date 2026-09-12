@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import { CtaLink } from "@/components/site/cta-link"
 import { GlassSurface, type GlassRim } from "@/components/site/glass-surface"
-import { contentCardClassName, navGlassClassName, statIconClassName } from "@/components/site/site-styles"
+import { contentCardClassName, statIconClassName } from "@/components/site/site-styles"
 import { pageFragmentId } from "@/lib/json-ld-ids"
 import { cn } from "@/lib/utils"
 

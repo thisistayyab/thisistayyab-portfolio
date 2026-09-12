@@ -34,7 +34,6 @@ import {
   statCardClassName,
   statIconClassName,
 } from "@/components/site/site-styles"
-import { imageSeoUrl } from "@/lib/image"
 import { buildPersonJsonLd } from "@/lib/person-json-ld"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { PROFILE_IMAGE, profileEmail, profileSameAs, SITE_URL } from "@/lib/site"
