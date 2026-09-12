@@ -9,6 +9,7 @@ import { JsonLd } from "@/components/site/json-ld"
 import { ProjectsShowcase } from "@/components/site/projects-showcase"
 import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
+import { auditblocProject, auditblocSeoKeywords } from "@/lib/data/auditbloc-project"
 import { tillqorinProject, tillqorinSeoKeywords } from "@/lib/data/tillqorin-project"
 import {
   buildPortfolioProjectSoftwareApplicationJsonLd,
@@ -34,9 +35,10 @@ const projectsKeywords = [
 ] as const
 
 const portfolioProjects: PortfolioProject[] = [
+  auditblocProject,
   tillqorinProject,
   {
-    id: 1,
+    id: 2,
     slug: "taylance-tech",
     name: "Taylance Tech",
     roleLabel: "Co-founded company",
@@ -56,7 +58,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 2,
+    id: 3,
     slug: "taylance-crm",
     name: "Taylance CRM",
     roleLabel: "Studio product",
@@ -75,7 +77,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 3,
+    id: 4,
     slug: "7opportunity",
     name: "7Opportunity",
     roleLabel: "Client project",
@@ -98,7 +100,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaDisabledReason: "Client internal application — not publicly accessible.",
   },
   {
-    id: 4,
+    id: 5,
     slug: "7options",
     name: "7Options",
     roleLabel: "Client project",
@@ -119,7 +121,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 5,
+    id: 6,
     slug: "7talenthub",
     name: "7TalentHub",
     roleLabel: "Client project",
@@ -142,7 +144,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaDisabledReason: "Client internal application — not publicly accessible.",
   },
   {
-    id: 6,
+    id: 7,
     slug: "notehub",
     name: "NoteHub",
     image: "/images/projects/notehub.webp",
@@ -160,7 +162,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 7,
+    id: 8,
     slug: "leetcode-profile",
     name: "LeetCode Profile",
     image: "/images/projects/leetcode-profile.webp",
@@ -178,7 +180,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "View Profile",
   },
   {
-    id: 8,
+    id: 9,
     slug: "taynio-chat",
     name: "Taynio Chat",
     image: "/images/projects/taynio-chat.webp",
@@ -196,7 +198,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Repo Link",
   },
   {
-    id: 9,
+    id: 10,
     slug: "newswave",
     name: "NewsWave",
     image: "/images/projects/newswave.webp",
@@ -214,7 +216,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 10,
+    id: 11,
     slug: "editwave",
     name: "EditWave",
     image: "/images/projects/editwave.webp",
@@ -232,7 +234,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 11,
+    id: 12,
     slug: "shahid-portfolio",
     name: "Shahid's Portfolio",
     image: "/images/projects/shahid-portfolio.webp",
@@ -340,7 +342,7 @@ export const metadata: Metadata = buildPageMetadata({
   description:
     "Browse Tayyab's full-stack portfolio — Tillqorin POS, Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
   canonicalPath: "/projects",
-  keywords: [...tillqorinSeoKeywords, ...projectsKeywords],
+  keywords: [...auditblocSeoKeywords, ...tillqorinSeoKeywords, ...projectsKeywords],
   openGraph: {
     title: "Web Development Projects | Tayyab",
     description:
@@ -374,6 +376,7 @@ export default function ProjectsPage() {
         }}
       />
       <JsonLd data={buildProjectsItemListJsonLd(portfolioProjects)} />
+      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
       <JsonLd
         data={{

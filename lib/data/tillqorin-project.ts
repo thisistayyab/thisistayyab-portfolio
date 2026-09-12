@@ -19,7 +19,7 @@ export const tillqorinSeoKeywords = [
 ] as const
 
 export const tillqorinProject: PortfolioProject = {
-  id: 12,
+  id: 1,
   slug: "tillqorin",
   name: "Tillqorin",
   roleLabel: "Studio product",
