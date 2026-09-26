@@ -5,7 +5,7 @@ import { formatSitemapDate } from "@/lib/blog/utils"
 import { SITE_URL } from "@/lib/site"
 
 /** Bump when static page content meaningfully changes. */
-const SITEMAP_FRESHNESS_DATE = "2026-07-05"
+const SITEMAP_FRESHNESS_DATE = "2026-09-26"
 
 /**
  * Update these dates whenever the page content meaningfully changes.
@@ -15,6 +15,7 @@ const staticRoutes: MetadataRoute.Sitemap = [
   { url: `${SITE_URL}/`, lastModified: SITEMAP_FRESHNESS_DATE, changeFrequency: "weekly", priority: 1 },
   { url: `${SITE_URL}/about`, lastModified: SITEMAP_FRESHNESS_DATE, changeFrequency: "monthly", priority: 0.9 },
   { url: `${SITE_URL}/projects`, lastModified: SITEMAP_FRESHNESS_DATE, changeFrequency: "weekly", priority: 0.9 },
+  { url: `${SITE_URL}/projects/auditbloc`, lastModified: SITEMAP_FRESHNESS_DATE, changeFrequency: "monthly", priority: 0.85 },
   { url: `${SITE_URL}/projects/tillqorin`, lastModified: SITEMAP_FRESHNESS_DATE, changeFrequency: "monthly", priority: 0.85 },
   { url: `${SITE_URL}/experience`, lastModified: SITEMAP_FRESHNESS_DATE, changeFrequency: "monthly", priority: 0.9 },
   { url: `${SITE_URL}/testimonials`, lastModified: SITEMAP_FRESHNESS_DATE, changeFrequency: "monthly", priority: 0.8 },

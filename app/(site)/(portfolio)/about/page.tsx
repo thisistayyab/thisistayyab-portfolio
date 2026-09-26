@@ -26,6 +26,8 @@ import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { GlassSurface, type GlassRim } from "@/components/site/glass-surface"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
+import { FaqSection } from "@/components/site/faq-section"
+import { buildFaqJsonLd } from "@/components/site/faq-json-ld"
 import { SocialIcon } from "@/components/site/social-icon"
 import {
   glassBadgeClassName,
@@ -195,6 +197,29 @@ const aboutSocialLinks = [
   },
 ] as const
 
+const aboutFaq = [
+  {
+    question: "What is Tayyab's role as co-founder at Taylance Tech?",
+    answer:
+      "As co-founder and lead software engineer at Taylance Tech, Tayyab leads full-stack application development, software architecture, technical SEO, and product delivery across agency client work and studio SaaS products including Tillqorin POS and AuditBloc.",
+  },
+  {
+    question: "What technologies and tools does Tayyab work with on a daily basis?",
+    answer:
+      "Tayyab works daily with modern TypeScript, React 19, Next.js (App Router), Node.js, Express, PostgreSQL, Supabase, Tailwind CSS, Playwright, Docker, and C++ for computational problem-solving.",
+  },
+  {
+    question: "Can Tayyab collaborate across different international time zones?",
+    answer:
+      "Yes. Tayyab collaborates with startups, product teams, and clients globally (US, UK, Europe, Asia), utilizing clear asynchronous updates, structured Git workflows, and scheduled check-ins for dependable delivery.",
+  },
+  {
+    question: "What distinguishes Tayyab's engineering approach?",
+    answer:
+      "A relentless focus on performance, maintainability, and clean architecture. Having solved 1,150+ LeetCode algorithmic challenges, Tayyab builds optimized, bug-free systems paired with modern UX design, strict TypeScript typing, and automated testing.",
+  },
+] as const
+
 export const metadata: Metadata = buildPageMetadata({
   title: "About Tayyab | Full Stack Developer — React & Next.js",
   description:
@@ -222,6 +247,7 @@ export default function AboutPage() {
         }}
       />
       <JsonLd data={buildPersonJsonLd(SITE_URL, aboutSubtitle)} />
+      <JsonLd data={buildFaqJsonLd(aboutFaq)} />
 
       <article
         className="relative z-[5]"

@@ -2,31 +2,53 @@
 
 > https://thisistayyab.dev
 
-Tayyab builds production web applications with React, Next.js, Node.js, PostgreSQL, SaaS platforms, APIs, and AI automation. Co-founder and lead developer at Taylance Tech.
+Tayyab is a full stack web developer and co-founder at Taylance Tech with 3+ years of experience. He specializes in React, Next.js (App Router), TypeScript, Node.js, Express, PostgreSQL, Supabase, WebSockets, WebRTC, SaaS platforms, and AI automation. He has solved over 1,150+ problems on LeetCode using C++.
 
-## Main pages
+## Main Pages
 
 - Home: https://thisistayyab.dev/
 - About: https://thisistayyab.dev/about
 - Projects: https://thisistayyab.dev/projects
-- Tillqorin POS (portfolio case study): https://thisistayyab.dev/projects/tillqorin
-- Experience: https://thisistayyab.dev/experience
 - Services: https://thisistayyab.dev/services
+- Experience: https://thisistayyab.dev/experience
 - Testimonials: https://thisistayyab.dev/testimonials
 - Blog: https://thisistayyab.dev/blog
 - Contact: https://thisistayyab.dev/contact
-- Privacy: https://thisistayyab.dev/privacy
-- Terms: https://thisistayyab.dev/terms
+- Privacy Policy: https://thisistayyab.dev/privacy
+- Terms of Service: https://thisistayyab.dev/terms
 
-## Featured product — Tillqorin
+## Featured Products & Case Studies
 
-Tillqorin is Taylance Tech's web POS and billing platform (Commerce OS for retail). Tayyab led full-stack development.
+### 1. Relay — Real-Time Text & P2P File Transfer
+Privacy-first real-time collaboration web application featuring instant shared notepad sync and direct peer-to-peer file transfer up to 100 MB via WebRTC data channels. Built with React, Node.js, Express, and Socket.IO. Requires zero user accounts and stores zero data or files on servers.
+- Live App: https://relay.thisistayyab.dev/
+- Portfolio Listing: https://thisistayyab.dev/projects
 
-- Portfolio write-up: https://thisistayyab.dev/projects/tillqorin
-- Product marketing: https://taylancetech.com/products/tillqorin
-- Live app: https://pos.taylancetech.com
+### 2. AuditBloc — Web Accessibility & Compliance Scanner
+Automated website accessibility, GDPR cookie banner, and AI content disclosure scanner. Developed with Next.js 16, Playwright for automated browser testing, axe-core for WCAG accessibility rule validation, and Supabase for authentication and backend reporting.
+- Portfolio Case Study: https://thisistayyab.dev/projects/auditbloc
+- Live Scanner: https://auditbloc.taylancetech.com/
 
-## Blog
+### 3. Tillqorin POS — Commerce OS for Retail
+Web-based retail POS, invoicing, and inventory management system published by Taylance Tech. Includes barcode generation, thermal receipt printing, sales analytics, multi-register support, and accounting. Backed by React and Supabase.
+- Portfolio Case Study: https://thisistayyab.dev/projects/tillqorin
+- Product Page: https://taylancetech.com/products/tillqorin
+- Live POS App: https://pos.taylancetech.com/
 
-Articles are published dynamically at https://thisistayyab.dev/blog/{slug}.
+## Core Skills & Stack
+
+- **Frontend**: React 19, Next.js 15/16 (App Router), TypeScript, Tailwind CSS, HTML5, CSS3
+- **Backend & APIs**: Node.js, Express.js, REST APIs, WebSockets (Socket.IO), WebRTC, Supabase, FastAPI
+- **Databases**: PostgreSQL, MongoDB, Redis, Supabase Database
+- **Problem Solving & Algorithms**: 1,150+ LeetCode problems solved with C++ (Data Structures, Graph Algorithms, Dynamic Programming)
+- **Tooling & Cloud**: Docker, Playwright, Jest, Git, GitHub Actions, Vercel, Render, Linux
+
+## Contact & Hire
+
+- Website Contact Form: https://thisistayyab.dev/contact
+- Direct Email: tayyab@taylancetech.com
+- LinkedIn: https://www.linkedin.com/in/thisistayyab/
+- GitHub: https://github.com/thisistayyab
+- LeetCode: https://leetcode.com/u/thisistayyab/
+
 Sitemap: https://thisistayyab.dev/sitemap.xml

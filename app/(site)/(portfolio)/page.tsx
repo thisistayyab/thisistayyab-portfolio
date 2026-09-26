@@ -23,6 +23,8 @@ import { ProjectsShowcase } from "@/components/site/projects-showcase"
 import { buildServicesItemListJsonLd } from "@/components/site/services-json-ld"
 import { BlogHomePreview } from "@/components/blog/blog-home-preview"
 import { ContactHomePreview } from "@/components/site/contact-home-preview"
+import { FaqSection } from "@/components/site/faq-section"
+import { buildFaqJsonLd } from "@/components/site/faq-json-ld"
 import { getFeaturedPosts } from "@/lib/blog/queries"
 import { ServicesHomePreview } from "@/components/site/services-home-preview"
 import { TechStackSection } from "@/components/site/tech-stack-section"
@@ -94,6 +96,39 @@ const homeFeaturedProjects: PortfolioProject[] = [
   tillqorinProject,
 ]
 
+const homeFaq = [
+  {
+    question: "Who is Tayyab and what does he specialize in?",
+    answer:
+      "Tayyab is a full stack web developer and co-founder at Taylance Tech with 3+ years of experience specializing in React, Next.js (App Router), TypeScript, Node.js, Express, and PostgreSQL. He builds production-grade SaaS platforms, real-time collaboration applications with WebSockets & WebRTC, REST APIs, database architecture, and technical SEO.",
+  },
+  {
+    question: "What are Tayyab's featured production projects?",
+    answer:
+      "Tayyab's flagship projects include Relay (a privacy-first real-time text notepad and WebRTC peer-to-peer file transfer tool at relay.thisistayyab.dev), Tillqorin POS (a retail commerce OS and web billing platform at pos.taylancetech.com), and AuditBloc (an automated web accessibility WCAG, GDPR cookie, and AI disclosure scanner at auditbloc.taylancetech.com).",
+  },
+  {
+    question: "Is Tayyab available for freelance, contract, or full-time roles?",
+    answer:
+      "Yes. Tayyab is actively available for freelance software projects, contract development, and technical consulting for startups and companies worldwide. He can take projects from initial concept through architecture, design, and cloud deployment.",
+  },
+  {
+    question: "What is Tayyab's background in Data Structures and Algorithms?",
+    answer:
+      "Tayyab has solved over 1,150+ problems on LeetCode using C++, demonstrating deep expertise in algorithmic design, time/space complexity optimization, and scalable computational problem-solving.",
+  },
+  {
+    question: "How does Tayyab approach web performance, SEO, and accessibility?",
+    answer:
+      "Every application is built following strict web performance and Core Web Vitals standards, responsive mobile-first layouts with Tailwind CSS, Schema.org JSON-LD structured data, WCAG accessibility compliance, and optimized static asset delivery with modern image formats (AVIF/WebP).",
+  },
+  {
+    question: "How can I hire Tayyab or discuss a project?",
+    answer:
+      "You can get in touch directly via the contact form on this site at https://thisistayyab.dev/contact, connect on LinkedIn at https://www.linkedin.com/in/thisistayyab/, or email tayyab@taylancetech.com to schedule a consultation.",
+  },
+] as const
+
 const heroStats: {
   icon: LucideIcon
   value: string
@@ -135,6 +170,7 @@ export default async function HomePage() {
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(relayProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
+      <JsonLd data={buildFaqJsonLd(homeFaq)} />
 
       <JsonLd
         data={{
@@ -522,6 +558,32 @@ export default async function HomePage() {
 
       <FadeIn>
         <BlogHomePreview posts={featuredBlogPosts} />
+      </FadeIn>
+
+      <FadeIn>
+        <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+          <FaqSection
+            headingId="home-faq-heading"
+            title="Frequently asked questions"
+            description="Clear answers about my full stack development experience, featured production products, and availability for hire."
+            items={homeFaq}
+            footerLead="Have a project in mind or want to discuss a role?"
+            ctas={[
+              {
+                label: "Get in touch",
+                href: "/contact",
+                title: "Contact Tayyab for projects or roles",
+                variant: "primary",
+              },
+              {
+                label: "View all projects",
+                href: "/projects",
+                title: "Browse complete project portfolio",
+                variant: "secondary",
+              },
+            ]}
+          />
+        </div>
       </FadeIn>
 
       <FadeIn>

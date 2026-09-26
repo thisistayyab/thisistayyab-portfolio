@@ -15,6 +15,7 @@ function webmasterRewrites(): { source: string; destination: string }[] {
 }
 
 const nextConfig: NextConfig = {
+  trailingSlash: false,
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**.supabase.co" },

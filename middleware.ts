@@ -6,6 +6,15 @@ const ADMIN_PREFIX = "/dashboard"
 const LOGIN_PATH = "/login"
 
 export async function middleware(request: NextRequest) {
+  const host = request.headers.get("host") || ""
+
+  /** Enforce non-www canonical domain (fixes duplicate www vs non-www indexation). */
+  if (host.startsWith("www.")) {
+    const url = request.nextUrl.clone()
+    url.host = host.replace(/^www\./, "")
+    return NextResponse.redirect(url, 308)
+  }
+
   const { pathname, searchParams } = request.nextUrl
 
   /** Stale `?s=` search-box crawl from a previous version of the site — no search feature exists now. */
@@ -33,5 +42,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/dashboard/:path*", "/login"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|woff2|pdf)$).*)",
+  ],
 }
