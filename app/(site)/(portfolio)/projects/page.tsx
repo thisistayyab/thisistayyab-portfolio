@@ -10,6 +10,7 @@ import { ProjectsShowcase } from "@/components/site/projects-showcase"
 import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { auditblocProject, auditblocSeoKeywords } from "@/lib/data/auditbloc-project"
+import { relayProject, relaySeoKeywords } from "@/lib/data/relay-project"
 import { tillqorinProject, tillqorinSeoKeywords } from "@/lib/data/tillqorin-project"
 import {
   buildPortfolioProjectSoftwareApplicationJsonLd,
@@ -21,6 +22,7 @@ const projectsPageIntro =
   "Explore full-stack web applications, SaaS products, and client projects built by Tayyab — a React, Next.js, and Node.js developer. Featured work includes Tillqorin POS (Commerce OS), Taylance Tech, Taylance CRM, and production apps with real APIs, databases, and SEO."
 
 const projectsKeywords = [
+  ...relaySeoKeywords,
   "Tayyab web development portfolio",
   "Tillqorin",
   "Tillqorin POS",
@@ -35,10 +37,11 @@ const projectsKeywords = [
 ] as const
 
 const portfolioProjects: PortfolioProject[] = [
+  relayProject,
   auditblocProject,
   tillqorinProject,
   {
-    id: 2,
+    id: 4,
     slug: "taylance-tech",
     name: "Taylance Tech",
     roleLabel: "Co-founded company",
@@ -58,7 +61,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 3,
+    id: 5,
     slug: "taylance-crm",
     name: "Taylance CRM",
     roleLabel: "Studio product",
@@ -77,7 +80,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 4,
+    id: 6,
     slug: "7opportunity",
     name: "7Opportunity",
     roleLabel: "Client project",
@@ -100,7 +103,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaDisabledReason: "Client internal application — not publicly accessible.",
   },
   {
-    id: 5,
+    id: 7,
     slug: "7options",
     name: "7Options",
     roleLabel: "Client project",
@@ -121,7 +124,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 6,
+    id: 8,
     slug: "7talenthub",
     name: "7TalentHub",
     roleLabel: "Client project",
@@ -144,7 +147,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaDisabledReason: "Client internal application — not publicly accessible.",
   },
   {
-    id: 7,
+    id: 9,
     slug: "notehub",
     name: "NoteHub",
     image: "/images/projects/notehub.webp",
@@ -162,7 +165,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 8,
+    id: 10,
     slug: "leetcode-profile",
     name: "LeetCode Profile",
     image: "/images/projects/leetcode-profile.webp",
@@ -180,7 +183,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "View Profile",
   },
   {
-    id: 9,
+    id: 11,
     slug: "taynio-chat",
     name: "Taynio Chat",
     image: "/images/projects/taynio-chat.webp",
@@ -198,7 +201,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Repo Link",
   },
   {
-    id: 10,
+    id: 12,
     slug: "newswave",
     name: "NewsWave",
     image: "/images/projects/newswave.webp",
@@ -216,7 +219,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 11,
+    id: 13,
     slug: "editwave",
     name: "EditWave",
     image: "/images/projects/editwave.webp",
@@ -234,7 +237,7 @@ const portfolioProjects: PortfolioProject[] = [
     ctaLabel: "Live View",
   },
   {
-    id: 12,
+    id: 14,
     slug: "shahid-portfolio",
     name: "Shahid's Portfolio",
     image: "/images/projects/shahid-portfolio.webp",
@@ -251,8 +254,7 @@ const portfolioProjects: PortfolioProject[] = [
     ],
     ctaLabel: "Live View",
   },
-]
-
+];
 const projectsFaq = [
   {
     question: "What kind of projects are these?",
@@ -376,6 +378,7 @@ export default function ProjectsPage() {
         }}
       />
       <JsonLd data={buildProjectsItemListJsonLd(portfolioProjects)} />
+      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(relayProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
       <JsonLd

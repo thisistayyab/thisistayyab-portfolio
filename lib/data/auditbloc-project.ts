@@ -19,7 +19,7 @@ export const auditblocSeoKeywords = [
 ] as const
 
 export const auditblocProject: PortfolioProject = {
-  id: 0,
+  id: 2,
   slug: "auditbloc",
   name: "AuditBloc",
   roleLabel: "Studio product",

@@ -41,6 +41,7 @@ import {
 } from "@/components/site/site-styles"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { auditblocProject } from "@/lib/data/auditbloc-project"
+import { relayProject } from "@/lib/data/relay-project"
 import { tillqorinProject } from "@/lib/data/tillqorin-project"
 import {
   buildPortfolioProjectSoftwareApplicationJsonLd,
@@ -88,27 +89,9 @@ const heroTags = [
 ] as const
 
 const homeFeaturedProjects: PortfolioProject[] = [
+  relayProject,
   auditblocProject,
   tillqorinProject,
-  {
-    id: 2,
-    slug: "taylance-tech",
-    name: "Taylance Tech",
-    roleLabel: "Co-founded company",
-    image: "/images/projects/taylance-tech.webp",
-    imageAlt: "Taylance Tech homepage",
-    imageTitle: "Taylance Tech homepage",
-    link: "https://taylancetech.com/",
-    description:
-      "Co-founded in 2026: a co-founder-led software agency for web, mobile, SaaS, AI automation, and UI/UX. I lead development and built the Next.js site for performance and SEO.",
-    tags: [
-      { label: "Co-founded", variant: "feature" },
-      { label: "Next.js", variant: "tech" },
-      { label: "Co-founder-led", variant: "feature" },
-      { label: "SaaS studio", variant: "feature" },
-    ],
-    ctaLabel: "Live View",
-  },
 ]
 
 const heroStats: {
@@ -149,6 +132,7 @@ export default async function HomePage() {
         )}
       />
 
+      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(relayProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
 
@@ -477,6 +461,15 @@ export default async function HomePage() {
               Deployed{" "}
               <strong className="font-semibold text-slate-200">production web applications</strong>{" "}
               — including{" "}
+              <a
+                href="https://relay.thisistayyab.dev"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
+              >
+                Relay
+              </a>
+              ,{" "}
               <Link
                 href="/projects/auditbloc"
                 className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
