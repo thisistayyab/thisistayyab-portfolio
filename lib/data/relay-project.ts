@@ -1,6 +1,7 @@
 import type { PortfolioProject } from "@/components/site/project-card"
 
 export const RELAY_URL = "https://relay.thisistayyab.dev/"
+export const RELAY_REPO = "https://github.com/thisistayyab/relay-real-time-communication"
 
 export const relaySeoKeywords = [
   "Relay",
@@ -23,6 +24,7 @@ export const relayProject: PortfolioProject = {
   imageAlt: "Relay real-time text and P2P file sharing platform",
   imageTitle: "Relay real-time communication",
   link: RELAY_URL,
+  detailPath: "/projects/relay",
   alternateName: ["Relay Real-Time Communication", "Relay P2P Transfer"],
   applicationCategory: "CommunicationApplication",
   seoKeywords: relaySeoKeywords,
@@ -38,3 +40,9 @@ export const relayProject: PortfolioProject = {
   ],
   ctaLabel: "Live View",
 }
+
+export const relayPageTitle =
+  "Relay — Real-Time Text & P2P File Transfer | Full Stack Portfolio"
+
+export const relayPageDescription =
+  "How I built Relay: a zero-login WebRTC peer-to-peer file transfer and live shared notepad web app to transfer files on public computers without compromising privacy."
