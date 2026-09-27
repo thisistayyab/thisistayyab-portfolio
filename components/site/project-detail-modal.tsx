@@ -1,6 +1,8 @@
 "use client"
 
-import { ExternalLink, X } from "lucide-react"
+import { ExternalLink, Lock, ShieldAlert, X } from "lucide-react"
+import Link from "next/link"
+import { RiGithubFill } from "react-icons/ri"
 import { useEffect } from "react"
 
 import type { PortfolioProject } from "@/components/site/project-card"
@@ -83,6 +85,7 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
           {project.name}
         </h2>
 
+
         <p
           id="project-modal-description"
           className="mt-4 text-base leading-relaxed text-slate-400"
@@ -119,9 +122,23 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
           </ul>
         </div>
 
-        {project.ctaDisabled || project.link ? (
-          <div className="mt-8">
-            {project.ctaDisabled ? (
+
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          {project.githubUrl && project.hideCardLiveLink ? (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`View ${project.name} on GitHub`}
+              className={cn(ctaPrimaryClassName, "inline-flex items-center gap-2 text-[0.88rem] px-5 py-3")}
+            >
+              <RiGithubFill className="size-4.5" aria-hidden="true" />
+              Source Code (GitHub)
+            </a>
+          ) : null}
+
+          {!project.hideCardLiveLink && (project.ctaDisabled || project.link) ? (
+            project.ctaDisabled ? (
               <button
                 type="button"
                 disabled
@@ -150,9 +167,32 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
                 {project.ctaLabel}
                 <ExternalLink className="size-4" aria-hidden="true" />
               </a>
-            )}
-          </div>
-        ) : null}
+            )
+          ) : null}
+
+          {project.githubUrl && !project.hideCardLiveLink ? (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`View ${project.name} on GitHub`}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-[0.88rem] font-medium text-white transition hover:border-white/30 hover:bg-white/10"
+            >
+              <RiGithubFill className="size-4" aria-hidden="true" />
+              Source Code (GitHub)
+            </a>
+          ) : null}
+
+          {project.detailPath ? (
+            <Link
+              href={project.detailPath}
+              onClick={onClose}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-[0.88rem] font-medium text-slate-300 transition hover:border-white/30 hover:text-white hover:bg-white/10"
+            >
+              Read Full Case Study
+            </Link>
+          ) : null}
+        </div>
       </article>
     </div>
   )

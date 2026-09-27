@@ -12,6 +12,7 @@ import { buildPageMetadata } from "@/lib/site-metadata"
 import { auditblocProject, auditblocSeoKeywords } from "@/lib/data/auditbloc-project"
 import { relayProject, relaySeoKeywords } from "@/lib/data/relay-project"
 import { tillqorinProject, tillqorinSeoKeywords } from "@/lib/data/tillqorin-project"
+import { youtubeDownloaderProject, youtubeDownloaderSeoKeywords } from "@/lib/data/youtube-downloader-project"
 import {
   buildPortfolioProjectSoftwareApplicationJsonLd,
   projectPortfolioUrl,
@@ -23,6 +24,7 @@ const projectsPageIntro =
 
 const projectsKeywords = [
   ...relaySeoKeywords,
+  ...youtubeDownloaderSeoKeywords,
   "Tayyab web development portfolio",
   "Tillqorin",
   "Tillqorin POS",
@@ -37,6 +39,7 @@ const projectsKeywords = [
 ] as const
 
 const portfolioProjects: PortfolioProject[] = [
+  youtubeDownloaderProject,
   relayProject,
   auditblocProject,
   tillqorinProject,
@@ -186,10 +189,13 @@ const portfolioProjects: PortfolioProject[] = [
     id: 11,
     slug: "taynio-chat",
     name: "Taynio Chat",
+    roleLabel: "Personal project",
     image: "/images/projects/taynio-chat.webp",
     imageAlt: "Taynio Chat messaging app",
     imageTitle: "Taynio Chat messaging app",
     link: "https://github.com/thisistayyab/Taynio-chat",
+    githubUrl: "https://github.com/thisistayyab/Taynio-chat",
+    hideCardLiveLink: true,
     description:
       "Taynio Chat is a real-time messaging application built with React, Node.js, and Socket.IO, designed for fast, secure, and reliable communication. It enables instant message exchange, active user presence detection, and seamless real-time updates without page reloads.",
     tags: [
@@ -198,7 +204,7 @@ const portfolioProjects: PortfolioProject[] = [
       { label: "Socket.IO", variant: "tech" },
       { label: "Real-time", variant: "feature" },
     ],
-    ctaLabel: "Repo Link",
+    ctaLabel: "Repository",
   },
   {
     id: 12,
@@ -268,6 +274,11 @@ const projectsFaq = [
   {
     question: "Are these deployed projects?",
     answer: "Yes. Most have a live link or a public repo.",
+  },
+  {
+    question: "Why are some projects listed as private or password-protected?",
+    answer:
+      "Tools like the YouTube Media Downloader are deployed in production on Render but protected by an APP_SECRET passphrase to comply with Google and YouTube platform policies, prevent unauthorized scraping traffic, and keep usage strictly reserved for personal creator archival.",
   },
   {
     question: 'What does "Client project" mean?',
@@ -381,6 +392,7 @@ export default function ProjectsPage() {
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(relayProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
+      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(youtubeDownloaderProject, SITE_URL)} />
       <JsonLd
         data={{
           "@context": "https://schema.org",

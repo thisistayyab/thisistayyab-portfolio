@@ -1,4 +1,5 @@
-import { ExternalLink } from "lucide-react"
+import { ExternalLink, Lock } from "lucide-react"
+import { RiGithubFill } from "react-icons/ri"
 import Link from "next/link"
 
 import { OptimizedPicture } from "@/components/site/optimized-picture"
@@ -42,6 +43,10 @@ export type PortfolioProject = {
   applicationCategory?: string
   publisher?: { name: string; url: string }
   seoKeywords?: readonly string[]
+  githubUrl?: string
+  deploymentStatus?: string
+  complianceNotice?: string
+  hideCardLiveLink?: boolean
 }
 
 const EXCERPT_LENGTH = 120
@@ -117,6 +122,7 @@ export function ProjectCard({ project, onLearnMore, priority }: ProjectCardProps
           </p>
         ) : null}
 
+
         <p
           className="mt-2 min-h-[4.75rem] flex-1 text-sm leading-relaxed text-slate-400 line-clamp-3 sm:min-h-[5.1rem] sm:text-[0.95rem] sm:leading-[1.75]"
           title={project.description}
@@ -147,7 +153,7 @@ export function ProjectCard({ project, onLearnMore, priority }: ProjectCardProps
         </ul>
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
-          {project.ctaDisabled || project.link ? (
+          {!project.hideCardLiveLink && (project.ctaDisabled || project.link) ? (
             project.ctaDisabled ? (
               <button
                 type="button"
@@ -181,10 +187,26 @@ export function ProjectCard({ project, onLearnMore, priority }: ProjectCardProps
               </a>
             )
           ) : null}
+          {project.githubUrl ? (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`View ${project.name} on GitHub — opens in a new tab`}
+              aria-label={`Open ${project.name} GitHub repository`}
+              className={cn(ctaSecondaryClassName, "text-[0.88rem] px-3.5 py-3 inline-flex items-center gap-1.5")}
+            >
+              <RiGithubFill className="size-4 shrink-0" aria-hidden="true" />
+              <span>Repository</span>
+            </a>
+          ) : null}
           {project.detailPath ? (
             <Link
               href={project.detailPath}
-              className={cn(ctaSecondaryClassName, "text-[0.88rem] px-5 py-3")}
+              className={cn(
+                project.hideCardLiveLink ? ctaPrimaryClassName : ctaSecondaryClassName,
+                "text-[0.88rem] px-5 py-3"
+              )}
               aria-label={`Read full details about ${project.name}`}
             >
               Learn more
@@ -193,7 +215,10 @@ export function ProjectCard({ project, onLearnMore, priority }: ProjectCardProps
             <button
               type="button"
               onClick={() => onLearnMore(project)}
-              className={cn(ctaSecondaryClassName, "cursor-pointer border-0 text-[0.88rem] px-5 py-3")}
+              className={cn(
+                project.hideCardLiveLink ? ctaPrimaryClassName : ctaSecondaryClassName,
+                "cursor-pointer border-0 text-[0.88rem] px-5 py-3"
+              )}
               aria-label={`Read full details about ${project.name}`}
             >
               Learn more

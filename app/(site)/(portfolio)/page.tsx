@@ -42,6 +42,7 @@ import {
   statusBadgeClassName,
 } from "@/components/site/site-styles"
 import { buildPageMetadata } from "@/lib/site-metadata"
+import { youtubeDownloaderProject } from "@/lib/data/youtube-downloader-project"
 import { auditblocProject } from "@/lib/data/auditbloc-project"
 import { relayProject } from "@/lib/data/relay-project"
 import { tillqorinProject } from "@/lib/data/tillqorin-project"
@@ -91,6 +92,7 @@ const heroTags = [
 ] as const
 
 const homeFeaturedProjects: PortfolioProject[] = [
+  youtubeDownloaderProject,
   relayProject,
   auditblocProject,
   tillqorinProject,
@@ -167,6 +169,7 @@ export default async function HomePage() {
         )}
       />
 
+      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(youtubeDownloaderProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(relayProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />

@@ -19,7 +19,7 @@ export function buildPortfolioProjectSoftwareApplicationJsonLd(
       : [project.alternateName]
     : undefined
 
-  const sameAs = [project.link, project.appUrl].filter(
+  const sameAs = [project.link, project.appUrl, project.githubUrl].filter(
     (url): url is string => Boolean(url),
   )
 
