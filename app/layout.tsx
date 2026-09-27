@@ -96,8 +96,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${outfit.variable} ${bricolage.variable} dark h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="relative min-h-full bg-background font-sans text-foreground">
+      <body
+        className="relative min-h-full bg-background font-sans text-foreground"
+        suppressHydrationWarning
+      >
         <GlobalBackground />
         {children}
         <Analytics />

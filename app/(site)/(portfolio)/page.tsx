@@ -95,7 +95,6 @@ const homeFeaturedProjects: PortfolioProject[] = [
   youtubeDownloaderProject,
   relayProject,
   auditblocProject,
-  tillqorinProject,
 ]
 
 const homeFaq = [

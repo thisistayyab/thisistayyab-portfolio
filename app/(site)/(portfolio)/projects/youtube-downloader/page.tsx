@@ -124,11 +124,11 @@ export default function YoutubeDownloaderProjectPage() {
 
         <div className="flex flex-wrap items-center gap-2.5">
           <p className="text-xs font-semibold tracking-[0.2em] text-violet-300/80 uppercase">
-            Personal project · Private tool
+            Personal project
           </p>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-0.5 text-[0.7rem] font-medium text-amber-300">
             <Lock className="size-3" aria-hidden="true" />
-            Password Protected
+            Private deployment · Password Protected
           </span>
         </div>
 

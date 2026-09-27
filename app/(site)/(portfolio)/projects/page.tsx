@@ -114,9 +114,9 @@ const portfolioProjects: PortfolioProject[] = [
     image: "/images/projects/7options.webp",
     imageAlt: "7Options subscription platform",
     imageTitle: "7Options subscription platform",
-    link: "https://7options.vercel.app/",
+    link: "",
     description:
-      "Freelance client project: a full stack subscription and account management platform with user dashboards, plans, payments, and admin workflows. Delivered without a formal IP contract; ownership stays with the client. A public demo is available at the link below.",
+      "Freelance client project: a full stack subscription and account management platform with user dashboards, plans, payments, and admin workflows. Delivered without a formal IP contract; ownership stays with the client. The live app is internal to the client and not linked here.",
     tags: [
       { label: "Client project", variant: "feature" },
       { label: "React", variant: "tech" },
@@ -124,7 +124,9 @@ const portfolioProjects: PortfolioProject[] = [
       { label: "Supabase", variant: "tech" },
       { label: "Payments", variant: "feature" },
     ],
-    ctaLabel: "Live View",
+    ctaLabel: "Internal site",
+    ctaDisabled: true,
+    ctaDisabledReason: "Client internal application — not publicly accessible.",
   },
   {
     id: 8,
