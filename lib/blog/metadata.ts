@@ -6,6 +6,7 @@ import {
   FEATURED_OG_ALT,
   FEATURED_OG_DIMENSIONS,
   featuredOgImageUrl,
+  SITE_BRAND,
   SITE_URL,
 } from "@/lib/site"
 
@@ -59,6 +60,8 @@ export function blogPostPageMetadata(post: {
     ...(post.seo_keywords?.length ? { keywords: post.seo_keywords } : {}),
     alternates: { canonical: url },
     openGraph: {
+      siteName: SITE_BRAND,
+      locale: "en_US",
       title,
       description,
       url,

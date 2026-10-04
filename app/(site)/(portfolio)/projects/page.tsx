@@ -322,6 +322,11 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
         },
         applicationCategory: "WebApplication",
         operatingSystem: "Web Browser",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
         author: {
           "@type": "Person",
           "@id": `${SITE_URL}/about`,

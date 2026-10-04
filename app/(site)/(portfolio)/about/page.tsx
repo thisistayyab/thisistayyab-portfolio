@@ -602,6 +602,33 @@ export default function AboutPage() {
         </MotionSection>
 
         <MotionSection
+          className="mx-auto max-w-[1200px] px-5 pb-20 sm:px-6 lg:px-4"
+          aria-labelledby="about-faq-heading"
+        >
+          <div className="mx-auto max-w-4xl">
+            <FaqSection
+              headingId="about-faq-heading"
+              title="About Tayyab — FAQ"
+              description="Quick answers about Tayyab's role, stack, and how he works with clients."
+              items={aboutFaq}
+              ctas={[
+                {
+                  label: "View projects",
+                  href: "/projects",
+                  title: "Browse Tayyab's full stack project portfolio",
+                },
+                {
+                  label: "Get in touch",
+                  href: "/contact",
+                  variant: "secondary",
+                  title: "Contact Tayyab for freelance or contract web development",
+                },
+              ]}
+            />
+          </div>
+        </MotionSection>
+
+        <MotionSection
           className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4"
           aria-labelledby="about-cta-heading"
         >

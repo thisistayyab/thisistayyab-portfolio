@@ -66,8 +66,8 @@ export const metadata: Metadata = buildPageMetadata({
     url: projectImageUrl(youtubeDownloaderProject.image),
     alt: youtubeDownloaderProject.imageAlt,
     width: 1280,
-    height: 720,
-    type: "image/webp",
+    height: 714,
+    type: "image/jpeg",
   },
   twitter: {
     title: "YouTube Video Downloader — Built by Tayyab",

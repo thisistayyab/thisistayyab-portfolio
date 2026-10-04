@@ -56,8 +56,8 @@ export const metadata: Metadata = buildPageMetadata({
     url: projectImageUrl(relayProject.image),
     alt: relayProject.imageAlt,
     width: 1280,
-    height: 720,
-    type: "image/webp",
+    height: 714,
+    type: "image/jpeg",
   },
   twitter: {
     title: "Relay — Built by Tayyab",

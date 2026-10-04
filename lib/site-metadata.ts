@@ -4,8 +4,19 @@ import {
   FEATURED_OG_ALT,
   FEATURED_OG_DIMENSIONS,
   featuredOgImageUrl,
+  SITE_BRAND,
   SITE_URL,
 } from "@/lib/site"
+
+/**
+ * openGraph is shallow-merged across segments: page-level openGraph fully replaces
+ * the root layout's, so every page must re-declare siteName/locale here or the
+ * tags vanish from all pages except none.
+ */
+const OPEN_GRAPH_SITE_DEFAULTS = {
+  siteName: SITE_BRAND,
+  locale: "en_US",
+} as const
 
 type OgImage = {
   url: string
@@ -74,6 +85,7 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
     ...(input.keywords ? { keywords: [...input.keywords] } : {}),
     alternates: { canonical },
     openGraph: {
+      ...OPEN_GRAPH_SITE_DEFAULTS,
       title: ogTitle,
       description: ogDescription,
       url: canonical,

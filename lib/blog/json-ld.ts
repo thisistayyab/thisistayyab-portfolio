@@ -2,7 +2,7 @@ import { BLOG_INDEX_PATH } from "@/lib/blog/config"
 import type { BlogPost, BlogPostSummary } from "@/lib/blog/types"
 import { blogImageUrl } from "@/lib/blog/utils"
 import { personId } from "@/lib/json-ld-ids"
-import { SITE_BRAND, SITE_URL } from "@/lib/site"
+import { FEATURED_OG_ALT, featuredOgImageUrl, SITE_BRAND, SITE_URL } from "@/lib/site"
 
 export function buildBlogIndexJsonLd(posts: BlogPostSummary[], description: string) {
   return {
@@ -61,7 +61,14 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
     url,
     headline: post.seo_title || post.title,
     description: post.seo_description || post.excerpt,
-    image: image ? [image] : undefined,
+    // Fall back to the site OG image so every article has a crawlable image URL.
+    image: [
+      {
+        "@type": "ImageObject",
+        url: image ?? featuredOgImageUrl(),
+        caption: image ? post.title : FEATURED_OG_ALT,
+      },
+    ],
     author: {
       "@type": "Person",
       "@id": personId(SITE_URL),

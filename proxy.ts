@@ -5,13 +5,28 @@ import { updateSession } from "@/lib/supabase/middleware"
 const ADMIN_PREFIX = "/dashboard"
 const LOGIN_PATH = "/login"
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const host = request.headers.get("host") || ""
 
   /** Enforce non-www canonical domain (fixes duplicate www vs non-www indexation). */
   if (host.startsWith("www.")) {
     const url = request.nextUrl.clone()
     url.host = host.replace(/^www\./, "")
+    return NextResponse.redirect(url, 308)
+  }
+
+  /**
+   * Enforce canonical thisistayyab.dev over default *.vercel.app domains in production.
+   * Prevents duplicate content indexation in Google and Bing.
+   */
+  if (
+    (host === "thisistayyab.vercel.app" ||
+      (process.env.VERCEL_ENV === "production" && host.endsWith(".vercel.app"))) &&
+    !host.includes("localhost")
+  ) {
+    const url = request.nextUrl.clone()
+    url.protocol = "https:"
+    url.host = "thisistayyab.dev"
     return NextResponse.redirect(url, 308)
   }
 

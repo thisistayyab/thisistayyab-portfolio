@@ -107,20 +107,17 @@ export function SiteNav() {
 
           <ul
             className="hidden list-none items-center gap-1 lg:flex"
-            role="menubar"
             aria-label="Main navigation menu"
           >
             {navLinks.map((item, index) => (
               <li
                 key={item.label}
-                role="none"
                 itemProp="itemListElement"
                 itemScope
                 itemType="https://schema.org/ListItem"
               >
                 <Link
                   href={item.href}
-                  role="menuitem"
                   aria-label={item.description}
                   title={`${item.description} - ${SITE_NAME}`}
                   aria-current={isActive(item.href) ? "page" : undefined}
@@ -168,12 +165,11 @@ export function SiteNav() {
               aria-label="Mobile navigation menu"
               className="flex flex-1 flex-col"
             >
-              <ul className="list-none space-y-2" role="menu" aria-label="Navigation links">
+              <ul className="list-none space-y-2" aria-label="Navigation links">
                 {navLinks.map((item) => (
-                  <li key={item.label} role="none">
+                  <li key={item.label}>
                     <Link
                       href={item.href}
-                      role="menuitem"
                       aria-label={item.description}
                       aria-current={isActive(item.href) ? "page" : undefined}
                       className={cn(

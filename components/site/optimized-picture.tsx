@@ -36,6 +36,7 @@ export function OptimizedPicture({
   const webp = imageWebpPath(src)
 
   return (
+    // Microdata on <img> (not <picture>) — Schema.org parsers skip <source> wrappers.
     <picture
       className={cn(
         fill ? "absolute inset-0 block h-full w-full" : "block",

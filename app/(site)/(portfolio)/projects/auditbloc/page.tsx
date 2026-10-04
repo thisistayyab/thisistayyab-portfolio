@@ -55,8 +55,8 @@ export const metadata: Metadata = buildPageMetadata({
     url: projectImageUrl(auditblocProject.image),
     alt: auditblocProject.imageAlt,
     width: 1280,
-    height: 720,
-    type: "image/webp",
+    height: 642,
+    type: "image/jpeg",
   },
   twitter: {
     title: "AuditBloc — Accessibility Scanner I Built",

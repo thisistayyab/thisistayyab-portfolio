@@ -114,6 +114,7 @@ export type SitemapPostEntry = {
   slug: string
   updated_at: string | null
   published_at: string | null
+  cover_image: string | null
 }
 
 export async function getPublishedPostsForSitemap(): Promise<SitemapPostEntry[]> {
@@ -122,7 +123,7 @@ export async function getPublishedPostsForSitemap(): Promise<SitemapPostEntry[]>
 
   const { data, error } = await supabase
     .from("posts")
-    .select("slug, updated_at, published_at, created_at")
+    .select("slug, updated_at, published_at, created_at, cover_image")
     .eq("published", true)
     .not("slug", "is", null)
 
@@ -139,5 +140,6 @@ export async function getPublishedPostsForSitemap(): Promise<SitemapPostEntry[]>
     slug: row.slug as string,
     updated_at: (row.updated_at as string | null) ?? null,
     published_at: (row.published_at as string | null) ?? (row.created_at as string | null) ?? null,
+    cover_image: (row.cover_image as string | null) ?? null,
   }))
 }

@@ -17,6 +17,7 @@ function webmasterRewrites(): { source: string; destination: string }[] {
 const nextConfig: NextConfig = {
   trailingSlash: false,
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { protocol: "https", hostname: "**.supabase.co" },
       { protocol: "https", hostname: "res.cloudinary.com" },
@@ -43,6 +44,9 @@ const nextConfig: NextConfig = {
       { source: "/resume", destination: "/Tayyab-CV.pdf", permanent: true },
       { source: "/cv", destination: "/Tayyab-CV.pdf", permanent: true },
       { source: "/contact-us", destination: "/contact", permanent: true },
+      { source: "/feed", destination: "/feed.xml", permanent: true },
+      { source: "/rss", destination: "/feed.xml", permanent: true },
+      { source: "/rss.xml", destination: "/feed.xml", permanent: true },
     ]
   },
 }

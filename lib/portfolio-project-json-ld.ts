@@ -42,6 +42,11 @@ export function buildPortfolioProjectSoftwareApplicationJsonLd(
     },
     applicationCategory: project.applicationCategory ?? "BusinessApplication",
     operatingSystem: "Web Browser",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
     ...(project.seoKeywords?.length ? { keywords: project.seoKeywords.join(", ") } : {}),
     author: {
       "@type": "Person",

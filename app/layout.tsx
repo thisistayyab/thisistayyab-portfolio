@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { GoogleAnalytics } from "@next/third-parties/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -12,10 +12,18 @@ import {
   FEATURED_OG_DIMENSIONS,
   featuredOgImageUrl,
   homeMetadata,
+  SITE_BRAND,
   SITE_URL,
 } from "@/lib/site"
 
 import "./globals.css"
+
+export const viewport: Viewport = {
+  themeColor: "#020106",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+}
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -33,14 +41,22 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  applicationName: "Tayyab — Full Stack Developer",
+  applicationName: SITE_BRAND,
   title: {
     default: homeMetadata.title,
     template: "%s | Tayyab",
   },
   description: homeMetadata.description,
+  category: "technology",
+  alternates: {
+    canonical: `${SITE_URL}/`,
+    types: {
+      "application/rss+xml": `${SITE_URL}/feed.xml`,
+    },
+  },
   authors: [{ name: "Tayyab", url: `${SITE_URL}/about` }],
   creator: "Tayyab",
+  publisher: "Tayyab",
   manifest: "/site.webmanifest",
   icons: {
     icon: [
@@ -64,8 +80,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
+    siteName: SITE_BRAND,
     url: `${SITE_URL}/`,
-    siteName: "Tayyab — Full Stack Developer",
     title: homeMetadata.title,
     description: homeMetadata.description,
     images: [

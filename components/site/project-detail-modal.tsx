@@ -1,6 +1,6 @@
 "use client"
 
-import { ExternalLink, Lock, ShieldAlert, X } from "lucide-react"
+import { ExternalLink, X } from "lucide-react"
 import Link from "next/link"
 import { RiGithubFill } from "react-icons/ri"
 import { useEffect } from "react"

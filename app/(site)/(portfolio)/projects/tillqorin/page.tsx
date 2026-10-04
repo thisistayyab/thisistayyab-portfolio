@@ -44,7 +44,7 @@ export const metadata: Metadata = buildPageMetadata({
     alt: tillqorinProject.imageAlt,
     width: 1280,
     height: 720,
-    type: "image/webp",
+    type: "image/jpeg",
   },
   twitter: {
     title: "Tillqorin POS — Commerce OS Built by Tayyab",

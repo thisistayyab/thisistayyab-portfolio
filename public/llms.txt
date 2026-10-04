@@ -21,8 +21,8 @@ Tayyab is a full stack web developer and co-founder at Taylance Tech with 3+ yea
 
 ### 1. Relay — Real-Time Text & P2P File Transfer
 Privacy-first real-time collaboration web application featuring instant shared notepad sync and direct peer-to-peer file transfer up to 100 MB via WebRTC data channels. Built with React, Node.js, Express, and Socket.IO. Requires zero user accounts and stores zero data or files on servers.
+- Portfolio Case Study: https://thisistayyab.dev/projects/relay
 - Live App: https://relay.thisistayyab.dev/
-- Portfolio Listing: https://thisistayyab.dev/projects
 
 ### 2. AuditBloc — Web Accessibility & Compliance Scanner
 Automated website accessibility, GDPR cookie banner, and AI content disclosure scanner. Developed with Next.js 16, Playwright for automated browser testing, axe-core for WCAG accessibility rule validation, and Supabase for authentication and backend reporting.
@@ -34,6 +34,11 @@ Web-based retail POS, invoicing, and inventory management system published by Ta
 - Portfolio Case Study: https://thisistayyab.dev/projects/tillqorin
 - Product Page: https://taylancetech.com/products/tillqorin
 - Live POS App: https://pos.taylancetech.com/
+
+### 4. YouTube Video Downloader — Private Archival Tool
+Fast, high-fidelity YouTube video and audio extraction web application built with Next.js, yt-dlp, and FFmpeg. Private password-locked tool for personal backups with live download progress.
+- Portfolio Case Study: https://thisistayyab.dev/projects/youtube-downloader
+- Live App: https://downloader.thisistayyab.dev/ (Private)
 
 ## Core Skills & Stack
 
@@ -52,3 +57,4 @@ Web-based retail POS, invoicing, and inventory management system published by Ta
 - LeetCode: https://leetcode.com/u/thisistayyab/
 
 Sitemap: https://thisistayyab.dev/sitemap.xml
+RSS Feed: https://thisistayyab.dev/feed.xml

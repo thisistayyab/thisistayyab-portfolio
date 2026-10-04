@@ -48,6 +48,7 @@ Blog database setup: run [`supabase/schema.sql`](./supabase/schema.sql) and [`su
 - Place new **Taylance Tech** screenshot as `taylancetech.png` in the repo root, then run `npm run optimize:images`.
 - Portfolio photos and project shots are served as **AVIF + WebP** pairs under `public/images/` for fast loads and SEO.
 - Hero / Open Graph portrait: `public/images/about.avif` + `about.webp` (stylized cutout — do not overwrite from `about.jpg` without intent).
+- **Crawler/share URLs** (`lib/image.ts` `imageSeoUrl`) never emit AVIF — X/Twitter, LinkedIn, Slack, iMessage, and Mastodon cannot read AVIF share images. They map to `.jpg` for assets with a JPG sibling (`og`, `projects/relay`, `projects/youtube-downloader`) and `.webp` for everything else. When adding a project image, either ship a `.jpg` sibling at the **same dimensions** as the AVIF/WebP pair (regenerate with `ffmpeg -i x.webp -frames:v 1 -q:v 3 x.jpg`) or extend `JPG_SIBLINGS` in `lib/image.ts` only after generating one.
 - Unused / alternate files: `public/assets-archive/` (see `index.html`, `noindex` listing page; image URLs remain reachable).
 
 ## Scripts

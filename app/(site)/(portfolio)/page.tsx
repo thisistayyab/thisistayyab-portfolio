@@ -51,11 +51,15 @@ import {
   projectPortfolioUrl,
 } from "@/lib/portfolio-project-json-ld"
 import {
+  FEATURED_OG_ALT,
+  featuredOgImageUrl,
   homeMetadata,
   PROFILE_IMAGE,
   projectImageUrl,
+  SITE_BRAND,
   SITE_URL,
 } from "@/lib/site"
+import { personId } from "@/lib/json-ld-ids"
 import { cn } from "@/lib/utils"
 import { FadeIn } from "@/components/motion/fade-in"
 import { StaggerContainer, StaggerItem } from "@/components/motion/stagger-reveal"
@@ -177,6 +181,34 @@ export default async function HomePage() {
       <JsonLd
         data={{
           "@context": "https://schema.org",
+          "@type": "WebPage",
+          "@id": `${SITE_URL}/#webpage`,
+          name: homeMetadata.title,
+          description: homeMetadata.description,
+          url: `${SITE_URL}/`,
+          isPartOf: {
+            "@type": "WebSite",
+            "@id": `${SITE_URL}/#website`,
+            name: SITE_BRAND,
+            url: `${SITE_URL}/`,
+          },
+          about: {
+            "@type": "Person",
+            "@id": personId(SITE_URL),
+            name: "Tayyab",
+            url: personId(SITE_URL),
+          },
+          primaryImageOfPage: {
+            "@type": "ImageObject",
+            url: featuredOgImageUrl(),
+            caption: FEATURED_OG_ALT,
+          },
+        }}
+      />
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Featured Web Development Projects by Tayyab",
           itemListElement: homeFeaturedProjects.map((project, index) => ({
@@ -197,6 +229,12 @@ export default async function HomePage() {
                 description: project.imageAlt,
               },
               applicationCategory: "WebApplication",
+              operatingSystem: "Web Browser",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+              },
             },
           })),
         }}
@@ -499,14 +537,12 @@ export default async function HomePage() {
               Deployed{" "}
               <strong className="font-semibold text-slate-200">production web applications</strong>{" "}
               — including{" "}
-              <a
-                href="https://relay.thisistayyab.dev"
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                href="/projects/relay"
                 className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
               >
                 Relay
-              </a>
+              </Link>
               ,{" "}
               <Link
                 href="/projects/auditbloc"
@@ -520,6 +556,13 @@ export default async function HomePage() {
                 className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
               >
                 Tillqorin POS
+              </Link>
+              ,{" "}
+              <Link
+                href="/projects/youtube-downloader"
+                className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
+              >
+                YouTube Downloader
               </Link>
               , SaaS dashboards, REST APIs, Supabase backends, and client work built with React,
               Next.js, Node.js, and PostgreSQL.

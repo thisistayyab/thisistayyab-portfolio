@@ -1,4 +1,4 @@
-import { ExternalLink, Lock } from "lucide-react"
+import { ExternalLink } from "lucide-react"
 import { RiGithubFill } from "react-icons/ri"
 import Link from "next/link"
 

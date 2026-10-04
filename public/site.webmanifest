@@ -1,8 +1,10 @@
 {
+  "id": "https://thisistayyab.dev/",
   "name": "Tayyab — Full Stack Developer",
   "short_name": "Tayyab",
   "description": "Full stack developer portfolio — React, Next.js, Node.js, SaaS, APIs, and AI automation.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#020106",
   "theme_color": "#020106",

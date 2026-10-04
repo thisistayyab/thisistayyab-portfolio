@@ -12,7 +12,11 @@ export function buildPersonJsonLd(siteUrl: string, description: string) {
     jobTitle: "Co-Founder & Lead Developer at Taylance Tech",
     description,
     url: personId(siteUrl),
-    image: imageSeoUrl(PROFILE_IMAGE, siteUrl),
+    image: {
+      "@type": "ImageObject",
+      url: imageSeoUrl(PROFILE_IMAGE, siteUrl),
+      caption: "Tayyab — Full Stack Developer",
+    },
     email: profileEmail,
     sameAs: [...profileSameAs],
     worksFor: {
