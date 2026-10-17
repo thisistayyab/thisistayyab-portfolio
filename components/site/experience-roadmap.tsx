@@ -12,7 +12,7 @@ export type ExperienceIcon = "rocket" | "briefcase" | "compass"
 export type CareerMilestone = {
   id: string
   slug: string
-  kind: "founder" | "freelance" | "client" | "vision"
+  kind: "freelance" | "client" | "vision"
   /** When client work was sourced through a platform (e.g. Upwork). */
   viaPlatform?: string
   phase: string
@@ -397,7 +397,8 @@ export function ExperienceHomePreview({
           </h2>
           <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
           <p className="text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
-            Where I work today — and the path from freelance delivery to Taylance Tech.
+            Where I work today — freelance and contract full stack delivery for global clients,
+            plus production web products shipped end to end.
           </p>
         </div>
 
@@ -426,7 +427,7 @@ export function ExperienceHomePreview({
                 <RoadmapPreviewTimeline milestones={upcomingMilestones} />
               </div>
               <p className="mt-5 shrink-0 border-t border-white/8 pt-4 text-center text-xs text-slate-500">
-                Includes 2023 studio vision on the full roadmap
+                Includes the 2023 full stack foundation on the full roadmap
               </p>
             </GlassSurface>
           </div>
@@ -470,7 +471,7 @@ export function buildExperienceItemListJsonLd(
     "@id": baseId,
     name: "Tayyab Full Stack Developer Career Roadmap",
     description:
-      "Professional experience of Tayyab: co-founder of Taylance Tech (launched 2026, envisioned since 2023), Upwork and Fiverr freelance delivery, and confidential Upwork contract work for Order AI LLC.",
+      "Professional experience of Tayyab: freelance and contract full stack delivery for global clients, production web products including Tillqorin POS, AuditBloc, and Taylance CRM, and confidential Upwork contract work for Order AI LLC.",
     numberOfItems: milestones.filter((m) => m.kind !== "vision").length,
     itemListElement: milestones
       .filter((m) => m.kind !== "vision")

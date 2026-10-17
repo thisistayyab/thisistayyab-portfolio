@@ -88,28 +88,36 @@ export const profileSameAs = [
   "https://leetcode.com/u/thisistayyab/",
 ] as const
 
-export const profileEmail = "tayyab@taylancetech.com"
+export const profileEmail = "thisistayyab@outlook.com"
 
 export const homeMetadata = {
   /** 50–60 chars for SERP title (SEO tools). */
-  title: "Tayyab | Full Stack Developer for Hire — React & Next.js",
+  title: "Tayyab | Full Stack Developer for Hire — React, Next.js, Node.js",
   /** ~155 chars — within meta description limits (AIOSEO flags 160+). */
   description:
-    "Hire Tayyab for React, Next.js & Node.js apps. Full stack developer — Tillqorin POS, Taylance Tech, 3+ years, 15+ projects, 1,150+ LeetCode.",
+    "Hire Tayyab — full stack web developer for fast, scalable React, Next.js & Node.js web apps: SaaS platforms, REST APIs, Tillqorin POS, AuditBloc. 3+ yrs, 15+ projects.",
   keywords: [
     "Tayyab",
+    "Tayyab full stack developer",
     "Tillqorin",
     "Tillqorin POS developer",
-    "Full Stack Developer",
+    "full stack developer",
     "React developer",
+    "React developer for hire",
     "Next.js developer",
+    "Next.js developer for hire",
     "Node.js developer",
+    "Node.js backend developer",
     "PostgreSQL developer",
     "REST API developer",
     "freelance web developer",
+    "freelance full stack developer",
     "full stack for hire",
-    "web application development",
+    "web application development services",
     "SaaS developer",
+    "SaaS product development",
+    "web app developer",
+    "hire web developer",
     "portfolio",
   ],
 } as const

@@ -4,17 +4,15 @@ import Link from "next/link"
 import { JsonLd } from "@/components/site/json-ld"
 import { LegalPageShell } from "@/components/site/legal-page-shell"
 import {
-  LEGAL_BUSINESS_NAME,
   LEGAL_CONTACT_EMAIL,
   LEGAL_OPERATOR_NAME,
   LEGAL_SITE_URL,
-  LEGAL_STUDIO_URL,
 } from "@/lib/legal"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
 const description =
-  "Terms of Service for thisistayyab.dev — website use, inquiries, and how Taylance Tech software development engagements are agreed after contact."
+  "Terms of Service for thisistayyab.dev — website use, project inquiries, and how Tayyab's full stack software development engagements are agreed after contact."
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Terms of Service | Tayyab — Full Stack Developer",
@@ -43,7 +41,7 @@ export default function TermsOfServicePage() {
     <LegalPageShell
       eyebrow="Legal"
       title="Terms of Service"
-      lead={`These terms apply to ${LEGAL_SITE_URL}, ${LEGAL_OPERATOR_NAME}'s personal portfolio. I am a co-founder of ${LEGAL_BUSINESS_NAME} (${LEGAL_STUDIO_URL}). You can contact me here or through the company site; paid software work is agreed in writing through ${LEGAL_BUSINESS_NAME}, not purchased on this portfolio.`}
+      lead={`These terms apply to ${LEGAL_SITE_URL}, ${LEGAL_OPERATOR_NAME}'s personal portfolio. Any paid software development work is agreed with me directly in writing after an inquiry, and is not purchased through this portfolio.`}
     >
       <h2 id="acceptance">Agreement</h2>
       <p>
@@ -54,14 +52,10 @@ export default function TermsOfServicePage() {
 
       <h2 id="about-the-site">About this website</h2>
       <p>
-        {LEGAL_SITE_URL} is <strong>{LEGAL_OPERATOR_NAME}&apos;s</strong> personal portfolio —
-        projects, blog, and contact. It is separate from, but connected to,{" "}
-        <strong>{LEGAL_BUSINESS_NAME}</strong>, the co-founder-led software agency I co-founded at{" "}
-        <a href={LEGAL_STUDIO_URL} rel="noopener noreferrer" target="_blank">
-          taylancetech.com
-        </a>
-        . This portfolio has no checkout or visitor accounts; services are sold by the company after
-        you inquire (here or on taylancetech.com). Content may change without notice.
+        {LEGAL_SITE_URL} is <strong>{LEGAL_OPERATOR_NAME}&apos;s</strong> personal full stack
+        developer portfolio — projects, blog, and contact. It has no checkout or visitor accounts;
+        development services are agreed directly with me after you inquire here. Content may change
+        without notice.
       </p>
 
       <h2 id="services">Software services (after contact)</h2>
@@ -72,17 +66,13 @@ export default function TermsOfServicePage() {
       <ol>
         <li>
           You reach out on {LEGAL_SITE_URL} (contact page or{" "}
-          <a href={`mailto:${LEGAL_CONTACT_EMAIL}`}>{LEGAL_CONTACT_EMAIL}</a>) or via{" "}
-          <a href={LEGAL_STUDIO_URL} rel="noopener noreferrer" target="_blank">
-            taylancetech.com
-          </a>
-          .
+          <a href={`mailto:${LEGAL_CONTACT_EMAIL}`}>{LEGAL_CONTACT_EMAIL}</a>) or via a freelance
+          platform listing.
         </li>
         <li>We discuss scope, timeline, and pricing.</li>
         <li>
           If we both agree to proceed, terms are set out in a written quote, proposal, SOW, and/or
-          contract with <strong>{LEGAL_BUSINESS_NAME}</strong> (including payment schedule,
-          deliverables, and revisions).
+          contract directly with me (including payment schedule, deliverables, and revisions).
         </li>
       </ol>
       <p>

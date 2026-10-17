@@ -53,7 +53,7 @@ export function buildPortfolioProjectSoftwareApplicationJsonLd(
       "@id": personId(siteUrl),
       name: "Tayyab",
       url: personId(siteUrl),
-      jobTitle: "Co-Founder & Lead Developer at Taylance Tech",
+      jobTitle: "Full Stack Web Developer",
     },
     creator: {
       "@type": "Person",

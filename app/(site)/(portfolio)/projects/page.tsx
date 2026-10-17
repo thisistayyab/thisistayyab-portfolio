@@ -20,7 +20,7 @@ import {
 import { projectImageUrl, SITE_URL } from "@/lib/site"
 
 const projectsPageIntro =
-  "Explore full-stack web applications, SaaS products, and client projects built by Tayyab — a React, Next.js, and Node.js developer. Featured work includes Tillqorin POS (Commerce OS), Taylance Tech, Taylance CRM, and production apps with real APIs, databases, and SEO."
+  "Explore full stack web applications, SaaS products, and client projects built by Tayyab — a React, Next.js, and Node.js developer. Featured work includes Tillqorin POS (Commerce OS), AuditBloc (accessibility scanner), Relay (real-time WebRTC), and production web apps with real APIs, databases, and SEO."
 
 const projectsKeywords = [
   ...relaySeoKeywords,
@@ -36,6 +36,10 @@ const projectsKeywords = [
   "Express.js API projects",
   "freelance full stack portfolio",
   "production web apps",
+  "Taylance CRM",
+  "CRM dashboard development",
+  "REST API portfolio examples",
+  "web application case studies",
 ] as const
 
 const portfolioProjects: PortfolioProject[] = [
@@ -44,41 +48,22 @@ const portfolioProjects: PortfolioProject[] = [
   auditblocProject,
   tillqorinProject,
   {
-    id: 4,
-    slug: "taylance-tech",
-    name: "Taylance Tech",
-    roleLabel: "Co-founded company",
-    image: "/images/projects/taylance-tech.webp",
-    imageAlt: "Taylance Tech homepage",
-    imageTitle: "Taylance Tech homepage",
-    link: "https://taylancetech.com/",
-    description:
-      "Taylance Tech is a co-founder-led software agency I co-founded in 2026 — web, mobile, SaaS, AI automation, and UI/UX for startups. I lead development and co-built taylancetech.com for performance, SEO, and clear positioning.",
-    tags: [
-      { label: "Co-founded", variant: "feature" },
-      { label: "Next.js", variant: "tech" },
-      { label: "Co-founder-led", variant: "feature" },
-      { label: "SaaS studio", variant: "feature" },
-      { label: "SEO", variant: "feature" },
-    ],
-    ctaLabel: "Live View",
-  },
-  {
     id: 5,
     slug: "taylance-crm",
     name: "Taylance CRM",
-    roleLabel: "Studio product",
+    roleLabel: "Full-stack product",
     image: "/images/projects/taylance-crm.webp",
-    imageAlt: "Taylance CRM dashboard",
+    imageAlt: "Taylance CRM dashboard for managing clients, leads, and projects, built by full stack developer Tayyab with React, Express.js, and Material UI",
     imageTitle: "Taylance CRM dashboard",
     link: "https://crm.taylancetech.com/",
     description:
-      "A full-featured CRM product under Taylance Tech: manage clients, leads, and projects from one dashboard. Built with React, Express.js, and Material UI — a studio product, not client work.",
+      "Taylance CRM is a full-featured CRM web application I built to manage clients, leads, and projects from one dashboard. Built with React, Express.js, and Material UI, with REST APIs and role-based workflows for sales teams.",
     tags: [
-      { label: "Studio product", variant: "feature" },
+      { label: "Full-stack product", variant: "feature" },
       { label: "React", variant: "tech" },
       { label: "Express.js", variant: "tech" },
       { label: "REST API", variant: "feature" },
+      { label: "Material UI", variant: "tech" },
     ],
     ctaLabel: "Live View",
   },
@@ -267,7 +252,7 @@ const projectsFaq = [
   {
     question: "What kind of projects are these?",
     answer:
-      "Live web apps and products — SaaS tools, APIs, CRMs, and marketing sites. Built for real use, not mockups.",
+      "Live web applications and products — SaaS tools, REST APIs, CRMs, and web platforms built for real traffic, not mockups. Each project links to a case study with the tech stack and architecture decisions.",
   },
   {
     question: "What technologies do you use most?",
@@ -358,15 +343,15 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
 }
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Projects | Full Stack Portfolio — React & Next.js",
+  title: "Web Development Projects | Full Stack Portfolio — React & Next.js Apps",
   description:
-    "Browse Tayyab's full-stack portfolio — Tillqorin POS, Taylance Tech, Taylance CRM, React and Node.js apps, client work, and production-ready demos.",
+    "Browse Tayyab's full stack web development portfolio — Tillqorin POS, AuditBloc accessibility scanner, Relay WebRTC app, Taylance CRM, and production React and Node.js projects with real APIs and databases.",
   canonicalPath: "/projects",
   keywords: [...auditblocSeoKeywords, ...tillqorinSeoKeywords, ...projectsKeywords],
   openGraph: {
-    title: "Web Development Projects | Tayyab",
+    title: "Web Development Projects | Full Stack Developer Tayyab",
     description:
-      "Full-stack portfolio featuring Tillqorin POS, Taylance Tech, Taylance CRM, React and Node.js apps, and production-ready demos.",
+      "Full stack portfolio featuring Tillqorin POS, AuditBloc, Relay, Taylance CRM, React and Node.js apps, and production-ready web projects.",
   },
   ogImage: {
     url: `${SITE_URL}/images/og.jpg`,
@@ -378,7 +363,7 @@ export const metadata: Metadata = buildPageMetadata({
   twitter: {
     title: "Full Stack Web Development Projects | Tayyab",
     description:
-      "Full stack portfolio: Tillqorin POS, Taylance Tech, Taylance CRM, React and Node.js apps, and production-ready demos.",
+      "Full stack portfolio: Tillqorin POS, AuditBloc, Relay, Taylance CRM, React and Node.js apps, and production-ready web projects.",
   },
 })
 

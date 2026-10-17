@@ -42,25 +42,22 @@ import { PROFILE_IMAGE, profileEmail, profileSameAs, SITE_URL } from "@/lib/site
 import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { cn } from "@/lib/utils"
 
-const TAYLANCE_TECH_URL = "https://taylancetech.com"
-
-const aboutInlineLinkClassName =
-  "font-medium text-violet-300 underline decoration-violet-400/40 underline-offset-2 transition-colors hover:text-violet-200 hover:decoration-violet-300/60"
-
 const aboutSubtitle =
-  "Co-Founder & Lead Developer at Taylance Tech and full stack developer specializing in React, Next.js, Node.js, and PostgreSQL — helping startups, SaaS companies, and growing businesses turn ideas into polished, maintainable software."
+  "Full stack web developer specializing in React, Next.js, Node.js, and PostgreSQL — helping startups, SaaS companies, and growing businesses turn product ideas into fast, polished, maintainable software."
 
 const aboutKeywords = [
   "Tayyab full stack developer",
   "React developer for hire",
-  "Next.js developer",
+  "Next.js developer for hire",
   "Node.js developer",
   "PostgreSQL developer",
   "freelance web developer",
   "SaaS developer",
-  "REST API development",
+  "REST API development services",
   "web application development",
   "TypeScript developer",
+  "hire full stack developer",
+  "remote software developer",
 ] as const
 
 const aboutStatCards: {
@@ -199,9 +196,9 @@ const aboutSocialLinks = [
 
 const aboutFaq = [
   {
-    question: "What is Tayyab's role as co-founder at Taylance Tech?",
+    question: "What types of projects does Tayyab build as a full stack developer?",
     answer:
-      "As co-founder and lead software engineer at Taylance Tech, Tayyab leads full-stack application development, software architecture, technical SEO, and product delivery across agency client work and studio SaaS products including Tillqorin POS and AuditBloc.",
+      "Tayyab builds production web applications end to end — SaaS platforms, POS and commerce systems like Tillqorin POS, accessibility and compliance tools like AuditBloc, real-time collaboration apps like Relay, REST APIs, and client dashboards. He owns the full delivery cycle from architecture and database design to cloud deployment and technical SEO.",
   },
   {
     question: "What technologies and tools does Tayyab work with on a daily basis?",
@@ -221,9 +218,9 @@ const aboutFaq = [
 ] as const
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "About Tayyab | Full Stack Developer — React & Next.js",
+  title: "About Tayyab | Full Stack Developer — React, Next.js & Node.js",
   description:
-    "Meet Tayyab — co-founder of Taylance Tech and full stack developer (React, Next.js, Node.js). 3+ years, 15+ projects, 1,150+ LeetCode. Available for hire.",
+    "Meet Tayyab — a full stack web developer for startups and SaaS teams (React, Next.js, Node.js, PostgreSQL). 3+ years, 15+ shipped projects, 1,150+ LeetCode. Available for hire.",
   canonicalPath: "/about",
   keywords: aboutKeywords,
   openGraph: {
@@ -282,7 +279,7 @@ export default function AboutPage() {
               <meta itemProp="name" content="Tayyab" />
               <meta
                 itemProp="jobTitle"
-                content="Co-Founder & Lead Developer at Taylance Tech"
+                content="Full Stack Web Developer"
               />
               <meta itemProp="url" content={`${SITE_URL}/about`} />
               <meta itemProp="description" content={aboutSubtitle} />
@@ -310,20 +307,11 @@ export default function AboutPage() {
 
                 <p className="mt-4 max-w-2xl text-base leading-[1.85] text-slate-400">
                   I&apos;m Tayyab, a full stack web developer with 3+ years of hands-on experience
-                  delivering production-ready applications for clients on Upwork and Fiverr. A studio
-                  I&apos;ve envisioned since 2023 became real when I launched{" "}
-                  <a
-                    href={TAYLANCE_TECH_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={aboutInlineLinkClassName}
-                  >
-                    Taylance Tech
-                  </a>{" "}
-                  in 2026 — to help businesses ship React and Node.js products with
-                  reliable engineering, clear communication, and code built for the long term. My
-                  work spans responsive interfaces, robust APIs, PostgreSQL data layers, and
-                  deployments engineered for real-world traffic.
+                  delivering production-ready applications for clients on Upwork, Fiverr, and
+                  direct engagements — building products with React and Node.js that ship on
+                  time, scale under real traffic, and stay maintainable for the long term.
+                  My work spans responsive interfaces, robust REST APIs, PostgreSQL data layers,
+                  and deployments engineered for real-world reliability.
                 </p>
 
                 <p className="mt-4 max-w-2xl text-base leading-[1.85] text-slate-400">
@@ -377,7 +365,7 @@ export default function AboutPage() {
                       "absolute bottom-6 left-1/2 flex w-[calc(100%-2rem)] -translate-x-1/2 justify-center text-center text-xs font-medium text-slate-200",
                     )}
                   >
-                    Co-Founder & Lead Developer, Taylance Tech
+                    Full Stack Web Developer
                   </div>
                 </GlassSurface>
               </div>
@@ -469,8 +457,8 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-5">
               <p className="text-base leading-[1.85] text-slate-400 sm:text-[1.05rem]">
-                Over the past three years, I&apos;ve partnered with founders, product teams, and
-                agencies to deliver web applications across industries — from SaaS dashboards and
+                Over the past three years, I&apos;ve partnered with startup teams, product owners,
+                and agencies to deliver web applications across industries — from SaaS dashboards and
                 e-commerce flows to internal tools and client-facing portals. Every engagement has
                 reinforced one principle: great software is measured by how reliably it serves
                 users after launch.
@@ -478,18 +466,12 @@ export default function AboutPage() {
               <p className="text-base leading-[1.85] text-slate-400 sm:text-[1.05rem]">
                 My freelance work on Upwork and Fiverr has earned consistent five-star feedback,
                 with clients citing responsiveness, technical clarity, and on-time delivery.
-                Building on that experience, I fulfilled a goal I&apos;ve held since 2023 by
-                co-founding{" "}
-                <a
-                  href={TAYLANCE_TECH_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={aboutInlineLinkClassName}
-                >
-                  Taylance Tech
-                </a>{" "}
-                in 2026 — a co-founder-led software agency for web, mobile, SaaS, AI automation, and
-                UI/UX, where code quality, thoughtful architecture, and long-term maintainability
+                Beyond client work, I architect and ship my own full stack products —{" "}
+                <span className="text-slate-200">Tillqorin POS</span>,{" "}
+                <span className="text-slate-200">AuditBloc</span>,{" "}
+                <span className="text-slate-200">Relay</span>, and a{" "}
+                <span className="text-slate-200">Taylance CRM</span> — web, SaaS, AI automation,
+                and UI/UX projects where code quality, thoughtful architecture, and long-term maintainability
                 come first.
               </p>
               <p className="text-base leading-[1.85] text-slate-400 sm:text-[1.05rem]">

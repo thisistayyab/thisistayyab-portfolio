@@ -9,7 +9,7 @@ import { youtubeDownloaderProject } from "@/lib/data/youtube-downloader-project"
 import { featuredOgImageUrl, projectImageUrl, SITE_URL } from "@/lib/site"
 
 /** Bump when static page content meaningfully changes. */
-const SITEMAP_FRESHNESS_DATE = "2026-10-05"
+const SITEMAP_FRESHNESS_DATE = "2026-10-18"
 
 /**
  * Update these dates whenever the page content meaningfully changes.

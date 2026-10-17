@@ -18,37 +18,34 @@ import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-const TAYLANCE_TECH_URL = "https://taylancetech.com"
-
 /** Full career roadmap — exported for home preview (single source of truth). */
 export const careerRoadmapMilestones: CareerMilestone[] = [
   {
-    id: "taylance-tech",
-    slug: "taylance-tech",
-    kind: "founder",
-    phase: "Studio launch",
+    id: "freelance-fullstack",
+    slug: "freelance-fullstack",
+    kind: "freelance",
+    phase: "Freelance & product work",
     roadmapYear: "2026",
-    roleTitle: "Co-Founder & Lead Developer",
-    organization: "Taylance Tech",
-    organizationUrl: TAYLANCE_TECH_URL,
-    periodLabel: "Founded 2026 · Vision since 2023",
+    roleTitle: "Full Stack Developer",
+    organization: "Freelance & Contract — Remote",
+    periodLabel: "Jan 2026 — Present",
     startDate: "2026-01-01",
     isCurrent: true,
-    platformLabel: "Co-founder-led software agency",
+    platformLabel: "Global clients · Remote delivery",
     summary:
-      "Co-founder-led software agency for web, mobile, SaaS, and AI — launched in 2026, planned since 2023.",
+      "Freelance and contract full stack delivery for web, mobile, SaaS, and AI products — alongside shipping production apps like Tillqorin POS, AuditBloc, and Taylance CRM.",
     description:
-      "I co-founded Taylance Tech with two partners. I lead web, mobile, and AI development — React and Next.js front ends, Node.js APIs, and deployments built to last.",
+      "I work as a full stack developer on freelance and contract engagements, and I ship my own production web products — React and Next.js front ends, Node.js APIs, and deployments built to last.",
     responsibilities: [
       "Product planning, architecture, and delivery.",
       "React, Next.js, and Node.js development.",
       "SEO, performance, and production launches.",
     ],
     outcomes: [
-      "Launched taylancetech.com, Taylance CRM, and Tillqorin POS.",
-      "Delivered client and studio products end to end.",
+      "Launched Tillqorin POS, AuditBloc, and Taylance CRM.",
+      "Delivered client and personal products end to end.",
     ],
-    skills: ["Next.js", "React", "Node.js", "SaaS", "AI integration", "SEO", "Co-founder-led"],
+    skills: ["Next.js", "React", "Node.js", "SaaS", "AI integration", "SEO", "Product delivery"],
     rim: "violet",
     accentBorderClass: "border-l-violet-500",
     icon: "rocket",
@@ -153,18 +150,18 @@ export const careerRoadmapMilestones: CareerMilestone[] = [
     phase: "Origin",
     roadmapYear: "2023",
     roleTitle: "Full stack foundation",
-    organization: "Path to Taylance Tech",
-    periodLabel: "Vision since 2023",
+    organization: "From first commit to client delivery",
+    periodLabel: "Since 2023",
     startDate: "2023-01-01",
     isCurrent: false,
-    platformLabel: "Before the studio",
+    platformLabel: "Learning & first clients",
     summary:
-      "Started building toward my own software studio in 2023.",
+      "Built the React and Node.js foundation that powers every project I ship today.",
     description:
-      "I focused on React, Node.js, and freelance delivery — and on the goal of launching Taylance Tech.",
+      "I focused on React, Node.js, and freelance delivery — and on the goal of shipping my own full stack products.",
     outcomes: [
-      "Studio vision set in 2023, launched in 2026.",
-      "Three years of client work before co-founding Taylance Tech.",
+      "First freelance clients in 2023.",
+      "Three years of client work before moving into full-time freelance and product delivery.",
     ],
     skills: ["React", "Node.js", "Problem solving", "Freelance discipline", "Product thinking"],
     rim: "violet",
@@ -174,13 +171,13 @@ export const careerRoadmapMilestones: CareerMilestone[] = [
 ]
 
 const experiencePageIntro =
-  "Tayyab's career as a full stack developer — co-founder of Taylance Tech (2026), freelance on Upwork and Fiverr, and selected client work."
+  "Tayyab's career as a full stack developer — freelance and contract delivery for global clients, production web products including Tillqorin POS, AuditBloc, and Taylance CRM, and selected client projects."
 
 const experienceKeywords = [
   "Tayyab full stack developer experience",
   "React developer career history",
   "Node.js freelance developer roadmap",
-  "Taylance Tech co-founder",
+  "freelance full stack developer",
   "Upwork full stack developer",
   "Fiverr web developer experience",
   "software engineer career timeline",
@@ -194,12 +191,12 @@ const experienceFaq = [
   {
     question: "What do you do today?",
     answer:
-      "I am Co-Founder and Lead Developer at Taylance Tech. I also take freelance work on Upwork and Fiverr.",
+      "I work as a full stack developer — shipping production web products like Tillqorin POS, AuditBloc, and Taylance CRM while taking freelance contract work on Upwork and Fiverr.",
   },
   {
-    question: "When did you start Taylance Tech?",
+    question: "When did you start working as a full stack developer?",
     answer:
-      "The agency launched in 2026 with two co-founders. I had planned it since 2023 while building skills through freelance work.",
+      "I started building full stack applications in 2023 and delivered client work through freelance platforms before expanding into full-time freelance and product development in 2026.",
   },
   {
     question: "Why is Order AI LLC not in Projects?",
@@ -212,7 +209,8 @@ const experienceFaq = [
   },
   {
     question: "Do you work with clients remotely?",
-    answer: "Yes. I work with clients worldwide through Upwork, Fiverr, and Taylance Tech.",
+    answer:
+      "Yes. I work with clients worldwide through Upwork, Fiverr, and direct client engagements.",
   },
 ] as const
 
@@ -317,14 +315,14 @@ export default function ExperiencePage() {
               Professional experience roadmap
             </h2>
             <p className="text-sm leading-relaxed text-slate-400 sm:text-base sm:leading-[1.8]">
-              Newest roles first — Taylance Tech, then Upwork, client contracts, Fiverr, and where it
-              started in 2023.
+              Newest roles first — current freelance and product work, then Upwork, client
+              contracts, Fiverr, and where it started in 2023.
             </p>
             <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="Career summary stats">
               {[
                 { value: "3+", label: "Years shipping" },
-                { value: "2026", label: "Studio founded" },
-                { value: "2023", label: "Vision started" },
+                { value: "15+", label: "Projects shipped" },
+                { value: "2023", label: "First client work" },
                 { value: "Remote", label: "Global delivery" },
               ].map(({ value, label }) => (
                 <li
@@ -346,7 +344,7 @@ export default function ExperiencePage() {
         <MotionSection className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4">
         <FaqSection
           headingId="experience-faq-heading"
-          description="Quick answers about my roles, studio, and client work."
+          description="Quick answers about my roles, work, and client projects."
           items={experienceFaq}
           footerLead="See public project examples"
           ctas={[

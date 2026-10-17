@@ -12,21 +12,12 @@ const publicDir = path.join(root, "public", "images")
 
 const featuredSource = path.join(publicDir, "featured-hero-source.png")
 
-const jobs = [
-  {
-    input: path.join(root, "taylancetech.png"),
-    outBase: path.join(publicDir, "projects", "taylance-tech"),
-    maxWidth: 1280,
-    avifCrf: 28,
-    webpQuality: 82,
-  },
-]
+const jobs = []
 
 const projectDir = path.join(publicDir, "projects")
 const projectSources = fs.readdirSync(projectDir).filter((f) => /\.(png|jpe?g)$/i.test(f))
 
 for (const file of projectSources) {
-  if (file.startsWith("taylance-tech")) continue
   jobs.push({
     input: path.join(projectDir, file),
     outBase: path.join(projectDir, path.parse(file).name),

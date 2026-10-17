@@ -12,8 +12,6 @@ import { contentCardClassName, navGlassClassName } from "@/components/site/site-
 import { letsTalkDescription, letsTalkHref, navItems, profileEmail, SITE_NAME } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-const TAYLANCE_TECH_URL = "https://taylancetech.com"
-
 const footerSocialLinks: {
   Icon: ComponentType<{ size?: number }>
   href: string
@@ -82,15 +80,7 @@ export function SiteFooter() {
                 Node.js.
               </p>
               <p className="mt-2 text-sm text-slate-500">
-                Co-Founder at{" "}
-                <Link
-                  href={TAYLANCE_TECH_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-violet-300/90 transition-colors hover:text-violet-200"
-                >
-                  Taylance Tech
-                </Link>
+                Available for freelance &amp; contract full stack projects worldwide.
               </p>
             </div>
 

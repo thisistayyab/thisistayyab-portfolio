@@ -79,10 +79,10 @@ export const metadata: Metadata = buildPageMetadata({
 })
 
 const homeTestimonialsIntro =
-  "Client feedback from freelance and contract web development work on Tayyab's portfolio."
+  "Verified client feedback from freelance and contract full stack web development work delivered by Tayyab through Upwork and Fiverr."
 
 const homeServicesIntro =
-  "Full stack software development by Tayyab: SaaS products, web applications, Node.js APIs, AI automation, PostgreSQL, deployment, and technical SEO."
+  "Full stack software development services by Tayyab: SaaS product development, custom web applications, Node.js REST APIs, AI automation, PostgreSQL database architecture, cloud deployment, and technical SEO."
 
 const heroTags = [
   "React Developer",
@@ -105,7 +105,7 @@ const homeFaq = [
   {
     question: "Who is Tayyab and what does he specialize in?",
     answer:
-      "Tayyab is a full stack web developer and co-founder at Taylance Tech with 3+ years of experience specializing in React, Next.js (App Router), TypeScript, Node.js, Express, and PostgreSQL. He builds production-grade SaaS platforms, real-time collaboration applications with WebSockets & WebRTC, REST APIs, database architecture, and technical SEO.",
+      "Tayyab is a full stack web developer with 3+ years of experience specializing in React, Next.js (App Router), TypeScript, Node.js, Express, and PostgreSQL. He builds production-grade SaaS platforms, real-time collaboration applications with WebSockets & WebRTC, REST APIs, database architecture, and technical SEO.",
   },
   {
     question: "What are Tayyab's featured production projects?",
@@ -130,7 +130,7 @@ const homeFaq = [
   {
     question: "How can I hire Tayyab or discuss a project?",
     answer:
-      "You can get in touch directly via the contact form on this site at https://thisistayyab.dev/contact, connect on LinkedIn at https://www.linkedin.com/in/thisistayyab/, or email tayyab@taylancetech.com to schedule a consultation.",
+      "You can get in touch directly via the contact form on this site at https://thisistayyab.dev/contact, connect on LinkedIn at https://www.linkedin.com/in/thisistayyab/, or email thisistayyab@outlook.com to schedule a free consultation.",
   },
 ] as const
 

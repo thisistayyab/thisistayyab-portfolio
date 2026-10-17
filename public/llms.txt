@@ -2,7 +2,7 @@
 
 > https://thisistayyab.dev
 
-Tayyab is a full stack web developer and co-founder at Taylance Tech with 3+ years of experience. He specializes in React, Next.js (App Router), TypeScript, Node.js, Express, PostgreSQL, Supabase, WebSockets, WebRTC, SaaS platforms, and AI automation. He has solved over 1,150+ problems on LeetCode using C++.
+Tayyab is a full stack web developer with 3+ years of production experience. He specializes in React, Next.js (App Router), TypeScript, Node.js, Express, PostgreSQL, Supabase, WebSockets, WebRTC, SaaS platforms, and AI automation. He has solved over 1,150+ problems on LeetCode using C++. Tayyab is available for freelance, contract, and full-time remote work building SaaS products, REST APIs, e-commerce systems, and real-time web applications.
 
 ## Main Pages
 
@@ -30,28 +30,42 @@ Automated website accessibility, GDPR cookie banner, and AI content disclosure s
 - Live Scanner: https://auditbloc.taylancetech.com/
 
 ### 3. Tillqorin POS — Commerce OS for Retail
-Web-based retail POS, invoicing, and inventory management system published by Taylance Tech. Includes barcode generation, thermal receipt printing, sales analytics, multi-register support, and accounting. Backed by React and Supabase.
+Web-based retail POS, invoicing, and inventory management system built by Tayyab. Includes barcode generation, thermal receipt printing, sales analytics, multi-register support, and double-entry accounting. Backed by React, Vite, Express.js, and Supabase.
 - Portfolio Case Study: https://thisistayyab.dev/projects/tillqorin
-- Product Page: https://taylancetech.com/products/tillqorin
 - Live POS App: https://pos.taylancetech.com/
 
-### 4. YouTube Video Downloader — Private Archival Tool
+### 4. Taylance CRM — Clients, Leads & Projects Dashboard
+Taylance CRM is a full-featured CRM web application built by Tayyab to manage clients, leads, and projects from one dashboard. Built with React, Express.js, and Material UI, with REST APIs and role-based workflows for sales teams.
+- Portfolio Case Study: https://thisistayyab.dev/projects
+- Live App: https://crm.taylancetech.com/
+
+### 5. YouTube Video Downloader — Private Archival Tool
 Fast, high-fidelity YouTube video and audio extraction web application built with Next.js, yt-dlp, and FFmpeg. Private password-locked tool for personal backups with live download progress.
 - Portfolio Case Study: https://thisistayyab.dev/projects/youtube-downloader
 - Live App: https://downloader.thisistayyab.dev/ (Private)
 
 ## Core Skills & Stack
 
-- **Frontend**: React 19, Next.js 15/16 (App Router), TypeScript, Tailwind CSS, HTML5, CSS3
-- **Backend & APIs**: Node.js, Express.js, REST APIs, WebSockets (Socket.IO), WebRTC, Supabase, FastAPI
-- **Databases**: PostgreSQL, MongoDB, Redis, Supabase Database
+- **Frontend**: React 19, Next.js 15/16 (App Router), TypeScript, Tailwind CSS, HTML5, CSS3, Core Web Vitals optimization
+- **Backend & APIs**: Node.js, Express.js, REST APIs, WebSockets (Socket.IO), WebRTC, Supabase, FastAPI, authentication & webhooks
+- **Databases**: PostgreSQL, MongoDB, Redis, Supabase Database, schema design & query tuning
 - **Problem Solving & Algorithms**: 1,150+ LeetCode problems solved with C++ (Data Structures, Graph Algorithms, Dynamic Programming)
+- **SEO & Performance**: technical SEO, Schema.org JSON-LD structured data, AVIF/WebP image optimization, Lighthouse 90+ builds
 - **Tooling & Cloud**: Docker, Playwright, Jest, Git, GitHub Actions, Vercel, Render, Linux
+
+## Services Offered
+
+- Custom web application development (React, Next.js, Node.js)
+- SaaS product development from MVP to production
+- REST API design and PostgreSQL/Supabase database architecture
+- Real-time apps with WebSockets and WebRTC
+- AI automation and LLM API integrations
+- Technical SEO, performance audits, and Core Web Vitals optimization
 
 ## Contact & Hire
 
 - Website Contact Form: https://thisistayyab.dev/contact
-- Direct Email: tayyab@taylancetech.com
+- Direct Email: thisistayyab@outlook.com
 - LinkedIn: https://www.linkedin.com/in/thisistayyab/
 - GitHub: https://github.com/thisistayyab
 - LeetCode: https://leetcode.com/u/thisistayyab/

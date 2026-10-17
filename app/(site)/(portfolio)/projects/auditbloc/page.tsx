@@ -104,7 +104,7 @@ export default function AuditblocProjectPage() {
         </Link>
 
         <p className="text-xs font-semibold tracking-[0.2em] text-violet-300/80 uppercase">
-          Studio product · Taylance Tech
+          Full-stack product · Web accessibility &amp; compliance scanner
         </p>
 
         <h1 className="mt-3 text-[clamp(1.85rem,5vw,2.75rem)] font-bold tracking-tight text-white">
@@ -112,7 +112,7 @@ export default function AuditblocProjectPage() {
         </h1>
 
         <p className="mt-5 text-base leading-relaxed text-slate-400 sm:text-lg sm:leading-[1.85]">
-          I built AuditBloc as a free web accessibility and compliance scanner for Taylance Tech. It checks websites for WCAG accessibility issues, GDPR cookie banner problems, and AI content disclosure. I used Next.js 16, Playwright for browser automation, axe-core for accessibility testing, and Supabase for the backend.
+          I built AuditBloc as a free web accessibility and compliance scanner. It audits websites for WCAG accessibility issues, GDPR cookie banner problems, and AI content disclosure, then reports results in a clear dashboard. I used Next.js 16, Playwright for browser automation, axe-core for accessibility testing, and Supabase for the backend.
         </p>
 
         <div className="relative mt-8 aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(135deg,#12141c,#1a1d2b)]">
@@ -194,16 +194,8 @@ export default function AuditblocProjectPage() {
         </div>
 
         <p className="mt-8 text-sm leading-relaxed text-slate-500">
-          AuditBloc is a product from{" "}
-          <a
-            href="https://taylancetech.com"
-            className="font-medium text-violet-300 underline decoration-violet-400/40 underline-offset-2 hover:text-violet-200"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Taylance Tech
-          </a>
-          . I built the entire application - from the scanning engine to the user interface and all the educational content.
+          AuditBloc is a full stack web application I built and maintain — from the Playwright
+          scanning engine to the user interface and all the educational content.
         </p>
 
         <div className="mt-10 flex justify-center">

@@ -9,7 +9,7 @@ export function buildPersonJsonLd(siteUrl: string, description: string) {
     "@type": "Person",
     "@id": personId(siteUrl),
     name: "Tayyab",
-    jobTitle: "Co-Founder & Lead Developer at Taylance Tech",
+    jobTitle: "Full Stack Web Developer",
     description,
     url: personId(siteUrl),
     image: {
@@ -19,11 +19,6 @@ export function buildPersonJsonLd(siteUrl: string, description: string) {
     },
     email: profileEmail,
     sameAs: [...profileSameAs],
-    worksFor: {
-      "@type": "Organization",
-      name: "Taylance Tech",
-      url: "https://taylancetech.com",
-    },
     knowsAbout: [
       "Relay",
       "WebRTC",

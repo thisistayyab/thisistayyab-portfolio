@@ -16,7 +16,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - Blog: `/blog`
 - Admin: `/login` → `/dashboard/blog`
 
-Blog database setup: run [`supabase/schema.sql`](./supabase/schema.sql) and [`supabase/rls-policies.sql`](./supabase/rls-policies.sql) in the Supabase SQL editor.
+Blog database setup: run [`supabase/schema.sql`](./supabase/schema.sql) and [`supabase/rls-policies.sql`](./supabase/rls-policies.sql) in the Supabase SQL editor. To seed the 12 pre-written, SEO-optimized articles, run [`supabase/blog-seed-articles.sql`](./supabase/blog-seed-articles.sql).
 
 ## Deploy on Vercel
 
@@ -45,7 +45,7 @@ Blog database setup: run [`supabase/schema.sql`](./supabase/schema.sql) and [`su
 ## Images
 
 - **Favicon:** replace repo-root `favicon.png`, then run `npm run generate:favicons` (updates `app/icon.png`, `app/apple-icon.png`, and `public/` icons).
-- Place new **Taylance Tech** screenshot as `taylancetech.png` in the repo root, then run `npm run optimize:images`.
+- Place new project screenshots as `.png`/`.jpg` under `public/images/projects/`, then run `npm run optimize:images` to generate AVIF + WebP pairs.
 - Portfolio photos and project shots are served as **AVIF + WebP** pairs under `public/images/` for fast loads and SEO.
 - Hero / Open Graph portrait: `public/images/about.avif` + `about.webp` (stylized cutout — do not overwrite from `about.jpg` without intent).
 - **Crawler/share URLs** (`lib/image.ts` `imageSeoUrl`) never emit AVIF — X/Twitter, LinkedIn, Slack, iMessage, and Mastodon cannot read AVIF share images. They map to `.jpg` for assets with a JPG sibling (`og`, `projects/relay`, `projects/youtube-downloader`) and `.webp` for everything else. When adding a project image, either ship a `.jpg` sibling at the **same dimensions** as the AVIF/WebP pair (regenerate with `ffmpeg -i x.webp -frames:v 1 -q:v 3 x.jpg`) or extend `JPG_SIBLINGS` in `lib/image.ts` only after generating one.

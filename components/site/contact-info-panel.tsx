@@ -126,7 +126,7 @@ export function ContactInfoPanel({ compact = false }: ContactInfoPanelProps) {
             <div>
               <p className="text-sm font-medium text-white">Working with clients</p>
               <p className="mt-1 text-xs leading-relaxed text-slate-500">
-                Startups, SaaS founders, agencies, and teams that need a dependable full stack
+                Startup teams, SaaS product owners, agencies, and businesses that need a dependable full stack
                 engineer from discovery through launch.
               </p>
             </div>

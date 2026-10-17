@@ -4,11 +4,9 @@ import Link from "next/link"
 import { JsonLd } from "@/components/site/json-ld"
 import { LegalPageShell } from "@/components/site/legal-page-shell"
 import {
-  LEGAL_BUSINESS_NAME,
   LEGAL_CONTACT_EMAIL,
   LEGAL_OPERATOR_NAME,
   LEGAL_SITE_URL,
-  LEGAL_STUDIO_URL,
 } from "@/lib/legal"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { isGoogleAnalyticsEnabled } from "@/lib/google-analytics"
@@ -46,19 +44,15 @@ export default function PrivacyPolicyPage() {
     <LegalPageShell
       eyebrow="Legal"
       title="Privacy Policy"
-      lead={`This policy covers ${LEGAL_SITE_URL} — ${LEGAL_OPERATOR_NAME}'s personal portfolio — including when you contact me here, read the blog, or use analytics on this site. I am a co-founder of ${LEGAL_BUSINESS_NAME} (${LEGAL_STUDIO_URL}); client work is delivered through the company after we agree in writing.`}
+      lead={`This policy covers ${LEGAL_SITE_URL} — ${LEGAL_OPERATOR_NAME}'s personal full stack developer portfolio — including when you contact me here, read the blog, or use analytics on this site. Client work is delivered by me directly after we agree on the scope in writing.`}
     >
       <h2 id="who-we-are">Who we are</h2>
       <p>
-        <strong>{LEGAL_OPERATOR_NAME}</strong> operates this portfolio at {LEGAL_SITE_URL} and is
-        a co-founder of <strong>{LEGAL_BUSINESS_NAME}</strong>, a co-founder-led software agency at{" "}
-        <a href={LEGAL_STUDIO_URL} rel="noopener noreferrer" target="_blank">
-          taylancetech.com
-        </a>
-        . You can contact me on this portfolio via the <Link href="/contact">contact page</Link> or{" "}
-        <a href={`mailto:${LEGAL_CONTACT_EMAIL}`}>{LEGAL_CONTACT_EMAIL}</a> — the same person and
-        company behind both sites. For privacy questions about this portfolio, email{" "}
-        {LEGAL_CONTACT_EMAIL}.
+        <strong>{LEGAL_OPERATOR_NAME}</strong> operates this portfolio at {LEGAL_SITE_URL} as a
+        full stack web developer. You can contact me via{" "}
+        the <Link href="/contact">contact page</Link> or{" "}
+        <a href={`mailto:${LEGAL_CONTACT_EMAIL}`}>{LEGAL_CONTACT_EMAIL}</a>. For privacy questions
+        about this portfolio, email {LEGAL_CONTACT_EMAIL}.
       </p>
 
       <h2 id="what-we-collect">Information we collect</h2>
@@ -108,8 +102,8 @@ export default function PrivacyPolicyPage() {
           inquiries that you initiate.
         </li>
         <li>
-          <strong>Contract</strong> — processing needed to perform or prepare a services agreement
-          after you contact us.
+          <strong>Contract</strong> — processing needed to perform or prepare a development
+          services agreement after you contact us.
         </li>
       </ul>
 

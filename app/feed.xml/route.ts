@@ -30,7 +30,7 @@ export async function GET() {
       <guid isPermaLink="true">${postUrl}</guid>
       <description>${escapeXml(post.excerpt)}</description>
       <pubDate>${pubDate}</pubDate>
-      ${post.author ? `<author>tayyab@taylancetech.com (${escapeXml(post.author.name)})</author>` : ""}
+      ${post.author ? `<author>webmaster@thisistayyab.dev (${escapeXml(post.author.name)})</author>` : ""}
       ${post.tags?.map((tag) => `<category>${escapeXml(tag)}</category>`).join("\n      ") ?? ""}
     </item>`
     })

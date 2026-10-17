@@ -10,37 +10,37 @@ export const tillqorinSeoKeywords = [
   "POS software developer",
   "retail billing software",
   "web POS system",
+  "point of sale web application",
   "inventory management software",
+  "invoicing and billing platform",
   "thermal receipt printing",
+  "barcode inventory system",
+  "retail analytics dashboard",
   "Supabase POS",
   "React POS application",
   "Tayyab Tillqorin",
-  "Taylance Tech Tillqorin",
+  "POS system built with Supabase",
 ] as const
 
 export const tillqorinProject: PortfolioProject = {
   id: 3,
   slug: "tillqorin",
   name: "Tillqorin",
-  roleLabel: "Studio product",
+  roleLabel: "Full-stack product",
   image: "/images/projects/tillqorin.webp",
   imageAlt:
-    "Tillqorin Commerce OS retail dashboard on a POS monitor with receipt printer and card terminal — built by Tayyab at Taylance Tech",
+    "Tillqorin Commerce OS retail dashboard on a POS monitor with receipt printer and card terminal, built by full stack developer Tayyab",
   imageTitle: "Tillqorin — commerce OS for retail",
   link: TILLQORIN_MARKETING_URL,
   appUrl: TILLQORIN_APP_URL,
   detailPath: "/projects/tillqorin",
   alternateName: ["Tillqorin Commerce OS", "Tillqorin POS"],
   applicationCategory: "BusinessApplication",
-  publisher: {
-    name: "Taylance Tech",
-    url: "https://taylancetech.com",
-  },
   seoKeywords: tillqorinSeoKeywords,
   description:
-    "Tillqorin is Taylance Tech's in-house POS and billing platform — sales orders, purchases, inventory, accounts, analytics, and thermal receipt printing. I led full-stack development with React, Vite, Express.js, and Supabase. Product marketing at taylancetech.com; live app at pos.taylancetech.com.",
+    "Tillqorin is a web-based POS, invoicing, and inventory management platform I built end to end — sales orders, purchases, accounts, sales analytics, and thermal receipt printing. I led full-stack development with React, Vite, Express.js, and Supabase. Live app at pos.taylancetech.com.",
   tags: [
-    { label: "Studio product", variant: "feature" },
+    { label: "Full-stack product", variant: "feature" },
     { label: "React", variant: "tech" },
     { label: "TypeScript", variant: "tech" },
     { label: "Supabase", variant: "tech" },
@@ -53,4 +53,4 @@ export const tillqorinPageTitle =
   "Tillqorin POS — Commerce OS Built by Tayyab | Full Stack Portfolio"
 
 export const tillqorinPageDescription =
-  "Tillqorin is a web POS and billing platform I built at Taylance Tech — sales, purchases, inventory, accounts, analytics, and thermal receipts. React, Vite, Express.js, and Supabase."
+  "Tillqorin is a web POS and billing platform I built — sales, purchases, inventory, accounts, analytics, and thermal receipts. React, Vite, Express.js, and Supabase."

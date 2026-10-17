@@ -27,7 +27,7 @@ const highlights = [
   "Analytics dashboard for revenue, expenses, and net profit trends",
   "Thermal, A4, and A5 invoice printing with branded receipts",
   "Barcode label printing and Excel export across key reports",
-  "Deployed at pos.taylancetech.com with a Supabase-backed API",
+  "Deployed in production at pos.taylancetech.com with a Supabase-backed API",
 ] as const
 
 export const metadata: Metadata = buildPageMetadata({
@@ -92,7 +92,7 @@ export default function TillqorinProjectPage() {
         </Link>
 
         <p className="text-xs font-semibold tracking-[0.2em] text-violet-300/80 uppercase">
-          Studio product · Taylance Tech
+          Full-stack product · POS &amp; commerce platform
         </p>
 
         <h1 className="mt-3 text-[clamp(1.85rem,5vw,2.75rem)] font-bold tracking-tight text-white">
@@ -174,16 +174,8 @@ export default function TillqorinProjectPage() {
         </div>
 
         <p className="mt-8 text-sm leading-relaxed text-slate-500">
-          Tillqorin is published by{" "}
-          <a
-            href="https://taylancetech.com"
-            className="font-medium text-violet-300 underline decoration-violet-400/40 underline-offset-2 hover:text-violet-200"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Taylance Tech
-          </a>
-          . I co-founded the studio and led full-stack development on this product.
+          Tillqorin is a full stack web application I architected, built, and shipped end to end —
+          from the database schema and REST API to the retail dashboard and invoice printing system.
         </p>
 
         <div className="mt-10 flex justify-center">
