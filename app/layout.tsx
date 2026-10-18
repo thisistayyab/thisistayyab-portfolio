@@ -49,7 +49,6 @@ export const metadata: Metadata = {
   description: homeMetadata.description,
   category: "technology",
   alternates: {
-    canonical: `${SITE_URL}/`,
     types: {
       "application/rss+xml": `${SITE_URL}/feed.xml`,
     },

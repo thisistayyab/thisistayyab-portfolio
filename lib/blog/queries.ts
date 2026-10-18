@@ -1,8 +1,12 @@
 import { mapSupabasePost, POST_SELECT, toPostSummary } from "@/lib/blog/map"
-import type { BlogPost, BlogPostSummary } from "@/lib/blog/types"
+import type { BlogPost, BlogPostSummary, SitemapPostEntry } from "@/lib/blog/types"
+import { FALLBACK_PUBLISHED_POSTS } from "@/lib/blog/fallback-posts"
 import { getSupabasePublicClientOrNull } from "@/lib/supabase/public"
 
-export const BLOG_REVALIDATE_SECONDS = 300
+export type { SitemapPostEntry }
+
+/** ISR revalidation interval (24 hours). On-demand revalidation triggers on CMS publish/update. */
+export const BLOG_REVALIDATE_SECONDS = 86400
 
 function getSupabase() {
   return getSupabasePublicClientOrNull()
@@ -93,8 +97,9 @@ export async function getRelatedPosts(
 }
 
 export async function getAllPostSlugs(): Promise<string[]> {
+  const fallbackSlugs = FALLBACK_PUBLISHED_POSTS.map((p) => p.slug)
   const supabase = getSupabase()
-  if (!supabase) return []
+  if (!supabase) return fallbackSlugs
 
   const { data, error } = await supabase
     .from("posts")
@@ -104,42 +109,50 @@ export async function getAllPostSlugs(): Promise<string[]> {
 
   if (error || !data) {
     if (error) console.error("[blog] getAllPostSlugs:", error.message)
-    return []
+    return fallbackSlugs
   }
 
-  return data.map((row) => row.slug as string)
-}
-
-export type SitemapPostEntry = {
-  slug: string
-  updated_at: string | null
-  published_at: string | null
-  cover_image: string | null
+  const dbSlugs = data.map((row) => row.slug as string).filter(Boolean)
+  return Array.from(new Set([...dbSlugs, ...fallbackSlugs]))
 }
 
 export async function getPublishedPostsForSitemap(): Promise<SitemapPostEntry[]> {
   const supabase = getSupabase()
-  if (!supabase) return []
+  let dbPosts: SitemapPostEntry[] = []
 
-  const { data, error } = await supabase
-    .from("posts")
-    .select("slug, updated_at, published_at, created_at, cover_image")
-    .eq("published", true)
-    .not("slug", "is", null)
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("slug, updated_at, published_at, created_at, cover_image")
+      .eq("published", true)
+      .not("slug", "is", null)
 
-  if (error) {
-    console.error(`[blog] getPublishedPostsForSitemap: ${error.message}`)
-    return []
+    if (error) {
+      console.error(`[blog] getPublishedPostsForSitemap: ${error.message}`)
+    } else if (data) {
+      dbPosts = data.map((row) => ({
+        slug: row.slug as string,
+        updated_at: (row.updated_at as string | null) ?? null,
+        published_at: (row.published_at as string | null) ?? (row.created_at as string | null) ?? null,
+        cover_image: (row.cover_image as string | null) ?? null,
+      }))
+    }
   }
 
-  if (!data) {
-    return []
+  // Merge dbPosts and FALLBACK_PUBLISHED_POSTS, preferring dbPosts if present
+  const postMap = new Map<string, SitemapPostEntry>()
+  for (const post of FALLBACK_PUBLISHED_POSTS) {
+    postMap.set(post.slug, post)
+  }
+  for (const post of dbPosts) {
+    postMap.set(post.slug, post)
   }
 
-  return data.map((row) => ({
-    slug: row.slug as string,
-    updated_at: (row.updated_at as string | null) ?? null,
-    published_at: (row.published_at as string | null) ?? (row.created_at as string | null) ?? null,
-    cover_image: (row.cover_image as string | null) ?? null,
-  }))
+  const merged = Array.from(postMap.values())
+  return merged.sort((a, b) => {
+    const dateA = a.published_at ?? ""
+    const dateB = b.published_at ?? ""
+    return dateB.localeCompare(dateA)
+  })
 }
+

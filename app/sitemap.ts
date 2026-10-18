@@ -8,6 +8,9 @@ import { tillqorinProject } from "@/lib/data/tillqorin-project"
 import { youtubeDownloaderProject } from "@/lib/data/youtube-downloader-project"
 import { featuredOgImageUrl, projectImageUrl, SITE_URL } from "@/lib/site"
 
+/** Revalidate sitemap via ISR every 24 hours (86400s) or on-demand via revalidatePath('/sitemap.xml'). */
+export const revalidate = 86400
+
 /** Bump when static page content meaningfully changes. */
 const SITEMAP_FRESHNESS_DATE = "2026-10-18"
 

@@ -48,3 +48,11 @@ export type BlogPostSummary = Pick<
   | "tags"
   | "author"
 >
+
+export type SitemapPostEntry = {
+  slug: string
+  updated_at: string | null
+  published_at: string | null
+  cover_image: string | null
+}
+

@@ -13,6 +13,9 @@ function escapeXml(unsafe: string): string {
     .replace(/'/g, "&apos;")
 }
 
+/** Revalidate feed every 24 hours or on-demand via revalidatePath('/feed.xml') */
+export const revalidate = 86400
+
 export async function GET() {
   const posts = await getPublishedPosts()
 

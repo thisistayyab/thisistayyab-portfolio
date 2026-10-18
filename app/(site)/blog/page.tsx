@@ -10,8 +10,8 @@ import { blogIndexPageMetadata } from "@/lib/blog/metadata"
 import { getPublishedPosts } from "@/lib/blog/queries"
 
 export const metadata = blogIndexPageMetadata()
-/** ISR — keep in sync with `BLOG_REVALIDATE_SECONDS` in `lib/blog/queries.ts` */
-export const revalidate = 300
+/** ISR — 24 hours; keep in sync with `BLOG_REVALIDATE_SECONDS` in `lib/blog/queries.ts` */
+export const revalidate = 86400
 
 export default async function BlogIndexPage() {
   const posts = await getPublishedPosts()

@@ -20,8 +20,8 @@ type BlogPostPageProps = {
   params: Promise<{ slug: string }>
 }
 
-/** ISR — keep in sync with `BLOG_REVALIDATE_SECONDS` in `lib/blog/queries.ts` */
-export const revalidate = 300
+/** ISR — 24 hours; keep in sync with `BLOG_REVALIDATE_SECONDS` in `lib/blog/queries.ts` */
+export const revalidate = 86400
 export const dynamicParams = true
 
 export async function generateStaticParams() {
