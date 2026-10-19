@@ -17,8 +17,8 @@ export function HeroStagger({ children, className, ...props }: HeroStaggerProps)
         hidden: {},
         visible: {
           transition: {
-            staggerChildren: 0.15,
-            delayChildren: 0.2,
+            staggerChildren: 0.08,
+            delayChildren: 0,
           },
         },
       }}
@@ -38,16 +38,16 @@ export function HeroItem({ children, className, ...props }: HeroItemProps) {
     <motion.div
       {...props}
       variants={{
-        hidden: { opacity: 0, y: 30, scale: 0.95 },
+        hidden: { opacity: 1, y: 12, scale: 0.99 },
         visible: {
           opacity: 1,
           y: 0,
           scale: 1,
           transition: {
             type: "spring",
-            stiffness: 100,
-            damping: 15,
-            mass: 1,
+            stiffness: 140,
+            damping: 18,
+            mass: 0.9,
           },
         },
       }}
@@ -61,12 +61,12 @@ export function HeroItem({ children, className, ...props }: HeroItemProps) {
 export function HeroImageReveal({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8, rotate: -5, filter: "blur(10px)" }}
-      animate={{ opacity: 1, scale: 1, rotate: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 1, scale: 0.96, y: 8 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{
-        duration: 1.2,
-        delay: 0.4,
-        ease: [0.16, 1, 0.3, 1], // Custom exponential out
+        duration: 0.55,
+        delay: 0,
+        ease: [0.16, 1, 0.3, 1],
       }}
       className={className}
     >
@@ -84,7 +84,7 @@ export function WordPullUp({ text, className }: { text: string; className?: stri
       variants={{
         hidden: {},
         visible: {
-          transition: { staggerChildren: 0.08, delayChildren: 0.2 },
+          transition: { staggerChildren: 0.05, delayChildren: 0 },
         },
       }}
       className={className}
@@ -94,11 +94,11 @@ export function WordPullUp({ text, className }: { text: string; className?: stri
           key={i}
           className="inline-block mr-[0.25em]"
           variants={{
-            hidden: { y: 20, opacity: 0 },
+            hidden: { y: 10, opacity: 1 },
             visible: {
               y: 0,
               opacity: 1,
-              transition: { type: "spring", stiffness: 120, damping: 14 },
+              transition: { type: "spring", stiffness: 150, damping: 16 },
             },
           }}
         >

@@ -15,6 +15,8 @@ import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/m
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
+export const dynamic = "force-static"
+
 const pageLead =
   "Reach out to discuss full stack software, SaaS products, APIs, or AI automation. Share your goals, timeline, and any technical context so we can plan the right next step."
 
@@ -39,12 +41,12 @@ const contactFaq = [
   {
     question: "Do you offer free discovery calls?",
     answer:
-      "Yes. After you submit the form, we can schedule a brief call to confirm fit, scope, and how you prefer to work — fixed milestones or hourly.",
+      "Yes. After you submit the form or reach out by email, we can schedule a brief discovery call to confirm fit, technical scope, and how you prefer to work — fixed milestones or hourly.",
   },
   {
     question: "What is your typical availability?",
     answer:
-      "I work with clients across time zones. You can expect an initial reply within 24–48 hours on business days.",
+      "I work with clients across US, UK, EU, and Gulf time zones. You can expect an initial reply within a few hours on business days.",
   },
 ] as const
 

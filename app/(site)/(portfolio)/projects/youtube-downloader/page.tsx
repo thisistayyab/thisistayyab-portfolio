@@ -33,7 +33,10 @@ import {
 } from "@/lib/portfolio-project-json-ld"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
+import { ProjectWarmup } from "@/components/site/project-warmup"
 import { cn } from "@/lib/utils"
+
+export const dynamic = "force-static"
 
 const keyFeatures = [
   "Direct download to your device: The video or audio downloads straight to your computer or phone.",
@@ -83,6 +86,7 @@ export default function YoutubeDownloaderProjectPage() {
 
   return (
     <>
+      <ProjectWarmup />
       <JsonLd
         data={buildPortfolioProjectSoftwareApplicationJsonLd(
           youtubeDownloaderProject,

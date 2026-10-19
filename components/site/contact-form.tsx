@@ -57,17 +57,49 @@ type ContactFormProps = {
   className?: string
 }
 
+const PROJECT_QUICK_TYPES = [
+  "Full-Stack Web / SaaS App",
+  "AI / Automation Integration",
+  "POS / CRM / Custom Dashboard",
+  "Next.js Frontend & SEO",
+  "Contract / Ongoing Engineering",
+] as const
+
 export function ContactForm({ formId = "contact-form", className }: ContactFormProps) {
   const formRef = useRef<HTMLFormElement>(null)
+  const subjectInputRef = useRef<HTMLInputElement>(null)
   const [status, setStatus] = useState<FormStatus>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [selectedQuickType, setSelectedQuickType] = useState<string | null>(null)
 
   useEffect(() => {
     const { publicKey } = getEmailJsConfig()
     if (publicKey) {
       emailjs.init({ publicKey })
     }
+
+    if (typeof window !== "undefined" && subjectInputRef.current) {
+      const params = new URLSearchParams(window.location.search)
+      const projectParam = params.get("project")?.trim()
+      if (projectParam && !subjectInputRef.current.value) {
+        subjectInputRef.current.value = `Project Inquiry: ${projectParam}`
+      }
+    }
   }, [])
+
+  function selectQuickType(type: string) {
+    setSelectedQuickType(type)
+    if (subjectInputRef.current) {
+      subjectInputRef.current.value = `Project Inquiry: ${type}`
+      subjectInputRef.current.focus()
+    }
+  }
+
+  function openMailtoFallback(name: string, email: string, subject: string, message: string) {
+    const body = `Hi Tayyab,\n\n${message}\n\nBest regards,\n${name}\n${email}`
+    const mailtoUrl = `mailto:${profileEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    window.location.href = mailtoUrl
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -95,18 +127,19 @@ export function ContactForm({ formId = "contact-form", className }: ContactFormP
       return
     }
     if (!subject) {
-      setStatus({ type: "error", message: "Please enter a subject." })
+      setStatus({ type: "error", message: "Please select a project type or enter a subject." })
       return
     }
     if (!message) {
-      setStatus({ type: "error", message: "Please enter your message." })
+      setStatus({ type: "error", message: "Please enter a brief overview of your project." })
       return
     }
 
     if (!isEmailJsConfigured()) {
+      openMailtoFallback(name, email, subject, message)
       setStatus({
-        type: "error",
-        message: `Email delivery is not configured. Please email me directly at ${profileEmail}.`,
+        type: "success",
+        message: `Opening your email client to send directly to ${profileEmail}. You usually get a reply within a few hours.`,
       })
       return
     }
@@ -118,13 +151,15 @@ export function ContactForm({ formId = "contact-form", className }: ContactFormP
       await emailjs.sendForm(serviceId, templateId, form, { publicKey })
       setStatus({
         type: "success",
-        message: "Thank you. Your message was sent successfully. I will reply as soon as possible.",
+        message: "Thank you! Your project inquiry was sent. I will review it and reply within a few hours.",
       })
       form.reset()
+      setSelectedQuickType(null)
     } catch {
+      openMailtoFallback(name, email, subject, message)
       setStatus({
         type: "error",
-        message: `Something went wrong while sending. Please try again or email ${profileEmail}.`,
+        message: `Form service was unreachable, so we opened your email client addressed to ${profileEmail}.`,
       })
     } finally {
       setIsSubmitting(false)
@@ -140,6 +175,32 @@ export function ContactForm({ formId = "contact-form", className }: ContactFormP
       aria-label="Contact form"
       noValidate
     >
+      <div>
+        <p className="mb-2 text-xs font-medium text-slate-400">
+          What can I help you build? <span className="text-slate-500">(Click to quick-select)</span>
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {PROJECT_QUICK_TYPES.map((type) => {
+            const isSelected = selectedQuickType === type
+            return (
+              <button
+                key={type}
+                type="button"
+                onClick={() => selectQuickType(type)}
+                className={cn(
+                  "cursor-pointer rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
+                  isSelected
+                    ? "border-cyan-400/70 bg-cyan-500/15 text-cyan-200 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
+                    : "border-white/12 bg-white/[0.03] text-slate-300 hover:border-white/25 hover:bg-white/[0.07] hover:text-white",
+                )}
+              >
+                {type}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor={`${formId}-name`} className="sr-only">
@@ -168,7 +229,7 @@ export function ContactForm({ formId = "contact-form", className }: ContactFormP
               name="user_email"
               required
               autoComplete="email"
-              placeholder="Your email"
+              placeholder="Your work email"
               className={inputClassName}
             />
           </FieldShell>
@@ -181,11 +242,15 @@ export function ContactForm({ formId = "contact-form", className }: ContactFormP
         </label>
         <FieldShell icon={<Tag className="size-[1.05rem]" strokeWidth={2} />}>
           <input
+            ref={subjectInputRef}
             id={`${formId}-subject`}
             type="text"
             name="subject"
             required
-            placeholder="Subject"
+            onChange={() => {
+              if (selectedQuickType) setSelectedQuickType(null)
+            }}
+            placeholder="Subject (e.g., SaaS MVP, Custom POS/CRM, React/Next.js build)"
             className={inputClassName}
           />
         </FieldShell>
@@ -204,7 +269,7 @@ export function ContactForm({ formId = "contact-form", className }: ContactFormP
             name="message"
             required
             rows={5}
-            placeholder="Tell me about your project, timeline, and goals"
+            placeholder="Tell me briefly about your product idea, timeline, or technical goals…"
             className={cn(inputClassName, "min-h-[140px] resize-y pt-3.5")}
           />
         </FieldShell>
@@ -223,7 +288,7 @@ export function ContactForm({ formId = "contact-form", className }: ContactFormP
         ) : (
           <>
             <Send className="size-4" aria-hidden="true" />
-            Send message
+            Send Project Inquiry
           </>
         )}
       </button>

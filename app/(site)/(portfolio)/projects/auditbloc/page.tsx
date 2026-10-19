@@ -21,6 +21,8 @@ import { buildPageMetadata } from "@/lib/site-metadata"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
+export const dynamic = "force-static"
+
 const highlights = [
   "Scans websites for WCAG accessibility issues automatically",
   "Checks GDPR cookie banners and AI content disclosure",
@@ -191,6 +193,14 @@ export default function AuditblocProjectPage() {
             Live scanner
             <ExternalLink className="size-4" aria-hidden="true" />
           </a>
+          <CtaLink
+            href="/blog/automated-accessibility-testing-axe-core-playwright"
+            variant="secondary"
+            title="Read how I built automated accessibility scanning with Playwright and axe-core"
+          >
+            Read engineering deep-dive
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </CtaLink>
         </div>
 
         <p className="mt-8 text-sm leading-relaxed text-slate-500">
@@ -198,11 +208,23 @@ export default function AuditblocProjectPage() {
           scanning engine to the user interface and all the educational content.
         </p>
 
-        <div className="mt-10 flex justify-center">
-          <CtaLink href="/projects" title="View all portfolio projects">
-            View all projects
-            <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
-          </CtaLink>
+        <div className="mt-12 rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/[0.07] via-slate-900/60 to-violet-500/[0.07] p-6">
+          <h2 className="text-base font-semibold text-white sm:text-lg">
+            Need automated Playwright testing, WCAG compliance, or a SaaS scanner?
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-slate-300">
+            I help teams remediate WCAG 2.2 accessibility issues, automate browser workflows with
+            Playwright, and ship compliant Next.js applications.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <CtaLink href="/contact?project=Accessibility+Audit+or+Playwright+Automation" title="Discuss an accessibility or automation project">
+              Book an Audit or Build a Tool
+              <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
+            </CtaLink>
+            <CtaLink href="/projects" variant="secondary" title="View all portfolio projects">
+              View all projects
+            </CtaLink>
+          </div>
         </div>
       </article>
     </>

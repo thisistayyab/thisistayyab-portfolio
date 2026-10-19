@@ -44,7 +44,7 @@ export function ContactInfoPanel({ compact = false }: ContactInfoPanelProps) {
         </p>
 
         <a
-          href={`mailto:${profileEmail}`}
+          href={`mailto:${profileEmail}?subject=Project%20Inquiry`}
           className={cn(
             "mt-5 flex gap-3 rounded-xl border border-white/10 p-4 no-underline transition-[border-color,box-shadow] duration-300",
             "hover:border-white/20",
@@ -95,7 +95,7 @@ export function ContactInfoPanel({ compact = false }: ContactInfoPanelProps) {
             <div>
               <p className="text-sm font-medium text-white">Response time</p>
               <p className="mt-1 text-xs leading-relaxed text-slate-500">
-                Usually within 24–48 hours on business days.
+                Usually replies within a few hours (same business day).
               </p>
             </div>
           </div>

@@ -4,59 +4,45 @@ import {
   headerGraphStars,
 } from "@/lib/header-graph-mesh"
 
-function GraphMeshLayer({
-  lineClass,
-  nodeClass,
-  strokeWidth,
-  nodes,
-  edges,
-  highlightNodes = [],
-}: {
-  lineClass: string
-  nodeClass: string
-  strokeWidth: number
-  nodes: readonly (readonly [number, number])[]
-  edges: readonly (readonly [number, number])[]
-  highlightNodes?: readonly number[]
-}) {
-  const highlightSet = new Set(highlightNodes)
-
-  return (
-    <g>
-      {edges.map(([a, b], i) => {
-        const from = nodes[a]
-        const to = nodes[b]
-        if (!from || !to) return null
-
-        return (
-          <line
-            key={`edge-${i}`}
-            x1={from[0]}
-            y1={from[1]}
-            x2={to[0]}
-            y2={to[1]}
-            className={lineClass}
-            strokeWidth={strokeWidth}
-            vectorEffect="non-scaling-stroke"
-          />
-        )
-      })}
-      {nodes.map(([x, y], i) => (
-        <circle
-          key={`node-${i}`}
-          cx={x}
-          cy={y}
-          r={highlightSet.has(i) ? 2.8 : 1.6}
-          className={cn(
-            nodeClass,
-            highlightSet.has(i) &&
-              "fill-sky-100/90 drop-shadow-[0_0_6px_rgba(56,189,248,0.85)]",
-          )}
-        />
-      ))}
-    </g>
-  )
+function circlePathSegment(cx: number, cy: number, r: number): string {
+  return `M${cx - r} ${cy}a${r} ${r} 0 1 0 ${r * 2} 0a${r} ${r} 0 1 0 -${r * 2} 0`
 }
+
+const precomputedLayers = headerGraphLayers.map((layer) => {
+  const highlightSet = new Set(layer.highlightNodes ?? [])
+  const edgeSegments: string[] = []
+  for (const [a, b] of layer.edges) {
+    const from = layer.nodes[a]
+    const to = layer.nodes[b]
+    if (from && to) {
+      edgeSegments.push(`M${from[0]} ${from[1]}L${to[0]} ${to[1]}`)
+    }
+  }
+
+  const normalNodeSegments: string[] = []
+  const highlightNodeSegments: string[] = []
+  layer.nodes.forEach(([x, y], i) => {
+    if (highlightSet.has(i)) {
+      highlightNodeSegments.push(circlePathSegment(x, y, 2.8))
+    } else {
+      normalNodeSegments.push(circlePathSegment(x, y, 1.6))
+    }
+  })
+
+  return {
+    id: layer.id,
+    lineClass: layer.lineClass,
+    nodeClass: layer.nodeClass,
+    strokeWidth: layer.strokeWidth,
+    edgesPath: edgeSegments.join(""),
+    normalNodesPath: normalNodeSegments.join(""),
+    highlightNodesPath: highlightNodeSegments.join(""),
+  }
+})
+
+const starsPath = headerGraphStars
+  .map(([x, y, r]) => circlePathSegment(x, y, r))
+  .join("")
 
 export function HeaderGraphBackground() {
   return (
@@ -92,24 +78,32 @@ export function HeaderGraphBackground() {
         <rect width="1440" height="720" fill="url(#header-graph-fade)" />
 
         <g filter="url(#header-graph-glow)">
-          {headerGraphLayers.map((layer) => (
-            <GraphMeshLayer
-              key={layer.id}
-              lineClass={layer.lineClass}
-              nodeClass={layer.nodeClass}
-              strokeWidth={layer.strokeWidth}
-              nodes={layer.nodes}
-              edges={layer.edges}
-              highlightNodes={layer.highlightNodes}
-            />
+          {precomputedLayers.map((layer) => (
+            <g key={layer.id}>
+              <path
+                d={layer.edgesPath}
+                fill="none"
+                className={layer.lineClass}
+                strokeWidth={layer.strokeWidth}
+                vectorEffect="non-scaling-stroke"
+              />
+              {layer.normalNodesPath ? (
+                <path d={layer.normalNodesPath} className={layer.nodeClass} />
+              ) : null}
+              {layer.highlightNodesPath ? (
+                <path
+                  d={layer.highlightNodesPath}
+                  className={cn(
+                    layer.nodeClass,
+                    "fill-sky-100/90 drop-shadow-[0_0_6px_rgba(56,189,248,0.85)]",
+                  )}
+                />
+              ) : null}
+            </g>
           ))}
         </g>
 
-        <g className="fill-sky-400/35">
-          {headerGraphStars.map(([x, y, r], i) => (
-            <circle key={`star-${i}`} cx={x} cy={y} r={r} />
-          ))}
-        </g>
+        <path d={starsPath} className="fill-sky-400/35" />
       </svg>
 
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-site-base to-transparent" />

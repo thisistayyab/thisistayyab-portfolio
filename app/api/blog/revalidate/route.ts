@@ -1,7 +1,8 @@
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 import { NextResponse } from "next/server"
 
 import { BLOG_INDEX_PATH } from "@/lib/blog/config"
+import { BLOG_CACHE_TAG, getBlogPostCacheTag } from "@/lib/blog/queries"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 
 async function isAuthorized(request: Request): Promise<boolean> {
@@ -27,21 +28,27 @@ async function isAuthorized(request: Request): Promise<boolean> {
 
 async function handleRevalidation(request: Request, slug?: string) {
   const revalidatedPaths = [BLOG_INDEX_PATH, "/", "/sitemap.xml", "/feed.xml"]
+  const revalidatedTags = [BLOG_CACHE_TAG]
 
+  revalidateTag(BLOG_CACHE_TAG, "max")
   revalidatePath(BLOG_INDEX_PATH)
   revalidatePath("/")
   revalidatePath("/sitemap.xml")
   revalidatePath("/feed.xml")
 
   if (slug) {
+    const postTag = getBlogPostCacheTag(slug)
     const postPath = `${BLOG_INDEX_PATH}/${slug}`
+    revalidateTag(postTag, "max")
     revalidatePath(postPath)
+    revalidatedTags.push(postTag)
     revalidatedPaths.push(postPath)
   }
 
   return NextResponse.json({
     ok: true,
     revalidated: revalidatedPaths,
+    tags: revalidatedTags,
     now: new Date().toISOString(),
   })
 }

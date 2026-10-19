@@ -15,6 +15,8 @@ import { MotionSection } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
+export const dynamic = "force-static"
+
 const pageIntro =
   "Client feedback from freelance and contract web development work — communication, delivery, and production-ready builds."
 

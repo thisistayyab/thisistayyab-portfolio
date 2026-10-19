@@ -153,39 +153,19 @@ export function ProjectCard({ project, onLearnMore, priority }: ProjectCardProps
         </ul>
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
-          {!project.hideCardLiveLink && (project.ctaDisabled || project.link) ? (
-            project.ctaDisabled ? (
-              <button
-                type="button"
-                disabled
-                title={
-                  project.ctaDisabledReason ??
-                  "This client application is internal and not available to the public."
-                }
-                aria-label={`${project.ctaLabel} — unavailable, internal client application`}
-                className={cn(
-                  ctaPrimaryClassName,
-                  "cursor-not-allowed text-[0.88rem] px-5 py-3 opacity-45 saturate-50",
-                  "hover:translate-y-0 hover:shadow-[0_10px_30px_rgba(99,102,241,0.35),0_0_40px_rgba(59,130,246,0.18)]",
-                )}
-              >
-                {project.ctaLabel}
-                <ExternalLink className="size-4" aria-hidden="true" />
-              </button>
-            ) : (
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={`Open ${project.name} — opens in a new tab`}
-                aria-label={`Open ${project.name} live site`}
-                className={cn(ctaPrimaryClassName, "text-[0.88rem] px-5 py-3")}
-                itemProp="url"
-              >
-                {project.ctaLabel}
-                <ExternalLink className="size-4" aria-hidden="true" />
-              </a>
-            )
+          {!project.hideCardLiveLink && !project.ctaDisabled && project.link ? (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`Open ${project.name} — opens in a new tab`}
+              aria-label={`Open ${project.name} live site`}
+              className={cn(ctaPrimaryClassName, "text-[0.88rem] px-5 py-3")}
+              itemProp="url"
+            >
+              {project.ctaLabel}
+              <ExternalLink className="size-4" aria-hidden="true" />
+            </a>
           ) : null}
           {project.githubUrl ? (
             <a
@@ -204,26 +184,37 @@ export function ProjectCard({ project, onLearnMore, priority }: ProjectCardProps
             <Link
               href={project.detailPath}
               className={cn(
-                project.hideCardLiveLink ? ctaPrimaryClassName : ctaSecondaryClassName,
+                project.hideCardLiveLink || project.ctaDisabled ? ctaPrimaryClassName : ctaSecondaryClassName,
                 "text-[0.88rem] px-5 py-3"
               )}
               aria-label={`Read full details about ${project.name}`}
             >
-              Learn more
+              Case Study
             </Link>
           ) : (
             <button
               type="button"
               onClick={() => onLearnMore(project)}
               className={cn(
-                project.hideCardLiveLink ? ctaPrimaryClassName : ctaSecondaryClassName,
+                project.hideCardLiveLink || project.ctaDisabled ? ctaPrimaryClassName : ctaSecondaryClassName,
                 "cursor-pointer border-0 text-[0.88rem] px-5 py-3"
               )}
               aria-label={`Read full details about ${project.name}`}
             >
-              Learn more
+              {project.ctaDisabled ? "Project Overview" : "Learn more"}
             </button>
           )}
+          {project.ctaDisabled ? (
+            <span
+              title={
+                project.ctaDisabledReason ??
+                "Private client deployment under NDA — not publicly accessible."
+              }
+              className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-400"
+            >
+              Private Client App (NDA)
+            </span>
+          ) : null}
         </div>
       </div>
     </article>

@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, CheckCircle2, Code2, ShieldCheck, Zap } from "lucide-react"
 
 import { CtaLink, NavCtaLink } from "@/components/site/cta-link"
 import { NavOrb } from "@/components/site/nav-orb"
@@ -6,6 +6,27 @@ import { TestimonialCard, type HomeTestimonial } from "@/components/site/testimo
 import { TestimonialsCarousel } from "@/components/site/testimonials-carousel"
 
 export type { HomeTestimonial } from "@/components/site/testimonial-card"
+
+const deliveryGuarantees = [
+  {
+    icon: ShieldCheck,
+    title: "5.0★ Verified Marketplace Record",
+    detail:
+      "Consistent five-star client satisfaction across Upwork and Fiverr contracts, including ongoing enterprise React & TypeScript engineering for Order AI LLC.",
+  },
+  {
+    icon: Code2,
+    title: "Live Production Proof, Not Just Mockups",
+    detail:
+      "Every flagship system in this portfolio — Tillqorin POS, AuditBloc, Taylance CRM, and Relay — runs in production with real APIs, databases, and active users.",
+  },
+  {
+    icon: Zap,
+    title: "Milestone Scope & Clean Handoff",
+    detail:
+      "Written technical scope before kickoff, weekly staging demos you can click through, clean Git commit history, and 100% repository & cloud ownership.",
+  },
+] as const
 
 type TestimonialsSectionProps = {
   testimonials: HomeTestimonial[]
@@ -42,7 +63,7 @@ export function TestimonialsSection({
       <div className="relative z-[2]">
         <div className="mx-auto mb-10 max-w-3xl text-center lg:mb-12">
           <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-emerald-300/80 uppercase">
-            Testimonials
+            Client Trust &amp; Reviews
           </p>
           <HeadingTag
             id={headingId}
@@ -57,7 +78,7 @@ export function TestimonialsSection({
           </HeadingTag>
           <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
           <p className="text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
-            Feedback from clients on freelance and contract web projects.
+            Verified feedback and engineering delivery standards from freelance and contract web projects.
           </p>
         </div>
 
@@ -71,14 +92,33 @@ export function TestimonialsSection({
           <TestimonialsCarousel testimonials={testimonials} />
         )}
 
-        <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+          {deliveryGuarantees.map((item) => {
+            const Icon = item.icon
+            return (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-white/10 bg-[rgba(8,12,26,0.72)] p-5 sm:p-6"
+              >
+                <div className="mb-3 inline-flex size-10 items-center justify-center rounded-xl border border-emerald-500/25 bg-emerald-500/10 text-emerald-300">
+                  <Icon className="size-5" aria-hidden="true" />
+                </div>
+                <h3 className="text-base font-semibold text-white">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.detail}</p>
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           {isHome && (
             <CtaLink
-              href="/testimonials"
+              href="/experience"
               variant="secondary"
-              title="Read all client testimonials"
+              title="View Tayyab's full contract and production engineering history"
             >
-              All testimonials
+              <CheckCircle2 className="size-[1.05rem] text-emerald-300" aria-hidden="true" />
+              View Contract &amp; Delivery History
               <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
             </CtaLink>
           )}

@@ -47,6 +47,7 @@ export type BlogPostSummary = Pick<
   | "read_time"
   | "tags"
   | "author"
+  | "updated_at"
 >
 
 export type SitemapPostEntry = {

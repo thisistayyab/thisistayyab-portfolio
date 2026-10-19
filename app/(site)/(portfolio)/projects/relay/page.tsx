@@ -24,7 +24,10 @@ import {
 } from "@/lib/portfolio-project-json-ld"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
+import { ProjectWarmup } from "@/components/site/project-warmup"
 import { cn } from "@/lib/utils"
+
+export const dynamic = "force-static"
 
 const highlights = [
   "Instant peer-to-peer file transfer up to 100 MB directly between browser tabs using WebRTC",
@@ -73,6 +76,7 @@ export default function RelayProjectPage() {
 
   return (
     <>
+      <ProjectWarmup />
       <JsonLd
         data={buildPortfolioProjectSoftwareApplicationJsonLd(
           relayProject,
@@ -250,6 +254,15 @@ export default function RelayProjectPage() {
             <RiGithubFill className="size-4.5" aria-hidden="true" />
             Source code (GitHub)
           </a>
+
+          <CtaLink
+            href="/blog/webrtc-file-sharing-architecture-relay"
+            variant="secondary"
+            title="Read the WebRTC and Socket.IO architecture breakdown"
+          >
+            Read WebRTC architecture post
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </CtaLink>
         </div>
 
         <p className="mt-8 text-sm leading-relaxed text-slate-500">
@@ -258,11 +271,23 @@ export default function RelayProjectPage() {
           notes between devices without compromising their privacy.
         </p>
 
-        <div className="mt-10 flex justify-center">
-          <CtaLink href="/projects" title="View all portfolio projects">
-            View all projects
-            <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
-          </CtaLink>
+        <div className="mt-12 rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/[0.07] via-slate-900/60 to-violet-500/[0.07] p-6">
+          <h2 className="text-base font-semibold text-white sm:text-lg">
+            Building a real-time WebRTC, Socket.IO, or collaborative web app?
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-slate-300">
+            I engineer low-latency real-time features, live collaboration tools, and peer-to-peer
+            data channels with React, Node.js, and WebSockets.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <CtaLink href="/contact?project=Real-Time+WebRTC+or+Socket.IO+App" title="Discuss a real-time application">
+              Discuss Your Real-Time App
+              <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
+            </CtaLink>
+            <CtaLink href="/projects" variant="secondary" title="View all portfolio projects">
+              View all projects
+            </CtaLink>
+          </div>
         </div>
       </article>
     </>

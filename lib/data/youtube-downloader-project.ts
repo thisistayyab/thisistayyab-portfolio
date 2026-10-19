@@ -1,7 +1,7 @@
 import type { PortfolioProject } from "@/components/site/project-card"
 
 export const YOUTUBE_DOWNLOADER_URL = "https://downloader.thisistayyab.dev"
-export const YOUTUBE_DOWNLOADER_REPO = "https://github.com/thisistayyab/youtube-downloader.git"
+export const YOUTUBE_DOWNLOADER_REPO = "https://github.com/thisistayyab/youtube-downloader"
 
 export const youtubeDownloaderSeoKeywords = [
   "YouTube Downloader",

@@ -2,7 +2,6 @@ import { ArrowLeft, ArrowRight, FileQuestion } from "lucide-react"
 import Link from "next/link"
 
 import { CtaLink } from "@/components/site/cta-link"
-import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { navItems, SITE_NAME } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
@@ -26,7 +25,10 @@ export function NotFoundContent({
   return (
     <article className={cn("relative isolate overflow-x-clip", className)}>
       <header className="relative isolate overflow-hidden pt-[88px]">
-        <HeaderGraphBackground />
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_50%_at_50%_0%,rgba(56,189,248,0.12),transparent_65%)]"
+          aria-hidden="true"
+        />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020106]/90" />
 
         <div className="relative z-[2] mx-auto max-w-[1200px] px-4 pb-16 sm:px-6 lg:px-8">

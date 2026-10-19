@@ -1,4 +1,7 @@
-import { mapSupabasePost, POST_SELECT, toPostSummary } from "@/lib/blog/map"
+import { cache } from "react"
+import { unstable_cache } from "next/cache"
+
+import { mapSupabasePost, POST_SELECT, POST_SUMMARY_SELECT, toPostSummary } from "@/lib/blog/map"
 import type { BlogPost, BlogPostSummary, SitemapPostEntry } from "@/lib/blog/types"
 import { FALLBACK_PUBLISHED_POSTS } from "@/lib/blog/fallback-posts"
 import { getSupabasePublicClientOrNull } from "@/lib/supabase/public"
@@ -7,66 +10,92 @@ export type { SitemapPostEntry }
 
 /** ISR revalidation interval (24 hours). On-demand revalidation triggers on CMS publish/update. */
 export const BLOG_REVALIDATE_SECONDS = 86400
+export const BLOG_CACHE_TAG = "blog-posts"
+
+export function getBlogPostCacheTag(slug: string): string {
+  return `blog-post-${slug}`
+}
+
+const VALID_SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+export function isValidBlogSlug(slug: string): boolean {
+  return Boolean(slug && slug.length >= 2 && slug.length <= 160 && VALID_SLUG_REGEX.test(slug))
+}
 
 function getSupabase() {
   return getSupabasePublicClientOrNull()
 }
 
-export async function getPublishedPosts(): Promise<BlogPostSummary[]> {
-  const supabase = getSupabase()
-  if (!supabase) return []
+const fetchPublishedPostsSummaryCached = unstable_cache(
+  async (): Promise<BlogPostSummary[]> => {
+    const supabase = getSupabase()
+    if (!supabase) return []
 
-  const { data, error } = await supabase
-    .from("posts")
-    .select(POST_SELECT)
-    .eq("published", true)
-    .order("published_at", { ascending: false })
+    const { data, error } = await supabase
+      .from("posts")
+      .select(POST_SUMMARY_SELECT)
+      .eq("published", true)
+      .order("published_at", { ascending: false })
 
-  if (error || !data?.length) {
-    if (error) console.error("[blog] getPublishedPosts:", error.message)
-    return []
-  }
+    if (error || !data?.length) {
+      if (error) console.error("[blog] getPublishedPosts:", error.message)
+      return []
+    }
 
-  return data.map((row) => toPostSummary(mapSupabasePost(row)))
+    return data.map((row) => toPostSummary(mapSupabasePost(row)))
+  },
+  ["blog-published-posts-summary-v2"],
+  {
+    revalidate: BLOG_REVALIDATE_SECONDS,
+    tags: [BLOG_CACHE_TAG],
+  },
+)
+
+export const getPublishedPosts = cache(async (): Promise<BlogPostSummary[]> => {
+  return fetchPublishedPostsSummaryCached()
+})
+
+export const getFeaturedPosts = cache(async (limit = 3): Promise<BlogPostSummary[]> => {
+  const posts = await getPublishedPosts()
+  return posts.slice(0, limit)
+})
+
+function fetchSinglePostCached(slug: string): Promise<BlogPost | null> {
+  return unstable_cache(
+    async (): Promise<BlogPost | null> => {
+      const supabase = getSupabase()
+      if (!supabase) return null
+
+      const { data, error } = await supabase
+        .from("posts")
+        .select(POST_SELECT)
+        .eq("slug", slug)
+        .eq("published", true)
+        .maybeSingle()
+
+      if (error || !data) {
+        if (error) console.error("[blog] getPostBySlug:", error.message)
+        return null
+      }
+
+      return mapSupabasePost(data)
+    },
+    ["blog-post-by-slug-v2", slug],
+    {
+      revalidate: BLOG_REVALIDATE_SECONDS,
+      tags: [BLOG_CACHE_TAG, getBlogPostCacheTag(slug)],
+    },
+  )()
 }
 
-export async function getFeaturedPosts(limit = 3): Promise<BlogPostSummary[]> {
-  const supabase = getSupabase()
-  if (!supabase) return []
-
-  const { data, error } = await supabase
-    .from("posts")
-    .select(POST_SELECT)
-    .eq("published", true)
-    .order("published_at", { ascending: false })
-    .limit(limit)
-
-  if (error || !data?.length) {
-    if (error) console.error("[blog] getFeaturedPosts:", error.message)
-    return []
-  }
-
-  return data.map((row) => toPostSummary(mapSupabasePost(row)))
-}
-
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const supabase = getSupabase()
-  if (!supabase) return null
-
-  const { data, error } = await supabase
-    .from("posts")
-    .select(POST_SELECT)
-    .eq("slug", slug)
-    .eq("published", true)
-    .maybeSingle()
-
-  if (error || !data) {
-    if (error) console.error("[blog] getPostBySlug:", error.message)
+export const getPostBySlug = cache(async (rawSlug: string): Promise<BlogPost | null> => {
+  const slug = rawSlug?.trim() ?? ""
+  if (!isValidBlogSlug(slug)) {
     return null
   }
 
-  return mapSupabasePost(data)
-}
+  return fetchSinglePostCached(slug)
+})
 
 export async function getRelatedPosts(
   currentSlug: string,
@@ -96,56 +125,27 @@ export async function getRelatedPosts(
   return [...withSharedTags, ...filler].slice(0, limit)
 }
 
-export async function getAllPostSlugs(): Promise<string[]> {
+export const getAllPostSlugs = cache(async (): Promise<string[]> => {
   const fallbackSlugs = FALLBACK_PUBLISHED_POSTS.map((p) => p.slug)
-  const supabase = getSupabase()
-  if (!supabase) return fallbackSlugs
-
-  const { data, error } = await supabase
-    .from("posts")
-    .select("slug")
-    .eq("published", true)
-    .not("slug", "is", null)
-
-  if (error || !data) {
-    if (error) console.error("[blog] getAllPostSlugs:", error.message)
-    return fallbackSlugs
-  }
-
-  const dbSlugs = data.map((row) => row.slug as string).filter(Boolean)
+  const publishedPosts = await getPublishedPosts()
+  const dbSlugs = publishedPosts.map((p) => p.slug).filter(Boolean)
   return Array.from(new Set([...dbSlugs, ...fallbackSlugs]))
-}
+})
 
-export async function getPublishedPostsForSitemap(): Promise<SitemapPostEntry[]> {
-  const supabase = getSupabase()
-  let dbPosts: SitemapPostEntry[] = []
+export const getPublishedPostsForSitemap = cache(async (): Promise<SitemapPostEntry[]> => {
+  const publishedPosts = await getPublishedPosts()
 
-  if (supabase) {
-    const { data, error } = await supabase
-      .from("posts")
-      .select("slug, updated_at, published_at, created_at, cover_image")
-      .eq("published", true)
-      .not("slug", "is", null)
-
-    if (error) {
-      console.error(`[blog] getPublishedPostsForSitemap: ${error.message}`)
-    } else if (data) {
-      dbPosts = data.map((row) => ({
-        slug: row.slug as string,
-        updated_at: (row.updated_at as string | null) ?? null,
-        published_at: (row.published_at as string | null) ?? (row.created_at as string | null) ?? null,
-        cover_image: (row.cover_image as string | null) ?? null,
-      }))
-    }
-  }
-
-  // Merge dbPosts and FALLBACK_PUBLISHED_POSTS, preferring dbPosts if present
   const postMap = new Map<string, SitemapPostEntry>()
   for (const post of FALLBACK_PUBLISHED_POSTS) {
     postMap.set(post.slug, post)
   }
-  for (const post of dbPosts) {
-    postMap.set(post.slug, post)
+  for (const post of publishedPosts) {
+    postMap.set(post.slug, {
+      slug: post.slug,
+      updated_at: post.updated_at ?? post.published_at ?? null,
+      published_at: post.published_at ?? null,
+      cover_image: post.cover_image ?? null,
+    })
   }
 
   const merged = Array.from(postMap.values())
@@ -154,5 +154,5 @@ export async function getPublishedPostsForSitemap(): Promise<SitemapPostEntry[]>
     const dateB = b.published_at ?? ""
     return dateB.localeCompare(dateA)
   })
-}
+})
 

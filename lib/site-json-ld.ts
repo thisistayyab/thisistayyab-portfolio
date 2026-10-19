@@ -7,13 +7,15 @@ export function buildWebSiteJsonLd(siteUrl: string) {
     "@type": "WebSite",
     "@id": `${siteUrl}/#website`,
     name: SITE_BRAND,
+    alternateName: ["Tayyab Portfolio", "Tayyab Full Stack Developer", "thisistayyab.dev"],
     url: `${siteUrl}/`,
     inLanguage: "en-US",
     publisher: {
       "@type": "Person",
       "@id": personId(siteUrl),
       name: "Tayyab",
-      url: personId(siteUrl),
+      jobTitle: "Full Stack Developer",
+      url: `${siteUrl}/`,
     },
   }
 }

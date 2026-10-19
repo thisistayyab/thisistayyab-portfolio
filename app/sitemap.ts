@@ -4,6 +4,7 @@ import { getPublishedPostsForSitemap } from "@/lib/blog/queries"
 import { blogImageUrl, formatSitemapDate } from "@/lib/blog/utils"
 import { auditblocProject } from "@/lib/data/auditbloc-project"
 import { relayProject } from "@/lib/data/relay-project"
+import { taylanceCrmProject } from "@/lib/data/taylance-crm-project"
 import { tillqorinProject } from "@/lib/data/tillqorin-project"
 import { youtubeDownloaderProject } from "@/lib/data/youtube-downloader-project"
 import { featuredOgImageUrl, projectImageUrl, SITE_URL } from "@/lib/site"
@@ -12,7 +13,7 @@ import { featuredOgImageUrl, projectImageUrl, SITE_URL } from "@/lib/site"
 export const revalidate = 86400
 
 /** Bump when static page content meaningfully changes. */
-const SITEMAP_FRESHNESS_DATE = "2026-10-18"
+const SITEMAP_FRESHNESS_DATE = "2026-10-19"
 
 /**
  * Update these dates whenever the page content meaningfully changes.
@@ -41,6 +42,13 @@ const staticRoutes: MetadataRoute.Sitemap = [
     images: [featuredOgImageUrl()],
   },
   {
+    url: `${SITE_URL}/projects/tillqorin`,
+    lastModified: SITEMAP_FRESHNESS_DATE,
+    changeFrequency: "monthly",
+    priority: 0.85,
+    images: [projectImageUrl(tillqorinProject.image)],
+  },
+  {
     url: `${SITE_URL}/projects/auditbloc`,
     lastModified: SITEMAP_FRESHNESS_DATE,
     changeFrequency: "monthly",
@@ -48,11 +56,11 @@ const staticRoutes: MetadataRoute.Sitemap = [
     images: [projectImageUrl(auditblocProject.image)],
   },
   {
-    url: `${SITE_URL}/projects/tillqorin`,
+    url: `${SITE_URL}/projects/taylance-crm`,
     lastModified: SITEMAP_FRESHNESS_DATE,
     changeFrequency: "monthly",
     priority: 0.85,
-    images: [projectImageUrl(tillqorinProject.image)],
+    images: [projectImageUrl(taylanceCrmProject.image)],
   },
   {
     url: `${SITE_URL}/projects/relay`,

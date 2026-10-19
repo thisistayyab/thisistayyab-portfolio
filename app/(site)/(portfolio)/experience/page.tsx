@@ -18,6 +18,8 @@ import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
+export const dynamic = "force-static"
+
 /** Full career roadmap — exported for home preview (single source of truth). */
 export const careerRoadmapMilestones: CareerMilestone[] = [
   {

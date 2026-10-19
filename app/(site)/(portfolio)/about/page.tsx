@@ -110,16 +110,48 @@ const aboutExpertisePillars: {
 
 const aboutSkillGroups = [
   {
-    category: "Frontend",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Responsive UI", "SEO"],
+    category: "Frontend & UI",
+    skills: [
+      "React 19",
+      "Next.js (App Router)",
+      "TypeScript",
+      "Tailwind CSS",
+      "Shadcn & Radix UI",
+      "Material UI",
+      "Framer Motion",
+      "Vite",
+      "Technical SEO",
+      "WCAG 2.2 Accessibility",
+    ],
   },
   {
-    category: "Backend",
-    skills: ["Node.js", "Express", "REST APIs", "FastAPI", "Authentication", "Webhooks"],
+    category: "Backend & Real-Time",
+    skills: [
+      "Node.js",
+      "Express.js",
+      "RESTful APIs",
+      "FastAPI (Python)",
+      "Socket.IO & WebSockets",
+      "WebRTC (P2P Data Channels)",
+      "JWT & OAuth Auth",
+      "Playwright Automation",
+      "Webhooks & Integrations",
+    ],
   },
   {
-    category: "Data & Tools",
-    skills: ["PostgreSQL", "MongoDB", "Prisma", "Git", "Docker", "CI/CD"],
+    category: "Data, Cloud & Core CS",
+    skills: [
+      "PostgreSQL",
+      "Supabase (Auth & RLS)",
+      "MongoDB",
+      "Redis",
+      "Prisma ORM",
+      "Docker & CI/CD",
+      "Vercel & Cloud Deploy",
+      "Git & GitHub",
+      "C++ (1,150+ LeetCode)",
+      "OpenAI & LLM APIs",
+    ],
   },
 ] as const
 
@@ -217,6 +249,8 @@ const aboutFaq = [
   },
 ] as const
 
+export const dynamic = "force-static"
+
 export const metadata: Metadata = buildPageMetadata({
   title: "About Tayyab | Full Stack Developer — React, Next.js & Node.js",
   description:
@@ -243,7 +277,7 @@ export default function AboutPage() {
           ],
         }}
       />
-      <JsonLd data={buildPersonJsonLd(SITE_URL, aboutSubtitle)} />
+      <JsonLd data={buildPersonJsonLd(SITE_URL)} />
       <JsonLd data={buildFaqJsonLd(aboutFaq)} />
 
       <article
@@ -467,10 +501,34 @@ export default function AboutPage() {
                 My freelance work on Upwork and Fiverr has earned consistent five-star feedback,
                 with clients citing responsiveness, technical clarity, and on-time delivery.
                 Beyond client work, I architect and ship my own full stack products —{" "}
-                <span className="text-slate-200">Tillqorin POS</span>,{" "}
-                <span className="text-slate-200">AuditBloc</span>,{" "}
-                <span className="text-slate-200">Relay</span>, and a{" "}
-                <span className="text-slate-200">Taylance CRM</span> — web, SaaS, AI automation,
+                <Link
+                  href="/projects/tillqorin"
+                  className="font-medium text-slate-200 underline decoration-white/25 underline-offset-4 transition-colors hover:text-cyan-300"
+                >
+                  Tillqorin POS
+                </Link>
+                ,{" "}
+                <Link
+                  href="/projects/auditbloc"
+                  className="font-medium text-slate-200 underline decoration-white/25 underline-offset-4 transition-colors hover:text-cyan-300"
+                >
+                  AuditBloc
+                </Link>
+                ,{" "}
+                <Link
+                  href="/projects/relay"
+                  className="font-medium text-slate-200 underline decoration-white/25 underline-offset-4 transition-colors hover:text-cyan-300"
+                >
+                  Relay
+                </Link>
+                , and{" "}
+                <Link
+                  href="/projects/taylance-crm"
+                  className="font-medium text-slate-200 underline decoration-white/25 underline-offset-4 transition-colors hover:text-cyan-300"
+                >
+                  Taylance CRM
+                </Link>{" "}
+                — web, SaaS, AI automation,
                 and UI/UX projects where code quality, thoughtful architecture, and long-term maintainability
                 come first.
               </p>

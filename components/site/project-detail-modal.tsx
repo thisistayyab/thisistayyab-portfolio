@@ -139,23 +139,14 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
 
           {!project.hideCardLiveLink && (project.ctaDisabled || project.link) ? (
             project.ctaDisabled ? (
-              <button
-                type="button"
-                disabled
-                title={
-                  project.ctaDisabledReason ??
-                  "This client application is internal and not available to the public."
-                }
-                aria-label={`${project.ctaLabel} — unavailable, internal client application`}
-                className={cn(
-                  ctaPrimaryClassName,
-                  "inline-flex cursor-not-allowed opacity-45 saturate-50",
-                  "hover:translate-y-0 hover:shadow-[0_10px_30px_rgba(99,102,241,0.35),0_0_40px_rgba(59,130,246,0.18)]",
-                )}
+              <Link
+                href="/contact"
+                onClick={onClose}
+                title="Request a free project scope to build a similar platform"
+                className={cn(ctaPrimaryClassName, "inline-flex text-[0.88rem] px-5 py-3")}
               >
-                {project.ctaLabel}
-                <ExternalLink className="size-4" aria-hidden="true" />
-              </button>
+                Build a Similar Platform — Request Free Scope
+              </Link>
             ) : (
               <a
                 href={project.link}

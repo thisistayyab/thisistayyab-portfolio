@@ -1,29 +1,35 @@
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, ArrowRight, Code2, ExternalLink } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
 
 import type { PortfolioProject } from "@/components/site/project-card"
+import { CtaLink } from "@/components/site/cta-link"
 import { FaqSection } from "@/components/site/faq-section"
+import { GlassSurface } from "@/components/site/glass-surface"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
+import { ProjectWarmup } from "@/components/site/project-warmup"
 import { ProjectsShowcase } from "@/components/site/projects-showcase"
+import { ctaSecondaryClassName, navGlassClassName } from "@/components/site/site-styles"
 import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { auditblocProject, auditblocSeoKeywords } from "@/lib/data/auditbloc-project"
 import { relayProject, relaySeoKeywords } from "@/lib/data/relay-project"
+import { taylanceCrmProject, taylanceCrmSeoKeywords } from "@/lib/data/taylance-crm-project"
 import { tillqorinProject, tillqorinSeoKeywords } from "@/lib/data/tillqorin-project"
 import { youtubeDownloaderProject, youtubeDownloaderSeoKeywords } from "@/lib/data/youtube-downloader-project"
-import {
-  buildPortfolioProjectSoftwareApplicationJsonLd,
-  projectPortfolioUrl,
-} from "@/lib/portfolio-project-json-ld"
+import { projectPortfolioUrl } from "@/lib/portfolio-project-json-ld"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
+import { cn } from "@/lib/utils"
+
+export const dynamic = "force-static"
 
 const projectsPageIntro =
-  "Explore full stack web applications, SaaS products, and client projects built by Tayyab — a React, Next.js, and Node.js developer. Featured work includes Tillqorin POS (Commerce OS), AuditBloc (accessibility scanner), Relay (real-time WebRTC), and production web apps with real APIs, databases, and SEO."
+  "Explore production SaaS platforms, real-time web applications, and private client systems architected and built by Tayyab — a Full Stack Developer specializing in React, Next.js, TypeScript, Node.js, and PostgreSQL. Featured work includes Tillqorin POS (Commerce OS), AuditBloc (automated accessibility & compliance scanner), Taylance CRM (B2B pipeline & delivery workspace), and Relay (real-time WebRTC P2P file transfer)."
 
 const projectsKeywords = [
   ...relaySeoKeywords,
+  ...taylanceCrmSeoKeywords,
   ...youtubeDownloaderSeoKeywords,
   "Tayyab web development portfolio",
   "Tillqorin",
@@ -43,234 +49,107 @@ const projectsKeywords = [
 ] as const
 
 const portfolioProjects: PortfolioProject[] = [
-  youtubeDownloaderProject,
-  relayProject,
-  auditblocProject,
   tillqorinProject,
-  {
-    id: 5,
-    slug: "taylance-crm",
-    name: "Taylance CRM",
-    roleLabel: "Full-stack product",
-    image: "/images/projects/taylance-crm.webp",
-    imageAlt: "Taylance CRM dashboard for managing clients, leads, and projects, built by full stack developer Tayyab with React, Express.js, and Material UI",
-    imageTitle: "Taylance CRM dashboard",
-    link: "https://crm.taylancetech.com/",
-    description:
-      "Taylance CRM is a full-featured CRM web application I built to manage clients, leads, and projects from one dashboard. Built with React, Express.js, and Material UI, with REST APIs and role-based workflows for sales teams.",
-    tags: [
-      { label: "Full-stack product", variant: "feature" },
-      { label: "React", variant: "tech" },
-      { label: "Express.js", variant: "tech" },
-      { label: "REST API", variant: "feature" },
-      { label: "Material UI", variant: "tech" },
-    ],
-    ctaLabel: "Live View",
-  },
+  auditblocProject,
+  taylanceCrmProject,
+  relayProject,
+  youtubeDownloaderProject,
   {
     id: 6,
     slug: "7opportunity",
     name: "7Opportunity",
-    roleLabel: "Client project",
+    roleLabel: "Client delivery (NDA)",
     isClientWork: true,
     image: "/images/projects/tayyab-7opportunity-react-marketing-platform.webp",
-    imageAlt: "7Opportunity marketing platform",
+    imageAlt: "7Opportunity client marketing and lead acquisition platform built by Tayyab",
     imageTitle: "7Opportunity marketing platform",
     link: "",
     description:
-      "Freelance client project: a marketing platform with scroll-driven sections, lead-focused layout, and an Express.js + Supabase API backend. Built for strong mobile performance and Lighthouse scores. I list my development role only; the product and IP belong to the client. The live app is internal to the client and not linked here.",
+      "Private client engagement: engineered a high-converting growth and lead acquisition platform featuring interactive scroll-driven sections, lead capture workflows, and an Express.js + Supabase REST API backend. Optimized for Core Web Vitals (90+ Lighthouse scores) and mobile conversion. Delivered as white-label client work under NDA; full IP and internal production deployment belong to the client.",
     tags: [
-      { label: "Client project", variant: "feature" },
+      { label: "Client NDA", variant: "feature" },
       { label: "React", variant: "tech" },
       { label: "Express.js", variant: "tech" },
       { label: "Supabase", variant: "tech" },
       { label: "Lighthouse 90+", variant: "feature" },
     ],
-    ctaLabel: "Internal site",
+    ctaLabel: "Private Client App",
     ctaDisabled: true,
-    ctaDisabledReason: "Client internal application — not publicly accessible.",
+    ctaDisabledReason: "Private client deployment under NDA — not publicly accessible.",
   },
   {
     id: 7,
     slug: "7options",
     name: "7Options",
-    roleLabel: "Client project",
+    roleLabel: "Client delivery (NDA)",
     isClientWork: true,
     image: "/images/projects/7options.webp",
-    imageAlt: "7Options subscription platform",
+    imageAlt: "7Options subscription and billing management platform built by Tayyab",
     imageTitle: "7Options subscription platform",
     link: "",
     description:
-      "Freelance client project: a full stack subscription and account management platform with user dashboards, plans, payments, and admin workflows. Delivered without a formal IP contract; ownership stays with the client. The live app is internal to the client and not linked here.",
+      "Private client engagement: architected a full-stack subscription and account management SaaS platform with multi-tier billing plans, subscriber dashboards, payment webhooks, and role-based admin controls using React, Express.js, and Supabase. Delivered as white-label client work under NDA; full IP and internal production deployment belong to the client.",
     tags: [
-      { label: "Client project", variant: "feature" },
+      { label: "Client NDA", variant: "feature" },
       { label: "React", variant: "tech" },
       { label: "Express.js", variant: "tech" },
       { label: "Supabase", variant: "tech" },
-      { label: "Payments", variant: "feature" },
+      { label: "Subscriptions & Billing", variant: "feature" },
     ],
-    ctaLabel: "Internal site",
+    ctaLabel: "Private Client App",
     ctaDisabled: true,
-    ctaDisabledReason: "Client internal application — not publicly accessible.",
+    ctaDisabledReason: "Private client deployment under NDA — not publicly accessible.",
   },
   {
     id: 8,
     slug: "7talenthub",
     name: "7TalentHub",
-    roleLabel: "Client project",
+    roleLabel: "Client delivery (NDA)",
     isClientWork: true,
     image: "/images/projects/7talenthub.webp",
-    imageAlt: "7TalentHub CRM interface",
+    imageAlt: "7TalentHub enterprise talent and HR CRM interface built by Tayyab",
     imageTitle: "7TalentHub CRM interface",
     link: "",
     description:
-      "Freelance client project: a company CRM for employee relations, talent tracking, and performance analytics. Built with React, Node.js, and Supabase. I list my development role only; the product and IP belong to the client. The live app is internal and not linked here.",
+      "Private client engagement: built an internal enterprise HR and talent operations CRM for employee relations, candidate pipeline tracking, and team performance analytics using React, Node.js, and Supabase PostgreSQL. Delivered as white-label client work under NDA; full IP and internal production deployment belong to the client.",
     tags: [
-      { label: "Client project", variant: "feature" },
+      { label: "Client NDA", variant: "feature" },
       { label: "React", variant: "tech" },
       { label: "Node.js", variant: "tech" },
       { label: "Supabase", variant: "tech" },
-      { label: "CRM", variant: "feature" },
+      { label: "Enterprise CRM", variant: "feature" },
     ],
-    ctaLabel: "Internal site",
+    ctaLabel: "Private Client App",
     ctaDisabled: true,
-    ctaDisabledReason: "Client internal application — not publicly accessible.",
+    ctaDisabledReason: "Private client deployment under NDA — not publicly accessible.",
   },
-  {
-    id: 9,
-    slug: "notehub",
-    name: "NoteHub",
-    image: "/images/projects/notehub.webp",
-    imageAlt: "NoteHub note-taking app",
-    imageTitle: "NoteHub note-taking app",
-    link: "https://notehub-thisistayyab.vercel.app/",
-    description:
-      "NoteHub is a modern note-taking web application that allows users to create, organize, and edit notes seamlessly in a clean, distraction-free interface. Built with React and Express.js, the app connects to a MongoDB database for secure storage and retrieval of user notes.",
-    tags: [
-      { label: "React", variant: "tech" },
-      { label: "Express.js", variant: "tech" },
-      { label: "MongoDB", variant: "tech" },
-      { label: "REST API", variant: "feature" },
-    ],
-    ctaLabel: "Live View",
-  },
-  {
-    id: 10,
-    slug: "leetcode-profile",
-    name: "LeetCode Profile",
-    image: "/images/projects/leetcode-profile.webp",
-    imageAlt: "Tayyab LeetCode profile",
-    imageTitle: "Tayyab LeetCode profile",
-    link: "https://leetcode.com/u/thisistayyab/",
-    description:
-      "My LeetCode profile reflects a strong foundation in Data Structures and Algorithms with over 1,150+ problems solved. This extensive problem-solving practice demonstrates deep expertise in algorithm design, time complexity optimization, and mastery of programming paradigms using C++ as the primary language.",
-    tags: [
-      { label: "Algorithms", variant: "tech" },
-      { label: "Data Structures", variant: "tech" },
-      { label: "C++", variant: "tech" },
-      { label: "1150+ Solved", variant: "feature" },
-    ],
-    ctaLabel: "View Profile",
-  },
-  {
-    id: 11,
-    slug: "taynio-chat",
-    name: "Taynio Chat",
-    roleLabel: "Personal project",
-    image: "/images/projects/taynio-chat.webp",
-    imageAlt: "Taynio Chat messaging app",
-    imageTitle: "Taynio Chat messaging app",
-    link: "https://github.com/thisistayyab/Taynio-chat",
-    githubUrl: "https://github.com/thisistayyab/Taynio-chat",
-    hideCardLiveLink: true,
-    description:
-      "Taynio Chat is a real-time messaging application built with React, Node.js, and Socket.IO, designed for fast, secure, and reliable communication. It enables instant message exchange, active user presence detection, and seamless real-time updates without page reloads.",
-    tags: [
-      { label: "React", variant: "tech" },
-      { label: "Node.js", variant: "tech" },
-      { label: "Socket.IO", variant: "tech" },
-      { label: "Real-time", variant: "feature" },
-    ],
-    ctaLabel: "Repository",
-  },
-  {
-    id: 12,
-    slug: "newswave",
-    name: "NewsWave",
-    image: "/images/projects/newswave.webp",
-    imageAlt: "NewsWave news aggregator",
-    imageTitle: "NewsWave news aggregator",
-    link: "https://newswave.thisistayyab.dev",
-    description:
-      "NewsWave is a dynamic news aggregator application designed to keep users informed with the latest headlines from around the world. Built with React and integrated with third-party news APIs, it fetches live articles and presents them in a structured, visually appealing layout.",
-    tags: [
-      { label: "React", variant: "tech" },
-      { label: "REST API", variant: "tech" },
-      { label: "Bootstrap", variant: "tech" },
-      { label: "Responsive Design", variant: "feature" },
-    ],
-    ctaLabel: "Live View",
-  },
-  {
-    id: 13,
-    slug: "editwave",
-    name: "EditWave",
-    image: "/images/projects/editwave.webp",
-    imageAlt: "EditWave browser text editor",
-    imageTitle: "EditWave browser text editor",
-    link: "https://thisistayyab.github.io/EditWave/",
-    description:
-      "EditWave is a browser-based text editor web application designed to offer a smooth and modern editing experience. With a clean and minimalistic UI, it supports real-time text manipulation and formatting, making it ideal for quick note-taking or drafting documents.",
-    tags: [
-      { label: "React", variant: "tech" },
-      { label: "JavaScript", variant: "tech" },
-      { label: "Bootstrap", variant: "tech" },
-      { label: "Responsive Design", variant: "feature" },
-    ],
-    ctaLabel: "Live View",
-  },
-  {
-    id: 14,
-    slug: "shahid-portfolio",
-    name: "Shahid's Portfolio",
-    image: "/images/projects/shahid-portfolio.webp",
-    imageAlt: "Shahid portfolio website",
-    imageTitle: "Shahid portfolio website",
-    link: "https://thisistayyab.github.io/kashif-project/",
-    description:
-      "Shahid's Portfolio is a modern personal branding website built to showcase projects, achievements, and skills with elegance. Developed with React, JavaScript, and CSS, the portfolio highlights clean UI design principles with smooth transitions, hover effects, and a modular layout.",
-    tags: [
-      { label: "React", variant: "tech" },
-      { label: "CSS", variant: "tech" },
-      { label: "JavaScript", variant: "tech" },
-      { label: "Responsive Design", variant: "feature" },
-    ],
-    ctaLabel: "Live View",
-  },
-];
+]
+
 const projectsFaq = [
   {
-    question: "What kind of projects are these?",
+    question: "What kind of projects are featured in this portfolio?",
     answer:
-      "Live web applications and products — SaaS tools, REST APIs, CRMs, and web platforms built for real traffic, not mockups. Each project links to a case study with the tech stack and architecture decisions.",
+      "Every project listed here is a real production software product or private client system — including multi-tenant SaaS platforms, retail POS & billing software (Tillqorin POS), automated browser compliance scanners (AuditBloc), B2B CRM workspaces (Taylance CRM), and WebRTC real-time apps (Relay). Each flagship product includes a full engineering case study.",
   },
   {
-    question: "What technologies do you use most?",
-    answer: "React, Next.js, TypeScript, Node.js, PostgreSQL, MongoDB, and Supabase.",
-  },
-  {
-    question: "Are these deployed projects?",
-    answer: "Yes. Most have a live link or a public repo.",
-  },
-  {
-    question: "Why are some projects listed as private or password-protected?",
+    question: "What technologies do you use across these production builds?",
     answer:
-      "Tools like the YouTube Media Downloader are deployed in production on Render but protected by an APP_SECRET passphrase to comply with Google and YouTube platform policies, prevent unauthorized scraping traffic, and keep usage strictly reserved for personal creator archival.",
+      "React 19, Next.js (App Router), TypeScript, Tailwind CSS, Node.js, Express.js, FastAPI, PostgreSQL, Supabase (Auth & Row-Level Security), Redis, Socket.IO, WebRTC, Playwright, and Docker.",
   },
   {
-    question: 'What does "Client project" mean?',
+    question: "Can I test the live applications right now?",
     answer:
-      "I built it for a client as freelance work. They own the product; I am listed as the developer.",
+      "Yes. Flagship products like Tillqorin POS (pos.taylancetech.com), AuditBloc (auditbloc.taylancetech.com), Taylance CRM (crm.taylancetech.com), and Relay (relay.thisistayyab.dev) are live in production and open to explore alongside their detailed architectural case studies.",
+  },
+  {
+    question: "Why are some tools password-protected or marked as Client NDA?",
+    answer:
+      "Client deliveries (7Opportunity, 7Options, 7TalentHub) are proprietary business platforms built under client NDA / white-label agreements where the live deployment is internal to the client's organization. Personal media tools like the YouTube Video Downloader are protected by an APP_SECRET passphrase to comply with platform policies and prevent public server abuse.",
+  },
+  {
+    question: "Can you build a similar SaaS product, POS, or custom CRM for my business?",
+    answer:
+      "Yes. I partner with startup founders, product teams, and businesses globally to take web applications from initial technical scope and database design through to production launch. Reach out via the contact page for a free project scope.",
   },
 ] as const
 
@@ -305,7 +184,7 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
           caption: project.imageAlt,
           description: project.imageAlt,
         },
-        applicationCategory: "WebApplication",
+        applicationCategory: project.applicationCategory ?? "WebApplication",
         operatingSystem: "Web Browser",
         offers: {
           "@type": "Offer",
@@ -317,7 +196,7 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
           "@id": `${SITE_URL}/about`,
           name: "Tayyab",
           url: `${SITE_URL}/about`,
-          jobTitle: "Full Stack Web Developer",
+          jobTitle: "Full Stack Developer",
         },
         ...(project.client
           ? {
@@ -333,7 +212,7 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
                   "@id": `${SITE_URL}/about`,
                   name: "Tayyab",
                   url: `${SITE_URL}/about`,
-                  jobTitle: "Full Stack Web Developer",
+                  jobTitle: "Full Stack Developer",
                 },
               }
             : {}),
@@ -370,6 +249,7 @@ export const metadata: Metadata = buildPageMetadata({
 export default function ProjectsPage() {
   return (
     <>
+      <ProjectWarmup />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -381,10 +261,6 @@ export default function ProjectsPage() {
         }}
       />
       <JsonLd data={buildProjectsItemListJsonLd(portfolioProjects)} />
-      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(relayProject, SITE_URL)} />
-      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
-      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
-      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(youtubeDownloaderProject, SITE_URL)} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -471,6 +347,56 @@ export default function ProjectsPage() {
             projects={portfolioProjects}
             listLabel="Full stack web development portfolio projects"
           />
+        </MotionSection>
+
+        <MotionSection
+          className="mx-auto max-w-[1200px] px-5 pb-16 sm:px-6 lg:px-4"
+          aria-labelledby="engineering-depth-heading"
+        >
+          <GlassSurface
+            rim="violet"
+            className={cn(
+              navGlassClassName,
+              "flex flex-col justify-between gap-6 rounded-2xl p-6 sm:p-8 lg:flex-row lg:items-center",
+            )}
+          >
+            <div className="max-w-2xl">
+              <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-violet-300 uppercase">
+                <Code2 className="size-4 text-cyan-300" aria-hidden="true" />
+                Algorithmic &amp; Systems Foundation
+              </p>
+              <h2
+                id="engineering-depth-heading"
+                className="text-xl font-bold tracking-tight text-white sm:text-2xl"
+              >
+                1,150+ LeetCode Challenges Solved in C++ — Applied to Production Architecture
+              </h2>
+              <p className="mt-2.5 text-sm leading-relaxed text-slate-300/90 sm:text-base">
+                Every SaaS platform, database schema, and real-time API above is backed by rigorous
+                data structures and algorithmic problem-solving — ensuring low-latency queries,
+                predictable memory usage, and clean edge-case handling in production.
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-wrap items-center gap-3">
+              <CtaLink
+                href="/contact"
+                title="Request a free technical scope for your web application"
+              >
+                Start a Similar Project
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </CtaLink>
+              <a
+                href="https://leetcode.com/u/thisistayyab/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="View Tayyab's verified LeetCode profile (1,150+ problems solved)"
+                className={cn(ctaSecondaryClassName, "inline-flex items-center gap-2 text-sm px-5 py-3")}
+              >
+                LeetCode Profile
+                <ExternalLink className="size-4" aria-hidden="true" />
+              </a>
+            </div>
+          </GlassSurface>
         </MotionSection>
 
         <MotionSection>

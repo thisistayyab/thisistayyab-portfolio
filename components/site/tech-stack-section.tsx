@@ -1,16 +1,60 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { Globe, ScanSearch, ShieldCheck, Webhook } from "lucide-react"
 import Image from "next/image"
-import { useState } from "react"
+import { useState, type ReactNode } from "react"
+import {
+  SiFfmpeg,
+  SiFramer,
+  SiGit,
+  SiGithubactions,
+  SiLeetcode,
+  SiLinux,
+  SiMui,
+  SiOpenai,
+  SiPrisma,
+  SiRedis,
+  SiShadcnui,
+  SiTypescript,
+  SiVercel,
+  SiVite,
+  SiWebrtc,
+} from "react-icons/si"
 
 import { GlassSurface } from "@/components/site/glass-surface"
 import { navGlassClassName } from "@/components/site/site-styles"
-import { techStackCategories, type TechStackCategory } from "@/lib/data/tech-stack"
+import {
+  techStackCategories,
+  type TechStackCategory,
+  type TechStackIconKey,
+} from "@/lib/data/tech-stack"
 import { cn } from "@/lib/utils"
 
 function techIconSrc(filename: string) {
   return `/images/tech-icons/${encodeURIComponent(filename)}`
+}
+
+const vectorTechIcons: Record<TechStackIconKey, ReactNode> = {
+  typescript: <SiTypescript className="size-[20px] shrink-0 text-[#3178C6]" aria-hidden="true" />,
+  shadcn: <SiShadcnui className="size-[19px] shrink-0 text-slate-100" aria-hidden="true" />,
+  framer: <SiFramer className="size-[19px] shrink-0 text-[#0055FF]" aria-hidden="true" />,
+  mui: <SiMui className="size-[20px] shrink-0 text-[#007FFF]" aria-hidden="true" />,
+  vite: <SiVite className="size-[20px] shrink-0 text-[#646CFF]" aria-hidden="true" />,
+  rest: <Globe className="size-[20px] shrink-0 text-cyan-400" aria-hidden="true" />,
+  webrtc: <SiWebrtc className="size-[20px] shrink-0 text-sky-400" aria-hidden="true" />,
+  webhooks: <Webhook className="size-[20px] shrink-0 text-indigo-400" aria-hidden="true" />,
+  playwright: <ScanSearch className="size-[20px] shrink-0 text-emerald-400" aria-hidden="true" />,
+  ffmpeg: <SiFfmpeg className="size-[19px] shrink-0 text-[#007808]" aria-hidden="true" />,
+  redis: <SiRedis className="size-[20px] shrink-0 text-[#DC382D]" aria-hidden="true" />,
+  prisma: <SiPrisma className="size-[20px] shrink-0 text-teal-300" aria-hidden="true" />,
+  git: <SiGit className="size-[20px] shrink-0 text-[#F05032]" aria-hidden="true" />,
+  cicd: <SiGithubactions className="size-[20px] shrink-0 text-[#2088FF]" aria-hidden="true" />,
+  vercel: <SiVercel className="size-[18px] shrink-0 text-white" aria-hidden="true" />,
+  linux: <SiLinux className="size-[20px] shrink-0 text-[#FCC624]" aria-hidden="true" />,
+  leetcode: <SiLeetcode className="size-[20px] shrink-0 text-[#FFA116]" aria-hidden="true" />,
+  openai: <SiOpenai className="size-[20px] shrink-0 text-[#10A37F]" aria-hidden="true" />,
+  wcag: <ShieldCheck className="size-[20px] shrink-0 text-rose-400" aria-hidden="true" />,
 }
 
 const rimBarGradients: Record<TechStackCategory["rim"], string> = {
@@ -54,6 +98,10 @@ function SkillRow({
                 className="size-[22px] shrink-0 object-contain"
                 aria-hidden="true"
               />
+            ) : item.iconKey ? (
+              <span className="flex size-[22px] shrink-0 items-center justify-center">
+                {vectorTechIcons[item.iconKey]}
+              </span>
             ) : (
               <span
                 className="flex size-[22px] shrink-0 items-center justify-center rounded-md bg-white/5 text-[0.55rem] font-bold text-violet-300"
@@ -78,11 +126,11 @@ function SkillRow({
         >
           <motion.div
             className={cn("h-full rounded-full bg-gradient-to-r", rimBarGradients[rim])}
-            initial={{ width: 0 }}
+            initial={{ width: `${item.proficiency}%` }}
             animate={{ width: `${item.proficiency}%` }}
             transition={{
-              duration: 0.85,
-              delay: index * 0.06,
+              duration: 0.55,
+              delay: index * 0.04,
               ease: [0.21, 0.47, 0.32, 0.98],
             }}
           />
@@ -126,8 +174,9 @@ export function TechStackSection({ className }: TechStackSectionProps) {
           </h2>
           <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/10" aria-hidden="true" />
           <p className="text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
-            Depth across frontend, backend, data, and AI — based on production work, freelance
-            delivery, and ongoing learning.
+            Depth across frontend, backend, real-time systems, databases, cloud DevOps, and AI —
+            proven across production SaaS platforms, client deliveries, and 1,150+ algorithmic
+            challenges.
           </p>
         </div>
 
@@ -165,21 +214,28 @@ export function TechStackSection({ className }: TechStackSectionProps) {
           rim={active.rim}
           className={cn(navGlassClassName, "rounded-2xl p-5 sm:p-8")}
         >
-          <div
-            key={active.id}
-            role="tabpanel"
-            id={`tech-panel-${active.id}`}
-            aria-labelledby={`tech-tab-${active.id}`}
-          >
-            <h3 className="mb-5 text-sm font-semibold tracking-[0.12em] text-violet-300 uppercase">
-              {active.label}
-            </h3>
-            <ul className="grid list-none gap-3 sm:grid-cols-2 sm:gap-4" role="list">
-              {active.items.map((item, index) => (
-                <SkillRow key={item.name} item={item} rim={active.rim} index={index} />
-              ))}
-            </ul>
-          </div>
+          {techStackCategories.map((category) => {
+            const isActive = category.id === active.id
+            return (
+              <div
+                key={category.id}
+                role="tabpanel"
+                id={`tech-panel-${category.id}`}
+                aria-labelledby={`tech-tab-${category.id}`}
+                hidden={!isActive}
+                className={cn(!isActive && "hidden")}
+              >
+                <h3 className="mb-5 text-sm font-semibold tracking-[0.12em] text-violet-300 uppercase">
+                  {category.label}
+                </h3>
+                <ul className="grid list-none gap-3 sm:grid-cols-2 sm:gap-4" role="list">
+                  {category.items.map((item, index) => (
+                    <SkillRow key={item.name} item={item} rim={category.rim} index={index} />
+                  ))}
+                </ul>
+              </div>
+            )
+          })}
         </GlassSurface>
       </div>
     </section>

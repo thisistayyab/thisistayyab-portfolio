@@ -35,8 +35,8 @@ Web-based retail POS, invoicing, and inventory management system built by Tayyab
 - Live POS App: https://pos.taylancetech.com/
 
 ### 4. Taylance CRM — Clients, Leads & Projects Dashboard
-Taylance CRM is a full-featured CRM web application built by Tayyab to manage clients, leads, and projects from one dashboard. Built with React, Express.js, and Material UI, with REST APIs and role-based workflows for sales teams.
-- Portfolio Case Study: https://thisistayyab.dev/projects
+Taylance CRM is a full-featured B2B CRM web application architected and built by Tayyab to manage clients, sales pipelines, leads, and projects from one dashboard. Built with React, Node.js, Express.js, and Material UI, with REST APIs and role-based workflows for sales and delivery teams.
+- Portfolio Case Study: https://thisistayyab.dev/projects/taylance-crm
 - Live App: https://crm.taylancetech.com/
 
 ### 5. YouTube Video Downloader — Private Archival Tool

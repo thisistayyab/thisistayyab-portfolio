@@ -22,12 +22,32 @@ import { buildPageMetadata } from "@/lib/site-metadata"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
+export const dynamic = "force-static"
+
 const highlights = [
-  "Sales orders, purchases, inventory, and accounts in one web app",
-  "Analytics dashboard for revenue, expenses, and net profit trends",
-  "Thermal, A4, and A5 invoice printing with branded receipts",
-  "Barcode label printing and Excel export across key reports",
-  "Deployed in production at pos.taylancetech.com with a Supabase-backed API",
+  "Sales orders, purchases, inventory, and accounts in one unified retail web app",
+  "Real-time analytics dashboard tracking revenue, expenses, and net profit trends",
+  "Thermal (80mm/58mm), A4, and A5 invoice printing with branded store receipts",
+  "Barcode label generation and one-click Excel export across financial reports",
+  "Deployed in production at pos.taylancetech.com with a Supabase-backed API and PostgreSQL row-level security",
+] as const
+
+const architectureDecisions = [
+  {
+    title: "Sub-Second Register Checkout",
+    detail:
+      "Retail cashiers cannot wait on slow spinners during peak hours. I engineered keyboard-first barcode scanning and optimistic cart state so item lookups and bill totals update instantaneously.",
+  },
+  {
+    title: "Multi-Format Print Engine",
+    detail:
+      "Built dedicated print stylesheets and layout templates supporting 80mm thermal receipt rolls alongside standard A4/A5 B2B tax invoices directly from the browser.",
+  },
+  {
+    title: "Ledger-Safe Inventory & Accounts",
+    detail:
+      "Every completed sale, return, and supplier purchase atomically updates stock quantities and account balances in PostgreSQL via Supabase.",
+  },
 ] as const
 
 export const metadata: Metadata = buildPageMetadata({
@@ -131,6 +151,25 @@ export default function TillqorinProjectPage() {
           </ul>
         </section>
 
+        <section className="mt-10" aria-labelledby="tillqorin-arch-heading">
+          <h2 id="tillqorin-arch-heading" className="text-lg font-semibold text-white">
+            Engineering &amp; Architecture Highlights
+          </h2>
+          <div className="mt-4 grid gap-4 sm:grid-cols-3">
+            {architectureDecisions.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-xl border border-white/10 bg-white/[0.03] p-4"
+              >
+                <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-400 sm:text-sm">
+                  {item.detail}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section className="mt-10" aria-labelledby="tillqorin-stack-heading">
           <h2 id="tillqorin-stack-heading" className="text-lg font-semibold text-white">
             Stack
@@ -171,6 +210,14 @@ export default function TillqorinProjectPage() {
             Live POS app
             <ExternalLink className="size-4" aria-hidden="true" />
           </a>
+          <CtaLink
+            href="/blog/how-i-built-tillqorin-pos-commerce-os"
+            variant="secondary"
+            title="Read the engineering article on how I built Tillqorin POS"
+          >
+            Read engineering deep-dive
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </CtaLink>
         </div>
 
         <p className="mt-8 text-sm leading-relaxed text-slate-500">
@@ -178,11 +225,23 @@ export default function TillqorinProjectPage() {
           from the database schema and REST API to the retail dashboard and invoice printing system.
         </p>
 
-        <div className="mt-10 flex justify-center">
-          <CtaLink href="/projects" title="View all portfolio projects">
-            View all projects
-            <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
-          </CtaLink>
+        <div className="mt-12 rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/[0.07] via-slate-900/60 to-violet-500/[0.07] p-6">
+          <h2 className="text-base font-semibold text-white sm:text-lg">
+            Need a custom POS, billing system, or retail SaaS platform?
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-slate-300">
+            I build custom inventory, invoicing, and multi-branch POS platforms with React,
+            Next.js, Node.js, and Supabase. Let&apos;s scope your requirements.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <CtaLink href="/contact?project=POS+%26+Commerce+Platform" title="Discuss a POS or SaaS project">
+              Start a Similar Project
+              <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
+            </CtaLink>
+            <CtaLink href="/projects" variant="secondary" title="View all portfolio projects">
+              View all projects
+            </CtaLink>
+          </div>
         </div>
       </article>
     </>

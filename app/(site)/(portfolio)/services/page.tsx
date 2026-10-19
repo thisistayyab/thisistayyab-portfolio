@@ -28,6 +28,8 @@ import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/m
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { SITE_URL } from "@/lib/site"
 
+export const dynamic = "force-static"
+
 /** Visible hero copy — keep distinct from the h1 to avoid repetition. */
 const pageLead =
   "I deliver full stack software for teams that need production-grade systems: SaaS products, client platforms, internal tools, APIs, and AI automation — scoped clearly, communicated openly, and engineered for real-world use."

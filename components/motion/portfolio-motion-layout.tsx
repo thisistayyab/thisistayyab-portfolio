@@ -19,10 +19,10 @@ export function PortfolioMotionLayout({ children }: { children: ReactNode }) {
   return (
     <motion.div
       key={pathname}
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 1, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.45,
+        duration: 0.3,
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
     >

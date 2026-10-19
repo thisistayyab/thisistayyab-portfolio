@@ -42,14 +42,12 @@ import {
   statusBadgeClassName,
 } from "@/components/site/site-styles"
 import { buildPageMetadata } from "@/lib/site-metadata"
-import { youtubeDownloaderProject } from "@/lib/data/youtube-downloader-project"
 import { auditblocProject } from "@/lib/data/auditbloc-project"
 import { relayProject } from "@/lib/data/relay-project"
 import { tillqorinProject } from "@/lib/data/tillqorin-project"
-import {
-  buildPortfolioProjectSoftwareApplicationJsonLd,
-  projectPortfolioUrl,
-} from "@/lib/portfolio-project-json-ld"
+import { projectPortfolioUrl } from "@/lib/portfolio-project-json-ld"
+import { buildPersonJsonLd } from "@/lib/person-json-ld"
+import { ProjectWarmup } from "@/components/site/project-warmup"
 import {
   FEATURED_OG_ALT,
   featuredOgImageUrl,
@@ -65,6 +63,9 @@ import { FadeIn } from "@/components/motion/fade-in"
 import { StaggerContainer, StaggerItem } from "@/components/motion/stagger-reveal"
 import { ParallaxScroll } from "@/components/motion/parallax-scroll"
 import { HeroStagger, HeroItem, HeroImageReveal, WordPullUp } from "@/components/motion/hero-reveal"
+
+/** ISR revalidation (24h). Also revalidated on-demand via /api/blog/revalidate. */
+export const revalidate = 86400
 
 export const metadata: Metadata = buildPageMetadata({
   title: homeMetadata.title,
@@ -96,26 +97,26 @@ const heroTags = [
 ] as const
 
 const homeFeaturedProjects: PortfolioProject[] = [
-  youtubeDownloaderProject,
-  relayProject,
+  tillqorinProject,
   auditblocProject,
+  relayProject,
 ]
 
 const homeFaq = [
   {
-    question: "Who is Tayyab and what does he specialize in?",
+    question: "Who is Tayyab and what is his current role?",
     answer:
-      "Tayyab is a full stack web developer with 3+ years of experience specializing in React, Next.js (App Router), TypeScript, Node.js, Express, and PostgreSQL. He builds production-grade SaaS platforms, real-time collaboration applications with WebSockets & WebRTC, REST APIs, database architecture, and technical SEO.",
+      "Tayyab (Tayyab Aslam) works full-time as an independent Full Stack Developer and contract software engineer with 3+ years of experience specializing in React, Next.js (App Router), TypeScript, Node.js, Express, FastAPI, and PostgreSQL. He builds production-grade SaaS platforms, AI applications, real-time WebRTC/WebSocket tools, and REST APIs for global startups and businesses.",
   },
   {
     question: "What are Tayyab's featured production projects?",
     answer:
-      "Tayyab's flagship projects include Relay (a privacy-first real-time text notepad and WebRTC peer-to-peer file transfer tool at relay.thisistayyab.dev), Tillqorin POS (a retail commerce OS and web billing platform at pos.taylancetech.com), and AuditBloc (an automated web accessibility WCAG, GDPR cookie, and AI disclosure scanner at auditbloc.taylancetech.com).",
+      "Tayyab's flagship projects include Tillqorin POS (a retail commerce OS and web billing platform at pos.taylancetech.com), AuditBloc (an automated web accessibility WCAG, GDPR cookie, and AI disclosure scanner at auditbloc.taylancetech.com), Taylance CRM (a B2B clients, leads, and projects dashboard at crm.taylancetech.com), and Relay (a privacy-first real-time text notepad and WebRTC peer-to-peer file transfer tool at relay.thisistayyab.dev).",
   },
   {
     question: "Is Tayyab available for freelance, contract, or full-time roles?",
     answer:
-      "Yes. Tayyab is actively available for freelance software projects, contract development, and technical consulting for startups and companies worldwide. He can take projects from initial concept through architecture, design, and cloud deployment.",
+      "Yes. Tayyab is actively available for freelance software projects, contract development, and technical consulting for startups and companies worldwide. He takes projects from initial concept through architecture, design, and cloud deployment.",
   },
   {
     question: "What is Tayyab's background in Data Structures and Algorithms?",
@@ -130,7 +131,7 @@ const homeFaq = [
   {
     question: "How can I hire Tayyab or discuss a project?",
     answer:
-      "You can get in touch directly via the contact form on this site at https://thisistayyab.dev/contact, connect on LinkedIn at https://www.linkedin.com/in/thisistayyab/, or email thisistayyab@outlook.com to schedule a free consultation.",
+      "You can get in touch directly via the contact form on this site at https://thisistayyab.dev/contact, connect on LinkedIn at https://www.linkedin.com/in/thisistayyab/, or email thisistayyab@outlook.com for a free project scope.",
   },
 ] as const
 
@@ -150,6 +151,8 @@ export default async function HomePage() {
   const featuredBlogPosts = await getFeaturedPosts(3)
   return (
     <>
+      <ProjectWarmup />
+      <JsonLd data={buildPersonJsonLd(SITE_URL)} />
       <JsonLd data={buildExperienceItemListJsonLd(careerRoadmapMilestones, SITE_URL, "/")} />
 
       {homeTestimonials.length > 0 && (
@@ -172,10 +175,6 @@ export default async function HomePage() {
         )}
       />
 
-      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(youtubeDownloaderProject, SITE_URL)} />
-      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(relayProject, SITE_URL)} />
-      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
-      <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
       <JsonLd data={buildFaqJsonLd(homeFaq)} />
 
       <JsonLd
@@ -196,7 +195,8 @@ export default async function HomePage() {
             "@type": "Person",
             "@id": personId(SITE_URL),
             name: "Tayyab",
-            url: personId(SITE_URL),
+            jobTitle: "Full Stack Developer",
+            url: `${SITE_URL}/`,
           },
           primaryImageOfPage: {
             "@type": "ImageObject",
@@ -228,7 +228,7 @@ export default async function HomePage() {
                 caption: project.imageAlt,
                 description: project.imageAlt,
               },
-              applicationCategory: "WebApplication",
+              applicationCategory: project.applicationCategory ?? "WebApplication",
               operatingSystem: "Web Browser",
               offers: {
                 "@type": "Offer",
@@ -327,22 +327,34 @@ export default async function HomePage() {
 
                 <div className="flex w-full min-w-0 flex-wrap items-center justify-center gap-3.5 lg:justify-start">
                   <CtaLink
-                    href="/projects"
-                    title="View Tayyab's web development projects"
+                    href="/contact"
+                    title="Start a project or request a free technical scope with Tayyab"
                   >
-                    View My Work
-                      <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
-                    </CtaLink>
-                    <CtaLink
-                      href="/Tayyab-CV.pdf"
-                      download
-                      variant="secondary"
-                      title="Download Tayyab's Full Stack Developer CV"
-                    >
-                      Download CV
-                      <Download className="size-[1.05rem]" aria-hidden="true" />
-                    </CtaLink>
-                  </div>
+                    Start a Project
+                    <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
+                  </CtaLink>
+                  <CtaLink
+                    href="/projects"
+                    variant="secondary"
+                    title="View Tayyab's live production web development projects"
+                  >
+                    Explore Live Work
+                  </CtaLink>
+                  <Link
+                    href="/Tayyab-CV.pdf"
+                    download
+                    title="Download Tayyab's Full Stack Developer CV"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-300 underline-offset-4 transition-colors hover:text-white hover:underline sm:text-sm"
+                  >
+                    <Download className="size-4 text-cyan-300" aria-hidden="true" />
+                    Download CV
+                  </Link>
+                </div>
+
+                <p className="text-xs leading-relaxed text-slate-400/90 max-lg:text-center">
+                  <span className="font-medium text-emerald-300">✓ Available for freelance &amp; contract</span>{" "}
+                  · Replies within a few hours · 5.0★ on Upwork &amp; Fiverr
+                </p>
                 </div>
               </HeroItem>
             </HeroStagger>

@@ -18,13 +18,16 @@ export const revalidate = 86400
 
 export async function GET() {
   const posts = await getPublishedPosts()
+  const latestPostDate = posts[0]?.published_at
+    ? new Date(posts[0].published_at).toUTCString()
+    : new Date("2026-01-01T00:00:00Z").toUTCString()
 
   const itemsXml = posts
     .map((post) => {
       const postUrl = `${SITE_URL}${BLOG_INDEX_PATH}/${post.slug}`
       const pubDate = post.published_at
         ? new Date(post.published_at).toUTCString()
-        : new Date().toUTCString()
+        : latestPostDate
 
       return `
     <item>
@@ -46,7 +49,7 @@ export async function GET() {
     <link>${SITE_URL}${BLOG_INDEX_PATH}</link>
     <description>Articles on full stack web development, React, Next.js, Node.js, and SaaS architecture by Tayyab.</description>
     <language>en-US</language>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <lastBuildDate>${latestPostDate}</lastBuildDate>
     <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
     ${itemsXml}
   </channel>
@@ -55,7 +58,7 @@ export async function GET() {
   return new NextResponse(rss.trim(), {
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
-      "Cache-Control": "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
+      "Cache-Control": "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800",
     },
   })
 }
