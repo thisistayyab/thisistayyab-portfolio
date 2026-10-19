@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { GoogleAnalytics } from "@next/third-parties/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Bricolage_Grotesque, Outfit } from "next/font/google"
+import localFont from "next/font/local"
 
 import { GlobalBackground } from "@/components/site/global-background"
 import { GA_MEASUREMENT_ID, isGoogleAnalyticsEnabled } from "@/lib/google-analytics"
@@ -25,17 +25,17 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
-const outfit = Outfit({
+const outfit = localFont({
+  src: "./fonts/outfit-latin.woff2",
   variable: "--font-outfit",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: "100 900",
   display: "swap",
 })
 
-const bricolage = Bricolage_Grotesque({
+const bricolage = localFont({
+  src: "./fonts/bricolage-grotesque-latin.woff2",
   variable: "--font-bricolage",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "200 800",
   display: "swap",
 })
 
