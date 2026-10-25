@@ -8,13 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: [
-          "/dashboard/",
-          "/login",
-          "/api/",
-          "/webmaster/",
-          "/assets-archive/",
-        ],
+        disallow: ["/api/", "/webmaster/", "/assets-archive/"],
       },
       {
         userAgent: [
@@ -28,13 +22,7 @@ export default function robots(): MetadataRoute.Robots {
           "Amazonbot",
         ],
         allow: "/",
-        disallow: [
-          "/dashboard/",
-          "/login",
-          "/api/",
-          "/webmaster/",
-          "/assets-archive/",
-        ],
+        disallow: ["/api/", "/webmaster/", "/assets-archive/"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

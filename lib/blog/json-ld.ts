@@ -1,5 +1,5 @@
-import { BLOG_INDEX_PATH } from "@/lib/blog/config"
-import type { BlogPost, BlogPostSummary } from "@/lib/blog/types"
+import { BLOG_COVER_DIMENSIONS, BLOG_INDEX_PATH, blogPostPath } from "@/lib/blog/config"
+import type { BlogPostSummary } from "@/lib/blog/types"
 import { blogImageUrl } from "@/lib/blog/utils"
 import { personId } from "@/lib/json-ld-ids"
 import { FEATURED_OG_ALT, featuredOgImageUrl, SITE_BRAND, SITE_URL } from "@/lib/site"
@@ -8,7 +8,7 @@ export function buildBlogIndexJsonLd(posts: BlogPostSummary[], description: stri
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "@id": `${SITE_URL}${BLOG_INDEX_PATH}`,
+    "@id": `${SITE_URL}${BLOG_INDEX_PATH}#webpage`,
     name: "Blog | Tayyab — Full Stack Development Articles",
     description,
     url: `${SITE_URL}${BLOG_INDEX_PATH}`,
@@ -48,47 +48,41 @@ export function buildBlogBreadcrumbJsonLd(slug?: string, postTitle?: string) {
   }
 }
 
-export function buildBlogPostingJsonLd(post: BlogPost) {
-  const url = `${SITE_URL}${BLOG_INDEX_PATH}/${post.slug}`
-  const image = blogImageUrl(post.cover_image)
-
-  const published = post.published_at || post.updated_at || new Date().toISOString()
+export function buildBlogPostingJsonLd(post: BlogPostSummary) {
+  const url = `${SITE_URL}${blogPostPath(post.slug)}`
+  const cover = blogImageUrl(post.coverImage)
+  const author = {
+    "@type": "Person",
+    "@id": personId(SITE_URL),
+    name: post.author.name,
+    url: personId(SITE_URL),
+  }
 
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "@id": url,
     url,
-    headline: post.seo_title || post.title,
-    description: post.seo_description || post.excerpt,
+    headline: post.seoTitle,
+    description: post.seoDescription,
     // Fall back to the site OG image so every article has a crawlable image URL.
     image: [
-      {
-        "@type": "ImageObject",
-        url: image ?? featuredOgImageUrl(),
-        caption: image ? post.title : FEATURED_OG_ALT,
-      },
+      cover
+        ? { "@type": "ImageObject", url: cover, caption: post.title, ...BLOG_COVER_DIMENSIONS }
+        : { "@type": "ImageObject", url: featuredOgImageUrl(), caption: FEATURED_OG_ALT },
     ],
-    author: {
-      "@type": "Person",
-      "@id": personId(SITE_URL),
-      name: post.author?.name || "Tayyab",
-      url: personId(SITE_URL),
-    },
-    publisher: {
-      "@type": "Person",
-      "@id": personId(SITE_URL),
-      name: "Tayyab",
-      url: personId(SITE_URL),
-    },
-    datePublished: published,
-    dateModified: post.updated_at || post.published_at || published,
+    author,
+    publisher: author,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt,
+    inLanguage: "en-US",
+    isPartOf: { "@id": `${SITE_URL}/#website` },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": url,
+      "@id": `${url}#webpage`,
     },
-    keywords: post.tags.length ? post.tags.join(", ") : post.seo_keywords?.join(", "),
-    articleSection: post.tags[0] || "Full Stack Development",
-    wordCount: post.content.replace(/<[^>]+>/g, " ").split(/\s+/g).filter(Boolean).length,
+    keywords: post.seoKeywords.join(", "),
+    articleSection: post.tags[0],
+    timeRequired: `PT${post.readTimeMinutes}M`,
   }
 }

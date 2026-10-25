@@ -51,7 +51,7 @@ export const youtubeDownloaderProject: PortfolioProject = {
 }
 
 export const youtubeDownloaderPageTitle =
-  "YouTube Video Downloader — Private Personal Tool | Full Stack Portfolio"
+  "YouTube Video & Audio Downloader — Next.js Tool | Tayyab"
 
 export const youtubeDownloaderPageDescription =
-  "A fast YouTube video and audio downloader built with Next.js, yt-dlp, and FFmpeg. Deployed on Render, password-protected for private use, and compliant with YouTube policies."
+  "A private YouTube video and audio downloader built with Next.js, yt-dlp, and FFmpeg. Deployed on Render with password protection and zero server storage."

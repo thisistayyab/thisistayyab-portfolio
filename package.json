@@ -1,7 +1,7 @@
 {
   "name": "tayyab-portfolio",
   "version": "1.0.0",
-  "description": "Tayyab's full stack developer portfolio — React, Next.js, Node.js, SaaS, and dynamic blog at thisistayyab.dev",
+  "description": "Tayyab's full stack developer portfolio — React, Next.js, Node.js, SaaS, and engineering blog at thisistayyab.dev",
   "private": true,
   "author": "Tayyab <thisistayyab@outlook.com>",
   "homepage": "https://thisistayyab.dev",
@@ -20,15 +20,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "optimize:images": "node scripts/optimize-images.mjs",
-    "generate:favicons": "node scripts/generate-favicons.mjs"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@next/third-parties": "^16.2.6",
-    "@supabase/ssr": "^0.10.3",
-    "@supabase/supabase-js": "^2.106.2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "class-variance-authority": "^0.7.1",

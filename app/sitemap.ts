@@ -1,19 +1,17 @@
 import type { MetadataRoute } from "next"
 
-import { getPublishedPostsForSitemap } from "@/lib/blog/queries"
+import { getLatestPostUpdate, getPublishedPosts } from "@/lib/blog/queries"
 import { blogImageUrl, formatSitemapDate } from "@/lib/blog/utils"
 import { auditblocProject } from "@/lib/data/auditbloc-project"
 import { relayProject } from "@/lib/data/relay-project"
 import { taylanceCrmProject } from "@/lib/data/taylance-crm-project"
 import { tillqorinProject } from "@/lib/data/tillqorin-project"
 import { youtubeDownloaderProject } from "@/lib/data/youtube-downloader-project"
-import { featuredOgImageUrl, projectImageUrl, SITE_URL } from "@/lib/site"
-
-/** Revalidate sitemap via ISR every 24 hours (86400s) or on-demand via revalidatePath('/sitemap.xml'). */
-export const revalidate = 86400
+import { imageSeoUrl } from "@/lib/image"
+import { featuredOgImageUrl, PROFILE_IMAGE, projectImageUrl, SITE_URL } from "@/lib/site"
 
 /** Bump when static page content meaningfully changes. */
-const SITEMAP_FRESHNESS_DATE = "2026-10-19"
+const SITEMAP_FRESHNESS_DATE = "2026-10-25"
 
 /**
  * Update these dates whenever the page content meaningfully changes.
@@ -32,7 +30,7 @@ const staticRoutes: MetadataRoute.Sitemap = [
     lastModified: SITEMAP_FRESHNESS_DATE,
     changeFrequency: "monthly",
     priority: 0.9,
-    images: [`${SITE_URL}/images/about.avif`],
+    images: [imageSeoUrl(PROFILE_IMAGE, SITE_URL)],
   },
   {
     url: `${SITE_URL}/projects`,
@@ -118,32 +116,22 @@ const staticRoutes: MetadataRoute.Sitemap = [
   },
 ]
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let posts: Awaited<ReturnType<typeof getPublishedPostsForSitemap>> = []
-  try {
-    posts = await getPublishedPostsForSitemap()
-  } catch (error) {
-    console.error("[sitemap] getPublishedPostsForSitemap:", error)
-  }
+export default function sitemap(): MetadataRoute.Sitemap {
+  const posts = getPublishedPosts()
 
   const postEntries: MetadataRoute.Sitemap = posts.map((post) => {
-    const postImage = blogImageUrl(post.cover_image)
+    const postImage = blogImageUrl(post.coverImage)
     return {
       url: `${SITE_URL}/blog/${post.slug}`,
-      lastModified: formatSitemapDate(post.updated_at ?? post.published_at, SITEMAP_FRESHNESS_DATE),
+      lastModified: formatSitemapDate(post.updatedAt),
       changeFrequency: "monthly",
       priority: 0.7,
       images: postImage ? [postImage] : [featuredOgImageUrl()],
     }
   })
 
-  const latestPostDate =
-    posts.length > 0
-      ? posts.reduce((latest, post) => {
-          const current = formatSitemapDate(post.updated_at ?? post.published_at, SITEMAP_FRESHNESS_DATE)
-          return current > latest ? current : latest
-        }, formatSitemapDate(posts[0].updated_at ?? posts[0].published_at, SITEMAP_FRESHNESS_DATE))
-      : SITEMAP_FRESHNESS_DATE
+  const latestUpdate = getLatestPostUpdate()
+  const latestPostDate = latestUpdate ? formatSitemapDate(latestUpdate) : SITEMAP_FRESHNESS_DATE
 
   const blogIndexEntry: MetadataRoute.Sitemap = [
     {

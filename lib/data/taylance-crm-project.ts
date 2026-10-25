@@ -46,7 +46,7 @@ export const taylanceCrmProject: PortfolioProject = {
 }
 
 export const taylanceCrmPageTitle =
-  "Taylance CRM — Clients, Leads & Projects Platform Built by Tayyab | Full Stack Portfolio"
+  "Taylance CRM — B2B Leads & Projects Dashboard | Tayyab"
 
 export const taylanceCrmPageDescription =
-  "Case study of Taylance CRM: a B2B client, lead pipeline, and project management web application built by Full Stack Developer Tayyab using React, Node.js, Express.js, and Material UI."
+  "Case study of Taylance CRM: a B2B client, lead pipeline, and project management web app built by Tayyab with React, Node.js, Express, and MUI."

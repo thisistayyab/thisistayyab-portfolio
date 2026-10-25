@@ -1,59 +1,38 @@
 export type BlogAuthor = {
-  id: string
   name: string
-  avatar_url: string | null
+  avatarUrl: string | null
 }
 
-export type BlogPost = {
-  id: string
+export type BlogFaqItem = {
+  question: string
+  answer: string
+}
+
+/**
+ * Registry entry for one post (`lib/blog/posts.ts`). The article body lives in
+ * `lib/blog/content/<slug>.tsx`.
+ */
+export type BlogPostMeta = {
   slug: string
   title: string
   excerpt: string
-  content: string
-  cover_image: string | null
-  published: boolean
-  published_at: string | null
-  featured: boolean
-  seo_title: string | null
-  seo_description: string | null
-  seo_keywords: string[] | null
-  read_time: string | null
-  view_count: number
+  /** Absolute URL or site-relative path. `null` falls back to the site OG image. */
+  coverImage: string | null
+  /** ISO 8601 timestamp. */
+  publishedAt: string
+  /** ISO 8601 timestamp. Bump only when the content meaningfully changes. */
+  updatedAt: string
+  readTimeMinutes: number
+  seoTitle: string
+  seoDescription: string
+  seoKeywords: string[]
   tags: string[]
-  author: BlogAuthor | null
-  updated_at?: string | null
+  /** Structured FAQ items for Schema.org FAQPage JSON-LD. */
+  faq?: readonly BlogFaqItem[]
 }
 
-export type BlogAuthorRecord = BlogAuthor & {
-  bio?: string | null
-  created_at?: string
+/** A post as rendered on listings, article pages, the feed, and JSON-LD. */
+export type BlogPostSummary = BlogPostMeta & {
+  readTime: string
+  author: BlogAuthor
 }
-
-export type BlogCategory = {
-  id: string
-  name: string
-  slug: string
-  description?: string | null
-}
-
-export type BlogPostSummary = Pick<
-  BlogPost,
-  | "id"
-  | "slug"
-  | "title"
-  | "excerpt"
-  | "cover_image"
-  | "published_at"
-  | "read_time"
-  | "tags"
-  | "author"
-  | "updated_at"
->
-
-export type SitemapPostEntry = {
-  slug: string
-  updated_at: string | null
-  published_at: string | null
-  cover_image: string | null
-}
-

@@ -43,6 +43,13 @@ export type PageMetadataInput = {
     title?: string
     description?: string
   }
+  /** Open Graph article fields; only used when `openGraph.type` is `"article"`. */
+  article?: {
+    publishedTime: string
+    modifiedTime: string
+    authors: string[]
+    tags?: string[]
+  }
 }
 
 const defaultOgImage = (): OgImage => ({
@@ -78,6 +85,7 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
   const ogDescription = input.openGraph?.description ?? input.description
   const images = resolveOgImages(input.ogImage)
   const twitterCard = input.twitter?.card ?? "summary_large_image"
+  const ogType = input.openGraph?.type ?? "website"
 
   return {
     title: { absolute: input.title },
@@ -89,7 +97,8 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
       title: ogTitle,
       description: ogDescription,
       url: canonical,
-      type: input.openGraph?.type ?? "website",
+      type: ogType,
+      ...(ogType === "article" && input.article ? input.article : {}),
       images,
     },
     twitter: {

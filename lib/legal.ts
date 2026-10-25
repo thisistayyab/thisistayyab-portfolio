@@ -9,4 +9,4 @@ export const LEGAL_CONTACT_EMAIL = profileEmail
 export const LEGAL_SITE_URL = SITE_URL
 
 /** Shown at top of Privacy Policy and Terms of Service. */
-export const LEGAL_LAST_UPDATED = "18 October 2026"
+export const LEGAL_LAST_UPDATED = "October 25, 2026"

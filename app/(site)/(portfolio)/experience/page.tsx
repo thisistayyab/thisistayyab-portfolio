@@ -8,10 +8,11 @@ import {
   ExperienceRoadmap,
   type CareerMilestone,
 } from "@/components/site/experience-roadmap"
+import { buildFaqJsonLd } from "@/components/site/faq-json-ld"
 import { FaqSection } from "@/components/site/faq-section"
+import { GlassSurface } from "@/components/site/glass-surface"
 import { HeaderGraphBackground } from "@/components/site/header-graph-background"
 import { JsonLd } from "@/components/site/json-ld"
-import { GlassSurface } from "@/components/site/glass-surface"
 import { navGlassClassName } from "@/components/site/site-styles"
 import { MotionSection, PageHeaderItem, PageHeaderStagger } from "@/components/motion/page-motion"
 import { buildPageMetadata } from "@/lib/site-metadata"
@@ -174,6 +175,9 @@ export const careerRoadmapMilestones: CareerMilestone[] = [
 const experiencePageIntro =
   "Tayyab's career as a full stack developer — freelance and contract delivery for global clients, production web products including Tillqorin POS, AuditBloc, and Taylance CRM, and selected client projects."
 
+const experienceMetaDescription =
+  "Tayyab's full stack developer career timeline: freelance & Upwork contracts, Order AI LLC, and shipping Tillqorin POS, AuditBloc, and Taylance CRM."
+
 const experienceKeywords = [
   "Tayyab full stack developer experience",
   "React developer career history",
@@ -217,16 +221,16 @@ const experienceFaq = [
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Experience | Full Stack Developer Career Roadmap — Tayyab",
-  description: experiencePageIntro,
+  description: experienceMetaDescription,
   canonicalPath: "/experience",
   keywords: experienceKeywords,
   openGraph: {
     title: "Full Stack Developer Experience & Career Roadmap | Tayyab",
-    description: experiencePageIntro,
+    description: experienceMetaDescription,
   },
   twitter: {
     title: "Career Roadmap | Tayyab — React & Node.js Full Stack Developer",
-    description: experiencePageIntro,
+    description: experienceMetaDescription,
   },
 })
 
@@ -247,17 +251,7 @@ export default function ExperiencePage() {
       />
       <JsonLd data={buildExperienceItemListJsonLd(careerRoadmapMilestones, SITE_URL, "/experience")} />
       <JsonLd data={buildExperienceWebPageJsonLd(SITE_URL, pageTitle, experiencePageIntro)} />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: experienceFaq.map((item) => ({
-            "@type": "Question",
-            name: item.question,
-            acceptedAnswer: { "@type": "Answer", text: item.answer },
-          })),
-        }}
-      />
+      <JsonLd data={buildFaqJsonLd(experienceFaq)} />
 
       <article itemScope itemType="https://schema.org/WebPage">
         <header className="relative isolate overflow-hidden pt-[88px]">
@@ -343,25 +337,25 @@ export default function ExperiencePage() {
         </MotionSection>
 
         <MotionSection className="mx-auto max-w-[1200px] px-5 pb-24 sm:px-6 lg:px-4">
-        <FaqSection
-          headingId="experience-faq-heading"
-          description="Quick answers about my roles, work, and client projects."
-          items={experienceFaq}
-          footerLead="See public project examples"
-          ctas={[
-            {
-              label: "View all projects",
-              href: "/projects",
-              title: "Browse Tayyab's full stack web development project portfolio",
-            },
-            {
-              label: "Get in touch",
-              href: "/contact",
-              variant: "secondary",
-              title: "Contact Tayyab for freelance or contract web development",
-            },
-          ]}
-        />
+          <FaqSection
+            headingId="experience-faq-heading"
+            description="Quick answers about my roles, work, and client projects."
+            items={experienceFaq}
+            footerLead="See public project examples"
+            ctas={[
+              {
+                label: "View all projects",
+                href: "/projects",
+                title: "Browse Tayyab's full stack web development project portfolio",
+              },
+              {
+                label: "Get in touch",
+                href: "/contact",
+                variant: "secondary",
+                title: "Contact Tayyab for freelance or contract web development",
+              },
+            ]}
+          />
         </MotionSection>
       </article>
     </>

@@ -68,7 +68,7 @@ const aboutStatCards: {
   { icon: Sparkles, value: "3+", label: "Years in Production", tone: "violet" },
   { icon: Rocket, value: "15+", label: "Projects Shipped", tone: "purple" },
   { icon: Code2, value: "1150+", label: "Problems Solved", tone: "blue" },
-  { icon: Globe, value: "4", label: "Live Products", tone: "pink" },
+  { icon: Globe, value: "5", label: "Live Products", tone: "pink" },
 ]
 
 const aboutExpertisePillars: {

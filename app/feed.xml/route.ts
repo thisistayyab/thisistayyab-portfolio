@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server"
 
 import { BLOG_INDEX_PATH } from "@/lib/blog/config"
-import { getPublishedPosts } from "@/lib/blog/queries"
-import { SITE_BRAND, SITE_URL } from "@/lib/site"
+import { getLatestPostUpdate, getPublishedPosts } from "@/lib/blog/queries"
+import { profileEmail, SITE_BRAND, SITE_URL } from "@/lib/site"
 
 function escapeXml(unsafe: string): string {
   return unsafe
@@ -13,20 +13,18 @@ function escapeXml(unsafe: string): string {
     .replace(/'/g, "&apos;")
 }
 
-/** Revalidate feed every 24 hours or on-demand via revalidatePath('/feed.xml') */
-export const revalidate = 86400
-
-export async function GET() {
-  const posts = await getPublishedPosts()
-  const latestPostDate = posts[0]?.published_at
-    ? new Date(posts[0].published_at).toUTCString()
+export function GET() {
+  const posts = getPublishedPosts()
+  const latestUpdate = getLatestPostUpdate()
+  const latestPostDate = latestUpdate
+    ? new Date(latestUpdate).toUTCString()
     : new Date("2026-01-01T00:00:00Z").toUTCString()
 
   const itemsXml = posts
     .map((post) => {
       const postUrl = `${SITE_URL}${BLOG_INDEX_PATH}/${post.slug}`
-      const pubDate = post.published_at
-        ? new Date(post.published_at).toUTCString()
+      const pubDate = post.publishedAt
+        ? new Date(post.publishedAt).toUTCString()
         : latestPostDate
 
       return `
@@ -36,8 +34,8 @@ export async function GET() {
       <guid isPermaLink="true">${postUrl}</guid>
       <description>${escapeXml(post.excerpt)}</description>
       <pubDate>${pubDate}</pubDate>
-      ${post.author ? `<author>webmaster@thisistayyab.dev (${escapeXml(post.author.name)})</author>` : ""}
-      ${post.tags?.map((tag) => `<category>${escapeXml(tag)}</category>`).join("\n      ") ?? ""}
+      <author>${escapeXml(profileEmail)} (${escapeXml(post.author.name)})</author>
+      ${post.tags.map((tag) => `<category>${escapeXml(tag)}</category>`).join("\n      ")}
     </item>`
     })
     .join("")

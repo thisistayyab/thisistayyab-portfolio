@@ -10,9 +10,9 @@ export type { HomeTestimonial } from "@/components/site/testimonial-card"
 const deliveryGuarantees = [
   {
     icon: ShieldCheck,
-    title: "A Real Client Review, From Shipped Work",
+    title: "Verified Reviews, From Shipped Work",
     detail:
-      "A five-star review from a project I built and shipped end to end — one real client with real context, not a screenshot of a badge.",
+      "Five-star reviews from projects built and shipped end to end, on Fiverr and Upwork contracts — real clients with real context, not a screenshot of a badge.",
   },
   {
     icon: Code2,

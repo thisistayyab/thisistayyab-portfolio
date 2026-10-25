@@ -43,7 +43,7 @@ export function BlogHomePreview({ posts }: BlogHomePreviewProps) {
 
         <ul className="grid list-none grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8" role="list">
           {posts.map((post, index) => (
-            <li key={post.id} className="list-none">
+            <li key={post.slug} className="list-none">
               <BlogCard post={post} priority={index === 0} />
             </li>
           ))}

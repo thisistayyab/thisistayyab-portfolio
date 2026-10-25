@@ -50,7 +50,7 @@ export const auditblocProject: PortfolioProject = {
 }
 
 export const auditblocPageTitle =
-  "AuditBloc — Web Accessibility & Compliance Scanner I Built | Full Stack Portfolio"
+  "AuditBloc — Web Accessibility & GDPR Scanner | Tayyab"
 
 export const auditblocPageDescription =
-  "AuditBloc is a free web accessibility and compliance scanner I built with Next.js, Playwright, and axe-core. It checks WCAG compliance, GDPR cookie banners, and AI content disclosure automatically."
+  "AuditBloc is a free web accessibility and compliance scanner built with Next.js, Playwright, and axe-core for WCAG 2.1 AA, GDPR cookie, and AI checks."

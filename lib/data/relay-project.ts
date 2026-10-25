@@ -42,7 +42,7 @@ export const relayProject: PortfolioProject = {
 }
 
 export const relayPageTitle =
-  "Relay — Real-Time Text & P2P File Transfer | Full Stack Portfolio"
+  "Relay — Real-Time Text & WebRTC P2P Transfer | Tayyab"
 
 export const relayPageDescription =
-  "How I built Relay: a zero-login WebRTC peer-to-peer file transfer and live shared notepad web app to transfer files on public computers without compromising privacy."
+  "Case study of Relay: a zero-login WebRTC peer-to-peer file transfer and live shared notepad web app built with React, Node.js, Express, and Socket.IO."

@@ -2,7 +2,7 @@
 
 > https://thisistayyab.dev
 
-Tayyab is a full stack web developer with 3+ years of production experience. He specializes in React, Next.js (App Router), TypeScript, Node.js, Express, PostgreSQL, Supabase, WebSockets, WebRTC, SaaS platforms, and AI automation. He has solved over 1,150+ problems on LeetCode using C++. Tayyab is available for freelance, contract, and full-time remote work building SaaS products, REST APIs, e-commerce systems, and real-time web applications.
+Tayyab is a full stack web developer with 3+ years of production experience. He specializes in React, Next.js (App Router), TypeScript, Node.js, Express, FastAPI, PostgreSQL, Supabase, WebSockets, WebRTC, SaaS platforms, and AI automation. He has solved over 1,150+ problems on LeetCode using C++. Tayyab is available for freelance, contract, and full-time remote work building SaaS products, REST APIs, retail POS and CRM systems, and real-time web applications.
 
 ## Main Pages
 
@@ -19,23 +19,23 @@ Tayyab is a full stack web developer with 3+ years of production experience. He 
 
 ## Featured Products & Case Studies
 
-### 1. Relay — Real-Time Text & P2P File Transfer
-Privacy-first real-time collaboration web application featuring instant shared notepad sync and direct peer-to-peer file transfer up to 100 MB via WebRTC data channels. Built with React, Node.js, Express, and Socket.IO. Requires zero user accounts and stores zero data or files on servers.
-- Portfolio Case Study: https://thisistayyab.dev/projects/relay
-- Live App: https://relay.thisistayyab.dev/
-
-### 2. AuditBloc — Web Accessibility & Compliance Scanner
-Automated website accessibility, GDPR cookie banner, and AI content disclosure scanner. Developed with Next.js 16, Playwright for automated browser testing, axe-core for WCAG accessibility rule validation, and Supabase for authentication and backend reporting.
-- Portfolio Case Study: https://thisistayyab.dev/projects/auditbloc
-- Live Scanner: https://auditbloc.taylancetech.com/
-
-### 3. Tillqorin POS — Commerce OS for Retail
-Web-based retail POS, invoicing, and inventory management system built by Tayyab. Includes barcode generation, thermal receipt printing, sales analytics, multi-register support, and double-entry accounting. Backed by React, Vite, Express.js, and Supabase.
+### 1. Tillqorin POS — Commerce OS for Retail
+Web-based retail POS, invoicing, and inventory management system built by Tayyab. Includes barcode scanning, 80mm/58mm thermal receipt printing, transactional stock locking, sales analytics, and multi-register support. Backed by React, Vite, Express.js, and Supabase (PostgreSQL).
 - Portfolio Case Study: https://thisistayyab.dev/projects/tillqorin
 - Live POS App: https://pos.taylancetech.com/
 
+### 2. AuditBloc — Web Accessibility & Compliance Scanner
+Automated website accessibility (WCAG 2.1 AA), GDPR cookie banner, and AI content disclosure scanner. Built with Next.js 16, FastAPI, Playwright for headless browser testing, axe-core for WCAG accessibility rule validation, and Supabase.
+- Portfolio Case Study: https://thisistayyab.dev/projects/auditbloc
+- Live Scanner: https://auditbloc.taylancetech.com/
+
+### 3. Relay — Real-Time Text & P2P File Transfer
+Privacy-first real-time collaboration web application featuring instant shared notepad sync and direct peer-to-peer file transfer via DTLS-encrypted WebRTC data channels. Built with React, Node.js, Express, and Socket.IO. Requires zero user accounts and stores zero files on servers.
+- Portfolio Case Study: https://thisistayyab.dev/projects/relay
+- Live App: https://relay.thisistayyab.dev/
+
 ### 4. Taylance CRM — Clients, Leads & Projects Dashboard
-Taylance CRM is a full-featured B2B CRM web application architected and built by Tayyab to manage clients, sales pipelines, leads, and projects from one dashboard. Built with React, Node.js, Express.js, and Material UI, with REST APIs and role-based workflows for sales and delivery teams.
+Full-featured B2B CRM web application architected and built by Tayyab to manage clients, sales pipelines, leads, and projects from one unified dashboard. Built with React, Node.js, Express.js, and Material UI with role-based access control and pipeline analytics.
 - Portfolio Case Study: https://thisistayyab.dev/projects/taylance-crm
 - Live App: https://crm.taylancetech.com/
 
@@ -44,14 +44,24 @@ Fast, high-fidelity YouTube video and audio extraction web application built wit
 - Portfolio Case Study: https://thisistayyab.dev/projects/youtube-downloader
 - Live App: https://downloader.thisistayyab.dev/ (Private)
 
+## Engineering Articles & Technical Guides
+
+- ADA Title II Web Accessibility: The Deadline Moved to April 2027: https://thisistayyab.dev/blog/ada-title-ii-web-accessibility-deadline-2027
+- AI Overviews Cut Clicks 58%: What Small Sites Should Publish Instead: https://thisistayyab.dev/blog/ai-overviews-cut-clicks-what-small-sites-should-publish-instead
+- How to Hire a Full Stack Developer for Your Startup in 2026: https://thisistayyab.dev/blog/how-to-hire-full-stack-developer-startup-2026
+- Case Study: Building Tillqorin POS — a Web Commerce OS for Retail: https://thisistayyab.dev/blog/how-i-built-tillqorin-pos-commerce-os
+- Automated Web Accessibility Testing with axe-core and Playwright: https://thisistayyab.dev/blog/automated-accessibility-testing-axe-core-playwright
+- WebRTC Peer-to-Peer File Transfer: How to Build It (Relay Case Study): https://thisistayyab.dev/blog/webrtc-peer-to-peer-file-transfer-tutorial
+- Core Web Vitals & Technical SEO for Next.js: The Complete Guide: https://thisistayyab.dev/blog/core-web-vitals-optimization-nextjs-guide
+
 ## Core Skills & Stack
 
-- **Frontend**: React 19, Next.js 15/16 (App Router), TypeScript, Tailwind CSS, HTML5, CSS3, Core Web Vitals optimization
-- **Backend & APIs**: Node.js, Express.js, REST APIs, WebSockets (Socket.IO), WebRTC, Supabase, FastAPI, authentication & webhooks
-- **Databases**: PostgreSQL, MongoDB, Redis, Supabase Database, schema design & query tuning
+- **Frontend**: React 19, Next.js 16 (App Router), TypeScript, Tailwind CSS, HTML5, CSS3, Core Web Vitals optimization
+- **Backend & APIs**: Node.js, Express.js, FastAPI, REST APIs, WebSockets (Socket.IO), WebRTC, Supabase, authentication & webhooks
+- **Databases**: PostgreSQL, MongoDB, Redis, Supabase Database, transactional RPCs, schema design & query tuning
 - **Problem Solving & Algorithms**: 1,150+ LeetCode problems solved with C++ (Data Structures, Graph Algorithms, Dynamic Programming)
-- **SEO & Performance**: technical SEO, Schema.org JSON-LD structured data, AVIF/WebP image optimization, Lighthouse 90+ builds
-- **Tooling & Cloud**: Docker, Playwright, Jest, Git, GitHub Actions, Vercel, Render, Linux
+- **SEO & Accessibility**: Technical SEO, Schema.org JSON-LD structured data, WCAG 2.1 AA accessibility, Playwright + axe-core automation, AVIF/WebP optimization
+- **Tooling & Cloud**: Docker, Playwright, Git, GitHub Actions, Vercel, Render, Linux
 
 ## Services Offered
 
@@ -59,6 +69,7 @@ Fast, high-fidelity YouTube video and audio extraction web application built wit
 - SaaS product development from MVP to production
 - REST API design and PostgreSQL/Supabase database architecture
 - Real-time apps with WebSockets and WebRTC
+- Web accessibility audits (WCAG 2.1 AA) and automated Playwright + axe-core testing
 - AI automation and LLM API integrations
 - Technical SEO, performance audits, and Core Web Vitals optimization
 

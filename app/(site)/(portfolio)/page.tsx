@@ -64,8 +64,7 @@ import { StaggerContainer, StaggerItem } from "@/components/motion/stagger-revea
 import { ParallaxScroll } from "@/components/motion/parallax-scroll"
 import { HeroStagger, HeroItem, HeroImageReveal, WordPullUp } from "@/components/motion/hero-reveal"
 
-/** ISR revalidation (24h). Also revalidated on-demand via /api/blog/revalidate. */
-export const revalidate = 86400
+export const dynamic = "force-static"
 
 export const metadata: Metadata = buildPageMetadata({
   title: homeMetadata.title,
@@ -144,11 +143,11 @@ const heroStats: {
   { icon: Sparkles, value: "3+", label: "Years Experience", tone: "violet" },
   { icon: Rocket, value: "15+", label: "Projects Completed", tone: "purple" },
   { icon: Code2, value: "1150+", label: "Problems Solved", tone: "blue" },
-  { icon: Globe, value: "4", label: "Live Products", tone: "pink" },
+  { icon: Globe, value: "5", label: "Live Products", tone: "pink" },
 ]
 
-export default async function HomePage() {
-  const featuredBlogPosts = await getFeaturedPosts(3)
+export default function HomePage() {
+  const featuredBlogPosts = getFeaturedPosts(3)
   return (
     <>
       <ProjectWarmup />
@@ -550,10 +549,10 @@ export default async function HomePage() {
               <strong className="font-semibold text-slate-200">production web applications</strong>{" "}
               — including{" "}
               <Link
-                href="/projects/relay"
+                href="/projects/tillqorin"
                 className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
               >
-                Relay
+                Tillqorin POS
               </Link>
               ,{" "}
               <Link
@@ -564,10 +563,17 @@ export default async function HomePage() {
               </Link>
               ,{" "}
               <Link
-                href="/projects/tillqorin"
+                href="/projects/taylance-crm"
                 className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
               >
-                Tillqorin POS
+                Taylance CRM
+              </Link>
+              ,{" "}
+              <Link
+                href="/projects/relay"
+                className="font-semibold text-violet-300 underline decoration-violet-400/35 underline-offset-2 hover:text-violet-200"
+              >
+                Relay
               </Link>
               ,{" "}
               <Link

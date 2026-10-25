@@ -1,10 +1,11 @@
 import { ArrowRight, Calendar, Clock } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
+import { contentCardClassName } from "@/components/site/site-styles"
 import { blogPostPath } from "@/lib/blog/config"
 import type { BlogPostSummary } from "@/lib/blog/types"
-import { blogImageUrl, formatBlogDate } from "@/lib/blog/utils"
-import { contentCardClassName } from "@/components/site/site-styles"
+import { formatBlogDate } from "@/lib/blog/utils"
 import { cn } from "@/lib/utils"
 
 type BlogCardProps = {
@@ -13,7 +14,6 @@ type BlogCardProps = {
 }
 
 export function BlogCard({ post, priority = false }: BlogCardProps) {
-  const cover = blogImageUrl(post.cover_image)
   const href = blogPostPath(post.slug)
 
   return (
@@ -27,16 +27,16 @@ export function BlogCard({ post, priority = false }: BlogCardProps) {
         href={href}
         className="relative block aspect-[16/10] overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950/80 to-violet-950/60"
         tabIndex={-1}
-        aria-hidden={!cover}
+        aria-hidden={!post.coverImage}
       >
-        {cover ? (
-          // eslint-disable-next-line @next/next/no-img-element -- CMS cover URLs vary by host
-          <img
-            src={cover}
+        {post.coverImage ? (
+          <Image
+            src={post.coverImage}
             alt={post.title}
-            className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-            loading={priority ? "eager" : "lazy"}
-            decoding="async"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 384px"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            priority={priority}
           />
         ) : null}
         <div
@@ -60,30 +60,35 @@ export function BlogCard({ post, priority = false }: BlogCardProps) {
         <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-slate-500">
           <span className="inline-flex items-center gap-1.5">
             <Calendar className="size-3.5" aria-hidden="true" />
-            <time dateTime={post.published_at ?? undefined}>{formatBlogDate(post.published_at)}</time>
+            <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt)}</time>
           </span>
-          {post.read_time ? (
+          {post.readTime ? (
             <span className="inline-flex items-center gap-1.5">
               <Clock className="size-3.5" aria-hidden="true" />
-              {post.read_time}
+              {post.readTime}
             </span>
           ) : null}
         </div>
 
-        <h3 className="text-lg font-bold leading-snug text-white transition-colors group-hover:text-violet-200 sm:text-xl">
+        <h3 className="text-lg leading-snug font-bold text-white transition-colors group-hover:text-violet-200 sm:text-xl">
           <Link href={href} className="no-underline">
             {post.title}
           </Link>
         </h3>
 
-        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-slate-400">{post.excerpt}</p>
+        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-slate-400">
+          {post.excerpt}
+        </p>
 
         <Link
           href={href}
           className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-300 no-underline transition-colors hover:text-white"
         >
           Read article
-          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          <ArrowRight
+            className="size-4 transition-transform group-hover:translate-x-0.5"
+            aria-hidden="true"
+          />
         </Link>
       </div>
     </article>

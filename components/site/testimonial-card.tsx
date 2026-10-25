@@ -60,10 +60,19 @@ function ClientAvatar({
 
   return (
     <div
-      className="flex size-20 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500/30 to-blue-500/25 text-2xl font-bold text-white ring-2 ring-white/15 sm:size-24"
-      aria-hidden="true"
+      className="relative flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-800/90 text-slate-400 ring-2 ring-white/15 sm:size-24"
+      role="img"
+      aria-label={`${name} profile avatar`}
     >
-      {name.charAt(0).toUpperCase()}
+      <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="size-full text-slate-400/85"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="9" r="4.25" />
+        <path d="M3.5 23.5c0-4.4 3.8-7.5 8.5-7.5s8.5 3.1 8.5 7.5V26h-17v-2.5z" />
+      </svg>
     </div>
   )
 }

@@ -13,8 +13,11 @@ import Link from "next/link"
 import { RiGithubFill } from "react-icons/ri"
 
 import { CtaLink } from "@/components/site/cta-link"
+import { buildFaqJsonLd } from "@/components/site/faq-json-ld"
+import { FaqSection } from "@/components/site/faq-section"
 import { JsonLd } from "@/components/site/json-ld"
 import { OptimizedPicture } from "@/components/site/optimized-picture"
+import { ProjectWarmup } from "@/components/site/project-warmup"
 import {
   ctaPrimaryClassName,
   ctaSecondaryClassName,
@@ -33,7 +36,6 @@ import {
 } from "@/lib/portfolio-project-json-ld"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
-import { ProjectWarmup } from "@/components/site/project-warmup"
 import { cn } from "@/lib/utils"
 
 export const dynamic = "force-static"
@@ -54,6 +56,24 @@ const techStack = [
   "FFmpeg for audio & video conversion",
   "Render Cloud for hosting",
   "Tailwind CSS for clean UI",
+] as const
+
+const youtubeDownloaderFaq = [
+  {
+    question: "How does the Next.js YouTube downloader stream files without filling server storage?",
+    answer:
+      "The backend spawns yt-dlp and FFmpeg inside an isolated temporary workspace, streams the muxed video or MP3 audio directly to the client HTTP response, and immediately unlinks temporary files once the response stream closes.",
+  },
+  {
+    question: "Why is the live deployment at downloader.thisistayyab.dev password-protected?",
+    answer:
+      "Locking the live application behind an APP_SECRET passphrase prevents public bandwidth abuse, protects server IPs from automated scraping blocks, and ensures the tool is used strictly for private personal backups.",
+  },
+  {
+    question: "Can I hire you to build a custom media processing pipeline or FFmpeg cloud service?",
+    answer:
+      "Yes. I build custom video/audio transcoding pipelines, streaming APIs, and Dockerized Node.js worker services with Next.js, FFmpeg, and cloud storage.",
+  },
 ] as const
 
 export const metadata: Metadata = buildPageMetadata({
@@ -94,11 +114,12 @@ export default function YoutubeDownloaderProjectPage() {
         )}
       />
       {breadcrumbJsonLd ? <JsonLd data={breadcrumbJsonLd} /> : null}
+      <JsonLd data={buildFaqJsonLd(youtubeDownloaderFaq)} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "@id": `${SITE_URL}/projects/youtube-downloader`,
+          "@id": `${SITE_URL}/projects/youtube-downloader#webpage`,
           name: youtubeDownloaderPageTitle,
           description: youtubeDownloaderPageDescription,
           url: `${SITE_URL}/projects/youtube-downloader`,
@@ -109,6 +130,7 @@ export default function YoutubeDownloaderProjectPage() {
             name: "Tayyab — Full Stack Developer",
           },
           about: { "@id": `${SITE_URL}/projects/youtube-downloader` },
+          mainEntity: { "@id": `${SITE_URL}/projects/youtube-downloader` },
           primaryImageOfPage: {
             "@type": "ImageObject",
             url: projectImageUrl(youtubeDownloaderProject.image),
@@ -333,11 +355,32 @@ export default function YoutubeDownloaderProjectPage() {
           Built and maintained by Tayyab as a private, high-performance media utility.
         </p>
 
-        <div className="mt-10 flex justify-center">
-          <CtaLink href="/projects" title="View all portfolio projects">
-            View all projects
-            <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
-          </CtaLink>
+        <div className="mt-12">
+          <FaqSection
+            headingId="downloader-faq-heading"
+            title="Media Processing & Architecture FAQ"
+            description="Streaming media, FFmpeg transcoding, and cloud worker design."
+            items={youtubeDownloaderFaq}
+          />
+        </div>
+
+        <div className="mt-12 rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/[0.07] via-slate-900/60 to-violet-500/[0.07] p-6">
+          <h2 className="text-base font-semibold text-white sm:text-lg">
+            Need a custom media pipeline, FFmpeg service, or Next.js cloud tool?
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-slate-300">
+            I engineer streaming media pipelines, background worker queues, and custom Next.js web
+            applications with TypeScript, Node.js, and Docker.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <CtaLink href="/contact?project=Media+Pipeline+or+Next.js+Cloud+App" title="Discuss a custom media or cloud project">
+              Start a Similar Project
+              <ArrowRight className="size-[1.05rem]" aria-hidden="true" />
+            </CtaLink>
+            <CtaLink href="/projects" variant="secondary" title="View all portfolio projects">
+              View all projects
+            </CtaLink>
+          </div>
         </div>
       </article>
     </>

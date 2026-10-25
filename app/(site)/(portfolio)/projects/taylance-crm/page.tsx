@@ -3,6 +3,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import { CtaLink } from "@/components/site/cta-link"
+import { buildFaqJsonLd } from "@/components/site/faq-json-ld"
+import { FaqSection } from "@/components/site/faq-section"
 import { JsonLd } from "@/components/site/json-ld"
 import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { ctaPrimaryClassName, ctaSecondaryClassName } from "@/components/site/site-styles"
@@ -50,6 +52,24 @@ const architecturePillars = [
   },
 ] as const
 
+const taylanceCrmFaq = [
+  {
+    question: "How does Taylance CRM connect sales pipelines to project delivery?",
+    answer:
+      "When a sales lead reaches the Closed-Won stage, Taylance CRM converts the deal record directly into a client account and active project workspace, preserving all discovery notes, scoped milestones, and stakeholder contacts without manual re-entry.",
+  },
+  {
+    question: "How is role-based access control (RBAC) enforced in Taylance CRM?",
+    answer:
+      "Permissions are enforced at the Express.js API middleware and database query layer using JWT claims and role scopes, ensuring executives, account managers, and delivery engineers only view or mutate records assigned to their role.",
+  },
+  {
+    question: "Can you build a custom B2B CRM, client portal, or internal operations dashboard for our company?",
+    answer:
+      "Yes. I design and build custom CRM systems, multi-tenant admin portals, and internal workflow tools tailored to your team's exact sales and delivery processes.",
+  },
+] as const
+
 export const metadata: Metadata = buildPageMetadata({
   title: taylanceCrmPageTitle,
   description: taylanceCrmPageDescription,
@@ -79,11 +99,12 @@ export default function TaylanceCrmProjectPage() {
     <>
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(taylanceCrmProject, SITE_URL)} />
       {breadcrumbJsonLd ? <JsonLd data={breadcrumbJsonLd} /> : null}
+      <JsonLd data={buildFaqJsonLd(taylanceCrmFaq)} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "@id": `${SITE_URL}/projects/taylance-crm`,
+          "@id": `${SITE_URL}/projects/taylance-crm#webpage`,
           name: taylanceCrmPageTitle,
           description: taylanceCrmPageDescription,
           url: `${SITE_URL}/projects/taylance-crm`,
@@ -94,6 +115,7 @@ export default function TaylanceCrmProjectPage() {
             name: "Tayyab — Full Stack Developer",
           },
           about: { "@id": `${SITE_URL}/projects/taylance-crm` },
+          mainEntity: { "@id": `${SITE_URL}/projects/taylance-crm` },
           primaryImageOfPage: {
             "@type": "ImageObject",
             url: projectImageUrl(taylanceCrmProject.image),
@@ -227,6 +249,23 @@ export default function TaylanceCrmProjectPage() {
             Need a custom CRM or dashboard? Let&apos;s talk
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
+          <CtaLink
+            href="/blog/how-to-hire-full-stack-developer-startup-2026"
+            variant="secondary"
+            title="Read the founder's guide to hiring a full stack developer for SaaS and internal tools"
+          >
+            Startup hiring &amp; scoping guide
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </CtaLink>
+        </div>
+
+        <div className="mt-12">
+          <FaqSection
+            headingId="taylance-crm-faq-heading"
+            title="Taylance CRM — Technical FAQ"
+            description="Pipeline architecture, RBAC security, and custom B2B software development."
+            items={taylanceCrmFaq}
+          />
         </div>
 
         <div className="mt-12 rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/[0.07] via-slate-900/60 to-violet-500/[0.07] p-6">

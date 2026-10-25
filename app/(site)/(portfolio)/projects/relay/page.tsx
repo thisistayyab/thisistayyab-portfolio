@@ -4,8 +4,11 @@ import Link from "next/link"
 import { RiGithubFill } from "react-icons/ri"
 
 import { CtaLink } from "@/components/site/cta-link"
+import { buildFaqJsonLd } from "@/components/site/faq-json-ld"
+import { FaqSection } from "@/components/site/faq-section"
 import { JsonLd } from "@/components/site/json-ld"
 import { OptimizedPicture } from "@/components/site/optimized-picture"
+import { ProjectWarmup } from "@/components/site/project-warmup"
 import {
   ctaPrimaryClassName,
   ctaSecondaryClassName,
@@ -24,7 +27,6 @@ import {
 } from "@/lib/portfolio-project-json-ld"
 import { buildPageMetadata } from "@/lib/site-metadata"
 import { projectImageUrl, SITE_URL } from "@/lib/site"
-import { ProjectWarmup } from "@/components/site/project-warmup"
 import { cn } from "@/lib/utils"
 
 export const dynamic = "force-static"
@@ -44,6 +46,24 @@ const techStack = [
   "Socket.IO and WebSockets for real-time notepad text synchronization",
   "Node.js and Express for room coordination and WebRTC signaling",
   "Render Cloud for lightweight, reliable hosting",
+] as const
+
+const relayFaq = [
+  {
+    question: "How does Relay transfer files up to 100 MB without storing them on a server?",
+    answer:
+      "Relay uses WebRTC RTCDataChannel to establish a DTLS-encrypted peer-to-peer connection directly between the sender's and receiver's browsers, streaming files in 64 KB chunks with bufferedAmountLowThreshold backpressure control so no file bytes ever touch a server disk or cloud bucket.",
+  },
+  {
+    question: "What role does the Node.js and Socket.IO server play in Relay?",
+    answer:
+      "The Node.js and Socket.IO backend handles 6-digit room pairing, exchanges WebRTC SDP offers/answers and ICE candidates for NAT traversal, and relays live shared-notepad text updates in memory.",
+  },
+  {
+    question: "Can I hire you to build a real-time WebRTC, Socket.IO, or collaborative web app?",
+    answer:
+      "Yes. I build low-latency collaborative workspaces, real-time WebSocket backends, and WebRTC data/media applications with React, Next.js, and Node.js.",
+  },
 ] as const
 
 export const metadata: Metadata = buildPageMetadata({
@@ -84,11 +104,12 @@ export default function RelayProjectPage() {
         )}
       />
       {breadcrumbJsonLd ? <JsonLd data={breadcrumbJsonLd} /> : null}
+      <JsonLd data={buildFaqJsonLd(relayFaq)} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "@id": `${SITE_URL}/projects/relay`,
+          "@id": `${SITE_URL}/projects/relay#webpage`,
           name: relayPageTitle,
           description: relayPageDescription,
           url: `${SITE_URL}/projects/relay`,
@@ -99,6 +120,7 @@ export default function RelayProjectPage() {
             name: "Tayyab — Full Stack Developer",
           },
           about: { "@id": `${SITE_URL}/projects/relay` },
+          mainEntity: { "@id": `${SITE_URL}/projects/relay` },
           primaryImageOfPage: {
             "@type": "ImageObject",
             url: projectImageUrl(relayProject.image),
@@ -270,6 +292,15 @@ export default function RelayProjectPage() {
           fully open-source and free for anyone who needs to quickly transfer files and
           notes between devices without compromising their privacy.
         </p>
+
+        <div className="mt-12">
+          <FaqSection
+            headingId="relay-faq-heading"
+            title="Relay — WebRTC & Real-Time FAQ"
+            description="How browser-to-browser file transfer works under the hood."
+            items={relayFaq}
+          />
+        </div>
 
         <div className="mt-12 rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/[0.07] via-slate-900/60 to-violet-500/[0.07] p-6">
           <h2 className="text-base font-semibold text-white sm:text-lg">

@@ -1,90 +1,22 @@
 import { SITE_URL } from "@/lib/site"
 
-export function calculateReadTime(content: string): string {
-  const wordsPerMinute = 200
-  const wordCount = content.replace(/<[^>]+>/g, " ").split(/\s+/g).filter(Boolean).length
-  const minutes = Math.max(1, Math.ceil(wordCount / wordsPerMinute))
-  return `${minutes} min read`
-}
-
-export function parseSeoKeywords(value: unknown): string[] | null {
-  if (!value) return null
-  if (Array.isArray(value)) {
-    return value.map(String).filter(Boolean)
-  }
-  if (typeof value === "string") {
-    const trimmed = value.trim()
-    if (!trimmed) return null
-    if (trimmed.startsWith("[")) {
-      try {
-        const parsed = JSON.parse(trimmed) as unknown
-        if (Array.isArray(parsed)) {
-          return parsed.map(String).filter(Boolean)
-        }
-      } catch {
-        // fall through to comma split
-      }
-    }
-    return trimmed
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean)
-  }
-  return null
-}
-
-export function slugifyTitle(title: string) {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "")
-}
-
 export function blogImageUrl(src: string | null | undefined): string | undefined {
   if (!src) return undefined
   if (src.startsWith("http://") || src.startsWith("https://")) return src
   return `${SITE_URL}${src.startsWith("/") ? src : `/${src}`}`
 }
 
-export function formatBlogDate(iso: string | null | undefined) {
-  if (!iso) return "Recently"
+/** Fixed to UTC so the prerendered date never depends on the build machine's timezone. */
+export function formatBlogDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "UTC",
   })
 }
 
-/** Prevent duplicate h1 when CMS HTML is injected below the page template h1. */
-export function sanitizeBlogContentHtml(html: string): string {
-  return html.replace(/<h1(\s[^>]*>|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>")
-}
-
-/** YYYY-MM-DD for sitemap lastmod — avoids noisy ISO timestamps from the database. */
-export function formatSitemapDate(iso: string | Date | null | undefined, fallback?: string): string {
-  if (!iso) return fallback ?? new Date().toISOString().slice(0, 10)
-  const date = typeof iso === "string" ? new Date(iso) : iso
-  if (Number.isNaN(date.getTime())) return fallback ?? new Date().toISOString().slice(0, 10)
-  return date.toISOString().slice(0, 10)
-}
-
-/** No-op: Google deprecated the public sitemap ping endpoint; submit via Search Console instead. */
-export async function pingSearchEnginesForSitemap() {}
-
-/**
- * Clears the Next.js ISR cache for the blog index, sitemap, and (if given) a post's own page.
- * Without this, the CMS writes straight to Supabase from the browser and the public site can
- * keep serving a stale cache — including a 404 cached from before the post was published — for
- * up to `revalidate` seconds.
- */
-export async function revalidateBlogPaths(slug?: string): Promise<void> {
-  try {
-    await fetch("/api/blog/revalidate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ slug }),
-    })
-  } catch (error) {
-    console.error("[blog] revalidateBlogPaths:", error)
-  }
+/** YYYY-MM-DD for sitemap `lastmod`. */
+export function formatSitemapDate(iso: string): string {
+  return new Date(iso).toISOString().slice(0, 10)
 }

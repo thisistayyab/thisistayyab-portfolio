@@ -22,9 +22,16 @@ const pageIntro =
 
 export const testimonials: HomeTestimonial[] = [
   {
+    name: "Upwork Client",
+    role: "Platform Migration · Dec 2025 – Sep 2026",
+    via: "an Upwork contract",
+    rating: 5,
+    quote:
+      "Tayyab was very helpful throughout our platform migration and website development process. He was responsive, professional, and handled the technical requirements efficiently. Communication was clear, and he adapted quickly whenever changes were needed. This project has now been completed, but I'm still working with him on another project. Highly recommended.",
+  },
+  {
     name: "Christopher",
     role: "Business Owner",
-    image: "/images/testimonials/client-1.webp",
     via: "a Fiverr contract",
     rating: 5,
     quote: "Attentive and thorough; mission successfully completed.",
@@ -61,26 +68,26 @@ export default function TestimonialsPage() {
       <JsonLd data={buildTestimonialsWebPageJsonLd(SITE_URL, pageIntro)} />
 
       <article className="relative z-[5]">
-      <header className="relative isolate overflow-hidden pt-[88px]">
-        <HeaderGraphBackground />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020106]/90" />
+        <header className="relative isolate overflow-hidden pt-[88px]">
+          <HeaderGraphBackground />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020106]/90" />
 
-        <div className="relative z-[2] mx-auto max-w-[1200px] px-5 pb-4 sm:px-6 lg:px-4">
-          <div className="mb-6 pt-6">
-            <Link
-              href="/"
-              className="inline-flex items-center text-sm text-slate-400 transition-all duration-300 hover:pl-2 hover:text-white"
-            >
-              <ArrowLeft className="mr-2 size-4" aria-hidden="true" />
-              Back to home
-            </Link>
+          <div className="relative z-[2] mx-auto max-w-[1200px] px-5 pb-4 sm:px-6 lg:px-4">
+            <div className="mb-6 pt-6">
+              <Link
+                href="/"
+                className="inline-flex items-center text-sm text-slate-400 transition-all duration-300 hover:pl-2 hover:text-white"
+              >
+                <ArrowLeft className="mr-2 size-4" aria-hidden="true" />
+                Back to home
+              </Link>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <MotionSection>
-        <TestimonialsSection testimonials={testimonials} variant="page" headingLevel="h1" />
-      </MotionSection>
+        <MotionSection>
+          <TestimonialsSection testimonials={testimonials} variant="page" headingLevel="h1" />
+        </MotionSection>
       </article>
     </>
   )

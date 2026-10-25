@@ -3,6 +3,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import { CtaLink } from "@/components/site/cta-link"
+import { buildFaqJsonLd } from "@/components/site/faq-json-ld"
+import { FaqSection } from "@/components/site/faq-section"
 import { JsonLd } from "@/components/site/json-ld"
 import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { ctaPrimaryClassName } from "@/components/site/site-styles"
@@ -50,6 +52,24 @@ const architectureDecisions = [
   },
 ] as const
 
+const tillqorinFaq = [
+  {
+    question: "How does Tillqorin prevent inventory drift during simultaneous sales?",
+    answer:
+      "Every completed sale, return, and supplier purchase executes inside a single PostgreSQL transaction via a Supabase RPC function, writing an immutable stock_movements ledger row and updating stock levels atomically.",
+  },
+  {
+    question: "Does Tillqorin support both 80mm thermal receipt printers and A4 invoices?",
+    answer:
+      "Yes. Tillqorin includes dedicated print layout templates for 80mm and 58mm thermal POS receipt printers as well as standard A4 and A5 B2B tax invoices directly from the browser.",
+  },
+  {
+    question: "Can I hire you to build a custom POS, ERP, or multi-tenant retail SaaS?",
+    answer:
+      "Yes. I architect and ship custom retail POS systems, inventory management platforms, and B2B billing software using React, Next.js, Node.js, and PostgreSQL.",
+  },
+] as const
+
 export const metadata: Metadata = buildPageMetadata({
   title: tillqorinPageTitle,
   description: tillqorinPageDescription,
@@ -79,11 +99,12 @@ export default function TillqorinProjectPage() {
     <>
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(tillqorinProject, SITE_URL)} />
       {breadcrumbJsonLd ? <JsonLd data={breadcrumbJsonLd} /> : null}
+      <JsonLd data={buildFaqJsonLd(tillqorinFaq)} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "@id": `${SITE_URL}/projects/tillqorin`,
+          "@id": `${SITE_URL}/projects/tillqorin#webpage`,
           name: tillqorinPageTitle,
           description: tillqorinPageDescription,
           url: `${SITE_URL}/projects/tillqorin`,
@@ -94,6 +115,7 @@ export default function TillqorinProjectPage() {
             name: "Tayyab — Full Stack Developer",
           },
           about: { "@id": `${SITE_URL}/projects/tillqorin` },
+          mainEntity: { "@id": `${SITE_URL}/projects/tillqorin` },
           primaryImageOfPage: {
             "@type": "ImageObject",
             url: projectImageUrl(tillqorinProject.image),
@@ -224,6 +246,15 @@ export default function TillqorinProjectPage() {
           Tillqorin is a full stack web application I architected, built, and shipped end to end —
           from the database schema and REST API to the retail dashboard and invoice printing system.
         </p>
+
+        <div className="mt-12">
+          <FaqSection
+            headingId="tillqorin-faq-heading"
+            title="Tillqorin POS — Technical FAQ"
+            description="Architecture and custom POS development questions."
+            items={tillqorinFaq}
+          />
+        </div>
 
         <div className="mt-12 rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/[0.07] via-slate-900/60 to-violet-500/[0.07] p-6">
           <h2 className="text-base font-semibold text-white sm:text-lg">

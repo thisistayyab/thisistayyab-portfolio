@@ -3,6 +3,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import { CtaLink } from "@/components/site/cta-link"
+import { buildFaqJsonLd } from "@/components/site/faq-json-ld"
+import { FaqSection } from "@/components/site/faq-section"
 import { JsonLd } from "@/components/site/json-ld"
 import { OptimizedPicture } from "@/components/site/optimized-picture"
 import { ctaPrimaryClassName } from "@/components/site/site-styles"
@@ -44,6 +46,24 @@ const techStack = [
   "Docker for deployment",
 ] as const
 
+const auditblocFaq = [
+  {
+    question: "How does AuditBloc scan websites for WCAG accessibility violations?",
+    answer:
+      "AuditBloc launches a real headless Chromium browser via Playwright, waits for client-side hydration to settle, and injects @axe-core/playwright against the live DOM to detect WCAG 2.1 and 2.2 Level A/AA issues, GDPR cookie banner behavior, and AI disclosure metadata.",
+  },
+  {
+    question: "Why use Playwright and axe-core instead of static HTML linters?",
+    answer:
+      "Static HTML linters cannot evaluate computed CSS color contrast, dynamic client-rendered modals, or ARIA state transitions. Running axe-core inside Playwright tests the exact DOM and CSS cascade a real user's browser renders.",
+  },
+  {
+    question: "Can you audit and remediate our existing Next.js or React app for ADA Title II / WCAG 2.2 AA?",
+    answer:
+      "Yes. I provide hands-on WCAG 2.1/2.2 AA code remediation, keyboard navigation fixes, and automated Playwright + axe-core CI pipelines for engineering teams and public-sector vendors.",
+  },
+] as const
+
 export const metadata: Metadata = buildPageMetadata({
   title: auditblocPageTitle,
   description: auditblocPageDescription,
@@ -73,11 +93,12 @@ export default function AuditblocProjectPage() {
     <>
       <JsonLd data={buildPortfolioProjectSoftwareApplicationJsonLd(auditblocProject, SITE_URL)} />
       {breadcrumbJsonLd ? <JsonLd data={breadcrumbJsonLd} /> : null}
+      <JsonLd data={buildFaqJsonLd(auditblocFaq)} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "@id": `${SITE_URL}/projects/auditbloc`,
+          "@id": `${SITE_URL}/projects/auditbloc#webpage`,
           name: auditblocPageTitle,
           description: auditblocPageDescription,
           url: `${SITE_URL}/projects/auditbloc`,
@@ -88,6 +109,7 @@ export default function AuditblocProjectPage() {
             name: "Tayyab — Full Stack Developer",
           },
           about: { "@id": `${SITE_URL}/projects/auditbloc` },
+          mainEntity: { "@id": `${SITE_URL}/projects/auditbloc` },
           primaryImageOfPage: {
             "@type": "ImageObject",
             url: projectImageUrl(auditblocProject.image),
@@ -198,7 +220,15 @@ export default function AuditblocProjectPage() {
             variant="secondary"
             title="Read how I built automated accessibility scanning with Playwright and axe-core"
           >
-            Read engineering deep-dive
+            Playwright + axe-core guide
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </CtaLink>
+          <CtaLink
+            href="/blog/ada-title-ii-web-accessibility-deadline-2027"
+            variant="secondary"
+            title="Read the ADA Title II April 2027 web accessibility compliance roadmap"
+          >
+            ADA Title II 2027 roadmap
             <ArrowRight className="size-4" aria-hidden="true" />
           </CtaLink>
         </div>
@@ -207,6 +237,15 @@ export default function AuditblocProjectPage() {
           AuditBloc is a full stack web application I built and maintain — from the Playwright
           scanning engine to the user interface and all the educational content.
         </p>
+
+        <div className="mt-12">
+          <FaqSection
+            headingId="auditbloc-faq-heading"
+            title="AuditBloc — Accessibility & Compliance FAQ"
+            description="How automated WCAG scanning works and how I help teams reach compliance."
+            items={auditblocFaq}
+          />
+        </div>
 
         <div className="mt-12 rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/[0.07] via-slate-900/60 to-violet-500/[0.07] p-6">
           <h2 className="text-base font-semibold text-white sm:text-lg">
