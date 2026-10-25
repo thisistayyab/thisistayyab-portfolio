@@ -120,25 +120,24 @@ export const careerRoadmapMilestones: CareerMilestone[] = [
     kind: "freelance",
     phase: "Freelance foundation",
     roadmapYear: "2024",
-    roleTitle: "Full Stack Developer",
-    organization: "Fiverr",
-    organizationUrl: "https://www.fiverr.com/",
+    roleTitle: "Freelance Full Stack Developer",
+    organization: "Independent — client & agency contracts",
     periodLabel: "Oct 2024 — Present",
     startDate: "2024-10-01",
     isCurrent: true,
     platformLabel: "Project-based delivery",
     summary:
-      "Full-stack web apps for clients worldwide on Fiverr.",
+      "First paid client work — building and shipping complete web apps end to end.",
     description:
-      "I deliver complete MERN projects on Fiverr: UI, APIs, databases, hosting, and fixes after launch.",
+      "I took briefs from agencies and direct clients, built the React front end and Node.js API, deployed, and supported after launch.",
     responsibilities: [
       "Build features from briefs or wireframes.",
       "Add auth, payments, and integrations when needed.",
       "Deploy and support after launch.",
     ],
     outcomes: [
-      "15+ shipped projects in this portfolio.",
-      "Consistent five-star client reviews.",
+      "First paid full stack delivery, shipped end to end.",
+      "Client work since then has come through agency contracts and referrals.",
     ],
     skills: ["HTML5", "CSS3", "React", "Express.js", "MongoDB", "REST APIs"],
     rim: "purple",
@@ -181,7 +180,7 @@ const experienceKeywords = [
   "Node.js freelance developer roadmap",
   "freelance full stack developer",
   "Upwork full stack developer",
-  "Fiverr web developer experience",
+  "agency contract developer experience",
   "software engineer career timeline",
   "MERN stack developer work history",
   "remote full stack developer",
@@ -193,12 +192,12 @@ const experienceFaq = [
   {
     question: "What do you do today?",
     answer:
-      "I work as a full stack developer — shipping production web products like Tillqorin POS, AuditBloc, and Taylance CRM while taking freelance contract work on Upwork and Fiverr.",
+      "I work as a full stack developer — shipping production web products like Tillqorin POS, AuditBloc, and Taylance CRM while taking freelance contract work through agency partnerships and direct clients.",
   },
   {
     question: "When did you start working as a full stack developer?",
     answer:
-      "I started building full stack applications in 2023 and delivered client work through freelance platforms before expanding into full-time freelance and product development in 2026.",
+      "I started building full stack applications in 2023 and delivered client work through agency contracts before expanding into full-time freelance and product development in 2026.",
   },
   {
     question: "Why is Order AI LLC not in Projects?",
@@ -212,7 +211,7 @@ const experienceFaq = [
   {
     question: "Do you work with clients remotely?",
     answer:
-      "Yes. I work with clients worldwide through Upwork, Fiverr, and direct client engagements.",
+      "Yes. I work with clients worldwide through agency contracts and direct engagements.",
   },
 ] as const
 
@@ -318,7 +317,7 @@ export default function ExperiencePage() {
             </h2>
             <p className="text-sm leading-relaxed text-slate-400 sm:text-base sm:leading-[1.8]">
               Newest roles first — current freelance and product work, then Upwork, client
-              contracts, Fiverr, and where it started in 2023.
+              contracts, and where it started in 2023.
             </p>
             <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="Career summary stats">
               {[

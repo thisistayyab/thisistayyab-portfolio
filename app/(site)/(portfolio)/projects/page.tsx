@@ -222,9 +222,9 @@ function buildProjectsItemListJsonLd(projects: PortfolioProject[]) {
 }
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Web Development Projects | Full Stack Portfolio — React & Next.js Apps",
+  title: "Web Development Projects | React & Next.js Portfolio",
   description:
-    "Browse Tayyab's full stack web development portfolio — Tillqorin POS, AuditBloc accessibility scanner, Relay WebRTC app, Taylance CRM, and production React and Node.js projects with real APIs and databases.",
+    "Full stack portfolio: Tillqorin POS, AuditBloc, Relay, Taylance CRM, and production React and Node.js projects with real APIs and databases.",
   canonicalPath: "/projects",
   keywords: [...auditblocSeoKeywords, ...tillqorinSeoKeywords, ...projectsKeywords],
   openGraph: {

@@ -50,7 +50,7 @@ export const tillqorinProject: PortfolioProject = {
 }
 
 export const tillqorinPageTitle =
-  "Tillqorin POS — Commerce OS Built by Tayyab | Full Stack Portfolio"
+  "Tillqorin POS — Commerce OS Built by Tayyab"
 
 export const tillqorinPageDescription =
-  "Tillqorin is a web POS and billing platform I built — sales, purchases, inventory, accounts, analytics, and thermal receipts. React, Vite, Express.js, and Supabase."
+  "Tillqorin is a web POS and billing platform I built — sales, inventory, accounts, analytics, and thermal receipts. React, Vite, Express.js, Supabase."

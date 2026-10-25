@@ -2,8 +2,8 @@ import {
   ArrowRight,
   Code2,
   Download,
+  Globe,
   Rocket,
-  Smile,
   Sparkles,
   type LucideIcon,
 } from "lucide-react"
@@ -80,7 +80,7 @@ export const metadata: Metadata = buildPageMetadata({
 })
 
 const homeTestimonialsIntro =
-  "Verified client feedback from freelance and contract full stack web development work delivered by Tayyab through Upwork and Fiverr."
+  "Client feedback from freelance and contract full stack web development work delivered by Tayyab."
 
 const homeServicesIntro =
   "Full stack software development services by Tayyab: SaaS product development, custom web applications, Node.js REST APIs, AI automation, PostgreSQL database architecture, cloud deployment, and technical SEO."
@@ -144,7 +144,7 @@ const heroStats: {
   { icon: Sparkles, value: "3+", label: "Years Experience", tone: "violet" },
   { icon: Rocket, value: "15+", label: "Projects Completed", tone: "purple" },
   { icon: Code2, value: "1150+", label: "Problems Solved", tone: "blue" },
-  { icon: Smile, value: "100%", label: "Client Satisfaction", tone: "pink" },
+  { icon: Globe, value: "4", label: "Live Products", tone: "pink" },
 ]
 
 export default async function HomePage() {
@@ -276,7 +276,7 @@ export default async function HomePage() {
 
               <HeroItem>
                 <h1 className="mb-6 w-full max-w-full text-[clamp(2.25rem,7.5vw,4.75rem)] leading-[1.02] font-extrabold tracking-tight sm:text-[clamp(2.75rem,7.5vw,4.75rem)] sm:leading-[0.98] lg:tracking-[-0.03em]">
-                  <WordPullUp text="Full Stack" className="block text-white" />
+                  <WordPullUp text="Full Stack" className="block text-white" />{" "}
                   <span className="block bg-gradient-to-r from-purple-400 via-violet-400 via-indigo-400 to-sky-400 bg-clip-text pb-[0.04em] text-transparent">
                     Developer
                   </span>
@@ -353,7 +353,7 @@ export default async function HomePage() {
 
                 <p className="text-xs leading-relaxed text-slate-400/90 max-lg:text-center">
                   <span className="font-medium text-emerald-300">✓ Available for freelance &amp; contract</span>{" "}
-                  · Replies within a few hours · 5.0★ on Upwork &amp; Fiverr
+                  · Replies within a few hours · Remote worldwide
                 </p>
                 </div>
               </HeroItem>

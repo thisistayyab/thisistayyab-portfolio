@@ -92,10 +92,10 @@ export const profileEmail = "thisistayyab@outlook.com"
 
 export const homeMetadata = {
   /** 50–60 chars for SERP title (SEO tools). */
-  title: "Tayyab | Full Stack Developer for Hire — React, Next.js, Node.js",
-  /** ~155 chars — within meta description limits (AIOSEO flags 160+). */
+  title: "Full Stack Developer for Hire | Tayyab — React, Next.js",
+  /** ≤155 chars — within meta description limits (AIOSEO flags 160+). */
   description:
-    "Hire Tayyab — full stack web developer for fast, scalable React, Next.js & Node.js web apps: SaaS platforms, REST APIs, Tillqorin POS, AuditBloc. 3+ yrs, 15+ projects.",
+    "Hire Tayyab — full stack developer building fast, scalable React, Next.js and Node.js apps: SaaS platforms, REST APIs, POS, and compliance tools.",
   keywords: [
     "Tayyab",
     "Tayyab full stack developer",

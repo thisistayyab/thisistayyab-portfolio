@@ -7,7 +7,6 @@ import {
   Download,
   Globe,
   Layers,
-  LineChart,
   MapPin,
   Rocket,
   Shield,
@@ -69,7 +68,7 @@ const aboutStatCards: {
   { icon: Sparkles, value: "3+", label: "Years in Production", tone: "violet" },
   { icon: Rocket, value: "15+", label: "Projects Shipped", tone: "purple" },
   { icon: Code2, value: "1150+", label: "Problems Solved", tone: "blue" },
-  { icon: LineChart, value: "5.0", label: "Fiverr Rating", tone: "pink" },
+  { icon: Globe, value: "4", label: "Live Products", tone: "pink" },
 ]
 
 const aboutExpertisePillars: {
@@ -252,9 +251,9 @@ const aboutFaq = [
 export const dynamic = "force-static"
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "About Tayyab | Full Stack Developer — React, Next.js & Node.js",
+  title: "About Tayyab — Full Stack Developer | React & Next.js",
   description:
-    "Meet Tayyab — a full stack web developer for startups and SaaS teams (React, Next.js, Node.js, PostgreSQL). 3+ years, 15+ shipped projects, 1,150+ LeetCode. Available for hire.",
+    "Meet Tayyab — full stack web developer for startups and SaaS teams (React, Next.js, Node.js, PostgreSQL). 3+ years, 1,150+ LeetCode problems.",
   canonicalPath: "/about",
   keywords: aboutKeywords,
   openGraph: {
@@ -341,7 +340,7 @@ export default function AboutPage() {
 
                 <p className="mt-4 max-w-2xl text-base leading-[1.85] text-slate-400">
                   I&apos;m Tayyab, a full stack web developer with 3+ years of hands-on experience
-                  delivering production-ready applications for clients on Upwork, Fiverr, and
+                  delivering production-ready applications for clients through agency contracts and
                   direct engagements — building products with React and Node.js that ship on
                   time, scale under real traffic, and stay maintainable for the long term.
                   My work spans responsive interfaces, robust REST APIs, PostgreSQL data layers,
@@ -498,8 +497,8 @@ export default function AboutPage() {
                 users after launch.
               </p>
               <p className="text-base leading-[1.85] text-slate-400 sm:text-[1.05rem]">
-                My freelance work on Upwork and Fiverr has earned consistent five-star feedback,
-                with clients citing responsiveness, technical clarity, and on-time delivery.
+                Client feedback cites responsiveness, technical clarity, and on-time delivery —
+                the five-star review on this site came from a project delivered on a contract.
                 Beyond client work, I architect and ship my own full stack products —{" "}
                 <Link
                   href="/projects/tillqorin"

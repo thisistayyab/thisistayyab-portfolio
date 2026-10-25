@@ -92,7 +92,7 @@ export function WordPullUp({ text, className }: { text: string; className?: stri
       {words.map((word, i) => (
         <motion.span
           key={i}
-          className="inline-block mr-[0.25em]"
+          className="inline-block"
           variants={{
             hidden: { y: 10, opacity: 1 },
             visible: {
@@ -103,6 +103,7 @@ export function WordPullUp({ text, className }: { text: string; className?: stri
           }}
         >
           {word}
+          {i < words.length - 1 ? "\u00A0" : null}
         </motion.span>
       ))}
     </motion.span>

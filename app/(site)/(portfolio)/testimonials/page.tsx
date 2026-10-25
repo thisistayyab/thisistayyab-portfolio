@@ -25,8 +25,7 @@ export const testimonials: HomeTestimonial[] = [
     name: "Christopher",
     role: "Business Owner",
     image: "/images/testimonials/client-1.webp",
-    via: "Fiverr",
-    viaUrl: "https://www.fiverr.com",
+    via: "a Fiverr contract",
     rating: 5,
     quote: "Attentive and thorough; mission successfully completed.",
   },
@@ -43,7 +42,7 @@ export const metadata: Metadata = buildPageMetadata({
     "freelance developer feedback",
     "React developer reviews",
     "web development client testimonials",
-    "Fiverr developer reviews",
+    "shipped project reviews",
     "Upwork developer feedback",
   ],
   openGraph: {

@@ -10,15 +10,15 @@ export type { HomeTestimonial } from "@/components/site/testimonial-card"
 const deliveryGuarantees = [
   {
     icon: ShieldCheck,
-    title: "5.0★ Verified Marketplace Record",
+    title: "A Real Client Review, From Shipped Work",
     detail:
-      "Consistent five-star client satisfaction across Upwork and Fiverr contracts, including ongoing enterprise React & TypeScript engineering for Order AI LLC.",
+      "A five-star review from a project I built and shipped end to end — one real client with real context, not a screenshot of a badge.",
   },
   {
     icon: Code2,
     title: "Live Production Proof, Not Just Mockups",
     detail:
-      "Every flagship system in this portfolio — Tillqorin POS, AuditBloc, Taylance CRM, and Relay — runs in production with real APIs, databases, and active users.",
+      "Every flagship system in this portfolio — Tillqorin POS, AuditBloc, Taylance CRM, and Relay — runs in production with real APIs and databases.",
   },
   {
     icon: Zap,
@@ -78,7 +78,7 @@ export function TestimonialsSection({
           </HeadingTag>
           <div className="mx-auto mt-6 mb-6 h-px w-12 bg-white/15" aria-hidden="true" />
           <p className="text-base leading-relaxed text-slate-400 sm:text-[1.05rem] sm:leading-[1.85]">
-            Verified feedback and engineering delivery standards from freelance and contract web projects.
+            Client feedback and delivery standards from freelance and contract web projects.
           </p>
         </div>
 

@@ -256,7 +256,7 @@ export default function RelayProjectPage() {
           </a>
 
           <CtaLink
-            href="/blog/webrtc-file-sharing-architecture-relay"
+            href="/blog/webrtc-peer-to-peer-file-transfer-tutorial"
             variant="secondary"
             title="Read the WebRTC and Socket.IO architecture breakdown"
           >
